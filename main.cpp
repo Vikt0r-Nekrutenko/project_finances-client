@@ -2,27 +2,9 @@
 #include <window.hpp>
 #include <smv/iview.hpp>
 #include <smv/imodel.hpp>
+#include <closeview.hpp>
 
 class AppModel : public stf::smv::BaseModel {};
-
-class CloseView : public stf::smv::IView
-{
-public:
-    CloseView(AppModel *model)
-        : stf::smv::IView(model) { }
-
-    bool isContinue() const override
-    {
-        return false;
-    }
-
-    void show(stf::Renderer&) override { };
-
-    IView* update(const float) override
-    {
-        return this;
-    }
-};
 
 class MenuView : public stf::smv::IView
 {
