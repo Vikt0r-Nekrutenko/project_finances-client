@@ -61,21 +61,27 @@ stf::smv::IView *DepositListView::keyEventsHandler(const int key)
             mOption = 0;
         else if(key == 13) {
             mOption = 0;
-            int delim = mInput.find(" ");
-            std::string name = mInput.substr(0, delim);
-            int balance = std::stoi(mInput.erase(0, delim + 1));
-            static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
+            try {
+                int delim = mInput.find(" ");
+                std::string name = mInput.substr(0, delim);
+                int balance = std::stoi(mInput.erase(0, delim + 1));
+                static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
+            } catch(const std::invalid_argument &msg) {
+                stf::Renderer::log << stf::endl << msg.what();
+            }
+            mInput.clear();
         } else if((key >= '0' && key <= 'z') || key == ' ')
             mInput += key;
         else if(key == 8 && !mInput.empty())
             mInput.pop_back();
         break;
     case 2:
-        if(key == 'q')
+        if(key == 'q' && mInput.empty())
             mOption = 0;
         else if(key == 13) {
             mOption = 0;
             static_cast<AppModel*>(m_model)->deleteDeposit(std::stoi(mInput) - 1);
+            mInput.clear();
         } else if(key >= '0' && key <= '9')
             mInput += key;
         else if(key == 8 && !mInput.empty())
@@ -90,6 +96,7 @@ stf::smv::IView *DepositListView::keyEventsHandler(const int key)
             int id = std::stoi(mInput.substr(0, delim)) - 1;
             int balance = std::stoi(mInput.erase(0, delim + 1));
             static_cast<AppModel*>(m_model)->changeBalance(id, balance);
+            mInput.clear();
         } else if((key >= '0' && key <= 'z') || key == ' ')
             mInput += key;
         else if(key == 8 && !mInput.empty())

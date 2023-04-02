@@ -10,6 +10,8 @@ const QVector<DepositModel> &AppModel::deposits() const
 
 void AppModel::deleteDeposit(int index)
 {
+    if(index >= mDepositHandler.deposits().size())
+        throw std::out_of_range("Deposit with that index does not exitst.");
     mDepositHandler.deleteDeposit(index);
 }
 
@@ -20,6 +22,8 @@ void AppModel::addNewDeposit(const char *name, int balance)
 
 void AppModel::changeBalance(int index, int balance)
 {
+    if(index >= mDepositHandler.deposits().size())
+        throw std::out_of_range("Deposit with that index does not exitst.");
     mDepositHandler.updateBalance(index, balance);
 }
 
