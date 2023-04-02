@@ -12,7 +12,7 @@ void ModelViewWithInputField::inputHandler(int key)
         onEnterHandler();
         mInput.clear();
         mOption = 0;
-    } else if((key >= '0' && key <= 'z') || key == ' ')
+    } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-')
         mInput += key;
     else if(key == 8 && !mInput.empty())
         mInput.pop_back();
