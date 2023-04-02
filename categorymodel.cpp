@@ -18,7 +18,13 @@ void CategoryModel::read()
 
 void CategoryModel::update()
 {
+    QJsonObject selectedCategory {
+        {"name", mName },
+        {"type", mType }
+    };
 
+    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', selectedCategory, "PUT");
+    replyHandler(reply, "Category updated successfully!");
 }
 
 void CategoryModel::remove()
