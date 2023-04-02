@@ -1,11 +1,14 @@
 #include <QCoreApplication>
 #include <window.hpp>
 #include <smv/iview.hpp>
+#include <smv/imodel.hpp>
+
+class Model : public stf::smv::BaseModel {};
 
 class CloseView : public stf::smv::IView
 {
 public:
-    CloseView(stf::smv::BaseModel *model)
+    CloseView(Model *model)
         : stf::smv::IView(model) { }
 
     bool isContinue() const override
@@ -24,7 +27,7 @@ public:
 class MenuView : public stf::smv::IView
 {
 public:
-    MenuView(stf::smv::BaseModel *model)
+    MenuView(Model *model)
         : stf::smv::IView(model)
     {
 
@@ -37,11 +40,7 @@ public:
     stf::smv::IView *keyEventsHandler(const int key) override
     {
         switch (key) {
-        case 'q':
-            return new CloseView(nullptr);
-            break;
-        default:
-            break;
+        case 'q': return new CloseView(static_cast<Model*>(m_model));
         }
         return this;
     }
@@ -49,8 +48,9 @@ public:
 
 class MainWindow : public stf::Window
 {
-    MenuView menuView = MenuView(nullptr);
-    CloseView closeView = CloseView(nullptr);
+    Model model = Model();
+    MenuView menuView = MenuView(&model);
+    CloseView closeView = CloseView(&model);
     stf::smv::IView *currentView = &menuView;
 
 public:
@@ -62,12 +62,12 @@ public:
 
     void keyEvents(const int key) override
     {
-        currentView->keyEventsHandler(key);
+        currentView = currentView->keyEventsHandler(key);
     }
 
     void mouseEvents(const stf::MouseRecord &mr) override
     {
-        currentView->mouseEventsHandler(mr);
+        currentView = currentView->mouseEventsHandler(mr);
     }
 };
 
