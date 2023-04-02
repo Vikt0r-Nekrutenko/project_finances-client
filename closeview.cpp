@@ -1,4 +1,5 @@
 #include "closeview.hpp"
+#include "appmodel.hpp"
 
 CloseView::CloseView(AppModel *model)
     : stf::smv::IView(model) { }

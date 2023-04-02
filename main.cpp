@@ -1,10 +1,10 @@
 #include <QCoreApplication>
 #include <window.hpp>
 #include <smv/iview.hpp>
-#include <smv/imodel.hpp>
-#include <closeview.hpp>
 
-class AppModel : public stf::smv::BaseModel {};
+#include <closeview.hpp>
+#include <appmodel.hpp>
+
 
 class MenuView : public stf::smv::IView
 {
