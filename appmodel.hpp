@@ -2,6 +2,7 @@
 #define APPMODEL_HPP
 
 #include "categorymodelhandler.hpp"
+#include "debtmodelhandler.hpp"
 #include "depositmodelhandler.hpp"
 #include "operationmodelhandler.hpp"
 #include <smv/imodel.hpp>
@@ -12,6 +13,7 @@ public:
     const QVector<DepositModel> &deposits() const;
     const QVector<OperationModel> &operations() const;
     const QVector<CategoryModel> &categories() const;
+    const QVector<DebtModel> &debts() const;
 
     void deleteDeposit(int index);
     void addNewDeposit(const char *name, int balance);
@@ -25,9 +27,14 @@ public:
     void deleteCategory(int index);
     void addNewCategory(const char *name, const char *type);
 
+    void addNewDebt(const char *name, int amount);
+    void changeDebt(int index, const char *name, int amount);
+    void deleteDebt(int index);
+
 private:
 
     OperationModelHandler mOperationHandler;
+    DebtModelHandler mDebtHandler;
     DepositModelHandler mDepositHandler;
     CategoryModelHandler mCategoryHandler;
 };

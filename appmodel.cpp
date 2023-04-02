@@ -15,6 +15,11 @@ const QVector<CategoryModel> &AppModel::categories() const
     return mCategoryHandler.categories();
 }
 
+const QVector<DebtModel> &AppModel::debts() const
+{
+    return mDebtHandler.debts();
+}
+
 void AppModel::deleteDeposit(int index)
 {
     if(index >= mDepositHandler.deposits().size() || index < 0)
@@ -73,4 +78,23 @@ void AppModel::deleteCategory(int index)
 void AppModel::addNewCategory(const char *name, const char *type)
 {
     mCategoryHandler.addNewCategory(name, type);
+}
+
+void AppModel::addNewDebt(const char *name, int amount)
+{
+    mDebtHandler.addNewDebt(name, amount);
+}
+
+void AppModel::changeDebt(int index, const char *name, int amount)
+{
+    if(index >= mDebtHandler.debts().size() || index < 0)
+        throw std::out_of_range("Debt with that index does not exitst.");
+    mDebtHandler.updateDebt(index, name, amount);
+}
+
+void AppModel::deleteDebt(int index)
+{
+    if(index >= mDebtHandler.debts().size() || index < 0)
+        throw std::out_of_range("Debt with that index does not exitst.");
+    mDebtHandler.deleteDebt(index);
 }
