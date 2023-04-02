@@ -11,6 +11,7 @@ CONFIG -= app_bundle
 SOURCES += \
         appmodel.cpp \
     categorymodel.cpp \
+    categorymodelhandler.cpp \
         closeview.cpp \
         datamodel.cpp \
         depositlistview.cpp \
@@ -39,6 +40,7 @@ DEPENDPATH += $$PWD/../stf
 HEADERS += \
     appmodel.hpp \
     categorymodel.hpp \
+    categorymodelhandler.hpp \
     closeview.hpp \
     crudmodel.hpp \
     datamodel.hpp \
