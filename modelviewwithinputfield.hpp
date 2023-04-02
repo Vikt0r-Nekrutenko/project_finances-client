@@ -15,6 +15,7 @@ public:
 protected:
 
     std::string mInput;
+    std::string mInputBackup;
     int mOption = 0;
 };
 

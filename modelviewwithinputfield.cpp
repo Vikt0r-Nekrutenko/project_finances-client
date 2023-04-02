@@ -8,7 +8,10 @@ void ModelViewWithInputField::inputHandler(int key)
 {
     if(key == 'q' && mInput.empty())
         mOption = 0;
+    else if(key == ' ' && mInput.empty() && !mInputBackup.empty())
+        mInput = mInputBackup;
     else if(key == 13) {
+        mInputBackup = mInput;
         onEnterHandler();
         mInput.clear();
         mOption = 0;
