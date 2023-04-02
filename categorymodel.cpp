@@ -1,3 +1,6 @@
+#include <QJsonObject>
+#include <QJsonDocument>
+
 #include "categorymodel.hpp"
 
 CategoryModel::CategoryModel(const QString &name, const QString &type)
@@ -23,9 +26,10 @@ void CategoryModel::remove()
 
 }
 
-void CategoryModel::parseJsonObject(const QJsonObject &)
+void CategoryModel::parseJsonObject(const QJsonObject &object)
 {
-
+    mName = object["name"].toString();
+    mType = object["type"].toString();
 }
 
 const QString &CategoryModel::name() const
