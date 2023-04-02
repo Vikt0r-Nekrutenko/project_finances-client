@@ -16,6 +16,7 @@ SOURCES += \
         closeview.cpp \
         datamodel.cpp \
     debtmodel.cpp \
+    debtmodelhandler.cpp \
         depositlistview.cpp \
         depositmodel.cpp \
         depositmodelhandler.cpp \
@@ -48,6 +49,7 @@ HEADERS += \
     crudmodel.hpp \
     datamodel.hpp \
     debtmodel.hpp \
+    debtmodelhandler.hpp \
     depositlistview.hpp \
     depositmodel.hpp \
     depositmodelhandler.hpp \
