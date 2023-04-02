@@ -3,7 +3,6 @@
 
 #include "operationmodelhandler.hpp"
 
-
 OperationModelHandler::OperationModelHandler()
 {
     get("operations/");
