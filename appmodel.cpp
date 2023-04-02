@@ -67,5 +67,5 @@ void AppModel::deleteCategory(int index)
 
 void AppModel::addNewCategory(const char *name, const char *type)
 {
-
+    mCategoryHandler.addNewCategory(name, type);
 }
