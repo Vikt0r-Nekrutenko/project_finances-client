@@ -1,11 +1,11 @@
 #ifndef OPERATIONSLISTVIEW_HPP
 #define OPERATIONSLISTVIEW_HPP
 
-#include "smv/iview.hpp"
+#include "modelviewwithinputfield.hpp"
 
 class AppModel;
 
-class OperationsListView : public stf::smv::IView
+class OperationsListView : public ModelViewWithInputField
 {
 public:
     OperationsListView(AppModel *model);
