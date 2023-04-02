@@ -1,6 +1,7 @@
 #ifndef APPMODEL_HPP
 #define APPMODEL_HPP
 
+#include "categorymodelhandler.hpp"
 #include "depositmodelhandler.hpp"
 #include "operationmodelhandler.hpp"
 #include <smv/imodel.hpp>
@@ -19,10 +20,15 @@ public:
     void addNewOperation(const char *date, const char *deposit, int amount, const char *category);
     void changeOperation(int index, const char *date, const char *deposit, int amount, const char *category);
     void deleteOperation(int index);
+
+    void deleteCategory(int index);
+    void addNewCategory(const char *name, const char *type);
+
 private:
 
     OperationModelHandler mOperationHandler;
     DepositModelHandler mDepositHandler;
+    CategoryModelHandler mCategoryHandler;
 };
 
 #endif // APPMODEL_HPP

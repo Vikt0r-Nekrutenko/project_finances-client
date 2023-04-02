@@ -57,3 +57,15 @@ void AppModel::deleteOperation(int index)
         throw std::out_of_range("Operation with that index does not exitst.");
     mOperationHandler.deleteOperation(index);
 }
+
+void AppModel::deleteCategory(int index)
+{
+    if(index >= mCategoryHandler.categories().size() || index < 0)
+        throw std::out_of_range("Category with that index does not exitst.");
+    mCategoryHandler.deleteCategory(index);
+}
+
+void AppModel::addNewCategory(const char *name, const char *type)
+{
+
+}
