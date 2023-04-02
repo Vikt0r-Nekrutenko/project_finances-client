@@ -12,6 +12,7 @@ SOURCES += \
         appmodel.cpp \
         closeview.cpp \
         datamodel.cpp \
+        depositmodel.cpp \
         main.cpp \
         menuview.cpp
 
@@ -32,4 +33,5 @@ HEADERS += \
     closeview.hpp \
     crudmodel.hpp \
     datamodel.hpp \
+    depositmodel.hpp \
     menuview.hpp
