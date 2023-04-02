@@ -5,7 +5,7 @@
 
 class AppModel;
 
-class DepositListView : stf::smv::IView
+class DepositListView : public stf::smv::IView
 {
 public:
     DepositListView(AppModel *model);
