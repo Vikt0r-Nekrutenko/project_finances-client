@@ -40,3 +40,8 @@ const QVector<DepositModel> &DepositModelHandler::deposits() const
 {
     return mDeposits;
 }
+
+QVector<DepositModel> &DepositModelHandler::deposits()
+{
+    return mDeposits;
+}
