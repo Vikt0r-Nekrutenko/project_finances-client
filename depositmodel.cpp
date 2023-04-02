@@ -44,3 +44,9 @@ void DepositModel::remove()
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "DELETE");
     replyHandler(reply, "Deposit deleted successfully!");
 }
+
+void DepositModel::parseJsonObject(const QJsonObject &object)
+{
+    mName = object["name"].toString();
+    mBalance = object["balance"].toInt();
+}

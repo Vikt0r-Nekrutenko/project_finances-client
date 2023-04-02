@@ -12,7 +12,7 @@ public:
     void read() override;
     void update() override;
     void remove() override;
-    void parseJsonObject(const QJsonObject &) override;
+    void parseJsonObject(const QJsonObject &object) override;
 
 private:
 
