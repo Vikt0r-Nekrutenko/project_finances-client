@@ -16,5 +16,5 @@ void OperationsListView::onEnterHandler()
 
 stf::smv::IView *OperationsListView::keyEventsHandler(const int key)
 {
-
+    return this;
 }
