@@ -21,7 +21,8 @@ void OperationModelHandler::updateOperation(int index, const QString &date, cons
 
 void OperationModelHandler::deleteOperation(int index)
 {
-
+    mOperations.removeAt(index);
+    mOperations[index].remove();
 }
 
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
