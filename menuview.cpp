@@ -9,7 +9,8 @@ MenuView::MenuView(AppModel *model)
 void MenuView::show(stf::Renderer &renderer)
 {
     renderer.drawText({0, 2}, "1.Deposits.");
-    renderer.drawText({0, 3}, "2.Press 'q' to exit.");
+    renderer.drawText({0, 3}, "2.Operations.");
+    renderer.drawText({0, 4}, "3.Press 'q' to exit.");
 }
 
 stf::smv::IView *MenuView::keyEventsHandler(const int key)
