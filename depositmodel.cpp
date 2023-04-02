@@ -1,6 +1,4 @@
 #include "depositmodel.hpp"
 
-DepositModel::DepositModel(const QString &name, const QString &balance)
-{
-
-}
+DepositModel::DepositModel(const QString &name, int balance)
+    : mName{name}, mBalance{balance} {}

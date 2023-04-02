@@ -6,7 +6,7 @@
 class DepositModel : public CRUDModel
 {
 public:
-    DepositModel(const QString &name, const QString &balance);
+    DepositModel(const QString &name, int balance);
 
 private:
     const QString mName;
