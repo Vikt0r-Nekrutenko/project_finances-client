@@ -11,6 +11,12 @@ public:
 
     CategoryModel(const QString &name, const QString &type);
 
+    void create() override;
+    void read() override;
+    void update() override;
+    void remove() override;
+    void parseJsonObject(const QJsonObject &) override;
+
     const QString &name() const;
     const QString &type() const;
 
