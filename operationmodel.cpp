@@ -29,3 +29,17 @@ void OperationModel::read()
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
 }
+
+void OperationModel::update()
+{
+    QJsonObject selectedOperation {
+        {"id", mId },
+        {"date", mDate },
+        {"deposit", mDeposit },
+        {"amount", mAmount },
+        {"category", mCategory },
+    };
+
+    QNetworkReply *reply = sendCRUDRequest("operations/" + QString::number(mId) + '/', selectedOperation, "PUT");
+    replyHandler(reply, "Operation updated successfully!");
+}
