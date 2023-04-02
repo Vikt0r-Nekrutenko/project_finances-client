@@ -16,7 +16,7 @@ public:
 
 private:
 
-    const QString mName;
+    QString mName;
     int mBalance;
 };
 
