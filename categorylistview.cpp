@@ -33,8 +33,8 @@ void CategoryListView::show(stf::Renderer &renderer)
 
     for(int i = categories.size() - 1; i >= 0; --i) {
         const auto &category = categories.at(i);
-        const int y = std::abs(i - listHeinght) + 9;
-        renderer.draw({0,  y}, "%d.%s %s", i + 1, category.name().toStdString().c_str(), category.type().toStdString().c_str());
+        const int y = std::abs(i - listHeinght) + 8;
+        renderer.draw({0,  y}, "%d.%s -- %s", i + 1, category.name().toStdString().c_str(), category.type().toStdString().c_str());
     }
 
 }
