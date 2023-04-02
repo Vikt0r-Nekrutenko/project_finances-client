@@ -12,14 +12,6 @@ public:
     void show(stf::Renderer &renderer) override;
     void onEnterHandler() override;
     stf::smv::IView *keyEventsHandler(const int key) override;
-
-private:
-
-//    std::string mInput;
-//    int mOption = 0;
-
-    // ModelViewWithInputField interface
-public:
 };
 
 #endif // DEPOSITLISTVIEW_HPP
