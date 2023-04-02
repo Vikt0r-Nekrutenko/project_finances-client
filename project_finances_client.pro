@@ -11,8 +11,12 @@ CONFIG -= app_bundle
 SOURCES += \
         appmodel.cpp \
         closeview.cpp \
+        datamodel.cpp \
+        depositmodel.cpp \
+        depositmodelhandler.cpp \
         main.cpp \
-        menuview.cpp
+        menuview.cpp \
+        modelhandler.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -29,4 +33,9 @@ DEPENDPATH += $$PWD/../stf
 HEADERS += \
     appmodel.hpp \
     closeview.hpp \
-    menuview.hpp
+    crudmodel.hpp \
+    datamodel.hpp \
+    depositmodel.hpp \
+    depositmodelhandler.hpp \
+    menuview.hpp \
+    modelhandler.hpp
