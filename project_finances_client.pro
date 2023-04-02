@@ -18,7 +18,8 @@ SOURCES += \
         main.cpp \
         menuview.cpp \
         modelhandler.cpp \
-        modelviewwithinputfield.cpp
+        modelviewwithinputfield.cpp \
+        operationmodel.cpp \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -42,4 +43,5 @@ HEADERS += \
     depositmodelhandler.hpp \
     menuview.hpp \
     modelhandler.hpp \
-    modelviewwithinputfield.hpp
+    modelviewwithinputfield.hpp \
+    operationmodel.hpp \
