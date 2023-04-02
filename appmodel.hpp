@@ -8,6 +8,8 @@ class AppModel : public stf::smv::BaseModel
 {
 public:
     const QVector<DepositModel> &deposits() const;
+
+    int getTotalBalanceOnDeposits() const;
 private:
 
     DepositModelHandler mDepositHandler;

@@ -10,7 +10,9 @@ MenuView::MenuView(AppModel *model)
 
 void MenuView::show(stf::Renderer &renderer)
 {
-    renderer.drawText({0, 1}, "Press 'q' to exit.");
+    AppModel *app = static_cast<AppModel*>(m_model);
+    renderer.draw({0,1}, "Total balance: %d", app->getTotalBalanceOnDeposits());
+    renderer.drawText({0, 2}, "Press 'q' to exit.");
 }
 
 stf::smv::IView *MenuView::keyEventsHandler(const int key)

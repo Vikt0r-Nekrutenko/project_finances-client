@@ -15,6 +15,9 @@ public:
     void remove() override;
     void parseJsonObject(const QJsonObject &object) override;
 
+    const QString &name() const;
+    int balance() const;
+
 private:
 
     QString mName;
