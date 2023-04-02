@@ -13,7 +13,12 @@ void CategoryModel::create()
 
 void CategoryModel::read()
 {
+    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', {}, "GET");
+    replyHandler(reply, "Get request successfully!");
 
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    QJsonObject object = jsonResponse.object();
+    parseJsonObject(object);
 }
 
 void CategoryModel::update()
