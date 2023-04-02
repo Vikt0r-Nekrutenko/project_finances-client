@@ -11,10 +11,14 @@ void OperationsListView::show(stf::Renderer &renderer)
 
     if(mOption == 0) {
         renderer.drawText({0, 2}, "Choose an option:");
-        renderer.drawText({0, 3}, "1.Add new deposit.");
-        renderer.drawText({0, 4}, "2.Delete deposit.");
-        renderer.drawText({0, 5}, "3.Change balance.");
+        renderer.drawText({0, 3}, "1.Add new operation.");
+        renderer.drawText({0, 4}, "2.Delete operation.");
+        renderer.drawText({0, 5}, "3.Change operation.");
         renderer.drawText({0, 6}, "q.Back to menu.");
+    } else if(mOption == 1) {
+        renderer.drawText({0, 2}, "Type 'date deposit amount category' or 'q' to step back:");
+        renderer.drawText({0, 3}, ">> ");
+        renderer.drawText({3, 3}, mInput.c_str());
     }
 
     renderer.drawText({0, 8}, "Your operations:");
@@ -36,7 +40,25 @@ void OperationsListView::show(stf::Renderer &renderer)
 
 void OperationsListView::onEnterHandler()
 {
+    switch (mOption) {
+    case 1: {
+        int delim = mInput.find(" ");
+        std::string date = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
 
+        delim = mInput.find(" ");
+        std::string deposit = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        int amount = std::stoi(mInput.substr(0, delim));
+        mInput.erase(0, delim + 1);
+
+        static_cast<AppModel*>(m_model)->addNewOperation(date.c_str(), deposit.c_str(), amount, mInput.c_str());
+
+        break;
+    }
+    };
 }
 
 stf::smv::IView *OperationsListView::keyEventsHandler(const int key)
