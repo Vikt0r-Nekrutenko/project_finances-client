@@ -19,6 +19,10 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 2}, "Type 'date deposit amount category' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
         renderer.drawText({3, 3}, mInput.c_str());
+    } else if(mOption == 2) {
+        renderer.drawText({0, 2}, "Type 'id' or 'q' to step back:");
+        renderer.drawText({0, 3}, ">> ");
+        renderer.drawText({3, 3}, mInput.c_str());
     }
 
     renderer.drawText({0, 8}, "Your operations:");
@@ -58,6 +62,9 @@ void OperationsListView::onEnterHandler()
 
         break;
     }
+    case 2:
+        static_cast<AppModel*>(m_model)->deleteOperation(std::stoi(mInput) - 1);
+        break;
     };
 }
 
