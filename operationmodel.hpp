@@ -5,6 +5,7 @@
 
 class OperationModel : public CRUDModel
 {
+    friend class OperationModelHandler;
 public:
     OperationModel(int id, const QString &date, const QString &deposit, int amount, const QString &category);
 

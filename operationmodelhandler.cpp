@@ -16,7 +16,11 @@ void OperationModelHandler::addNewOperation(const QString &date, const QString &
 
 void OperationModelHandler::updateOperation(int index, const QString &date, const QString &deposit, int amount, const QString &category)
 {
-
+    mOperations[index].mDate = date;
+    mOperations[index].mDeposit = deposit;
+    mOperations[index].mAmount = amount;
+    mOperations[index].mCategory = category;
+    mOperations[index].update();
 }
 
 void OperationModelHandler::deleteOperation(int index)
