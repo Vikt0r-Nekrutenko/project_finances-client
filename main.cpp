@@ -13,7 +13,7 @@ class MainWindow : public stf::Window
     stf::smv::IView *currentView = &menuView;
 
 public:
-    bool onUpdate(const float dt) override
+    bool onUpdate(const float) override
     {
         currentView->show(renderer);
         return currentView->isContinue();
