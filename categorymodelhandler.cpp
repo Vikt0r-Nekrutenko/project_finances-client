@@ -1,3 +1,5 @@
+#include <QJsonArray>
+#include <QJsonObject>
 #include "categorymodelhandler.hpp"
 
 CategoryModelHandler::CategoryModelHandler()
@@ -19,7 +21,13 @@ void CategoryModelHandler::deleteCategory(int index)
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-
+    mCategories.clear();
+    for (const auto &var : replyJsonArray) {
+        mCategories.push_back(CategoryModel{
+            var.toObject()["name"].toString(),
+            var.toObject()["type"].toString()
+        });
+    }
 }
 
 const QVector<CategoryModel> &CategoryModelHandler::categories() const
