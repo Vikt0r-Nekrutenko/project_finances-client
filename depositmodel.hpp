@@ -5,6 +5,7 @@
 
 class DepositModel : public CRUDModel
 {
+    friend class DepositModelHandler;
 public:
     DepositModel(const QString &name, int balance);
 
