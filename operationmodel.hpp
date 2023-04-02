@@ -6,7 +6,7 @@
 class OperationModel : public CRUDModel
 {
 public:
-    OperationModel();
+    OperationModel(int id, const QString &date, const QString &deposit, int amount, const QString &category);
 
 private:
 
