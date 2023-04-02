@@ -15,6 +15,12 @@ public:
     void remove() override;
     void parseJsonObject(const QJsonObject &) override;
 
+    const QString &date() const;
+    const QString &deposit() const;
+    const QString &category() const;
+    int id() const;
+    int amount() const;
+
 private:
 
     QString mDate;

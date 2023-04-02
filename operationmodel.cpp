@@ -58,3 +58,28 @@ void OperationModel::parseJsonObject(const QJsonObject &object)
     mAmount = object["amount"].toInt();
     mCategory = object["category"].toString();
 }
+
+int OperationModel::id() const
+{
+    return mId;
+}
+
+const QString &OperationModel::date() const
+{
+    return mDate;
+}
+
+const QString &OperationModel::deposit() const
+{
+    return mDeposit;
+}
+
+int OperationModel::amount() const
+{
+    return mAmount;
+}
+
+const QString &OperationModel::category() const
+{
+    return mCategory;
+}
