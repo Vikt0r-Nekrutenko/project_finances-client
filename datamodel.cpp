@@ -1,4 +1,5 @@
 #include <QEventLoop>
+#include <QJsonDocument>
 #include "datamodel.hpp"
 
 QNetworkReply *DataModel::sendCRUDRequest(const QString &additionalPath, const QJsonObject &data, const QString &request)
