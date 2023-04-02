@@ -19,3 +19,13 @@ void OperationModel::create()
     QNetworkReply *reply = sendCRUDRequest("operations/", newOperation, "POST");
     replyHandler(reply, "Operation added successfully!");
 }
+
+void OperationModel::read()
+{
+    QNetworkReply *reply = sendCRUDRequest("operations/" + QString::number(mId) + '/', {}, "GET");
+    replyHandler(reply, "Operation read successfully!");
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    QJsonObject object = jsonResponse.object();
+    parseJsonObject(object);
+}
