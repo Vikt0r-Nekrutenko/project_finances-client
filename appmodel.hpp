@@ -11,6 +11,7 @@ class AppModel : public stf::smv::BaseModel
 public:
     const QVector<DepositModel> &deposits() const;
     const QVector<OperationModel> &operations() const;
+    const QVector<CategoryModel> &categories() const;
 
     void deleteDeposit(int index);
     void addNewDeposit(const char *name, int balance);

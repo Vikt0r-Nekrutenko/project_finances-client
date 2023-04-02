@@ -10,6 +10,11 @@ const QVector<OperationModel> &AppModel::operations() const
     return mOperationHandler.operations();
 }
 
+const QVector<CategoryModel> &AppModel::categories() const
+{
+    return mCategoryHandler.categories();
+}
+
 void AppModel::deleteDeposit(int index)
 {
     if(index >= mDepositHandler.deposits().size() || index < 0)
