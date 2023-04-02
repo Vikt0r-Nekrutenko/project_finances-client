@@ -3,12 +3,12 @@
 #include <smv/iview.hpp>
 #include <smv/imodel.hpp>
 
-class Model : public stf::smv::BaseModel {};
+class AppModel : public stf::smv::BaseModel {};
 
 class CloseView : public stf::smv::IView
 {
 public:
-    CloseView(Model *model)
+    CloseView(AppModel *model)
         : stf::smv::IView(model) { }
 
     bool isContinue() const override
@@ -27,20 +27,20 @@ public:
 class MenuView : public stf::smv::IView
 {
 public:
-    MenuView(Model *model)
+    MenuView(AppModel *model)
         : stf::smv::IView(model)
     {
 
     }
     void show(stf::Renderer &renderer) override
     {
-
+        renderer.drawText({0, 1}, "Press 'q' to exit.");
     }
 
     stf::smv::IView *keyEventsHandler(const int key) override
     {
         switch (key) {
-        case 'q': return new CloseView(static_cast<Model*>(m_model));
+        case 'q': return new CloseView(static_cast<AppModel*>(m_model));
         }
         return this;
     }
@@ -48,7 +48,7 @@ public:
 
 class MainWindow : public stf::Window
 {
-    Model model = Model();
+    AppModel model = AppModel();
     MenuView menuView = MenuView(&model);
     CloseView closeView = CloseView(&model);
     stf::smv::IView *currentView = &menuView;
