@@ -14,3 +14,10 @@ SOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../stf/release/ -lstf
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../stf/debug/ -lstf
+else:unix:!macx: LIBS += -L$$PWD/../stf/ -lstf
+
+INCLUDEPATH += $$PWD/../stf
+DEPENDPATH += $$PWD/../stf
