@@ -10,6 +10,7 @@ public:
     DepositModelHandler();
     void addNewDeposit(const QString &name, int balance);
     void updateBalance(int depositIndex, int newBalance);
+    void deleteDeposit(int depositIndex);
 
 private:
 

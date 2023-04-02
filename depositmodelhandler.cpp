@@ -15,3 +15,9 @@ void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
     mDeposits[depositIndex].mBalance = newBalance;
     mDeposits[depositIndex].update();
 }
+
+void DepositModelHandler::deleteDeposit(int depositIndex)
+{
+    mDeposits[depositIndex].remove();
+    mDeposits.removeAt(depositIndex);
+}
