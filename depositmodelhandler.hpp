@@ -11,6 +11,7 @@ public:
     void addNewDeposit(const QString &name, int balance);
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
+    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
 private:
 
