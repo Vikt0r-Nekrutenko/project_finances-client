@@ -50,3 +50,13 @@ void DepositModel::parseJsonObject(const QJsonObject &object)
     mName = object["name"].toString();
     mBalance = object["balance"].toInt();
 }
+
+const QString &DepositModel::name() const
+{
+    return mName;
+}
+
+int DepositModel::balance() const
+{
+    return mBalance;
+}

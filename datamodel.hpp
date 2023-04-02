@@ -5,7 +5,10 @@
 
 enum class RequestType
 {
-    GET, POST, PUT, DELETE,
+    GET_RQ,
+    POST_RQ,
+    PUT_RQ,
+    DELETE_RQ
 };
 
 const QString MainPath = "http://127.0.0.1:8000/api/";

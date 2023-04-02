@@ -13,8 +13,11 @@ class MainWindow : public stf::Window
     stf::smv::IView *currentView = &menuView;
 
 public:
+
     bool onUpdate(const float) override
     {
+        for(int i = 0; i < renderer.Size.x; ++i)
+            renderer.drawPixel({i, 1}, '-', stf::ColorTable::Cyan);
         currentView->show(renderer);
         return currentView->isContinue();
     }
@@ -33,5 +36,12 @@ public:
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    return MainWindow().run();
+
+    stf::Renderer::log.setX(35);
+    stf::Renderer::log.setHeight(20);
+    stf::Renderer::log.setY(2);
+
+    MainWindow wnd;
+    wnd.enableLog();
+    return wnd.run();
 }

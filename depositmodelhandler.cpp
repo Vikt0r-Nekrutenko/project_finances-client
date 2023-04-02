@@ -10,6 +10,7 @@ DepositModelHandler::DepositModelHandler()
 void DepositModelHandler::addNewDeposit(const QString &name, int balance)
 {
     mDeposits.push_back(DepositModel{name, balance});
+    mDeposits.back().create();
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
@@ -27,10 +28,15 @@ void DepositModelHandler::deleteDeposit(int depositIndex)
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     mDeposits.clear();
-    foreach (const auto &var, replyJsonArray) {
+    for (const auto &var : replyJsonArray) {
         mDeposits.push_back(DepositModel{
             var.toObject()["name"].toString(),
             var.toObject()["balance"].toInt()
         });
     }
+}
+
+const QVector<DepositModel> &DepositModelHandler::deposits() const
+{
+    return mDeposits;
 }

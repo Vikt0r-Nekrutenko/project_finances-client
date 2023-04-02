@@ -13,6 +13,8 @@ public:
     void deleteDeposit(int depositIndex);
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
+    const QVector<DepositModel> &deposits() const;
+
 private:
 
     QVector<DepositModel> mDeposits;
