@@ -38,3 +38,8 @@ int AppModel::getTotalBalanceOnDeposits() const
     }
     return result;
 }
+
+void AppModel::addNewOperation(const char *date, const char *deposit, int amount, const char *category)
+{
+    mOperationHandler.addNewOperation(date, deposit, amount, category);
+}

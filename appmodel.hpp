@@ -12,12 +12,11 @@ public:
     const QVector<OperationModel> &operations() const;
 
     void deleteDeposit(int index);
-
     void addNewDeposit(const char *name, int balance);
-
     void changeBalance(int index, int balance);
-
     int getTotalBalanceOnDeposits() const;
+
+    void addNewOperation(const char *date, const char *deposit, int amount, const char *category);
 private:
 
     OperationModelHandler mOperationHandler;
