@@ -8,7 +8,13 @@ CategoryModel::CategoryModel(const QString &name, const QString &type)
 
 void CategoryModel::create()
 {
+    QJsonObject newCategory {
+        {"name", mName },
+        {"type", mType }
+    };
 
+    QNetworkReply *reply = sendCRUDRequest("categories/", newCategory, "POST");
+    replyHandler(reply, "Category added successfully!");
 }
 
 void CategoryModel::read()
