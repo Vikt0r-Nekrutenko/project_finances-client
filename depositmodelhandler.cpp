@@ -1,4 +1,5 @@
 #include <QJsonArray>
+#include <QJsonObject>
 #include "depositmodelhandler.hpp"
 
 DepositModelHandler::DepositModelHandler()
