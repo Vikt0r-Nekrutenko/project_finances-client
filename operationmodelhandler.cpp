@@ -11,7 +11,13 @@ OperationModelHandler::OperationModelHandler()
 
 void OperationModelHandler::addNewOperation(const QString &date, const QString &deposit, int amount, const QString &category)
 {
-
+    mOperations.push_back(OperationModel(
+                              mOperations.empty() ? 0 : mOperations.back().mId + 1,
+                              date,
+                              deposit,
+                              amount,
+                              category));
+    mOperations.back().create();
 }
 
 void OperationModelHandler::updateOperation(int index, const QString &date, const QString &deposit, int amount, const QString &category)
