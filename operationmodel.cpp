@@ -43,3 +43,9 @@ void OperationModel::update()
     QNetworkReply *reply = sendCRUDRequest("operations/" + QString::number(mId) + '/', selectedOperation, "PUT");
     replyHandler(reply, "Operation updated successfully!");
 }
+
+void OperationModel::remove()
+{
+    QNetworkReply *reply = sendCRUDRequest("operations/" + QString::number(mId) + '/', {}, "DELETE");
+    replyHandler(reply, "Operation delete successfully!");
+}
