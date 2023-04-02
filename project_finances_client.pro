@@ -30,5 +30,6 @@ DEPENDPATH += $$PWD/../stf
 HEADERS += \
     appmodel.hpp \
     closeview.hpp \
+    crudmodel.hpp \
     datamodel.hpp \
     menuview.hpp
