@@ -49,3 +49,12 @@ void OperationModel::remove()
     QNetworkReply *reply = sendCRUDRequest("operations/" + QString::number(mId) + '/', {}, "DELETE");
     replyHandler(reply, "Operation delete successfully!");
 }
+
+void OperationModel::parseJsonObject(const QJsonObject &object)
+{
+    mId = object["id"].toInt();
+    mDate = object["date"].toString();
+    mDeposit = object["deposit"].toString();
+    mAmount = object["amount"].toInt();
+    mCategory = object["category"].toString();
+}
