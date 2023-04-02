@@ -5,12 +5,6 @@
 #include "operationmodelhandler.hpp"
 #include <smv/imodel.hpp>
 
-class BadDateFormat : public std::exception
-{
-public:
-    const char *what() const noexcept override;
-};
-
 class AppModel : public stf::smv::BaseModel
 {
 public:

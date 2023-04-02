@@ -1,10 +1,5 @@
 #include "appmodel.hpp"
 
-const char *BadDateFormat::what() const noexcept
-{
-    return "Date format is YYYY-MM-DD";
-}
-
 const QVector<DepositModel> &AppModel::deposits() const
 {
     return mDepositHandler.deposits();
