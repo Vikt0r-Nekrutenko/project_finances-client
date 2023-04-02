@@ -14,7 +14,7 @@ void MenuView::show(stf::Renderer &renderer)
     renderer.drawText({0, 2}, "1.Deposits.");
     renderer.drawText({0, 3}, "2.Operations.");
     renderer.drawText({0, 4}, "3.Categories.");
-    renderer.drawText({0, 5}, "4.Categories.");
+    renderer.drawText({0, 5}, "4.Debts.");
     renderer.drawText({0, 6}, "5.Press 'q' to exit.");
 }
 
