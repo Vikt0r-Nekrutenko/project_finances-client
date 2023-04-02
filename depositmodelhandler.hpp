@@ -9,6 +9,7 @@ class DepositModelHandler : public DataModelHandler
 public:
     DepositModelHandler();
     void addNewDeposit(const QString &name, int balance);
+    void updateBalance(int depositIndex, int newBalance);
 
 private:
 
