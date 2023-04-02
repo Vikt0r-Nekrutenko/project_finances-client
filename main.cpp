@@ -1,32 +1,9 @@
 #include <QCoreApplication>
 #include <window.hpp>
-#include <smv/iview.hpp>
 
-#include <closeview.hpp>
-#include <appmodel.hpp>
-
-
-class MenuView : public stf::smv::IView
-{
-public:
-    MenuView(AppModel *model)
-        : stf::smv::IView(model)
-    {
-
-    }
-    void show(stf::Renderer &renderer) override
-    {
-        renderer.drawText({0, 1}, "Press 'q' to exit.");
-    }
-
-    stf::smv::IView *keyEventsHandler(const int key) override
-    {
-        switch (key) {
-        case 'q': return new CloseView(static_cast<AppModel*>(m_model));
-        }
-        return this;
-    }
-};
+#include "closeview.hpp"
+#include "menuview.hpp"
+#include "appmodel.hpp"
 
 class MainWindow : public stf::Window
 {
