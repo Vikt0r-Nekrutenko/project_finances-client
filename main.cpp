@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    stf::Renderer::log.setX(35);
+    stf::Renderer::log.setX(60);
     stf::Renderer::log.setHeight(20);
     stf::Renderer::log.setY(2);
 
