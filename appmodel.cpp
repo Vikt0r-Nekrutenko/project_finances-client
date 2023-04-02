@@ -12,7 +12,7 @@ const QVector<OperationModel> &AppModel::operations() const
 
 void AppModel::deleteDeposit(int index)
 {
-    if(index >= mDepositHandler.deposits().size())
+    if(index >= mDepositHandler.deposits().size() || index < 0)
         throw std::out_of_range("Deposit with that index does not exitst.");
     mDepositHandler.deleteDeposit(index);
 }
@@ -42,4 +42,11 @@ int AppModel::getTotalBalanceOnDeposits() const
 void AppModel::addNewOperation(const char *date, const char *deposit, int amount, const char *category)
 {
     mOperationHandler.addNewOperation(date, deposit, amount, category);
+}
+
+void AppModel::deleteOperation(int index)
+{
+    if(index >= mOperationHandler.operations().size() || index < 0)
+        throw std::out_of_range("Deposit with that index does not exitst.");
+    mOperationHandler.deleteOperation(index);
 }

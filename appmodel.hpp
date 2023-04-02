@@ -17,6 +17,7 @@ public:
     int getTotalBalanceOnDeposits() const;
 
     void addNewOperation(const char *date, const char *deposit, int amount, const char *category);
+    void deleteOperation(int index);
 private:
 
     OperationModelHandler mOperationHandler;
