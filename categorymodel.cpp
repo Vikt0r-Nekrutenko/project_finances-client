@@ -23,7 +23,8 @@ void CategoryModel::update()
 
 void CategoryModel::remove()
 {
-
+    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', {}, "DELETE");
+    replyHandler(reply, "Category deleted successfully!");
 }
 
 void CategoryModel::parseJsonObject(const QJsonObject &object)
