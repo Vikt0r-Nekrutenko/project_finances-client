@@ -5,6 +5,11 @@ const QVector<DepositModel> &AppModel::deposits() const
     return mDepositHandler.deposits();
 }
 
+const QVector<OperationModel> &AppModel::operations() const
+{
+    return mOperationHandler.operations();
+}
+
 void AppModel::deleteDeposit(int index)
 {
     if(index >= mDepositHandler.deposits().size())

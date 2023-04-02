@@ -2,12 +2,14 @@
 #define APPMODEL_HPP
 
 #include "depositmodelhandler.hpp"
+#include "operationmodelhandler.hpp"
 #include <smv/imodel.hpp>
 
 class AppModel : public stf::smv::BaseModel
 {
 public:
     const QVector<DepositModel> &deposits() const;
+    const QVector<OperationModel> &operations() const;
 
     void deleteDeposit(int index);
 
@@ -18,6 +20,7 @@ public:
     int getTotalBalanceOnDeposits() const;
 private:
 
+    OperationModelHandler mOperationHandler;
     DepositModelHandler mDepositHandler;
 };
 
