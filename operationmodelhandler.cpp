@@ -1,3 +1,6 @@
+#include <QJsonArray>
+#include <QJsonObject>
+
 #include "operationmodelhandler.hpp"
 
 
@@ -23,7 +26,16 @@ void OperationModelHandler::deleteOperation(int index)
 
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-
+    mOperations.clear();
+    for (const auto &var : replyJsonArray) {
+        mOperations.push_back(OperationModel{
+            var.toObject()["id"].toInt(),
+            var.toObject()["date"].toString(),
+            var.toObject()["deposit"].toString(),
+            var.toObject()["amount"].toInt(),
+            var.toObject()["category"].toString()
+        });
+    }
 }
 
 const QVector<OperationModel> &OperationModelHandler::operations() const
