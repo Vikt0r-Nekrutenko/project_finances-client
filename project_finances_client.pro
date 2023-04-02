@@ -17,7 +17,8 @@ SOURCES += \
         depositmodelhandler.cpp \
         main.cpp \
         menuview.cpp \
-        modelhandler.cpp
+        modelhandler.cpp \
+        modelviewwithinputfield.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -40,4 +41,5 @@ HEADERS += \
     depositmodel.hpp \
     depositmodelhandler.hpp \
     menuview.hpp \
-    modelhandler.hpp
+    modelhandler.hpp \
+    modelviewwithinputfield.hpp

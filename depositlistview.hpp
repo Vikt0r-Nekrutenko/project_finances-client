@@ -1,22 +1,25 @@
 #ifndef DEPOSITLISTVIEW_HPP
 #define DEPOSITLISTVIEW_HPP
 
-#include "smv/iview.hpp"
+#include "modelviewwithinputfield.hpp"
 
 class AppModel;
 
-class DepositListView : public stf::smv::IView
+class DepositListView : public ModelViewWithInputField
 {
 public:
     DepositListView(AppModel *model);
     void show(stf::Renderer &renderer) override;
-
+    void onEnterHandler() override;
     stf::smv::IView *keyEventsHandler(const int key) override;
 
 private:
 
-    std::string mInput;
-    int mOption = 0;
+//    std::string mInput;
+//    int mOption = 0;
+
+    // ModelViewWithInputField interface
+public:
 };
 
 #endif // DEPOSITLISTVIEW_HPP

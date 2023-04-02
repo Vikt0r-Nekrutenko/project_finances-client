@@ -3,7 +3,7 @@
 #include "menuview.hpp"
 
 DepositListView::DepositListView(AppModel *model)
-    : stf::smv::IView(model)
+    : ModelViewWithInputField(model)
 {
 
 }
@@ -42,6 +42,22 @@ void DepositListView::show(stf::Renderer &renderer)
     }
 }
 
+void DepositListView::onEnterHandler()
+{
+    switch (mOption) {
+    case 1:
+        try {
+            int delim = mInput.find(" ");
+            std::string name = mInput.substr(0, delim);
+            int balance = std::stoi(mInput.erase(0, delim + 1));
+            static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
+        } catch(const std::exception &msg) {
+            stf::Renderer::log << stf::endl << msg.what();
+        }
+        break;
+    }
+}
+
 stf::smv::IView *DepositListView::keyEventsHandler(const int key)
 {
     switch (mOption) {
@@ -57,23 +73,24 @@ stf::smv::IView *DepositListView::keyEventsHandler(const int key)
         }
         break;
     case 1:
-        if(key == 'q' && mInput.empty())
-            mOption = 0;
-        else if(key == 13) {
-            mOption = 0;
-            try {
-                int delim = mInput.find(" ");
-                std::string name = mInput.substr(0, delim);
-                int balance = std::stoi(mInput.erase(0, delim + 1));
-                static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
-            } catch(const std::invalid_argument &msg) {
-                stf::Renderer::log << stf::endl << msg.what();
-            }
-            mInput.clear();
-        } else if((key >= '0' && key <= 'z') || key == ' ')
-            mInput += key;
-        else if(key == 8 && !mInput.empty())
-            mInput.pop_back();
+        inputHandler(key);
+//        if(key == 'q' && mInput.empty())
+//            mOption = 0;
+//        else if(key == 13) {
+//            mOption = 0;
+//            try {
+//                int delim = mInput.find(" ");
+//                std::string name = mInput.substr(0, delim);
+//                int balance = std::stoi(mInput.erase(0, delim + 1));
+//                static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
+//            } catch(const std::invalid_argument &msg) {
+//                stf::Renderer::log << stf::endl << msg.what();
+//            }
+//            mInput.clear();
+//        } else if((key >= '0' && key <= 'z') || key == ' ')
+//            mInput += key;
+//        else if(key == 8 && !mInput.empty())
+//            mInput.pop_back();
         break;
     case 2:
         if(key == 'q' && mInput.empty())
