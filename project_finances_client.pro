@@ -14,7 +14,8 @@ SOURCES += \
         datamodel.cpp \
         depositmodel.cpp \
         main.cpp \
-        menuview.cpp
+        menuview.cpp \
+        modelhandler.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -34,4 +35,5 @@ HEADERS += \
     crudmodel.hpp \
     datamodel.hpp \
     depositmodel.hpp \
-    menuview.hpp
+    menuview.hpp \
+    modelhandler.hpp
