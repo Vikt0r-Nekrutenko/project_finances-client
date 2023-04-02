@@ -60,3 +60,14 @@ int DepositModel::balance() const
 {
     return mBalance;
 }
+
+void DepositModel::increaseBalance(int amount)
+{
+    mBalance += amount;
+}
+
+void DepositModel::decreaseBalance(int amount)
+{
+    mBalance -= amount;
+}
+
