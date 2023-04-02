@@ -13,16 +13,28 @@ void DepositModel::create()
         {"balance", mBalance }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("deposits/", newDepo, Requests[RequestType::POST]);
+    QNetworkReply *reply = sendCRUDRequest("deposits/", newDepo, "POST");
     replyHandler(reply, "Deposit added successfully!");
 }
 
 void DepositModel::read()
 {
-    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, Requests[RequestType::GET]);
+    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "GET");
     replyHandler(reply, "Get request successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
+}
+
+void DepositModel::update()
+{
+    QJsonObject selectedDeposit {
+        {"name", mName },
+        {"balance", mBalance }
+    };
+
+    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', selectedDeposit, "PUT");
+    replyHandler(reply, "Balance updated successfully!");
+
 }
