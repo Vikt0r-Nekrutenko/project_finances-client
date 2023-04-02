@@ -13,7 +13,8 @@ void CategoryModelHandler::addNewCategory(const QString &name, const QString &ty
 
 void CategoryModelHandler::deleteCategory(int index)
 {
-
+    mCategories[index].remove();
+    mCategories.removeAt(index);
 }
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
