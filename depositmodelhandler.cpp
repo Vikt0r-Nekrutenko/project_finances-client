@@ -10,6 +10,7 @@ DepositModelHandler::DepositModelHandler()
 void DepositModelHandler::addNewDeposit(const QString &name, int balance)
 {
     mDeposits.push_back(DepositModel{name, balance});
+    mDeposits.back().create();
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)

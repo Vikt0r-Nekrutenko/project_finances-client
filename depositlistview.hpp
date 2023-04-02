@@ -12,6 +12,11 @@ public:
     void show(stf::Renderer &renderer) override;
 
     stf::smv::IView *keyEventsHandler(const int key) override;
+
+private:
+
+    std::string mInput;
+    int mOption = 0;
 };
 
 #endif // DEPOSITLISTVIEW_HPP

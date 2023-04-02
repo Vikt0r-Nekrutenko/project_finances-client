@@ -13,6 +13,7 @@ class MainWindow : public stf::Window
     stf::smv::IView *currentView = &menuView;
 
 public:
+
     bool onUpdate(const float) override
     {
         currentView->show(renderer);
@@ -33,5 +34,9 @@ public:
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    return MainWindow().run();
+    stf::Renderer::log.setX(30);
+    stf::Renderer::log.setHeight(20);
+    MainWindow wnd;
+    wnd.enableLog();
+    return wnd.run();
 }

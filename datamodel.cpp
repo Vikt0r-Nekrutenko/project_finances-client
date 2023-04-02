@@ -24,9 +24,9 @@ QNetworkReply *DataModel::sendCRUDRequest(const QString &additionalPath, const Q
 void DataModel::replyHandler(QNetworkReply *reply, const QString &noErrorMsg) const
 {
     if(reply->error() == QNetworkReply::NoError) {
-        stf::Renderer::log << reply->errorString().toStdString() << stf::endl;
+        stf::Renderer::log << stf::endl << noErrorMsg.toStdString();
     } else {
-        stf::Renderer::log << noErrorMsg.toStdString() << stf::endl;
+        stf::Renderer::log << stf::endl << reply->errorString().toStdString();
     }
     reply->deleteLater();
 }
