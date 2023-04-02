@@ -23,6 +23,10 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 2}, "Type 'id' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
         renderer.drawText({3, 3}, mInput.c_str());
+    } else if(mOption == 3) {
+        renderer.drawText({0, 2}, "Type 'id date deposit amount category' or 'q' to step back:");
+        renderer.drawText({0, 3}, ">> ");
+        renderer.drawText({3, 3}, mInput.c_str());
     }
 
     renderer.drawText({0, 8}, "Your operations:");
@@ -65,6 +69,28 @@ void OperationsListView::onEnterHandler()
     case 2:
         static_cast<AppModel*>(m_model)->deleteOperation(std::stoi(mInput) - 1);
         break;
+    case 3: {
+        int delim = mInput.find(" ");
+        int id = std::stoi(mInput.substr(0, delim)) - 1;
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        std::string date = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        std::string deposit = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        int amount = std::stoi(mInput.substr(0, delim));
+        mInput.erase(0, delim + 1);
+
+        static_cast<AppModel*>(m_model)->changeOperation(id, date.c_str(), deposit.c_str(), amount, mInput.c_str());
+
+        break;
+    }
+
     };
 }
 
