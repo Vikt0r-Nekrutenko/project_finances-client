@@ -9,7 +9,10 @@ class CategoryModel : public CRUDModel
 
 public:
 
-    CategoryModel();
+    CategoryModel(const QString &name, const QString &type);
+
+    const QString &name() const;
+    const QString &type() const;
 
 private:
 

@@ -1,6 +1,6 @@
 #include "categorymodel.hpp"
 
-CategoryModel::CategoryModel()
+CategoryModel::CategoryModel(const QString &name, const QString &type)
 {
 
 }
