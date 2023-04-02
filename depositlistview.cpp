@@ -45,23 +45,28 @@ void DepositListView::show(stf::Renderer &renderer)
 void DepositListView::onEnterHandler()
 {
     switch (mOption) {
-    case 1:
-        try {
-            int delim = mInput.find(" ");
-            std::string name = mInput.substr(0, delim);
-            int balance = std::stoi(mInput.erase(0, delim + 1));
-            static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
-        } catch(const std::exception &msg) {
-            stf::Renderer::log << stf::endl << msg.what();
-        }
+    case 1: {
+        int delim = mInput.find(" ");
+        std::string name = mInput.substr(0, delim);
+        int balance = std::stoi(mInput.erase(0, delim + 1));
+        static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
         break;
     }
+    case 2:
+        static_cast<AppModel*>(m_model)->deleteDeposit(std::stoi(mInput) - 1);
+        break;
+    case 3: {
+        int delim = mInput.find(" ");
+        int id = std::stoi(mInput.substr(0, delim)) - 1;
+        int balance = std::stoi(mInput.erase(0, delim + 1));
+        static_cast<AppModel*>(m_model)->changeBalance(id, balance);
+        break;
+    }}
 }
 
 stf::smv::IView *DepositListView::keyEventsHandler(const int key)
 {
-    switch (mOption) {
-    case 0:
+    if(mOption == 0) {
         switch (key) {
         case '1':
         case '2':
@@ -71,54 +76,12 @@ stf::smv::IView *DepositListView::keyEventsHandler(const int key)
         case 'q':
             return new MenuView(static_cast<AppModel*>(m_model));
         }
-        break;
-    case 1:
-        inputHandler(key);
-//        if(key == 'q' && mInput.empty())
-//            mOption = 0;
-//        else if(key == 13) {
-//            mOption = 0;
-//            try {
-//                int delim = mInput.find(" ");
-//                std::string name = mInput.substr(0, delim);
-//                int balance = std::stoi(mInput.erase(0, delim + 1));
-//                static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
-//            } catch(const std::invalid_argument &msg) {
-//                stf::Renderer::log << stf::endl << msg.what();
-//            }
-//            mInput.clear();
-//        } else if((key >= '0' && key <= 'z') || key == ' ')
-//            mInput += key;
-//        else if(key == 8 && !mInput.empty())
-//            mInput.pop_back();
-        break;
-    case 2:
-        if(key == 'q' && mInput.empty())
-            mOption = 0;
-        else if(key == 13) {
-            mOption = 0;
-            static_cast<AppModel*>(m_model)->deleteDeposit(std::stoi(mInput) - 1);
-            mInput.clear();
-        } else if(key >= '0' && key <= '9')
-            mInput += key;
-        else if(key == 8 && !mInput.empty())
-            mInput.pop_back();
-        break;
-    case 3:
-        if(key == 'q' && mInput.empty())
-            mOption = 0;
-        else if(key == 13) {
-            mOption = 0;
-            int delim = mInput.find(" ");
-            int id = std::stoi(mInput.substr(0, delim)) - 1;
-            int balance = std::stoi(mInput.erase(0, delim + 1));
-            static_cast<AppModel*>(m_model)->changeBalance(id, balance);
-            mInput.clear();
-        } else if((key >= '0' && key <= 'z') || key == ' ')
-            mInput += key;
-        else if(key == 8 && !mInput.empty())
-            mInput.pop_back();
-        break;
+    } else {
+        try {
+            inputHandler(key);
+        } catch(const std::exception &msg) {
+            stf::Renderer::log << stf::endl << msg.what();
+        }
     }
     return this;
 }
