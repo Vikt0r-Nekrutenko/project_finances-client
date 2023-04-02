@@ -3,7 +3,7 @@
 #include "debtmodel.hpp"
 
 DebtModel::DebtModel(int id, const QString &name, int amount)
-    : mId{id}, mName{name}, mAmount{amount} {}
+    : mName{name}, mId{id}, mAmount{amount} {}
 
 void DebtModel::create()
 {
