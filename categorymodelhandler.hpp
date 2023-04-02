@@ -10,6 +10,10 @@ public:
 
     CategoryModelHandler();
 
+    void addNewCategory(const QString &name, const QString &type);
+    void deleteCategory(int index);
+    void parseJsonArray(const QJsonArray &replyJsonArray) override;
+
     const QVector<CategoryModel> &categories() const;
 
 private:
