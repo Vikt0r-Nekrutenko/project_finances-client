@@ -17,7 +17,10 @@ public:
     bool onUpdate(const float) override
     {
         for(int i = 0; i < renderer.Size.x; ++i)
-            renderer.drawPixel({i, 1}, '-', stf::ColorTable::Cyan);
+            renderer.drawPixel({i, 1}, '-');
+        for(int i = 2; i < renderer.Size.y; ++i)
+            renderer.drawPixel({59, i}, '|');
+
         currentView->show(renderer);
         return currentView->isContinue();
     }
