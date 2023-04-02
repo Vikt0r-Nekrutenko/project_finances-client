@@ -38,3 +38,9 @@ void DepositModel::update()
     replyHandler(reply, "Balance updated successfully!");
 
 }
+
+void DepositModel::remove()
+{
+    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "DELETE");
+    replyHandler(reply, "Deposit deleted successfully!");
+}
