@@ -3,10 +3,7 @@
 #include "menuview.hpp"
 
 DepositListView::DepositListView(AppModel *model)
-    : ModelViewWithInputField(model)
-{
-
-}
+    : ModelViewWithInputField(model) {}
 
 void DepositListView::show(stf::Renderer &renderer)
 {

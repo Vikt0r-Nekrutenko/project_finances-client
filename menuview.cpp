@@ -4,10 +4,7 @@
 #include "depositlistview.hpp"
 
 MenuView::MenuView(AppModel *model)
-    : stf::smv::IView(model)
-{
-
-}
+    : stf::smv::IView(model) {}
 
 void MenuView::show(stf::Renderer &renderer)
 {
