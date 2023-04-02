@@ -11,6 +11,7 @@ CONFIG -= app_bundle
 SOURCES += \
         appmodel.cpp \
         closeview.cpp \
+        datamodel.cpp \
         main.cpp \
         menuview.cpp
 
@@ -29,4 +30,5 @@ DEPENDPATH += $$PWD/../stf
 HEADERS += \
     appmodel.hpp \
     closeview.hpp \
+    datamodel.hpp \
     menuview.hpp
