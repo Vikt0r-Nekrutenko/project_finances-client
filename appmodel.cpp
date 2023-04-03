@@ -61,11 +61,7 @@ void AppModel::addNewOperation(const char *date, const char *deposit, int amount
         return model.name() == deposit;
     });
 
-    if(cat->type() == "negative") {
-        depo->decreaseBalance(amount);
-    } else {
-        depo->increaseBalance(amount);
-    }
+    updateDepositBalanceByCategoryType(cat, depo, +amount);
     depo->update();
 }
 
@@ -86,11 +82,7 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
 
     const int oldAmount = mOperationHandler.operations().at(index).amount();
 
-    if(cat->type() == "negative") {
-        depo->increaseBalance(oldAmount);
-    } else {
-        depo->decreaseBalance(oldAmount);
-    }
+    updateDepositBalanceByCategoryType(cat, depo, -amount);
 
     mOperationHandler.updateOperation(index, date, deposit, amount, category);
 
@@ -98,11 +90,7 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
         return model.name() == category;
     });
 
-    if(cat->type() == "negative") {
-        depo->decreaseBalance(amount);
-    } else {
-        depo->increaseBalance(amount);
-    }
+    updateDepositBalanceByCategoryType(cat, depo, +amount);
 
     depo->update();
 }

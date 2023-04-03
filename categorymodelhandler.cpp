@@ -34,3 +34,8 @@ const QVector<CategoryModel> &CategoryModelHandler::categories() const
 {
     return mCategories;
 }
+
+QVector<CategoryModel> &CategoryModelHandler::categories()
+{
+    return mCategories;
+}

@@ -15,6 +15,7 @@ public:
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
     const QVector<CategoryModel> &categories() const;
+    QVector<CategoryModel> &categories();
 
 private:
 
