@@ -42,6 +42,7 @@ public:
 
 private:
 
+    int getPnLByDays(int days) const;
     int getSumOfOperationsByCategoryType(const QVector<OperationModel> &operations, const QString &categoryName) const;
     void updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount);
 

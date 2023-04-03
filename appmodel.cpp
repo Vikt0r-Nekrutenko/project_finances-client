@@ -211,15 +211,20 @@ int AppModel::getTodayPnL() const
 
 int AppModel::getWeekPnL() const
 {
+    return getPnLByDays(-7);
+}
+
+int AppModel::getPnLByDays(int days) const
+{
     if(mOperationHandler.operations().empty())
         return 0;
 
     QVector<OperationModel> operations;
     for(const auto &operation : mOperationHandler.operations()) {
         const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
-        const QDateTime week   = QDateTime().currentDateTime().addDays(-7);
+        const QDateTime time   = QDateTime().currentDateTime().addDays(days);
         const QDateTime today  = QDateTime().currentDateTime();
-        if(opDate >= week && opDate <= today)
+        if(opDate >= time && opDate <= today)
             operations.push_back(operation);
     }
 
