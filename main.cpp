@@ -5,6 +5,7 @@
 #include "closeview.hpp"
 #include "menuview.hpp"
 #include "appmodel.hpp"
+#include "modelviewwithinputfield.hpp"
 
 class MainWindow : public stf::Window
 {
@@ -50,7 +51,8 @@ public:
     {
         currentView = currentView->keyEventsHandler(key);
 
-        updateStats();
+        if(key == 'r' && (static_cast<ModelViewWithInputField*>(currentView)->option() == 0 || currentView == &menuView))
+            updateStats();
     }
 
     void mouseEvents(const stf::MouseRecord &mr) override

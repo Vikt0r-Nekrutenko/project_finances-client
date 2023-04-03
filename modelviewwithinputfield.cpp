@@ -40,6 +40,11 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
     return this;
 }
 
+int ModelViewWithInputField::option() const
+{
+    return mOption;
+}
+
 std::string ModelViewWithInputField::getStrFromInput()
 {
     int pos = mInput.find(" ");

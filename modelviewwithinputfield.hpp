@@ -15,6 +15,8 @@ public:
     virtual void onEnterHandler() = 0;
     virtual stf::smv::IView *keyEventsHandler(const int key);
 
+    int option() const;
+
 protected:
 
     std::string getStrFromInput();
