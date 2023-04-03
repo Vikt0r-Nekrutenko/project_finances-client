@@ -50,16 +50,10 @@ void DebtListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
-        int delim = mInput.find(" ");
-        std::string name = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        int amount = std::stoi(mInput.substr(0, delim));
-        mInput.erase(0, delim + 1);
+        std::string name = getStrFromInput();
+        int amount = getIntFromInput();
 
         static_cast<AppModel*>(m_model)->addNewDebt(name.c_str(), amount);
-
         break;
     }
     case 2:
