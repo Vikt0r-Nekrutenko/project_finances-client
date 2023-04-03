@@ -1,6 +1,5 @@
 #include "categorylistview.hpp"
 #include "appmodel.hpp"
-#include "menuview.hpp"
 
 CategoryListView::CategoryListView(AppModel *model)
     : ModelViewWithInputField(model)
@@ -39,7 +38,6 @@ void CategoryListView::show(stf::Renderer &renderer)
         const int y = std::abs(i - listHeinght) + 8;
         renderer.draw({0,  y}, "%d.%s -- %s", i + 1, category.name().toStdString().c_str(), category.type().toStdString().c_str());
     }
-
 }
 
 void CategoryListView::onEnterHandler()

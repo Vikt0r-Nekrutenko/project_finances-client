@@ -1,6 +1,5 @@
 #include "debtlistview.hpp"
 #include "appmodel.hpp"
-#include "menuview.hpp"
 
 DebtListView::DebtListView(AppModel *model)
     : ModelViewWithInputField(model)
@@ -68,8 +67,7 @@ void DebtListView::onEnterHandler()
 
         static_cast<AppModel*>(m_model)->changeDebt(id, name.c_str(), amount);
         break;
-    }
-    };
+    }};
 }
 
 stf::smv::IView *DebtListView::keyEventsHandler(const int key)

@@ -1,6 +1,5 @@
 #include "operationslistview.hpp"
 #include "appmodel.hpp"
-#include "menuview.hpp"
 
 OperationsListView::OperationsListView(AppModel *model)
     : ModelViewWithInputField(model)
@@ -56,7 +55,6 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.draw({27, y}, "%s.00 UAH", std::to_string(operation.amount()).c_str());
         renderer.draw({40, y}, "%s", operation.category().toStdString().c_str());
     }
-
 }
 
 void OperationsListView::onEnterHandler()
@@ -103,8 +101,7 @@ void OperationsListView::onEnterHandler()
 
         static_cast<AppModel*>(m_model)->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
         break;
-    }
-    };
+    }};
 }
 
 stf::smv::IView *OperationsListView::keyEventsHandler(const int key)

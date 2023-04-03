@@ -1,6 +1,5 @@
 #include "depositlistview.hpp"
 #include "appmodel.hpp"
-#include "menuview.hpp"
 
 DepositListView::DepositListView(AppModel *model)
     : ModelViewWithInputField(model)
