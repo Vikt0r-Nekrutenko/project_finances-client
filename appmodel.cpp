@@ -73,7 +73,38 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
 {
     if(index >= mOperationHandler.operations().size() || index < 0)
         throw std::out_of_range("Operation with that index does not exitst.");
+
+    const QString &oldCategory = mOperationHandler.operations().at(index).category();
+
+    auto cat = std::find_if(mCategoryHandler.categories().begin(), mCategoryHandler.categories().end(), [&](const CategoryModel &model){
+        return model.name() == oldCategory;
+    });
+
+    auto depo = std::find_if(mDepositHandler.deposits().begin(), mDepositHandler.deposits().end(), [&](const DepositModel &model){
+        return model.name() == deposit;
+    });
+
+    const int oldAmount = mOperationHandler.operations().at(index).amount();
+
+    if(cat->type() == "negative") {
+        depo->increaseBalance(oldAmount);
+    } else {
+        depo->decreaseBalance(oldAmount);
+    }
+
     mOperationHandler.updateOperation(index, date, deposit, amount, category);
+
+    cat = std::find_if(mCategoryHandler.categories().begin(), mCategoryHandler.categories().end(), [&](const CategoryModel &model){
+        return model.name() == category;
+    });
+
+    if(cat->type() == "negative") {
+        depo->decreaseBalance(amount);
+    } else {
+        depo->increaseBalance(amount);
+    }
+
+    depo->update();
 }
 
 void AppModel::deleteOperation(int index)
