@@ -31,13 +31,13 @@ void DebtListView::show(stf::Renderer &renderer)
         renderer.drawText({3, 3}, mInput.c_str());
     }
 
-    renderer.drawText({0, 8}, "Your debts:");
+    renderer.drawText({0, BeginListY - 1}, "Your debts:");
 
     const auto &debts = app->debts();
 
     for(int i = 0; i < debts.size(); ++i) {
         const auto &debt = debts.at(i);
-        const int y = i + 10;
+        const int y = i + BeginListY + 1;
         renderer.draw({0,  y}, "%d.%s", i + 1, debt.name().toStdString().c_str());
         renderer.draw({27, y}, "%s.00 UAH", std::to_string(debt.amount()).c_str());
     }

@@ -19,7 +19,7 @@ public:
         for(int i = 0; i < renderer.Size.x; ++i)
             renderer.drawPixel({i, 1}, '-');
         for(int i = 0; i < 59; ++i)
-            renderer.drawPixel({i, 8}, '-');
+            renderer.drawPixel({i, 13}, '-');
         for(int i = 2; i < renderer.Size.y; ++i)
             renderer.drawPixel({59, i}, '|');
 

@@ -8,6 +8,8 @@ class AppModel;
 class ModelViewWithInputField : public stf::smv::IView
 {
 public:
+    const int BeginListY = 13;
+
     ModelViewWithInputField(AppModel *model);
     virtual void inputHandler(int key);
     virtual void onEnterHandler() = 0;

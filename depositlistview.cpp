@@ -31,13 +31,14 @@ void DepositListView::show(stf::Renderer &renderer)
         renderer.drawText({3, 3}, mInput.c_str());
     }
 
-    renderer.drawText({0,8}, "Your deposits:");
+    renderer.drawText({0, BeginListY - 1}, "Your deposits:");
 
     const QVector<DepositModel> &deposits = app->deposits();
 
     for(int i = 0; i < deposits.size(); ++i) {
-        renderer.draw({0, i + 11}, "%d.%s", i+1, deposits.at(i).name().toStdString().c_str());
-        renderer.draw({17, i + 11}, "- %s.00 UAH", std::to_string(deposits.at(i).balance()).c_str());
+        const int y = i + BeginListY + 1;
+        renderer.draw({0, y}, "%d.%s", i+1, deposits.at(i).name().toStdString().c_str());
+        renderer.draw({17, y}, "- %s.00 UAH", std::to_string(deposits.at(i).balance()).c_str());
     }
 }
 

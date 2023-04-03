@@ -26,14 +26,14 @@ void CategoryListView::show(stf::Renderer &renderer)
         renderer.drawText({3, 3}, mInput.c_str());
     }
 
-    renderer.drawText({0, 7}, "Your categories:");
+    renderer.drawText({0, BeginListY - 1}, "Your categories:");
 
     const auto &categories = app->categories();
     const int listHeinght = categories.size();
 
     for(int i = categories.size() - 1; i >= 0; --i) {
         const auto &category = categories.at(i);
-        const int y = std::abs(i - listHeinght) + 8;
+        const int y = std::abs(i - listHeinght) + BeginListY;
         renderer.draw({0,  y}, "%d.%s -- %s", i + 1, category.name().toStdString().c_str(), category.type().toStdString().c_str());
     }
 }
