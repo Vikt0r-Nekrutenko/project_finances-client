@@ -20,6 +20,14 @@ const QVector<DebtModel> &AppModel::debts() const
     return mDebtHandler.debts();
 }
 
+void AppModel::updateAllHandlers()
+{
+    mDepositHandler.get("deposits/");
+    mOperationHandler.get("operations/");
+    mCategoryHandler.get("categories/");
+    mDebtHandler.get("debts/");
+}
+
 void AppModel::deleteDeposit(int index)
 {
     if(index >= mDepositHandler.deposits().size() || index < 0)

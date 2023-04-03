@@ -64,6 +64,8 @@ private:
 
     void updateStats()
     {
+        model.updateAllHandlers();
+
         mSumOfAllEarnOperations = model.getSumOfAllEarnOperations();
         mSumOfAllDeposits = model.getSumOfAllDeposits();
         mTodayPnL = model.getTodayPnL();
