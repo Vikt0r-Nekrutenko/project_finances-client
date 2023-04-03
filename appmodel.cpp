@@ -191,15 +191,11 @@ int AppModel::getTodayPnL() const
     if(mOperationHandler.operations().empty())
         return 0;
 
+    OperationModelHandler newHandler;
+    newHandler.get("operations/?date=" + QDateTime().currentDateTime().toString("yyyy-MM-dd"));
+
     const QString &today = QDateTime().currentDateTime().toString("yyyy-MM-dd");
-
-    QVector<OperationModel> todayOperations;
-    for(const auto &operation : mOperationHandler.operations())
-        if(operation.date() == today)
-            todayOperations.push_back(operation);
-
-    int negOpSum = getSumOfOperationsByCategoryType(todayOperations, "negative");
-    int posOpSum = getSumOfOperationsByCategoryType(todayOperations, "positive") + getSumOfOperationsByCategoryType(todayOperations, "earn");
-
+    int negOpSum = getSumOfOperationsByCategoryType(newHandler.operations(), "negative");
+    int posOpSum = getSumOfOperationsByCategoryType(newHandler.operations(), "positive") + getSumOfOperationsByCategoryType(newHandler.operations(), "earn");
     return posOpSum - negOpSum;
 }
