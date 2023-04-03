@@ -46,22 +46,17 @@ void CategoryListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
-        int delim = mInput.find(" ");
-        std::string name = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        std::string type = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
+        std::string name = getStrFromInput();
+        std::string type = getStrFromInput();
 
         static_cast<AppModel*>(m_model)->addNewCategory(name.c_str(), type.c_str());
-
         break;
     }
-    case 2:
-        static_cast<AppModel*>(m_model)->deleteCategory(std::stoi(mInput) - 1);
+    case 2: {
+        int id = getIntFromInput() - 1;
+        static_cast<AppModel*>(m_model)->deleteCategory(id);
         break;
-    };
+    }};
 }
 
 stf::smv::IView *CategoryListView::keyEventsHandler(const int key)
