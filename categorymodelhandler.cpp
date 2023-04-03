@@ -46,3 +46,12 @@ QList<CategoryModel>::iterator CategoryModelHandler::findByName(const QString &n
         return model.name() == name;
     });
 }
+
+QVector<CategoryModel> CategoryModelHandler::getByType(const QString &type) const
+{
+    QVector<CategoryModel> resultCategories;
+    for(const auto &category : mCategories)
+        if(category.type() == type)
+            resultCategories.push_back(category);
+    return resultCategories;
+}
