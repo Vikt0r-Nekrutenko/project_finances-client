@@ -200,3 +200,23 @@ int AppModel::getTodayPnL() const
     int posOpSum = getSumOfOperationsByCategoryType(newHandler.operations(), "positive") + getSumOfOperationsByCategoryType(newHandler.operations(), "earn");
     return posOpSum - negOpSum;
 }
+
+int AppModel::getWeekPnL() const
+{
+    if(mOperationHandler.operations().empty())
+        return 0;
+
+    QVector<OperationModel> operations;
+    for(const auto &operation : mOperationHandler.operations()) {
+        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime week   = QDateTime().currentDateTime().addDays(-7);
+        const QDateTime today  = QDateTime().currentDateTime();
+        if(opDate >= week && opDate <= today)
+            operations.push_back(operation);
+    }
+
+    const QString &today = QDateTime().currentDateTime().toString("yyyy-MM-dd");
+    int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
+    int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
+    return posOpSum - negOpSum;
+}

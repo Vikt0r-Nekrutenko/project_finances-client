@@ -36,6 +36,7 @@ public:
     int getSumOfAllEarnOperations() const;
     int getSumOfAllDeposits() const;
     int getTodayPnL() const;
+    int getWeekPnL() const;
 
 private:
 
