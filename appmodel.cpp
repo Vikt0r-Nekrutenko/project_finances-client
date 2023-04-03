@@ -82,7 +82,7 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
 
     const int oldAmount = mOperationHandler.operations().at(index).amount();
 
-    updateDepositBalanceByCategoryType(cat, depo, -amount);
+    updateDepositBalanceByCategoryType(cat, depo, -oldAmount);
 
     mOperationHandler.updateOperation(index, date, deposit, amount, category);
 
