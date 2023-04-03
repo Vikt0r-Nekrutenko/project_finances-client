@@ -19,6 +19,9 @@ public:
     int amount() const;
     int id() const;
 
+    void increase(int amount);
+    void decrease(int amount);
+
 private:
 
     QString mName;
