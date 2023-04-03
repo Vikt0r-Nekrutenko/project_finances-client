@@ -214,6 +214,16 @@ int AppModel::getWeekPnL() const
     return getPnLByDays(-7);
 }
 
+int AppModel::getMonthPnL() const
+{
+    return getPnLByDays(-30);
+}
+
+int AppModel::getYearPnl() const
+{
+    return getPnLByDays(-365);
+}
+
 int AppModel::getPnLByDays(int days) const
 {
     if(mOperationHandler.operations().empty())

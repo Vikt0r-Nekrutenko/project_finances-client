@@ -39,6 +39,8 @@ public:
     int getSumOfAllDeposits() const;
     int getTodayPnL() const;
     int getWeekPnL() const;
+    int getMonthPnL() const;
+    int getYearPnl() const;
 
 private:
 

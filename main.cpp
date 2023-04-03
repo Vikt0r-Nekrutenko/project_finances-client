@@ -37,11 +37,14 @@ public:
         for(int i = 2; i < int(stf::Renderer::log.y() - 1); ++i)
             renderer.drawPixel({59, i}, '|');
 
-        renderer.draw({60, 2}, "Total earn:.......%d.00 UAH", mSumOfAllEarnOperations);
-        renderer.draw({60, 3}, "Total deposits:...%d.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60, 4}, "Difference:.......%d.00 UAH [%d%c]", mDiffBetweenSoAEOandSoAD, int(mDiffBetweenSoAEOandSoAD / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60, 5}, "Today PnL:........%d.00 UAH [%d%c]", mTodayPnL, int(mTodayPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60, 6}, "Week PnL:.........%d.00 UAH [%d%c]", mWeekPnL, int(mWeekPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  2}, "Total earn:.......%d.00 UAH", mSumOfAllEarnOperations);
+        renderer.draw({60,  3}, "Total deposits:...%d.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  4}, "Total P&L:........%d.00 UAH [%d%c]", mTotalPnL, int(mTotalPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  6}, "P&L's:");
+        renderer.draw({60,  7}, "Today PnL:...%d.00 UAH [%d%c]", mTodayPnL, int(mTodayPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  8}, "Week PnL:....%d.00 UAH [%d%c]", mWeekPnL, int(mWeekPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  9}, "Month PnL:...%d.00 UAH [%d%c]", mMonthPnL, int(mMonthPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60, 10}, "Year PnL:....%d.00 UAH [%d%c]", mYearPnL, int(mYearPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
 
         currentView->show(renderer);
         return currentView->isContinue();
@@ -70,14 +73,18 @@ private:
         mSumOfAllDeposits = model.getSumOfAllDeposits();
         mTodayPnL = model.getTodayPnL();
         mWeekPnL = model.getWeekPnL();
-        mDiffBetweenSoAEOandSoAD = mSumOfAllDeposits - mSumOfAllEarnOperations;
+        mMonthPnL = model.getMonthPnL();
+        mYearPnL = model.getYearPnl();
+        mTotalPnL = mSumOfAllDeposits - mSumOfAllEarnOperations;
     }
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,
-        mDiffBetweenSoAEOandSoAD = 0,
+        mTotalPnL = 0,
         mTodayPnL = 0,
-        mWeekPnL = 0;
+        mWeekPnL = 0,
+        mMonthPnL = 0,
+        mYearPnL = 0;
 };
 
 int main(int argc, char *argv[])
