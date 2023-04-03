@@ -167,3 +167,18 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
         deposit->increaseBalance(amount);
     }
 }
+
+int AppModel::calculateAllEarnOperations()
+{
+    QVector<QString> earnOperationNames;
+    for(const auto &category : mCategoryHandler.categories())
+        if(category.type() == "earn")
+            earnOperationNames.push_back(category.name());
+
+    int result = 0;
+    for(const auto &name : earnOperationNames)
+        for(const auto &operation : mOperationHandler.operations())
+            if(operation.category() == name)
+                result += operation.amount();
+    return result;
+}

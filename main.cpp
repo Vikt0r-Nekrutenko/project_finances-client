@@ -33,6 +33,8 @@ public:
         for(int i = 2; i < int(stf::Renderer::log.y() - 1); ++i)
             renderer.drawPixel({59, i}, '|');
 
+        renderer.draw({60, 2}, "Total earn: %d.00 UAH", model.calculateAllEarnOperations());
+
         currentView->show(renderer);
         return currentView->isContinue();
     }

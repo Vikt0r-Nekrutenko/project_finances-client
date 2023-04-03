@@ -34,6 +34,8 @@ public:
     void changeDebt(int index, const char *name, int amount);
     void deleteDebt(int index);
 
+    int calculateAllEarnOperations();
+
 private:
 
     void updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount);
