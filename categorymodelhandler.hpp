@@ -17,6 +17,8 @@ public:
     const QVector<CategoryModel> &categories() const;
     QVector<CategoryModel> &categories();
 
+    QList<CategoryModel>::iterator findByName(const QString &name);
+
 private:
 
     QVector<CategoryModel> mCategories;
