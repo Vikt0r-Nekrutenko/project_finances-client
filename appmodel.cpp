@@ -49,6 +49,28 @@ int AppModel::getTotalBalanceOnDeposits() const
     return result;
 }
 
+void AppModel::addNewLendOperation(const char *date, const char *deposit, int amount, const char *name)
+{
+    mOperationHandler.addNewOperation(date, deposit, amount, "Lend");
+
+    auto depo = mDepositHandler.findByName(deposit);
+    depo->decreaseBalance(amount);
+    depo->update();
+
+    auto debt = mDebtHandler.findByName(name);
+    if(debt == mDebtHandler.debts().end()) {
+        mDebtHandler.addNewDebt(name, amount);
+    } else {
+        debt->increase(amount);
+    }
+    debt->update();
+}
+
+void AppModel::addNewRepayOperation(const char *date, const char *deposit, int amount, const char *name)
+{
+
+}
+
 void AppModel::addNewOperation(const char *date, const char *deposit, int amount, const char *category)
 {
     mOperationHandler.addNewOperation(date, deposit, amount, category);
