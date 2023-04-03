@@ -3,7 +3,10 @@
 #include "menuview.hpp"
 
 DebtListView::DebtListView(AppModel *model)
-    : ModelViewWithInputField(model) {}
+    : ModelViewWithInputField(model)
+{
+    mOptrionsCount = 3;
+}
 
 void DebtListView::show(stf::Renderer &renderer)
 {
@@ -85,22 +88,5 @@ void DebtListView::onEnterHandler()
 
 stf::smv::IView *DebtListView::keyEventsHandler(const int key)
 {
-    if(mOption == 0) {
-        switch (key) {
-        case '1':
-        case '2':
-        case '3':
-            mOption = key - '0';
-            break;
-        case 'q':
-            return new MenuView(static_cast<AppModel*>(m_model));
-        }
-    } else {
-        try {
-            inputHandler(key);
-        } catch(const std::exception &msg) {
-            stf::Renderer::log << stf::endl << msg.what();
-        }
-    }
-    return this;
+    return ModelViewWithInputField::keyEventsHandler(key);
 }
