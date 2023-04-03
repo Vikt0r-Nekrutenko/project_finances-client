@@ -11,12 +11,13 @@ public:
     ModelViewWithInputField(AppModel *model);
     virtual void inputHandler(int key);
     virtual void onEnterHandler() = 0;
+    virtual stf::smv::IView *keyEventsHandler(const int key);
 
 protected:
 
     std::string mInput;
     std::string mInputBackup;
-    int mOption = 0;
+    int mOption = 0, mOptrionsCount = 0;
 };
 
 #endif // MODELVIEWWITHINPUTFIELD_HPP

@@ -1,5 +1,6 @@
 #include "modelviewwithinputfield.hpp"
 #include "appmodel.hpp"
+#include "menuview.hpp"
 
 ModelViewWithInputField::ModelViewWithInputField(AppModel *model)
     : stf::smv::IView(model) {}
@@ -19,4 +20,22 @@ void ModelViewWithInputField::inputHandler(int key)
         mInput += key;
     else if(key == 8 && !mInput.empty())
         mInput.pop_back();
+}
+
+stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
+{
+    if(mOption == 0) {
+        for(int i = 1; i <= mOptrionsCount; ++i)
+            if(key == '0' + i)
+                mOption = key - '0';
+        if(key == 'q')
+            return new MenuView(static_cast<AppModel*>(m_model));
+    } else {
+        try {
+            inputHandler(key);
+        } catch(const std::exception &msg) {
+            stf::Renderer::log << stf::endl << msg.what();
+        }
+    }
+    return this;
 }
