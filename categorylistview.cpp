@@ -15,7 +15,8 @@ void CategoryListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 2}, "Choose an option:");
         renderer.drawText({0, 3}, "1.Add new category.");
         renderer.drawText({0, 4}, "2.Delete category.");
-        renderer.drawText({0, 5}, "q.Back to menu.");
+        renderer.drawText({0, 5}, "3.Select favorite categories.");
+        renderer.drawText({0, 6}, "q.Back to menu.");
     } else if(mOption == 1) {
         renderer.drawText({0, 2}, "Type 'name type' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
@@ -24,7 +25,11 @@ void CategoryListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 2}, "Type 'id' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
         renderer.drawText({3, 3}, mInput.c_str());
-    }
+    } else if(mOption == 3) {
+    renderer.drawText({0, 2}, "Type 'id id id' or 'q' to step back:");
+    renderer.drawText({0, 3}, ">> ");
+    renderer.drawText({3, 3}, mInput.c_str());
+}
 
     renderer.drawText({0, BeginListY - 1}, "Your categories:");
 
@@ -53,6 +58,12 @@ void CategoryListView::onEnterHandler()
     case 2: {
         int id = getIntFromInput() - 1;
         static_cast<AppModel*>(m_model)->deleteCategory(id);
+        break;
+    }
+    case 3: {
+        int id1 = getIntFromInput() - 1;
+        int id2 = getIntFromInput() - 1;
+        int id3 = getIntFromInput() - 1;
         break;
     }};
 }
