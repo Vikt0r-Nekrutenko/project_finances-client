@@ -63,81 +63,47 @@ void OperationsListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
-        int delim = mInput.find(" ");
-        std::string date = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
+        std::string date = getStrFromInput();
+        std::string deposit = getStrFromInput();
+        int amount = getIntFromInput();
+        std::string category = getStrFromInput();
 
-        delim = mInput.find(" ");
-        std::string deposit = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        int amount = std::stoi(mInput.substr(0, delim));
-        mInput.erase(0, delim + 1);
-
-        static_cast<AppModel*>(m_model)->addNewOperation(date.c_str(), deposit.c_str(), amount, mInput.c_str());
-
+        static_cast<AppModel*>(m_model)->addNewOperation(date.c_str(), deposit.c_str(), amount, category.c_str());
         break;
     }
-    case 2:
-        static_cast<AppModel*>(m_model)->deleteOperation(std::stoi(mInput) - 1);
+    case 2: {
+        int id = getIntFromInput() - 1;
+        static_cast<AppModel*>(m_model)->deleteOperation(id);
         break;
+    }
     case 3: {
-        int delim = mInput.find(" ");
-        int id = std::stoi(mInput.substr(0, delim)) - 1;
-        mInput.erase(0, delim + 1);
+        int id = getIntFromInput() - 1;
+        std::string date = getStrFromInput();
+        std::string deposit = getStrFromInput();
+        int amount = getIntFromInput();
+        std::string category = getStrFromInput();
 
-        delim = mInput.find(" ");
-        std::string date = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        std::string deposit = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        int amount = std::stoi(mInput.substr(0, delim));
-        mInput.erase(0, delim + 1);
-
-        static_cast<AppModel*>(m_model)->changeOperation(id, date.c_str(), deposit.c_str(), amount, mInput.c_str());
-
+        static_cast<AppModel*>(m_model)->changeOperation(id, date.c_str(), deposit.c_str(), amount, category.c_str());
         break;
     }
     case 4: {
-        int delim = mInput.find(" ");
-        std::string date = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
+        std::string date = getStrFromInput();
+        std::string deposit = getStrFromInput();
+        int amount = getIntFromInput();
+        std::string name = getStrFromInput();
 
-        delim = mInput.find(" ");
-        std::string deposit = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        int amount = std::stoi(mInput.substr(0, delim));
-        mInput.erase(0, delim + 1);
-
-        static_cast<AppModel*>(m_model)->addNewLendOperation(date.c_str(), deposit.c_str(), amount, mInput.c_str());
-
+        static_cast<AppModel*>(m_model)->addNewLendOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
         break;
     }
     case 5: {
-        int delim = mInput.find(" ");
-        std::string date = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
+        std::string date = getStrFromInput();
+        std::string deposit = getStrFromInput();
+        int amount = getIntFromInput();
+        std::string name = getStrFromInput();
 
-        delim = mInput.find(" ");
-        std::string deposit = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        int amount = std::stoi(mInput.substr(0, delim));
-        mInput.erase(0, delim + 1);
-
-        static_cast<AppModel*>(m_model)->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, mInput.c_str());
-
+        static_cast<AppModel*>(m_model)->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
         break;
     }
-
     };
 }
 
