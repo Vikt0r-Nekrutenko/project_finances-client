@@ -91,6 +91,7 @@ void AppModel::deleteOperation(int index)
 
     updateDepositBalanceByCategoryType(categoryModel, depositModel, -oldAmount);
     mOperationHandler.deleteOperation(index);
+    depositModel->update();
 }
 
 void AppModel::deleteCategory(int index)
