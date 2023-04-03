@@ -18,6 +18,9 @@ public:
     const QString &name() const;
     int balance() const;
 
+    void increaseBalance(int amount);
+    void decreaseBalance(int amount);
+
 private:
 
     QString mName;

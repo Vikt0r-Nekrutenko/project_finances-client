@@ -66,3 +66,13 @@ int DebtModel::amount() const
 {
     return mAmount;
 }
+
+void DebtModel::increase(int amount)
+{
+    mAmount += amount;
+}
+
+void DebtModel::decrease(int amount)
+{
+    mAmount -= amount;
+}

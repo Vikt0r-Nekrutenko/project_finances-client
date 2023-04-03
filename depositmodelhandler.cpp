@@ -40,3 +40,15 @@ const QVector<DepositModel> &DepositModelHandler::deposits() const
 {
     return mDeposits;
 }
+
+QVector<DepositModel> &DepositModelHandler::deposits()
+{
+    return mDeposits;
+}
+
+QList<DepositModel>::iterator DepositModelHandler::findByName(const QString &name)
+{
+    return std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
+        return model.name() == name;
+    });
+}

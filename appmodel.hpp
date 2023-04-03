@@ -20,6 +20,9 @@ public:
     void changeBalance(int index, int balance);
     int getTotalBalanceOnDeposits() const;
 
+    void addNewLendOperation(const char *date, const char *deposit, int amount, const char *name);
+    void addNewRepayOperation(const char *date, const char *deposit, int amount, const char *name);
+
     void addNewOperation(const char *date, const char *deposit, int amount, const char *category);
     void changeOperation(int index, const char *date, const char *deposit, int amount, const char *category);
     void deleteOperation(int index);
@@ -32,6 +35,8 @@ public:
     void deleteDebt(int index);
 
 private:
+
+    void updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount);
 
     OperationModelHandler mOperationHandler;
     DebtModelHandler mDebtHandler;

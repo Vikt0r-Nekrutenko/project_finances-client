@@ -14,6 +14,9 @@ public:
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
     const QVector<DepositModel> &deposits() const;
+    QVector<DepositModel> &deposits();
+
+    QList<DepositModel>::iterator findByName(const QString &name);
 
 private:
 

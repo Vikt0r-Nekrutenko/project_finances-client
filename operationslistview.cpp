@@ -14,7 +14,9 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 3}, "1.Add new operation.");
         renderer.drawText({0, 4}, "2.Delete operation.");
         renderer.drawText({0, 5}, "3.Change operation.");
-        renderer.drawText({0, 6}, "q.Back to menu.");
+        renderer.drawText({0, 6}, "4.Lend operation.");
+        renderer.drawText({0, 7}, "5.Repay operation.");
+        renderer.drawText({0, 8}, "q.Back to menu.");
     } else if(mOption == 1) {
         renderer.drawText({0, 2}, "Type 'date deposit amount category' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
@@ -25,6 +27,14 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({3, 3}, mInput.c_str());
     } else if(mOption == 3) {
         renderer.drawText({0, 2}, "Type 'id date deposit amount category' or 'q' to step back:");
+        renderer.drawText({0, 3}, ">> ");
+        renderer.drawText({3, 3}, mInput.c_str());
+    } else if(mOption == 4) {
+        renderer.drawText({0, 2}, "Type 'date deposit amount name' or 'q' to step back:");
+        renderer.drawText({0, 3}, ">> ");
+        renderer.drawText({3, 3}, mInput.c_str());
+    } else if(mOption == 5) {
+        renderer.drawText({0, 2}, "Type 'date deposit amount name' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
         renderer.drawText({3, 3}, mInput.c_str());
     }
@@ -90,6 +100,40 @@ void OperationsListView::onEnterHandler()
 
         break;
     }
+    case 4: {
+        int delim = mInput.find(" ");
+        std::string date = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        std::string deposit = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        int amount = std::stoi(mInput.substr(0, delim));
+        mInput.erase(0, delim + 1);
+
+        static_cast<AppModel*>(m_model)->addNewLendOperation(date.c_str(), deposit.c_str(), amount, mInput.c_str());
+
+        break;
+    }
+    case 5: {
+        int delim = mInput.find(" ");
+        std::string date = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        std::string deposit = mInput.substr(0, delim);
+        mInput.erase(0, delim + 1);
+
+        delim = mInput.find(" ");
+        int amount = std::stoi(mInput.substr(0, delim));
+        mInput.erase(0, delim + 1);
+
+        static_cast<AppModel*>(m_model)->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, mInput.c_str());
+
+        break;
+    }
 
     };
 }
@@ -101,6 +145,8 @@ stf::smv::IView *OperationsListView::keyEventsHandler(const int key)
         case '1':
         case '2':
         case '3':
+        case '4':
+        case '5':
             mOption = key - '0';
             break;
         case 'q':
