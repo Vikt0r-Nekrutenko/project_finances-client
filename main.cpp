@@ -37,14 +37,14 @@ public:
         for(int i = 2; i < int(stf::Renderer::log.y() - 1); ++i)
             renderer.drawPixel({59, i}, '|');
 
-        renderer.draw({60,  2}, "Total earn:.......%d.00 UAH", mSumOfAllEarnOperations);
-        renderer.draw({60,  3}, "Total deposits:...%d.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60,  4}, "Total P&L:........%d.00 UAH [%d%c]", mTotalPnL, int(mTotalPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  2}, "Total earn:.......%m.00 UAH", mSumOfAllEarnOperations);
+        renderer.draw({60,  3}, "Total deposits:...%m.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  4}, "Total P&L:........%m.00 UAH [%d%c]", mTotalPnL, int(mTotalPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
         renderer.draw({60,  6}, "P&L's:");
-        renderer.draw({60,  7}, "Today PnL:...%d.00 UAH [%d%c]", mTodayPnL, int(mTodayPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60,  8}, "Week PnL:....%d.00 UAH [%d%c]", mWeekPnL, int(mWeekPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60,  9}, "Month PnL:...%d.00 UAH [%d%c]", mMonthPnL, int(mMonthPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60, 10}, "Year PnL:....%d.00 UAH [%d%c]", mYearPnL, int(mYearPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  7}, "Today PnL:...%m.00 UAH [%d%c]", mTodayPnL, int(mTodayPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  8}, "Week PnL:....%m.00 UAH [%d%c]", mWeekPnL, int(mWeekPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  9}, "Month PnL:...%m.00 UAH [%d%c]", mMonthPnL, int(mMonthPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60, 10}, "Year PnL:....%m.00 UAH [%d%c]", mYearPnL, int(mYearPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
 
         currentView->show(renderer);
         return currentView->isContinue();
@@ -86,7 +86,7 @@ private:
         mMonthPnL = 0,
         mYearPnL = 0;
 };
-
+#include <iostream>
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
