@@ -3,7 +3,10 @@
 #include "menuview.hpp"
 
 CategoryListView::CategoryListView(AppModel *model)
-    : ModelViewWithInputField(model) {}
+    : ModelViewWithInputField(model)
+{
+    mOptrionsCount = 2;
+}
 
 void CategoryListView::show(stf::Renderer &renderer)
 {
@@ -63,21 +66,5 @@ void CategoryListView::onEnterHandler()
 
 stf::smv::IView *CategoryListView::keyEventsHandler(const int key)
 {
-    if(mOption == 0) {
-        switch (key) {
-        case '1':
-        case '2':
-            mOption = key - '0';
-            break;
-        case 'q':
-            return new MenuView(static_cast<AppModel*>(m_model));
-        }
-    } else {
-        try {
-            inputHandler(key);
-        } catch(const std::exception &msg) {
-            stf::Renderer::log << stf::endl << msg.what();
-        }
-    }
-    return this;
+    return ModelViewWithInputField::keyEventsHandler(key);
 }
