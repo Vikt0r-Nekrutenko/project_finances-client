@@ -32,8 +32,6 @@ void DebtListView::show(stf::Renderer &renderer)
     }
 
     renderer.drawText({0, 8}, "Your debts:");
-    for(int i = 0; i < 59; ++i)
-        renderer.drawPixel({i, 9}, '-');
 
     const auto &debts = app->debts();
 

@@ -42,8 +42,6 @@ void OperationsListView::show(stf::Renderer &renderer)
     }
 
     renderer.drawText({0, 8}, "Your operations:");
-    for(int i = 0; i < 59; ++i)
-        renderer.drawPixel({i, 9}, '-');
 
     const auto &operations = app->operations();
     const int listHeinght = operations.size();

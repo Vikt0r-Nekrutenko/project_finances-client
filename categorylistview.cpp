@@ -27,8 +27,6 @@ void CategoryListView::show(stf::Renderer &renderer)
     }
 
     renderer.drawText({0, 7}, "Your categories:");
-    for(int i = 0; i < 59; ++i)
-        renderer.drawPixel({i, 8}, '-');
 
     const auto &categories = app->categories();
     const int listHeinght = categories.size();
