@@ -68,7 +68,19 @@ void AppModel::addNewLendOperation(const char *date, const char *deposit, int am
 
 void AppModel::addNewRepayOperation(const char *date, const char *deposit, int amount, const char *name)
 {
+    mOperationHandler.addNewOperation(date, deposit, amount, "Repay");
 
+    auto depo = mDepositHandler.findByName(deposit);
+    depo->increaseBalance(amount);
+    depo->update();
+
+    auto debt = mDebtHandler.findByName(name);
+    if(debt == mDebtHandler.debts().end()) {
+        mDebtHandler.addNewDebt(name, amount);
+    } else {
+        debt->decrease(amount);
+    }
+    debt->update();
 }
 
 void AppModel::addNewOperation(const char *date, const char *deposit, int amount, const char *category)
