@@ -49,6 +49,8 @@ void OperationsListView::show(stf::Renderer &renderer)
     for(int i = operations.size() - 1; i >= 0; --i) {
         const auto &operation = operations.at(i);
         const int y = std::abs(i - listHeinght) + BeginListY;
+        if(y >= int(stf::Renderer::log.y() - 1))
+            continue;
         renderer.draw({0,  y}, "%d.%s %s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
         renderer.draw({27, y}, "%s.00 UAH", std::to_string(operation.amount()).c_str());
         renderer.draw({40, y}, "%s", operation.category().toStdString().c_str());

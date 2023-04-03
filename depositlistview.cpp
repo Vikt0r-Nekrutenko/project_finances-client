@@ -37,6 +37,8 @@ void DepositListView::show(stf::Renderer &renderer)
 
     for(int i = 0; i < deposits.size(); ++i) {
         const int y = i + BeginListY + 1;
+            if(y >= int(stf::Renderer::log.y() - 1))
+                continue;
         renderer.draw({0, y}, "%d.%s", i+1, deposits.at(i).name().toStdString().c_str());
         renderer.draw({17, y}, "- %s.00 UAH", std::to_string(deposits.at(i).balance()).c_str());
     }

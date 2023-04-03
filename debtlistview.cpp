@@ -38,6 +38,8 @@ void DebtListView::show(stf::Renderer &renderer)
     for(int i = 0; i < debts.size(); ++i) {
         const auto &debt = debts.at(i);
         const int y = i + BeginListY + 1;
+        if(y >= int(stf::Renderer::log.y() - 1))
+            continue;
         renderer.draw({0,  y}, "%d.%s", i + 1, debt.name().toStdString().c_str());
         renderer.draw({27, y}, "%s.00 UAH", std::to_string(debt.amount()).c_str());
     }
