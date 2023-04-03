@@ -33,9 +33,12 @@ void AppModel::updateAllHandlers()
     mDebtHandler.get("debts/");
 }
 
-void AppModel::selectFavCategories()
+void AppModel::selectFavCategories(int index1, int index2, int index3)
 {
-
+    mFavCategories.clear();
+    mFavCategories.append({mCategoryHandler.categories().at(index1),
+                           mCategoryHandler.categories().at(index2),
+                           mCategoryHandler.categories().at(index3)});
 }
 
 void AppModel::deleteDeposit(int index)

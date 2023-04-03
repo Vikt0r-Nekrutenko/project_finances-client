@@ -17,7 +17,7 @@ public:
     const QVector<DebtModel> &debts() const;
 
     void updateAllHandlers();
-    void selectFavCategories();
+    void selectFavCategories(int index1, int index2, int index3);
 
     void deleteDeposit(int index);
     void addNewDeposit(const char *name, int balance);
