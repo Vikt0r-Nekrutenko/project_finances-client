@@ -46,14 +46,25 @@ void OperationsListView::show(stf::Renderer &renderer)
     const auto &operations = app->operations();
     const int listHeinght = operations.size();
 
+    auto drawLine = [&](int beginX, int endX, int y){
+        for(int j = beginX; j < endX; ++j)
+            renderer.drawPixel({j, y}, '.');
+    };
+
     for(int i = operations.size() - 1; i >= 0; --i) {
         const auto &operation = operations.at(i);
         const int y = std::abs(i - listHeinght) + BeginListY;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
-        renderer.draw({0,  y}, "%d.%s %s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
-        renderer.draw({27, y}, "%m.00 UAH", operation.amount());
-        renderer.draw({43, y}, "%s", operation.category().toStdString().c_str());
+
+        int depositEndX = renderer.draw({0,  y}, "%d.%s %s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
+        drawLine(depositEndX, 27, y);
+
+        int amountEndX = renderer.draw({27, y}, "%m.00 UAH", operation.amount());
+        drawLine(amountEndX, 43, y);
+
+        int categoryEndX = renderer.draw({43, y}, "%s", operation.category().toStdString().c_str());
+        drawLine(categoryEndX, 59, y);
     }
 }
 
