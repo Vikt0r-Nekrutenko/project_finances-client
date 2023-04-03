@@ -67,26 +67,16 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
 
     const QString &oldCategory = mOperationHandler.operations().at(index).category();
 
-    auto cat = std::find_if(mCategoryHandler.categories().begin(), mCategoryHandler.categories().end(), [&](const CategoryModel &model){
-        return model.name() == oldCategory;
-    });
-
-    auto depo = std::find_if(mDepositHandler.deposits().begin(), mDepositHandler.deposits().end(), [&](const DepositModel &model){
-        return model.name() == deposit;
-    });
-
+    auto cat = mCategoryHandler.findByName(oldCategory);
+    auto depo = mDepositHandler.findByName(deposit);
     const int oldAmount = mOperationHandler.operations().at(index).amount();
 
     updateDepositBalanceByCategoryType(cat, depo, -oldAmount);
 
     mOperationHandler.updateOperation(index, date, deposit, amount, category);
-
-    cat = std::find_if(mCategoryHandler.categories().begin(), mCategoryHandler.categories().end(), [&](const CategoryModel &model){
-        return model.name() == category;
-    });
+    cat = mCategoryHandler.findByName(category);
 
     updateDepositBalanceByCategoryType(cat, depo, +amount);
-
     depo->update();
 }
 
