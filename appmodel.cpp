@@ -53,13 +53,8 @@ void AppModel::addNewOperation(const char *date, const char *deposit, int amount
 {
     mOperationHandler.addNewOperation(date, deposit, amount, category);
 
-    auto cat = std::find_if(mCategoryHandler.categories().begin(), mCategoryHandler.categories().end(), [&](const CategoryModel &model){
-        return model.name() == category;
-    });
-
-    auto depo = std::find_if(mDepositHandler.deposits().begin(), mDepositHandler.deposits().end(), [&](const DepositModel &model){
-        return model.name() == deposit;
-    });
+    auto cat = mCategoryHandler.findByName(category);
+    auto depo = mDepositHandler.findByName(deposit);
 
     updateDepositBalanceByCategoryType(cat, depo, +amount);
     depo->update();
