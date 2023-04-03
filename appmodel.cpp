@@ -52,6 +52,21 @@ int AppModel::getTotalBalanceOnDeposits() const
 void AppModel::addNewOperation(const char *date, const char *deposit, int amount, const char *category)
 {
     mOperationHandler.addNewOperation(date, deposit, amount, category);
+
+    auto cat = std::find_if(mCategoryHandler.categories().begin(), mCategoryHandler.categories().end(), [&](const CategoryModel &model){
+        return model.name() == category;
+    });
+
+    auto depo = std::find_if(mDepositHandler.deposits().begin(), mDepositHandler.deposits().end(), [&](const DepositModel &model){
+        return model.name() == deposit;
+    });
+
+    if(cat->type() == "negative") {
+        depo->decreaseBalance(amount);
+    } else {
+        depo->increaseBalance(amount);
+    }
+    depo->update();
 }
 
 void AppModel::changeOperation(int index, const char *date, const char *deposit, int amount, const char *category)
