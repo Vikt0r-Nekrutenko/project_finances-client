@@ -39,7 +39,7 @@ public:
         renderer.draw({60, 2}, "Total earn:.......%d.00 UAH", mSumOfAllEarnOperations);
         renderer.draw({60, 3}, "Total deposits:...%d.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
         renderer.draw({60, 4}, "Difference:.......%d.00 UAH [%d%c]", mDiffBetweenSoAEOandSoAD, int(mDiffBetweenSoAEOandSoAD / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60, 5}, "Today PnL:........%d.00 UAH [%d%c]", mTodayPnL, int(mDiffBetweenSoAEOandSoAD / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60, 5}, "Today PnL:........%d.00 UAH [%d%c]", mTodayPnL, int(mTodayPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
 
         currentView->show(renderer);
         return currentView->isContinue();
