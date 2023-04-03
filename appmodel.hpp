@@ -34,7 +34,9 @@ public:
     void changeDebt(int index, const char *name, int amount);
     void deleteDebt(int index);
 
-    int getSumOfAllEarnOperations();
+    int getSumOfOperationsByCategoryType(const QVector<OperationModel> &operations, const QString &categoryName) const;
+    int getSumOfAllEarnOperations() const;
+    int getTodayPnL() const;
 
 private:
 

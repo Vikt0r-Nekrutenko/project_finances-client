@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include <time.hpp>
 #include <window.hpp>
 
 #include "closeview.hpp"
@@ -37,11 +38,8 @@ public:
 
         renderer.draw({60, 2}, "Total earn:.......%d.00 UAH", mSumOfAllEarnOperations);
         renderer.draw({60, 3}, "Total deposits:...%d.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
-
-        if(mDiffBetweenSoAEOandSoAD > 0)
-            renderer.draw({60, 4}, "Difference:......+%d.00 UAH", mDiffBetweenSoAEOandSoAD);
-        else
-            renderer.draw({60, 4}, "Difference:......%d.00 UAH", mDiffBetweenSoAEOandSoAD);
+        renderer.draw({60, 4}, "Difference:.......%d.00 UAH [%d%c]", mDiffBetweenSoAEOandSoAD, int(mDiffBetweenSoAEOandSoAD / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60, 5}, "Today PnL:........%d.00 UAH [%d%c]", mTodayPnL, int(mDiffBetweenSoAEOandSoAD / (float)mSumOfAllEarnOperations * 100.f), '%');
 
         currentView->show(renderer);
         return currentView->isContinue();
@@ -65,12 +63,14 @@ private:
     {
         mSumOfAllEarnOperations = model.getSumOfAllEarnOperations();
         mSumOfAllDeposits = model.getSumOfAllDeposits();
+        mTodayPnL = model.getTodayPnL();
         mDiffBetweenSoAEOandSoAD = mSumOfAllDeposits - mSumOfAllEarnOperations;
     }
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,
-        mDiffBetweenSoAEOandSoAD = 0;
+        mDiffBetweenSoAEOandSoAD = 0,
+        mTodayPnL = 0;
 };
 
 int main(int argc, char *argv[])
