@@ -53,7 +53,7 @@ void OperationsListView::show(stf::Renderer &renderer)
             continue;
         renderer.draw({0,  y}, "%d.%s %s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
         renderer.draw({27, y}, "%m.00 UAH", operation.amount());
-        renderer.draw({40, y}, "%s", operation.category().toStdString().c_str());
+        renderer.draw({43, y}, "%s", operation.category().toStdString().c_str());
     }
 }
 
