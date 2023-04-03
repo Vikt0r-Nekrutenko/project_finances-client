@@ -39,7 +39,7 @@ void AppModel::changeBalance(int index, int balance)
     mDepositHandler.updateBalance(index, balance);
 }
 
-int AppModel::getTotalBalanceOnDeposits() const
+int AppModel::getSumOfAllDeposits() const
 {
     int result = 0;
 
@@ -168,7 +168,7 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
     }
 }
 
-int AppModel::calculateAllEarnOperations()
+int AppModel::getSumOfAllEarnOperations()
 {
     QVector<QString> earnOperationNames;
     for(const auto &category : mCategoryHandler.categories())
