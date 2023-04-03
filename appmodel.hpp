@@ -15,10 +15,11 @@ public:
     const QVector<CategoryModel> &categories() const;
     const QVector<DebtModel> &debts() const;
 
+    void updateAllHandlers();
+
     void deleteDeposit(int index);
     void addNewDeposit(const char *name, int balance);
     void changeBalance(int index, int balance);
-    int getTotalBalanceOnDeposits() const;
 
     void addNewLendOperation(const char *date, const char *deposit, int amount, const char *name);
     void addNewRepayOperation(const char *date, const char *deposit, int amount, const char *name);
@@ -34,8 +35,17 @@ public:
     void changeDebt(int index, const char *name, int amount);
     void deleteDebt(int index);
 
+    int getSumOfAllEarnOperations() const;
+    int getSumOfAllDeposits() const;
+    int getTodayPnL() const;
+    int getWeekPnL() const;
+    int getMonthPnL() const;
+    int getYearPnl() const;
+
 private:
 
+    int getPnLByDays(int days) const;
+    int getSumOfOperationsByCategoryType(const QVector<OperationModel> &operations, const QString &categoryName) const;
     void updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount);
 
     OperationModelHandler mOperationHandler;

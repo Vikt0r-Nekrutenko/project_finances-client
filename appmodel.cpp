@@ -20,6 +20,14 @@ const QVector<DebtModel> &AppModel::debts() const
     return mDebtHandler.debts();
 }
 
+void AppModel::updateAllHandlers()
+{
+    mDepositHandler.get("deposits/");
+    mOperationHandler.get("operations/");
+    mCategoryHandler.get("categories/");
+    mDebtHandler.get("debts/");
+}
+
 void AppModel::deleteDeposit(int index)
 {
     if(index >= mDepositHandler.deposits().size() || index < 0)
@@ -39,7 +47,7 @@ void AppModel::changeBalance(int index, int balance)
     mDepositHandler.updateBalance(index, balance);
 }
 
-int AppModel::getTotalBalanceOnDeposits() const
+int AppModel::getSumOfAllDeposits() const
 {
     int result = 0;
 
@@ -159,6 +167,7 @@ void AppModel::deleteDebt(int index)
     mDebtHandler.deleteDebt(index);
 }
 
+
 void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount)
 {
     if(category->type() == "negative") {
@@ -166,4 +175,71 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
     } else {
         deposit->increaseBalance(amount);
     }
+}
+
+int AppModel::getSumOfOperationsByCategoryType(const QVector<OperationModel> &operations, const QString &categoryName) const
+{
+    CategoryModelHandler newHandler;
+    newHandler.get("categories/?type=" + categoryName);
+
+    int result = 0;
+    for(const auto &category : newHandler.categories())
+        for(const auto &operation : operations)
+            if(operation.category() == category.name())
+                result += operation.amount();
+    return result;
+}
+
+int AppModel::getSumOfAllEarnOperations() const
+{
+    return getSumOfOperationsByCategoryType(mOperationHandler.operations(), "earn");
+}
+
+int AppModel::getTodayPnL() const
+{
+    if(mOperationHandler.operations().empty())
+        return 0;
+
+    OperationModelHandler newHandler;
+    newHandler.get("operations/?date=" + QDateTime().currentDateTime().toString("yyyy-MM-dd"));
+
+    const QString &today = QDateTime().currentDateTime().toString("yyyy-MM-dd");
+    int negOpSum = getSumOfOperationsByCategoryType(newHandler.operations(), "negative");
+    int posOpSum = getSumOfOperationsByCategoryType(newHandler.operations(), "positive") + getSumOfOperationsByCategoryType(newHandler.operations(), "earn");
+    return posOpSum - negOpSum;
+}
+
+int AppModel::getWeekPnL() const
+{
+    return getPnLByDays(-7);
+}
+
+int AppModel::getMonthPnL() const
+{
+    return getPnLByDays(-30);
+}
+
+int AppModel::getYearPnl() const
+{
+    return getPnLByDays(-365);
+}
+
+int AppModel::getPnLByDays(int days) const
+{
+    if(mOperationHandler.operations().empty())
+        return 0;
+
+    QVector<OperationModel> operations;
+    for(const auto &operation : mOperationHandler.operations()) {
+        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime time   = QDateTime().currentDateTime().addDays(days);
+        const QDateTime today  = QDateTime().currentDateTime();
+        if(opDate >= time && opDate <= today)
+            operations.push_back(operation);
+    }
+
+    const QString &today = QDateTime().currentDateTime().toString("yyyy-MM-dd");
+    int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
+    int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
+    return posOpSum - negOpSum;
 }
