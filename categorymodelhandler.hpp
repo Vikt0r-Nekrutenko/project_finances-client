@@ -19,8 +19,6 @@ public:
 
     QList<CategoryModel>::iterator findByName(const QString &name);
 
-    QVector<CategoryModel> getByType(const QString &type) const;
-
 private:
 
     QVector<CategoryModel> mCategories;
