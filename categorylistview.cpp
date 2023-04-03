@@ -4,7 +4,7 @@
 CategoryListView::CategoryListView(AppModel *model)
     : ModelViewWithInputField(model)
 {
-    mOptrionsCount = 2;
+    mOptrionsCount = 3;
 }
 
 void CategoryListView::show(stf::Renderer &renderer)
@@ -64,6 +64,8 @@ void CategoryListView::onEnterHandler()
         int id1 = getIntFromInput() - 1;
         int id2 = getIntFromInput() - 1;
         int id3 = getIntFromInput() - 1;
+
+        static_cast<AppModel*>(m_model)->selectFavCategories(id1, id2, id3);
         break;
     }};
 }

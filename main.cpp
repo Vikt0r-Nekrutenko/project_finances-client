@@ -47,6 +47,11 @@ public:
         renderer.draw({60,  8}, "Week PnL:....%m.00 UAH [%d%c]", mWeekPnL, inPercentage(mWeekPnL, mSumOfAllEarnOperations), '%');
         renderer.draw({60,  9}, "Month PnL:...%m.00 UAH [%d%c]", mMonthPnL, inPercentage(mMonthPnL, mSumOfAllEarnOperations), '%');
         renderer.draw({60, 10}, "Year PnL:....%m.00 UAH [%d%c]", mYearPnL, inPercentage(mYearPnL, mSumOfAllEarnOperations), '%');
+        renderer.draw({60,  12}, "Favorite categories:");
+        int i = 1;
+        for(const auto &favcat : model.favCategories()) {
+            renderer.draw({60,  12 + i++}, "Name %s", favcat.name().toStdString().c_str());
+        }
 
         currentView->show(renderer);
         return currentView->isContinue();
