@@ -171,10 +171,11 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
 
 int AppModel::getSumOfOperationsByCategoryType(const QVector<OperationModel> &operations, const QString &categoryName) const
 {
-    const auto &categories = mCategoryHandler.getByType(categoryName);
+    CategoryModelHandler newHandler;
+    newHandler.get("categories/?type=" + categoryName);
 
     int result = 0;
-    for(const auto &category : categories)
+    for(const auto &category : newHandler.categories())
         for(const auto &operation : operations)
             if(operation.category() == category.name())
                 result += operation.amount();
