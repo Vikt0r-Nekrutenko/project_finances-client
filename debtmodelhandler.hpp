@@ -16,6 +16,8 @@ public:
 
     const QVector<DebtModel> &debts() const;
 
+    QList<DebtModel>::iterator findByName(const QString &name);
+
 private:
 
     QVector<DebtModel> mDebts;

@@ -46,3 +46,10 @@ const QVector<DebtModel> &DebtModelHandler::debts() const
 {
     return mDebts;
 }
+
+QList<DebtModel>::iterator DebtModelHandler::findByName(const QString &name)
+{
+    return std::find_if(mDebts.begin(), mDebts.end(), [&](const DebtModel &model){
+        return model.name() == name;
+    });
+}
