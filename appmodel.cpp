@@ -144,3 +144,12 @@ void AppModel::deleteDebt(int index)
         throw std::out_of_range("Debt with that index does not exitst.");
     mDebtHandler.deleteDebt(index);
 }
+
+void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount)
+{
+    if(category->type() == "negative") {
+        deposit->decreaseBalance(amount);
+    } else {
+        deposit->increaseBalance(amount);
+    }
+}

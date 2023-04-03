@@ -33,6 +33,8 @@ public:
 
 private:
 
+    void updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount);
+
     OperationModelHandler mOperationHandler;
     DebtModelHandler mDebtHandler;
     DepositModelHandler mDepositHandler;
