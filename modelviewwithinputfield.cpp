@@ -39,3 +39,27 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
     }
     return this;
 }
+
+std::string ModelViewWithInputField::getStrFromInput()
+{
+    int pos = mInput.find(" ");
+    if(pos != int(mInput.npos)) {
+        std::string result = mInput.substr(0, pos);
+        mInput.erase(0, pos + 1);
+        return result;
+    } else {
+        return mInput.erase(0, pos + 1);
+    }
+}
+
+int ModelViewWithInputField::getIntFromInput()
+{
+    int pos = mInput.find(" ");
+    if(pos != int(mInput.npos)) {
+        int result = std::stoi(mInput.substr(0, pos));
+        mInput.erase(0, pos + 1);
+        return result;
+    } else {
+        return std::stoi(mInput.erase(0, pos + 1));
+    }
+}

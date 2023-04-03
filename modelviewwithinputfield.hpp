@@ -15,6 +15,9 @@ public:
 
 protected:
 
+    std::string getStrFromInput();
+    int getIntFromInput();
+
     std::string mInput;
     std::string mInputBackup;
     int mOption = 0, mOptrionsCount = 0;

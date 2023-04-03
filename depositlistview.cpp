@@ -46,9 +46,9 @@ void DepositListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
-        int delim = mInput.find(" ");
-        std::string name = mInput.substr(0, delim);
-        int balance = std::stoi(mInput.erase(0, delim + 1));
+//        int delim = mInput.find(" ");
+        std::string name = getStrFromInput();//mInput.substr(0, delim);
+        int balance = getIntFromInput();//std::stoi(mInput.erase(0, delim + 1));
         static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
         break;
     }
