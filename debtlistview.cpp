@@ -56,9 +56,11 @@ void DebtListView::onEnterHandler()
         static_cast<AppModel*>(m_model)->addNewDebt(name.c_str(), amount);
         break;
     }
-    case 2:
-        static_cast<AppModel*>(m_model)->deleteDebt(std::stoi(mInput) - 1);
+    case 2: {
+        int id = getIntFromInput();
+        static_cast<AppModel*>(m_model)->deleteDebt(id - 1);
         break;
+    }
     case 3: {
         int delim = mInput.find(" ");
         int id = std::stoi(mInput.substr(0, delim)) - 1;
