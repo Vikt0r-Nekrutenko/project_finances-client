@@ -20,6 +20,8 @@ public:
         stf::Renderer::log.setHeight(4);
         stf::Renderer::log.setY(renderer.Size.y - stf::Renderer::log.height());
         enableLog();
+
+        updateStats();
     }
 
     bool onUpdate(const float) override
@@ -33,8 +35,13 @@ public:
         for(int i = 2; i < int(stf::Renderer::log.y() - 1); ++i)
             renderer.drawPixel({59, i}, '|');
 
-        renderer.draw({60, 2}, "Total earn: %d.00 UAH", model.getSumOfAllEarnOperations());
-        renderer.draw({60, 3}, "Total deposits: %d.00 UAH", model.getSumOfAllDeposits());
+        renderer.draw({60, 2}, "Total earn:.......%d.00 UAH", mSumOfAllEarnOperations);
+        renderer.draw({60, 3}, "Total deposits:...%d.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
+
+        if(mDiffBetweenSoAEOandSoAD > 0)
+            renderer.draw({60, 4}, "Difference:......+%d.00 UAH", mDiffBetweenSoAEOandSoAD);
+        else
+            renderer.draw({60, 4}, "Difference:......%d.00 UAH", mDiffBetweenSoAEOandSoAD);
 
         currentView->show(renderer);
         return currentView->isContinue();
@@ -43,12 +50,27 @@ public:
     void keyEvents(const int key) override
     {
         currentView = currentView->keyEventsHandler(key);
+
+        updateStats();
     }
 
     void mouseEvents(const stf::MouseRecord &mr) override
     {
         currentView = currentView->mouseEventsHandler(mr);
     }
+
+private:
+
+    void updateStats()
+    {
+        mSumOfAllEarnOperations = model.getSumOfAllEarnOperations();
+        mSumOfAllDeposits = model.getSumOfAllDeposits();
+        mDiffBetweenSoAEOandSoAD = mSumOfAllDeposits - mSumOfAllEarnOperations;
+    }
+
+    int mSumOfAllEarnOperations = 0,
+        mSumOfAllDeposits = 0,
+        mDiffBetweenSoAEOandSoAD = 0;
 };
 
 int main(int argc, char *argv[])
