@@ -46,9 +46,8 @@ void DepositListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
-//        int delim = mInput.find(" ");
-        std::string name = getStrFromInput();//mInput.substr(0, delim);
-        int balance = getIntFromInput();//std::stoi(mInput.erase(0, delim + 1));
+        std::string name = getStrFromInput();
+        int balance = getIntFromInput();
         static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
         break;
     }
@@ -56,9 +55,8 @@ void DepositListView::onEnterHandler()
         static_cast<AppModel*>(m_model)->deleteDeposit(std::stoi(mInput) - 1);
         break;
     case 3: {
-        int delim = mInput.find(" ");
-        int id = std::stoi(mInput.substr(0, delim)) - 1;
-        int balance = std::stoi(mInput.erase(0, delim + 1));
+        int id = getIntFromInput() - 1;
+        int balance = getIntFromInput();
         static_cast<AppModel*>(m_model)->changeBalance(id, balance);
         break;
     }}
