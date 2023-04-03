@@ -7,6 +7,8 @@
 #include "appmodel.hpp"
 #include "modelviewwithinputfield.hpp"
 
+#define inPercentage(a, b) int(a / (float)b * 100.f)
+
 class MainWindow : public stf::Window
 {
     AppModel model = AppModel();
@@ -38,13 +40,13 @@ public:
             renderer.drawPixel({59, i}, '|');
 
         renderer.draw({60,  2}, "Total earn:.......%m.00 UAH", mSumOfAllEarnOperations);
-        renderer.draw({60,  3}, "Total deposits:...%m.00 UAH [%d%c]", mSumOfAllDeposits, int(mSumOfAllDeposits / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60,  4}, "Total P&L:........%m.00 UAH [%d%c]", mTotalPnL, int(mTotalPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  3}, "Total deposits:...%m.00 UAH [%d%c]", mSumOfAllDeposits, inPercentage(mSumOfAllDeposits, mSumOfAllEarnOperations), '%');
+        renderer.draw({60,  4}, "Total P&L:........%m.00 UAH [%d%c]", mTotalPnL, inPercentage(mTotalPnL, mSumOfAllEarnOperations), '%');
         renderer.draw({60,  6}, "P&L's:");
-        renderer.draw({60,  7}, "Today PnL:...%m.00 UAH [%d%c]", mTodayPnL, int(mTodayPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60,  8}, "Week PnL:....%m.00 UAH [%d%c]", mWeekPnL, int(mWeekPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60,  9}, "Month PnL:...%m.00 UAH [%d%c]", mMonthPnL, int(mMonthPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
-        renderer.draw({60, 10}, "Year PnL:....%m.00 UAH [%d%c]", mYearPnL, int(mYearPnL / (float)mSumOfAllEarnOperations * 100.f), '%');
+        renderer.draw({60,  7}, "Today PnL:...%m.00 UAH [%d%c]", mTodayPnL, inPercentage(mTodayPnL, mSumOfAllEarnOperations), '%');
+        renderer.draw({60,  8}, "Week PnL:....%m.00 UAH [%d%c]", mWeekPnL, inPercentage(mWeekPnL, mSumOfAllEarnOperations), '%');
+        renderer.draw({60,  9}, "Month PnL:...%m.00 UAH [%d%c]", mMonthPnL, inPercentage(mMonthPnL, mSumOfAllEarnOperations), '%');
+        renderer.draw({60, 10}, "Year PnL:....%m.00 UAH [%d%c]", mYearPnL, inPercentage(mYearPnL, mSumOfAllEarnOperations), '%');
 
         currentView->show(renderer);
         return currentView->isContinue();
