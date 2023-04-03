@@ -30,7 +30,7 @@ public:
         for(int i = 0; i < renderer.Size.x; ++i)
             renderer.drawPixel({i, 1}, '-');
         for(int i = 0; i < renderer.Size.x; ++i)
-            renderer.drawPixel({i, stf::Renderer::log.y() - 1}, '-');
+            renderer.drawPixel({i, int(stf::Renderer::log.y() - 1)}, '-');
         for(int i = 0; i < 59; ++i)
             renderer.drawPixel({i, 13}, '-');
         for(int i = 2; i < int(stf::Renderer::log.y() - 1); ++i)
