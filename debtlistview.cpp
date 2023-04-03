@@ -57,28 +57,18 @@ void DebtListView::onEnterHandler()
         break;
     }
     case 2: {
-        int id = getIntFromInput();
-        static_cast<AppModel*>(m_model)->deleteDebt(id - 1);
+        int id = getIntFromInput() - 1;
+        static_cast<AppModel*>(m_model)->deleteDebt(id);
         break;
     }
     case 3: {
-        int delim = mInput.find(" ");
-        int id = std::stoi(mInput.substr(0, delim)) - 1;
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        std::string name = mInput.substr(0, delim);
-        mInput.erase(0, delim + 1);
-
-        delim = mInput.find(" ");
-        int amount = std::stoi(mInput.substr(0, delim));
-        mInput.erase(0, delim + 1);
+        int id = getIntFromInput() - 1;
+        std::string name = getStrFromInput();
+        int amount = getIntFromInput();
 
         static_cast<AppModel*>(m_model)->changeDebt(id, name.c_str(), amount);
-
         break;
     }
-
     };
 }
 
