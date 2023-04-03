@@ -16,6 +16,8 @@ public:
     const QVector<DepositModel> &deposits() const;
     QVector<DepositModel> &deposits();
 
+    QList<DepositModel>::iterator findByName(const QString &name);
+
 private:
 
     QVector<DepositModel> mDeposits;
