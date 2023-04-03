@@ -13,9 +13,11 @@ public:
     const QVector<DepositModel> &deposits() const;
     const QVector<OperationModel> &operations() const;
     const QVector<CategoryModel> &categories() const;
+    const QVector<CategoryModel> &favCategories() const;
     const QVector<DebtModel> &debts() const;
 
     void updateAllHandlers();
+    void selectFavCategories();
 
     void deleteDeposit(int index);
     void addNewDeposit(const char *name, int balance);
@@ -52,6 +54,8 @@ private:
     DebtModelHandler mDebtHandler;
     DepositModelHandler mDepositHandler;
     CategoryModelHandler mCategoryHandler;
+
+    QVector<CategoryModel> mFavCategories;
 };
 
 #endif // APPMODEL_HPP

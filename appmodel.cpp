@@ -15,6 +15,11 @@ const QVector<CategoryModel> &AppModel::categories() const
     return mCategoryHandler.categories();
 }
 
+const QVector<CategoryModel> &AppModel::favCategories() const
+{
+    return mFavCategories;
+}
+
 const QVector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
@@ -26,6 +31,11 @@ void AppModel::updateAllHandlers()
     mOperationHandler.get("operations/");
     mCategoryHandler.get("categories/");
     mDebtHandler.get("debts/");
+}
+
+void AppModel::selectFavCategories()
+{
+
 }
 
 void AppModel::deleteDeposit(int index)
