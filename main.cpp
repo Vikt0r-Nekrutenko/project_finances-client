@@ -25,6 +25,7 @@ public:
         stf::Renderer::log.setY(renderer.Size.y - stf::Renderer::log.height());
         enableLog();
 
+        model.selectFavCategories(9, 5, 1);
         updateStats();
     }
 
@@ -49,8 +50,9 @@ public:
         renderer.draw({60, 10}, "Year PnL:....%m.00 UAH [%d%c]", mYearPnL, inPercentage(mYearPnL, mSumOfAllEarnOperations), '%');
         renderer.draw({60,  12}, "Favorite categories:");
         int i = 1;
-        for(const auto &favcat : model.favCategories()) {
-            renderer.draw({60,  12 + i++}, "Name %s", favcat.name().toStdString().c_str());
+        for(const auto &favcat : mFavCats) {
+            renderer.draw({60,  12 + i}, "%s", favcat.first.toStdString().c_str());
+            renderer.draw({70, 12 + i++}, "%m.00 UAH", favcat.second);
         }
 
         currentView->show(renderer);
@@ -83,7 +85,13 @@ private:
         mMonthPnL = model.getMonthPnL();
         mYearPnL = model.getYearPnl();
         mTotalPnL = mSumOfAllDeposits - mSumOfAllEarnOperations;
+
+        mFavCats.clear();
+        for(const auto &favcat : model.favCategories())
+            mFavCats.push_back({favcat.name(), model.getSum30DeysOfOperationsByCategory(favcat)});
     }
+
+    QVector<QPair<QString, int>> mFavCats;
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,

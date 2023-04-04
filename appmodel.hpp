@@ -37,6 +37,7 @@ public:
     void changeDebt(int index, const char *name, int amount);
     void deleteDebt(int index);
 
+    int getSum30DeysOfOperationsByCategory(const CategoryModel &category) const;
     int getSumOfAllEarnOperations() const;
     int getSumOfAllDeposits() const;
     int getTodayPnL() const;

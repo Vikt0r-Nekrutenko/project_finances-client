@@ -180,6 +180,25 @@ void AppModel::deleteDebt(int index)
     mDebtHandler.deleteDebt(index);
 }
 
+int AppModel::getSum30DeysOfOperationsByCategory(const CategoryModel &category) const
+{
+    OperationModelHandler newHandler;
+    newHandler.get("operations/?category=" + category.name());
+
+    int result = 0;
+    for(const auto &operation : newHandler.operations()) {
+        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime time   = QDateTime().currentDateTime().addDays(-30);
+        const QDateTime today  = QDateTime().currentDateTime();
+        if(opDate >= time && opDate <= today) {
+            result += operation.amount();
+        }
+    }
+    if(category.type() == "negative")
+        return -result;
+    return result;
+}
+
 
 void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount)
 {
