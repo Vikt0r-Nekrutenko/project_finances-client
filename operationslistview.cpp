@@ -4,7 +4,7 @@
 OperationsListView::OperationsListView(AppModel *model)
     : ModelViewWithInputField(model)
 {
-    mOptrionsCount = 5;
+    mOptrionsCount = 6;
 }
 
 void OperationsListView::show(stf::Renderer &renderer)
@@ -18,7 +18,8 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({0, 5}, "3.Change operation.");
     renderer.drawText({0, 6}, "4.Lend operation.");
     renderer.drawText({0, 7}, "5.Repay operation.");
-    renderer.drawText({0, 8}, "q.Back to menu.");
+    renderer.drawText({0, 8}, "6.Select list.");
+    renderer.drawText({0, 9}, "q.Back to menu.");
 
     if(mOption == 1) {
         renderer.drawText({0, InputInfoY}, "Type 'date deposit amount category' or 'q' to step back:");
@@ -30,6 +31,8 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
     } else if(mOption == 5) {
         renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+    } else if(mOption == 6) {
+        renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
     }
 
 
@@ -96,6 +99,13 @@ void OperationsListView::onEnterHandler()
         std::string name = getStrFromInput();
 
         static_cast<AppModel*>(m_model)->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+        break;
+    }
+    case 6: {
+        int year = getIntFromInput();
+        int month = getIntFromInput();
+
+        static_cast<AppModel*>(m_model)->getOperationsByMonth(year, month);
         break;
     }};
 }
