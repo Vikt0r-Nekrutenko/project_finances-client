@@ -17,7 +17,8 @@ void MenuView::show(stf::Renderer &renderer)
     renderer.drawText({0, 3}, "2.Operations.");
     renderer.drawText({0, 4}, "3.Categories.");
     renderer.drawText({0, 5}, "4.Debts.");
-    renderer.drawText({0, 6}, "q.Exit.");
+    renderer.drawText({0, 6}, "r.Update.");
+    renderer.drawText({0, 7}, "q.Exit.");
 
     AppModel *m = static_cast<AppModel*>(m_model);
 
