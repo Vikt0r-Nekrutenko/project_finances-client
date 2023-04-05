@@ -46,25 +46,18 @@ void OperationsListView::show(stf::Renderer &renderer)
     const auto &operations = app->operations();
     const int listHeinght = operations.size();
 
-    auto drawLine = [&](int beginX, int endX, int y){
-        for(int j = beginX; j < endX; ++j)
-            renderer.drawPixel({j, y}, '.');
-    };
-
     for(int i = operations.size() - 1; i >= 0; --i) {
         const auto &operation = operations.at(i);
         const int y = std::abs(i - listHeinght) + BeginListY;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
 
-        int depositEndX = renderer.draw({BeginListX,  y}, "[%d].%s...%s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
-        drawLine(depositEndX, BeginListX + 31, y);
+        for(int j = BeginListX; j < renderer.Size.x; ++j)
+            renderer.drawPixel({j, y}, '.');
 
-        int amountEndX = renderer.draw({BeginListX + 31, y}, "%m.00 UAH", operation.amount());
-        drawLine(amountEndX, BeginListX + 47, y);
-
-        int categoryEndX = renderer.draw({BeginListX + 47, y}, "%s", operation.category().toStdString().c_str());
-        drawLine(categoryEndX, renderer.Size.x, y);
+        renderer.draw({BeginListX,  y}, "[%d].%s...%s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
+        renderer.draw({BeginListX + 31, y}, "%m.00 UAH", operation.amount());
+        renderer.draw({BeginListX + 47, y}, "%s", operation.category().toStdString().c_str());
     }
 
     ModelViewWithInputField::show(renderer);

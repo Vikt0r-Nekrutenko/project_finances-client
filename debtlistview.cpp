@@ -40,8 +40,10 @@ void DebtListView::show(stf::Renderer &renderer)
         const int y = i + BeginListY + 1;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
+
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, y}, '.');
+
         renderer.draw({BeginListX,  y}, "%d.%s", i + 1, debt.name().toStdString().c_str());
         renderer.draw({BeginListX + 15, y}, "%m.00 UAH", debt.amount());
     }
