@@ -15,6 +15,7 @@ public:
     virtual void onEnterHandler() = 0;
     virtual stf::smv::IView *keyEventsHandler(const int key);
 
+    void show(stf::Renderer &renderer) override;
     int option() const;
 
 protected:
