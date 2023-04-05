@@ -20,24 +20,18 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({0, 7}, "5.Repay operation.");
     renderer.drawText({0, 8}, "q.Back to menu.");
 
-    int inputInfoY = stf::Renderer::log.y() - 3;
-    int inputPreviewY = stf::Renderer::log.y() - 2;
-
-    if(mOption != 0)
-    {
-        if(mOption == 1) {
-            renderer.drawText({0, inputInfoY}, "Type 'date deposit amount category' or 'q' to step back:");
-        } else if(mOption == 2) {
-            renderer.drawText({0, inputInfoY}, "Type 'id' or 'q' to step back:");
-        } else if(mOption == 3) {
-            renderer.drawText({0, inputInfoY}, "Type 'id date deposit amount category' or 'q' to step back:");
-        } else if(mOption == 4) {
-            renderer.drawText({0, inputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
-        } else if(mOption == 5) {
-            renderer.drawText({0, inputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
-        }
-        renderer.draw({0, inputPreviewY}, ">> %s", mInput.c_str());
+    if(mOption == 1) {
+        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount category' or 'q' to step back:");
+    } else if(mOption == 2) {
+        renderer.drawText({0, InputInfoY}, "Type 'id' or 'q' to step back:");
+    } else if(mOption == 3) {
+        renderer.drawText({0, InputInfoY}, "Type 'id date deposit amount category' or 'q' to step back:");
+    } else if(mOption == 4) {
+        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+    } else if(mOption == 5) {
+        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
     }
+
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 

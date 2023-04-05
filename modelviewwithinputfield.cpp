@@ -3,7 +3,9 @@
 #include "menuview.hpp"
 
 ModelViewWithInputField::ModelViewWithInputField(AppModel *model)
-    : stf::smv::IView(model) {}
+    : stf::smv::IView(model),
+      InputPrewievY(stf::Renderer::log.y() - 2),
+      InputInfoY(stf::Renderer::log.y() - 3) {}
 
 void ModelViewWithInputField::inputHandler(int key)
 {
@@ -50,6 +52,9 @@ void ModelViewWithInputField::show(stf::Renderer &renderer)
         renderer.drawPixel({i, int(stf::Renderer::log.y() - 1)}, '-');
     for(int i = 2; i < int(stf::Renderer::log.y() - 3); ++i)
         renderer.drawPixel({BeginListX - 1, i}, '|');
+
+    if(mOption != 0)
+        renderer.draw({0, InputPrewievY}, ">> %s", mInput.c_str());
 }
 
 int ModelViewWithInputField::option() const
