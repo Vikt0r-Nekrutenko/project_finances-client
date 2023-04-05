@@ -14,6 +14,7 @@ public:
     const QVector<OperationModel> &operations() const;
     const QVector<CategoryModel> &categories() const;
     const QVector<CategoryModel> &favCategories() const;
+    const QVector<QPair<QString, int>> &sumByFavCategories() const;
     const QVector<DebtModel> &debts() const;
 
     int sumOfAllEarnOperations() const;
@@ -65,6 +66,7 @@ private:
     DepositModelHandler mDepositHandler;
     CategoryModelHandler mCategoryHandler;
 
+    QVector<QPair<QString, int>> mSumByFavCategories;
     QVector<CategoryModel> mFavCategories;
 
     int mSumOfAllEarnOperations = 0,

@@ -20,6 +20,11 @@ const QVector<CategoryModel> &AppModel::favCategories() const
     return mFavCategories;
 }
 
+const QVector<QPair<QString, int> > &AppModel::sumByFavCategories() const
+{
+    return mSumByFavCategories;
+}
+
 const QVector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
@@ -71,6 +76,10 @@ void AppModel::updateStats()
     mMonthPnL = getMonthPnL();
     mYearPnL = getYearPnl();
     mTotalPnL = mSumOfAllDeposits - mSumOfAllEarnOperations;
+
+    mSumByFavCategories.clear();
+    for(const auto &favcat : mFavCategories)
+        mSumByFavCategories.push_back({favcat.name(), getSum30DeysOfOperationsByCategory(favcat)});
 }
 
 void AppModel::updateAllHandlers()

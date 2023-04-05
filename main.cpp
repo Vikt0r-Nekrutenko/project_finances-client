@@ -23,7 +23,7 @@ public:
         enableLog();
 
         model.selectFavCategories(9, 5, 1);
-        menuView.updateStats();
+        model.updateStats();
     }
 
     bool onUpdate(const float) override
