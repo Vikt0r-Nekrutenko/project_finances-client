@@ -31,7 +31,7 @@ void DebtListView::show(stf::Renderer &renderer)
         renderer.drawText({3, 3}, mInput.c_str());
     }
 
-    renderer.drawText({0, BeginListY - 1}, "Your debts:");
+    renderer.drawText({BeginListX, BeginListY}, "Your debts:");
 
     const auto &debts = app->debts();
 
@@ -40,9 +40,14 @@ void DebtListView::show(stf::Renderer &renderer)
         const int y = i + BeginListY + 1;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
-        renderer.draw({0,  y}, "%d.%s", i + 1, debt.name().toStdString().c_str());
-        renderer.draw({15, y}, "%m.00 UAH", debt.amount());
+
+        for(int j = BeginListX; j < renderer.Size.x; ++j)
+            renderer.drawPixel({j, y}, '.');
+
+        renderer.draw({BeginListX,  y}, "%d.%s", i + 1, debt.name().toStdString().c_str());
+        renderer.draw({BeginListX + 15, y}, "%m.00 UAH", debt.amount());
     }
+    ModelViewWithInputField::show(renderer);
 }
 
 void DebtListView::onEnterHandler()

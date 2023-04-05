@@ -13,9 +13,21 @@ public:
     const QVector<DepositModel> &deposits() const;
     const QVector<OperationModel> &operations() const;
     const QVector<CategoryModel> &categories() const;
+    const QVector<CategoryModel> &favCategories() const;
+    const QVector<QPair<QString, int>> &sumByFavCategories() const;
     const QVector<DebtModel> &debts() const;
 
+    int sumOfAllEarnOperations() const;
+    int sumOfAllDeposits() const;
+    int totalPnL() const;
+    int todayPnL() const;
+    int weekPnL() const;
+    int monthPnL() const;
+    int yearPnL() const;
+
+    void updateStats();
     void updateAllHandlers();
+    void selectFavCategories(int index1, int index2, int index3);
 
     void deleteDeposit(int index);
     void addNewDeposit(const char *name, int balance);
@@ -35,6 +47,7 @@ public:
     void changeDebt(int index, const char *name, int amount);
     void deleteDebt(int index);
 
+    int getSum30DeysOfOperationsByCategory(const CategoryModel &category) const;
     int getSumOfAllEarnOperations() const;
     int getSumOfAllDeposits() const;
     int getTodayPnL() const;
@@ -52,6 +65,17 @@ private:
     DebtModelHandler mDebtHandler;
     DepositModelHandler mDepositHandler;
     CategoryModelHandler mCategoryHandler;
+
+    QVector<QPair<QString, int>> mSumByFavCategories;
+    QVector<CategoryModel> mFavCategories;
+
+    int mSumOfAllEarnOperations = 0,
+        mSumOfAllDeposits = 0,
+        mTotalPnL = 0,
+        mTodayPnL = 0,
+        mWeekPnL = 0,
+        mMonthPnL = 0,
+        mYearPnL = 0;
 };
 
 #endif // APPMODEL_HPP

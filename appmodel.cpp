@@ -15,9 +15,71 @@ const QVector<CategoryModel> &AppModel::categories() const
     return mCategoryHandler.categories();
 }
 
+const QVector<CategoryModel> &AppModel::favCategories() const
+{
+    return mFavCategories;
+}
+
+const QVector<QPair<QString, int> > &AppModel::sumByFavCategories() const
+{
+    return mSumByFavCategories;
+}
+
 const QVector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
+}
+
+int AppModel::sumOfAllEarnOperations() const
+{
+    return mSumOfAllEarnOperations;
+}
+
+int AppModel::sumOfAllDeposits() const
+{
+    return mSumOfAllDeposits;
+}
+
+int AppModel::totalPnL() const
+{
+    return mTotalPnL;
+}
+
+int AppModel::todayPnL() const
+{
+    return mTodayPnL;
+}
+
+int AppModel::weekPnL() const
+{
+    return mWeekPnL;
+}
+
+int AppModel::monthPnL() const
+{
+    return mMonthPnL;
+}
+
+int AppModel::yearPnL() const
+{
+    return mYearPnL;
+}
+
+void AppModel::updateStats()
+{
+    updateAllHandlers();
+
+    mSumOfAllEarnOperations = getSumOfAllEarnOperations();
+    mSumOfAllDeposits = getSumOfAllDeposits();
+    mTodayPnL = getTodayPnL();
+    mWeekPnL = getWeekPnL();
+    mMonthPnL = getMonthPnL();
+    mYearPnL = getYearPnl();
+    mTotalPnL = mSumOfAllDeposits - mSumOfAllEarnOperations;
+
+    mSumByFavCategories.clear();
+    for(const auto &favcat : mFavCategories)
+        mSumByFavCategories.push_back({favcat.name(), getSum30DeysOfOperationsByCategory(favcat)});
 }
 
 void AppModel::updateAllHandlers()
@@ -26,6 +88,14 @@ void AppModel::updateAllHandlers()
     mOperationHandler.get("operations/");
     mCategoryHandler.get("categories/");
     mDebtHandler.get("debts/");
+}
+
+void AppModel::selectFavCategories(int index1, int index2, int index3)
+{
+    mFavCategories.clear();
+    mFavCategories.append({mCategoryHandler.categories().at(index1),
+                           mCategoryHandler.categories().at(index2),
+                           mCategoryHandler.categories().at(index3)});
 }
 
 void AppModel::deleteDeposit(int index)
@@ -165,6 +235,25 @@ void AppModel::deleteDebt(int index)
     if(index >= mDebtHandler.debts().size() || index < 0)
         throw std::out_of_range("Debt with that index does not exitst.");
     mDebtHandler.deleteDebt(index);
+}
+
+int AppModel::getSum30DeysOfOperationsByCategory(const CategoryModel &category) const
+{
+    OperationModelHandler newHandler;
+    newHandler.get("operations/?category=" + category.name());
+
+    int result = 0;
+    for(const auto &operation : newHandler.operations()) {
+        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime time   = QDateTime().currentDateTime().addDays(-30);
+        const QDateTime today  = QDateTime().currentDateTime();
+        if(opDate >= time && opDate <= today) {
+            result += operation.amount();
+        }
+    }
+    if(category.type() == "negative")
+        return -result;
+    return result;
 }
 
 

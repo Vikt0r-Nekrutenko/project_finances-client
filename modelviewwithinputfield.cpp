@@ -40,6 +40,16 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
     return this;
 }
 
+void ModelViewWithInputField::show(stf::Renderer &renderer)
+{
+    for(int i = 0; i < renderer.Size.x; ++i)
+        renderer.drawPixel({i, 1}, '-');
+    for(int i = 0; i < renderer.Size.x; ++i)
+        renderer.drawPixel({i, int(stf::Renderer::log.y() - 1)}, '-');
+    for(int i = 2; i < int(stf::Renderer::log.y() - 1); ++i)
+        renderer.drawPixel({BeginListX - 1, i}, '|');
+}
+
 int ModelViewWithInputField::option() const
 {
     return mOption;

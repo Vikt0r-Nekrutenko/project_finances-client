@@ -4,7 +4,7 @@
 CategoryListView::CategoryListView(AppModel *model)
     : ModelViewWithInputField(model)
 {
-    mOptrionsCount = 2;
+    mOptrionsCount = 3;
 }
 
 void CategoryListView::show(stf::Renderer &renderer)
@@ -15,7 +15,8 @@ void CategoryListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 2}, "Choose an option:");
         renderer.drawText({0, 3}, "1.Add new category.");
         renderer.drawText({0, 4}, "2.Delete category.");
-        renderer.drawText({0, 5}, "q.Back to menu.");
+        renderer.drawText({0, 5}, "3.Select favorites.");
+        renderer.drawText({0, 6}, "q.Back to menu.");
     } else if(mOption == 1) {
         renderer.drawText({0, 2}, "Type 'name type' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
@@ -24,9 +25,13 @@ void CategoryListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 2}, "Type 'id' or 'q' to step back:");
         renderer.drawText({0, 3}, ">> ");
         renderer.drawText({3, 3}, mInput.c_str());
-    }
+    } else if(mOption == 3) {
+    renderer.drawText({0, 2}, "Type 'id id id' or 'q' to step back:");
+    renderer.drawText({0, 3}, ">> ");
+    renderer.drawText({3, 3}, mInput.c_str());
+}
 
-    renderer.drawText({0, BeginListY - 1}, "Your categories:");
+    renderer.drawText({BeginListX, BeginListY}, "Your categories:");
 
     const auto &categories = app->categories();
     const int listHeinght = categories.size();
@@ -36,8 +41,14 @@ void CategoryListView::show(stf::Renderer &renderer)
         const int y = std::abs(i - listHeinght) + BeginListY;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
-        renderer.draw({0,  y}, "%d.%s -- %s", i + 1, category.name().toStdString().c_str(), category.type().toStdString().c_str());
+
+        for(int j = BeginListX; j < renderer.Size.x; ++j)
+            renderer.drawPixel({j, y}, '.');
+
+        renderer.draw({BeginListX,  y}, "%d.%s", i + 1, category.name().toStdString().c_str());
+        renderer.draw({BeginListX + 15,  y}, "%s", category.type().toStdString().c_str());
     }
+    ModelViewWithInputField::show(renderer);
 }
 
 void CategoryListView::onEnterHandler()
@@ -53,6 +64,14 @@ void CategoryListView::onEnterHandler()
     case 2: {
         int id = getIntFromInput() - 1;
         static_cast<AppModel*>(m_model)->deleteCategory(id);
+        break;
+    }
+    case 3: {
+        int id1 = getIntFromInput() - 1;
+        int id2 = getIntFromInput() - 1;
+        int id3 = getIntFromInput() - 1;
+
+        static_cast<AppModel*>(m_model)->selectFavCategories(id1, id2, id3);
         break;
     }};
 }
