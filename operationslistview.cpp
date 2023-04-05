@@ -35,7 +35,6 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
     }
 
-
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
     const auto &operations = app->operationsByMonth();
