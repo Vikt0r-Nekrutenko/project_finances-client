@@ -25,9 +25,9 @@ const QVector<QPair<QString, int> > &AppModel::sumByFavCategories() const
     return mSumByFavCategories;
 }
 
-const QVector<OperationModel> &AppModel::operationsByCurrentMonth() const
+const QVector<OperationModel> &AppModel::operationsByMonth() const
 {
-    return mOperationsByCurrentMonth;
+    return mOperationsByMonth;
 }
 
 const QVector<DebtModel> &AppModel::debts() const
@@ -107,12 +107,17 @@ void AppModel::selectFavCategories(int index1, int index2, int index3)
 
 void AppModel::getOperationsByCurrentMonth()
 {
-    mOperationsByCurrentMonth.clear();
     const QDate &currentDate = QDate().currentDate();
+    getOperationsByMonth(currentDate.year(), currentDate.month());
+}
+
+void AppModel::getOperationsByMonth(int year, int month)
+{
+    mOperationsByMonth.clear();
     for(const auto &operation : mOperationHandler.operations()) {
         const QDate &date = QDateTime().fromString(operation.date(), "yyyy-MM-dd").date();
-        if(currentDate.year() == date.year() && currentDate.month() == date.month())
-            mOperationsByCurrentMonth.push_back(operation);
+        if(year == date.year() && month == date.month())
+            mOperationsByMonth.push_back(operation);
     }
 }
 

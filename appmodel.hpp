@@ -15,7 +15,7 @@ public:
     const QVector<CategoryModel> &categories() const;
     const QVector<CategoryModel> &favCategories() const;
     const QVector<QPair<QString, int>> &sumByFavCategories() const;
-    const QVector<OperationModel> &operationsByCurrentMonth() const;
+    const QVector<OperationModel> &operationsByMonth() const;
     const QVector<DebtModel> &debts() const;
 
     int sumOfAllEarnOperations() const;
@@ -29,6 +29,7 @@ public:
     void updateStats();
     void updateAllHandlers();
     void getOperationsByCurrentMonth();
+    void getOperationsByMonth(int year, int month);
     void selectFavCategories(int index1, int index2, int index3);
 
     void deleteDeposit(int index);
@@ -70,7 +71,7 @@ private:
 
     QVector<QPair<QString, int>> mSumByFavCategories;
     QVector<CategoryModel> mFavCategories;
-    QVector<OperationModel> mOperationsByCurrentMonth;
+    QVector<OperationModel> mOperationsByMonth;
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,
