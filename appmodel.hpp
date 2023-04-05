@@ -15,6 +15,7 @@ public:
     const QVector<CategoryModel> &categories() const;
     const QVector<CategoryModel> &favCategories() const;
     const QVector<QPair<QString, int>> &sumByFavCategories() const;
+    const QVector<OperationModel> &operationsByCurrentMonth() const;
     const QVector<DebtModel> &debts() const;
 
     int sumOfAllEarnOperations() const;
@@ -27,6 +28,7 @@ public:
 
     void updateStats();
     void updateAllHandlers();
+    void getOperationsByCurrentMonth();
     void selectFavCategories(int index1, int index2, int index3);
 
     void deleteDeposit(int index);
@@ -47,7 +49,7 @@ public:
     void changeDebt(int index, const char *name, int amount);
     void deleteDebt(int index);
 
-    int getSum30DeysOfOperationsByCategory(const CategoryModel &category) const;
+    int getSum30DaysOfOperationsByCategory(const CategoryModel &category) const;
     int getSumOfAllEarnOperations() const;
     int getSumOfAllDeposits() const;
     int getTodayPnL() const;
@@ -68,6 +70,7 @@ private:
 
     QVector<QPair<QString, int>> mSumByFavCategories;
     QVector<CategoryModel> mFavCategories;
+    QVector<OperationModel> mOperationsByCurrentMonth;
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,

@@ -43,7 +43,7 @@ void OperationsListView::show(stf::Renderer &renderer)
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
-    const auto &operations = app->operations();
+    const auto &operations = app->operationsByCurrentMonth();
     const int listHeinght = operations.size();
 
     for(int i = operations.size() - 1; i >= 0; --i) {

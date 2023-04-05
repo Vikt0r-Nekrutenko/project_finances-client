@@ -25,6 +25,11 @@ const QVector<QPair<QString, int> > &AppModel::sumByFavCategories() const
     return mSumByFavCategories;
 }
 
+const QVector<OperationModel> &AppModel::operationsByCurrentMonth() const
+{
+    return mOperationsByCurrentMonth;
+}
+
 const QVector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
@@ -79,7 +84,9 @@ void AppModel::updateStats()
 
     mSumByFavCategories.clear();
     for(const auto &favcat : mFavCategories)
-        mSumByFavCategories.push_back({favcat.name(), getSum30DeysOfOperationsByCategory(favcat)});
+        mSumByFavCategories.push_back({favcat.name(), getSum30DaysOfOperationsByCategory(favcat)});
+
+    getOperationsByCurrentMonth();
 }
 
 void AppModel::updateAllHandlers()
@@ -96,6 +103,17 @@ void AppModel::selectFavCategories(int index1, int index2, int index3)
     mFavCategories.append({mCategoryHandler.categories().at(index1),
                            mCategoryHandler.categories().at(index2),
                            mCategoryHandler.categories().at(index3)});
+}
+
+void AppModel::getOperationsByCurrentMonth()
+{
+    mOperationsByCurrentMonth.clear();
+    const QDate &currentDate = QDate().currentDate();
+    for(const auto &operation : mOperationHandler.operations()) {
+        const QDate &date = QDateTime().fromString(operation.date(), "yyyy-MM-dd").date();
+        if(currentDate.year() == date.year() && currentDate.month() == date.month())
+            mOperationsByCurrentMonth.push_back(operation);
+    }
 }
 
 void AppModel::deleteDeposit(int index)
@@ -237,7 +255,7 @@ void AppModel::deleteDebt(int index)
     mDebtHandler.deleteDebt(index);
 }
 
-int AppModel::getSum30DeysOfOperationsByCategory(const CategoryModel &category) const
+int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) const
 {
     OperationModelHandler newHandler;
     newHandler.get("operations/?category=" + category.name());
