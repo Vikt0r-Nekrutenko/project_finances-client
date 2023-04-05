@@ -9,7 +9,10 @@
 #define inPercentage(a, b) int(a / (float)b * 100.f)
 
 MenuView::MenuView(AppModel *model)
-    : ModelViewWithInputField(model) {}
+    : ModelViewWithInputField(model)
+{
+    updateStats();
+}
 
 void MenuView::show(stf::Renderer &renderer)
 {
