@@ -25,6 +25,54 @@ const QVector<DebtModel> &AppModel::debts() const
     return mDebtHandler.debts();
 }
 
+int AppModel::sumOfAllEarnOperations() const
+{
+    return mSumOfAllEarnOperations;
+}
+
+int AppModel::sumOfAllDeposits() const
+{
+    return mSumOfAllDeposits;
+}
+
+int AppModel::totalPnL() const
+{
+    return mTotalPnL;
+}
+
+int AppModel::todayPnL() const
+{
+    return mTodayPnL;
+}
+
+int AppModel::weekPnL() const
+{
+    return mWeekPnL;
+}
+
+int AppModel::monthPnL() const
+{
+    return mMonthPnL;
+}
+
+int AppModel::yearPnL() const
+{
+    return mYearPnL;
+}
+
+void AppModel::updateStats()
+{
+    updateAllHandlers();
+
+    mSumOfAllEarnOperations = getSumOfAllEarnOperations();
+    mSumOfAllDeposits = getSumOfAllDeposits();
+    mTodayPnL = getTodayPnL();
+    mWeekPnL = getWeekPnL();
+    mMonthPnL = getMonthPnL();
+    mYearPnL = getYearPnl();
+    mTotalPnL = mSumOfAllDeposits - mSumOfAllEarnOperations;
+}
+
 void AppModel::updateAllHandlers()
 {
     mDepositHandler.get("deposits/");

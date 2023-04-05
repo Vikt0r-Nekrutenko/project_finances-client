@@ -9,10 +9,7 @@
 #define inPercentage(a, b) int(a / (float)b * 100.f)
 
 MenuView::MenuView(AppModel *model)
-    : ModelViewWithInputField(model)
-{
-    updateStats();
-}
+    : ModelViewWithInputField(model) {}
 
 void MenuView::show(stf::Renderer &renderer)
 {
@@ -61,23 +58,4 @@ stf::smv::IView *MenuView::keyEventsHandler(const int key)
     case 'r': updateStats(); break;
     }
     return this;
-}
-
-void MenuView::updateStats()
-{
-    AppModel &model = *static_cast<AppModel*>(m_model);
-
-    model.updateAllHandlers();
-
-    mSumOfAllEarnOperations = model.getSumOfAllEarnOperations();
-    mSumOfAllDeposits = model.getSumOfAllDeposits();
-    mTodayPnL = model.getTodayPnL();
-    mWeekPnL = model.getWeekPnL();
-    mMonthPnL = model.getMonthPnL();
-    mYearPnL = model.getYearPnl();
-    mTotalPnL = mSumOfAllDeposits - mSumOfAllEarnOperations;
-
-    mFavCats.clear();
-    for(const auto &favcat : model.favCategories())
-        mFavCats.push_back({favcat.name(), model.getSum30DeysOfOperationsByCategory(favcat)});
 }

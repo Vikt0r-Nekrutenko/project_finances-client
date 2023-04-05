@@ -16,6 +16,15 @@ public:
     const QVector<CategoryModel> &favCategories() const;
     const QVector<DebtModel> &debts() const;
 
+    int sumOfAllEarnOperations() const;
+    int sumOfAllDeposits() const;
+    int totalPnL() const;
+    int todayPnL() const;
+    int weekPnL() const;
+    int monthPnL() const;
+    int yearPnL() const;
+
+    void updateStats();
     void updateAllHandlers();
     void selectFavCategories(int index1, int index2, int index3);
 
@@ -57,6 +66,14 @@ private:
     CategoryModelHandler mCategoryHandler;
 
     QVector<CategoryModel> mFavCategories;
+
+    int mSumOfAllEarnOperations = 0,
+        mSumOfAllDeposits = 0,
+        mTotalPnL = 0,
+        mTodayPnL = 0,
+        mWeekPnL = 0,
+        mMonthPnL = 0,
+        mYearPnL = 0;
 };
 
 #endif // APPMODEL_HPP
