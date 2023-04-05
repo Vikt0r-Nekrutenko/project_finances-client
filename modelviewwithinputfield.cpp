@@ -46,10 +46,10 @@ void ModelViewWithInputField::show(stf::Renderer &renderer)
         renderer.drawPixel({i, 1}, '-');
     for(int i = 0; i < renderer.Size.x; ++i)
         renderer.drawPixel({i, int(stf::Renderer::log.y() - 1)}, '-');
-    for(int i = 0; i < 59; ++i)
-        renderer.drawPixel({i, 13}, '-');
+//    for(int i = 0; i < BeginListX - 1; ++i)
+//        renderer.drawPixel({i, 13}, '-');
     for(int i = 2; i < int(stf::Renderer::log.y() - 1); ++i)
-        renderer.drawPixel({59, i}, '|');
+        renderer.drawPixel({BeginListX - 1, i}, '|');
 }
 
 int ModelViewWithInputField::option() const

@@ -41,7 +41,7 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({3, 3}, mInput.c_str());
     }
 
-    renderer.drawText({0, BeginListY - 1}, "Your operations:");
+    renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
     const auto &operations = app->operations();
     const int listHeinght = operations.size();
@@ -57,15 +57,17 @@ void OperationsListView::show(stf::Renderer &renderer)
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
 
-        int depositEndX = renderer.draw({0,  y}, "%d.%s %s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
-        drawLine(depositEndX, 27, y);
+        int depositEndX = renderer.draw({BeginListX,  y}, "[%d].%s...%s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
+        drawLine(depositEndX, BeginListX + 31, y);
 
-        int amountEndX = renderer.draw({27, y}, "%m.00 UAH", operation.amount());
-        drawLine(amountEndX, 43, y);
+        int amountEndX = renderer.draw({BeginListX + 31, y}, "%m.00 UAH", operation.amount());
+        drawLine(amountEndX, BeginListX + 47, y);
 
-        int categoryEndX = renderer.draw({43, y}, "%s", operation.category().toStdString().c_str());
-        drawLine(categoryEndX, 59, y);
+        int categoryEndX = renderer.draw({BeginListX + 47, y}, "%s", operation.category().toStdString().c_str());
+        drawLine(categoryEndX, renderer.Size.x, y);
     }
+
+    ModelViewWithInputField::show(renderer);
 }
 
 void OperationsListView::onEnterHandler()

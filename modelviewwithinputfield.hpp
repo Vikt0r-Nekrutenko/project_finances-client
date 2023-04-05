@@ -8,13 +8,14 @@ class AppModel;
 class ModelViewWithInputField : public stf::smv::IView
 {
 public:
-    const int BeginListY = 13;
+    const int BeginListY = 2;
+    const int BeginListX = 25;
 
     ModelViewWithInputField(AppModel *model);
     virtual void inputHandler(int key);
     virtual void onEnterHandler() = 0;
-    virtual stf::smv::IView *keyEventsHandler(const int key);
 
+    stf::smv::IView *keyEventsHandler(const int key) override;
     void show(stf::Renderer &renderer) override;
     int option() const;
 
