@@ -1,19 +1,19 @@
 #ifndef MENUVIEW_HPP
 #define MENUVIEW_HPP
 
-#include <smv/iview.hpp>
+#include "modelviewwithinputfield.hpp"
 #include <QString>
 #include <QVector>
 
 class AppModel;
 
-class MenuView : public stf::smv::IView
+class MenuView : public ModelViewWithInputField
 {
 public:
     MenuView(AppModel *model);
     void updateStats();
     void show(stf::Renderer &renderer) override;
-
+    void onEnterHandler() override {};
     stf::smv::IView *keyEventsHandler(const int key) override;
 
 private:
