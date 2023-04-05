@@ -15,7 +15,7 @@ void CategoryListView::show(stf::Renderer &renderer)
         renderer.drawText({0, 2}, "Choose an option:");
         renderer.drawText({0, 3}, "1.Add new category.");
         renderer.drawText({0, 4}, "2.Delete category.");
-        renderer.drawText({0, 5}, "3.Select favorite categories.");
+        renderer.drawText({0, 5}, "3.Select favorites.");
         renderer.drawText({0, 6}, "q.Back to menu.");
     } else if(mOption == 1) {
         renderer.drawText({0, 2}, "Type 'name type' or 'q' to step back:");
@@ -31,7 +31,7 @@ void CategoryListView::show(stf::Renderer &renderer)
     renderer.drawText({3, 3}, mInput.c_str());
 }
 
-    renderer.drawText({0, BeginListY - 1}, "Your categories:");
+    renderer.drawText({BeginListX, BeginListY}, "Your categories:");
 
     const auto &categories = app->categories();
     const int listHeinght = categories.size();
@@ -41,8 +41,14 @@ void CategoryListView::show(stf::Renderer &renderer)
         const int y = std::abs(i - listHeinght) + BeginListY;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
-        renderer.draw({0,  y}, "%d.%s -- %s", i + 1, category.name().toStdString().c_str(), category.type().toStdString().c_str());
+
+        for(int j = BeginListX; j < renderer.Size.x; ++j)
+            renderer.drawPixel({j, y}, '.');
+
+        renderer.draw({BeginListX,  y}, "%d.%s", i + 1, category.name().toStdString().c_str());
+        renderer.draw({BeginListX + 15,  y}, "%s", category.type().toStdString().c_str());
     }
+    ModelViewWithInputField::show(renderer);
 }
 
 void CategoryListView::onEnterHandler()
