@@ -9,27 +9,22 @@ CategoryListView::CategoryListView(AppModel *model)
 
 void CategoryListView::show(stf::Renderer &renderer)
 {
+    ModelViewWithInputField::show(renderer);
     AppModel *app = static_cast<AppModel*>(m_model);
 
-    if(mOption == 0) {
-        renderer.drawText({0, 2}, "Choose an option:");
-        renderer.drawText({0, 3}, "1.Add new category.");
-        renderer.drawText({0, 4}, "2.Delete category.");
-        renderer.drawText({0, 5}, "3.Select favorites.");
-        renderer.drawText({0, 6}, "q.Back to menu.");
-    } else if(mOption == 1) {
-        renderer.drawText({0, 2}, "Type 'name type' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
+    renderer.drawText({0, 2}, "Choose an option:");
+    renderer.drawText({0, 3}, "1.Add new category.");
+    renderer.drawText({0, 4}, "2.Delete category.");
+    renderer.drawText({0, 5}, "3.Select favorites.");
+    renderer.drawText({0, 6}, "q.Back to menu.");
+
+    if(mOption == 1) {
+        renderer.drawText({0, InputInfoY}, "Type 'name type' or 'q' to step back:");
     } else if(mOption == 2) {
-        renderer.drawText({0, 2}, "Type 'id' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
+        renderer.drawText({0, InputInfoY}, "Type 'id' or 'q' to step back:");
     } else if(mOption == 3) {
-    renderer.drawText({0, 2}, "Type 'id id id' or 'q' to step back:");
-    renderer.drawText({0, 3}, ">> ");
-    renderer.drawText({3, 3}, mInput.c_str());
-}
+        renderer.drawText({0, InputInfoY}, "Type 'id id id' or 'q' to step back:");
+    }
 
     renderer.drawText({BeginListX, BeginListY}, "Your categories:");
 
@@ -48,7 +43,6 @@ void CategoryListView::show(stf::Renderer &renderer)
         renderer.draw({BeginListX,  y}, "%d.%s", i + 1, category.name().toStdString().c_str());
         renderer.draw({BeginListX + 15,  y}, "%s", category.type().toStdString().c_str());
     }
-    ModelViewWithInputField::show(renderer);
 }
 
 void CategoryListView::onEnterHandler()
