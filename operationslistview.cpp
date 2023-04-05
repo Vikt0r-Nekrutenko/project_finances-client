@@ -55,7 +55,7 @@ void OperationsListView::show(stf::Renderer &renderer)
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, y}, '.');
 
-        renderer.draw({BeginListX,  y}, "[%d].%s...%s", i + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
+        renderer.draw({BeginListX,  y}, "[%d].%s...%s", operation.id() + 1, operation.date().toStdString().c_str(), operation.deposit().toStdString().c_str());
         renderer.draw({BeginListX + 31, y}, "%m.00 UAH", operation.amount());
         renderer.draw({BeginListX + 47, y}, "%s", operation.category().toStdString().c_str());
     }
