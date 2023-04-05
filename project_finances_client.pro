@@ -9,25 +9,25 @@ CONFIG -= app_bundle
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        appmodel.cpp \
-    categorylistview.cpp \
-    categorymodel.cpp \
-    categorymodelhandler.cpp \
-        closeview.cpp \
-        datamodel.cpp \
-    debtlistview.cpp \
-    debtmodel.cpp \
-    debtmodelhandler.cpp \
-        depositlistview.cpp \
-        depositmodel.cpp \
-        depositmodelhandler.cpp \
+        models/sources/appmodel.cpp \
+        models/sources/datamodel.cpp \
+        models/sources/debtmodel.cpp \
+        models/sources/depositmodel.cpp \
+        models/sources/modelhandler.cpp \
+        models/sources/categorymodel.cpp \
+        models/sources/operationmodel.cpp \
+        models/sources/debtmodelhandler.cpp \
+        models/sources/depositmodelhandler.cpp \
+        models/sources/categorymodelhandler.cpp \
+        models/sources/operationmodelhandler.cpp \
+        views/sources/menuview.cpp \
+        views/sources/closeview.cpp \
+        views/sources/debtlistview.cpp \
+        views/sources/depositlistview.cpp \
+        views/sources/categorylistview.cpp \
+        views/sources/operationslistview.cpp \
+        views/sources/modelviewwithinputfield.cpp \
         main.cpp \
-        menuview.cpp \
-        modelhandler.cpp \
-        modelviewwithinputfield.cpp \
-        operationmodel.cpp \
-    operationmodelhandler.cpp \
-    operationslistview.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -38,29 +38,33 @@ win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../stf/release/ -lstf
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../stf/debug/ -lstf
 else:unix:!macx: LIBS += -L$$PWD/../stf/ -lstf
 
-INCLUDEPATH += $$PWD/../stf
-DEPENDPATH += $$PWD/../stf
+INCLUDEPATH += $$PWD/../stf \
+                models/headers \
+                views/headers \
+DEPENDPATH += $$PWD/../stf \
+                models/headers \
+                views/headers \
 
 HEADERS += \
-    appmodel.hpp \
-    categorylistview.hpp \
-    categorymodel.hpp \
-    categorymodelhandler.hpp \
-    closeview.hpp \
-    crudmodel.hpp \
-    datamodel.hpp \
-    debtlistview.hpp \
-    debtmodel.hpp \
-    debtmodelhandler.hpp \
-    depositlistview.hpp \
-    depositmodel.hpp \
-    depositmodelhandler.hpp \
-    menuview.hpp \
-    modelhandler.hpp \
-    modelviewwithinputfield.hpp \
-    operationmodel.hpp \
-    operationmodelhandler.hpp \
-    operationslistview.hpp
+    models/headers/appmodel.hpp \
+    models/headers/crudmodel.hpp \
+    models/headers/debtmodel.hpp \
+    models/headers/datamodel.hpp \
+    models/headers/depositmodel.hpp \
+    models/headers/modelhandler.hpp \
+    models/headers/categorymodel.hpp \
+    models/headers/operationmodel.hpp \
+    models/headers/debtmodelhandler.hpp \
+    models/headers/depositmodelhandler.hpp \
+    models/headers/categorymodelhandler.hpp \
+    models/headers/operationmodelhandler.hpp \
+    views/headers/menuview.hpp \
+    views/headers/closeview.hpp \
+    views/headers/debtlistview.hpp \
+    views/headers/depositlistview.hpp \
+    views/headers/categorylistview.hpp \
+    views/headers/operationslistview.hpp \
+    views/headers/modelviewwithinputfield.hpp \
 
 DISTFILES += \
     sprs/main_stats.spr \
