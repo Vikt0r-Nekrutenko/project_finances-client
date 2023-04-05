@@ -61,3 +61,7 @@ HEADERS += \
     operationmodel.hpp \
     operationmodelhandler.hpp \
     operationslistview.hpp
+
+DISTFILES += \
+    sprs/main_stats.spr \
+    sprs/pnl_stats.spr

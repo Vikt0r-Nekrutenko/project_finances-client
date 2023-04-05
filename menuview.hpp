@@ -14,6 +14,11 @@ public:
     void show(stf::Renderer &renderer) override;
     void onEnterHandler() override {};
     stf::smv::IView *keyEventsHandler(const int key) override;
+
+private:
+
+    stf::Sprite mMainStatsTable = stf::Sprite("sprs/main_stats.spr");
+    stf::Sprite mPnLStatsTable = stf::Sprite("sprs/pnl_stats.spr");
 };
 
 #endif // MENUVIEW_HPP
