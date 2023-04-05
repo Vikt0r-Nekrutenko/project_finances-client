@@ -9,26 +9,21 @@ DebtListView::DebtListView(AppModel *model)
 
 void DebtListView::show(stf::Renderer &renderer)
 {
+    ModelViewWithInputField::show(renderer);
     AppModel *app = static_cast<AppModel*>(m_model);
 
-    if(mOption == 0) {
-        renderer.drawText({0, 2}, "Choose an option:");
-        renderer.drawText({0, 3}, "1.Add new debt.");
-        renderer.drawText({0, 4}, "2.Delete debt.");
-        renderer.drawText({0, 5}, "3.Change debt.");
-        renderer.drawText({0, 6}, "q.Back to menu.");
-    } else if(mOption == 1) {
-        renderer.drawText({0, 2}, "Type 'name amount' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
+    renderer.drawText({0, 2}, "Choose an option:");
+    renderer.drawText({0, 3}, "1.Add new debt.");
+    renderer.drawText({0, 4}, "2.Delete debt.");
+    renderer.drawText({0, 5}, "3.Change debt.");
+    renderer.drawText({0, 6}, "q.Back to menu.");
+
+    if(mOption == 1) {
+        renderer.drawText({0, InputInfoY}, "Type 'name amount' or 'q' to step back:");
     } else if(mOption == 2) {
-        renderer.drawText({0, 2}, "Type 'id' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
+        renderer.drawText({0, InputInfoY}, "Type 'id' or 'q' to step back:");
     } else if(mOption == 3) {
-        renderer.drawText({0, 2}, "Type 'id name amount' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
+        renderer.drawText({0, InputInfoY}, "Type 'id name amount' or 'q' to step back:");
     }
 
     renderer.drawText({BeginListX, BeginListY}, "Your debts:");
@@ -47,7 +42,6 @@ void DebtListView::show(stf::Renderer &renderer)
         renderer.draw({BeginListX,  y}, "%d.%s", i + 1, debt.name().toStdString().c_str());
         renderer.draw({BeginListX + 15, y}, "%m.00 UAH", debt.amount());
     }
-    ModelViewWithInputField::show(renderer);
 }
 
 void DebtListView::onEnterHandler()
