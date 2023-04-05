@@ -9,36 +9,34 @@ OperationsListView::OperationsListView(AppModel *model)
 
 void OperationsListView::show(stf::Renderer &renderer)
 {
+    ModelViewWithInputField::show(renderer);
     AppModel *app = static_cast<AppModel*>(m_model);
 
-    if(mOption == 0) {
-        renderer.drawText({0, 2}, "Choose an option:");
-        renderer.drawText({0, 3}, "1.Add new operation.");
-        renderer.drawText({0, 4}, "2.Delete operation.");
-        renderer.drawText({0, 5}, "3.Change operation.");
-        renderer.drawText({0, 6}, "4.Lend operation.");
-        renderer.drawText({0, 7}, "5.Repay operation.");
-        renderer.drawText({0, 8}, "q.Back to menu.");
-    } else if(mOption == 1) {
-        renderer.drawText({0, 2}, "Type 'date deposit amount category' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
-    } else if(mOption == 2) {
-        renderer.drawText({0, 2}, "Type 'id' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
-    } else if(mOption == 3) {
-        renderer.drawText({0, 2}, "Type 'id date deposit amount category' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
-    } else if(mOption == 4) {
-        renderer.drawText({0, 2}, "Type 'date deposit amount name' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
-    } else if(mOption == 5) {
-        renderer.drawText({0, 2}, "Type 'date deposit amount name' or 'q' to step back:");
-        renderer.drawText({0, 3}, ">> ");
-        renderer.drawText({3, 3}, mInput.c_str());
+    renderer.drawText({0, 2}, "Choose an option:");
+    renderer.drawText({0, 3}, "1.Add new operation.");
+    renderer.drawText({0, 4}, "2.Delete operation.");
+    renderer.drawText({0, 5}, "3.Change operation.");
+    renderer.drawText({0, 6}, "4.Lend operation.");
+    renderer.drawText({0, 7}, "5.Repay operation.");
+    renderer.drawText({0, 8}, "q.Back to menu.");
+
+    int inputInfoY = stf::Renderer::log.y() - 3;
+    int inputPreviewY = stf::Renderer::log.y() - 2;
+
+    if(mOption != 0)
+    {
+        if(mOption == 1) {
+            renderer.drawText({0, inputInfoY}, "Type 'date deposit amount category' or 'q' to step back:");
+        } else if(mOption == 2) {
+            renderer.drawText({0, inputInfoY}, "Type 'id' or 'q' to step back:");
+        } else if(mOption == 3) {
+            renderer.drawText({0, inputInfoY}, "Type 'id date deposit amount category' or 'q' to step back:");
+        } else if(mOption == 4) {
+            renderer.drawText({0, inputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+        } else if(mOption == 5) {
+            renderer.drawText({0, inputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+        }
+        renderer.draw({0, inputPreviewY}, ">> %s", mInput.c_str());
     }
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
@@ -59,8 +57,6 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.draw({BeginListX + 31, y}, "%m.00 UAH", operation.amount());
         renderer.draw({BeginListX + 47, y}, "%s", operation.category().toStdString().c_str());
     }
-
-    ModelViewWithInputField::show(renderer);
 }
 
 void OperationsListView::onEnterHandler()
