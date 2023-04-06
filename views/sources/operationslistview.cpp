@@ -57,6 +57,12 @@ void OperationsListView::show(stf::Renderer &renderer)
 
 void OperationsListView::onEnterHandler()
 {
+    auto updateOperationsList = [&](const std::string &date){
+        const int year = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().year();
+        const int month = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().month();
+        static_cast<AppModel*>(m_model)->getOperationsByMonth(year, month);
+    };
+
     switch (mOption) {
     case 1: {
         std::string date = getStrFromInput();
@@ -65,6 +71,7 @@ void OperationsListView::onEnterHandler()
         std::string category = getStrFromInput();
 
         static_cast<AppModel*>(m_model)->addNewOperation(date.c_str(), deposit.c_str(), amount, category.c_str());
+        updateOperationsList(date);
         break;
     }
     case 2: {
@@ -80,6 +87,7 @@ void OperationsListView::onEnterHandler()
         std::string category = getStrFromInput();
 
         static_cast<AppModel*>(m_model)->changeOperation(id, date.c_str(), deposit.c_str(), amount, category.c_str());
+        updateOperationsList(date);
         break;
     }
     case 4: {
@@ -89,6 +97,7 @@ void OperationsListView::onEnterHandler()
         std::string name = getStrFromInput();
 
         static_cast<AppModel*>(m_model)->addNewLendOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+        updateOperationsList(date);
         break;
     }
     case 5: {
@@ -98,6 +107,7 @@ void OperationsListView::onEnterHandler()
         std::string name = getStrFromInput();
 
         static_cast<AppModel*>(m_model)->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+        updateOperationsList(date);
         break;
     }
     case 6: {
