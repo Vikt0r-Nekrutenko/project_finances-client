@@ -73,8 +73,6 @@ int AppModel::yearPnL() const
 
 void AppModel::updateStats()
 {
-    updateAllHandlers();
-
     mSumOfAllEarnOperations = getSumOfAllEarnOperations();
     mSumOfAllDeposits = getSumOfAllDeposits();
     mTodayPnL = getTodayPnL();

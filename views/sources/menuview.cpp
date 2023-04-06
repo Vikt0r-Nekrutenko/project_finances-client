@@ -68,7 +68,9 @@ stf::smv::IView *MenuView::keyEventsHandler(const int key)
     case '3': return new CategoryListView(static_cast<AppModel*>(m_model));
     case '4': return new DebtListView(static_cast<AppModel*>(m_model));
     case 'q': return new CloseView(static_cast<AppModel*>(m_model));
-    case 'r': static_cast<AppModel*>(m_model)->updateStats(); break;
+    case 'r':
+        static_cast<AppModel*>(m_model)->updateAllHandlers();
+        static_cast<AppModel*>(m_model)->updateStats(); break;
     }
     return this;
 }
