@@ -266,20 +266,20 @@ void AppModel::deleteDebt(int index)
 
 int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) const
 {
-    OperationModelHandler newHandler;
-    newHandler.get("operations/?category=" + category.name());
-//    QVector<const OperationModel *> categories;
-//    for(const auto &cat : mOperationHandler.operations())
-//        if(cat.category() == category.name())
-//            categories.push_back(&cat);
+//    OperationModelHandler newHandler;
+//    newHandler.get("operations/?category=" + category.name());
+    QVector<const OperationModel *> operations;
+    for(const auto &cat : mOperationHandler.operations())
+        if(cat.category() == category.name())
+            operations.push_back(&cat);
 
     int result = 0;
-    for(const auto &operation : newHandler.operations()) {
-        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+    for(const auto &operation : operations) {
+        const QDateTime opDate = QDateTime().fromString(operation->date(), "yyyy-MM-dd");
         const QDateTime time   = QDateTime().currentDateTime().addDays(-30);
         const QDateTime today  = QDateTime().currentDateTime();
         if(opDate >= time && opDate <= today) {
-            result += operation.amount();
+            result += operation->amount();
         }
     }
     if(category.type() == "negative")
