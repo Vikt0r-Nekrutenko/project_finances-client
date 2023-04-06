@@ -1,4 +1,5 @@
 #include "appmodel.hpp"
+#include "renderer.hpp"
 
 const QVector<DepositModel> &AppModel::deposits() const
 {
@@ -99,6 +100,11 @@ void AppModel::updateAllHandlers()
 
 void AppModel::selectFavCategories(int index1, int index2, int index3)
 {
+    if(index1 >= mCategoryHandler.categories().size() ||
+        index2 >= mCategoryHandler.categories().size() ||
+        index3 >= mCategoryHandler.categories().size())
+        throw std::out_of_range("category index doesn't exist");
+
     mFavCategories.clear();
     mFavCategories.append({mCategoryHandler.categories().at(index1),
                            mCategoryHandler.categories().at(index2),

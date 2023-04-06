@@ -22,8 +22,12 @@ public:
         stf::Renderer::log.setY(renderer.Size.y - stf::Renderer::log.height());
         enableLog();
 
-        model.selectFavCategories(9, 5, 1);
-        model.updateStats();
+        try {
+            model.selectFavCategories(9, 5, 1);
+            model.updateStats();
+        }catch(const std::exception& ex) {
+            stf::Renderer::log << stf::endl << ex.what();
+        }
     }
 
     bool onUpdate(const float) override

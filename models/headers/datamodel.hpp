@@ -11,7 +11,7 @@ enum class RequestType
     DELETE_RQ
 };
 
-const QString MainPath = "http://127.0.0.1:8000/api/";
+const QString MainPath = "https://grhin0.pythonanywhere.com/api/";
 
 class DataModel
 {
