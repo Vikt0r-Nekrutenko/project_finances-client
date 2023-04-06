@@ -314,7 +314,7 @@ int AppModel::getSumOfAllEarnOperations() const
 
 int AppModel::getTodayPnL() const
 {
-    return getPnLByDays(0);
+    return getPnLByDays(-1);
 }
 
 int AppModel::getWeekPnL() const
