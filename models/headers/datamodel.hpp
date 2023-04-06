@@ -18,6 +18,10 @@ class DataModel
 public:
     virtual QNetworkReply *sendCRUDRequest(const QString &additionalPath, const QJsonObject &data, const QString &request);
     void replyHandler(QNetworkReply *reply, const QString &noErrorMsg) const;
+
+private:
+
+    QString mAuthName, mAuthValue;
 };
 
 #endif // DATAMODEL_HPP
