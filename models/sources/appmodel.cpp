@@ -301,15 +301,15 @@ int AppModel::getSumOfOperationsByCategoryType(const QVector<const OperationMode
 {
 //    CategoryModelHandler newHandler;
 //    newHandler.get("categories/?type=" + categoryName);
-    QVector<const CategoryModel *> categories;
+//    QVector<const CategoryModel *> categories;
+    int result = 0;
     for(const auto &category : mCategoryHandler.categories())
         if(category.type() == categoryType)
-            categories.push_back(&category);
+//            categories.push_back(&category);
 
-    int result = 0;
-    for(const auto &category : categories)
+//    for(const auto &category : categories)
         for(const auto &operation : operations)
-            if(operation->category() == category->name())
+            if(operation->category() == category.name())
                 result += operation->amount();
     return result;
 }
@@ -322,7 +322,6 @@ int AppModel::getSumOfAllEarnOperations() const
             for(const auto &operation : mOperationHandler.operations())
                 if(operation.category() == category.name())
                     result += operation.amount();
-
     return result;
 }
 
