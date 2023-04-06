@@ -268,6 +268,10 @@ int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) 
 {
     OperationModelHandler newHandler;
     newHandler.get("operations/?category=" + category.name());
+//    QVector<const OperationModel *> categories;
+//    for(const auto &cat : mOperationHandler.operations())
+//        if(cat.category() == category.name())
+//            categories.push_back(&cat);
 
     int result = 0;
     for(const auto &operation : newHandler.operations()) {
