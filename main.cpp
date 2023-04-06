@@ -6,13 +6,6 @@
 #include "menuview.hpp"
 #include "appmodel.hpp"
 
-#include <thread>
-#include <chrono>
-
-using namespace std::chrono;
-
-auto tbegin = high_resolution_clock::now();
-
 class MainWindow : public stf::Window
 {
     AppModel model = AppModel();
@@ -39,8 +32,6 @@ public:
 
     bool onUpdate(const float) override
     {
-        static auto tend = duration_cast<milliseconds>(high_resolution_clock::now() - tbegin).count();
-        renderer.draw({30, 0}, "Time: %f", (double)tend);
         currentView->show(renderer);
         return currentView->isContinue();
     }
@@ -55,10 +46,9 @@ public:
         currentView = currentView->mouseEventsHandler(mr);
     }
 };
-#include <iostream>
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    tbegin = high_resolution_clock::now();
     return MainWindow().run();
 }
