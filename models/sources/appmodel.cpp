@@ -266,8 +266,6 @@ void AppModel::deleteDebt(int index)
 
 int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) const
 {
-//    OperationModelHandler newHandler;
-//    newHandler.get("operations/?category=" + category.name());
     QVector<const OperationModel *> operations;
     for(const auto &cat : mOperationHandler.operations())
         if(cat.category() == category.name())
@@ -299,18 +297,12 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
 
 int AppModel::getSumOfOperationsByCategoryType(const QVector<const OperationModel *> &operations, const QString &categoryType) const
 {
-//    CategoryModelHandler newHandler;
-//    newHandler.get("categories/?type=" + categoryName);
-//    QVector<const CategoryModel *> categories;
     int result = 0;
     for(const auto &category : mCategoryHandler.categories())
         if(category.type() == categoryType)
-//            categories.push_back(&category);
-
-//    for(const auto &category : categories)
-        for(const auto &operation : operations)
-            if(operation->category() == category.name())
-                result += operation->amount();
+            for(const auto &operation : operations)
+                if(operation->category() == category.name())
+                    result += operation->amount();
     return result;
 }
 
@@ -327,21 +319,7 @@ int AppModel::getSumOfAllEarnOperations() const
 
 int AppModel::getTodayPnL() const
 {
-    if(mOperationHandler.operations().empty())
-        return 0;
-
-//    OperationModelHandler newHandler;
-    QString strToday = QDateTime().currentDateTime().toString("yyyy-MM-dd");
-//    newHandler.get("operations/?date=" + strToday);
-    QVector<const OperationModel *> operations;
-    for(const auto &op : mOperationHandler.operations())
-        if(op.date() == strToday)
-            operations.push_back(&op);
-
-    const QString &today = QDateTime().currentDateTime().toString("yyyy-MM-dd");
-    int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
-    int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
-    return posOpSum - negOpSum;
+    return getPnLByDays(0);
 }
 
 int AppModel::getWeekPnL() const
