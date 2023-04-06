@@ -297,13 +297,13 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
     }
 }
 
-int AppModel::getSumOfOperationsByCategoryType(const QVector<const OperationModel *> &operations, const QString &categoryName) const
+int AppModel::getSumOfOperationsByCategoryType(const QVector<const OperationModel *> &operations, const QString &categoryType) const
 {
 //    CategoryModelHandler newHandler;
 //    newHandler.get("categories/?type=" + categoryName);
     QVector<const CategoryModel *> categories;
     for(const auto &category : mCategoryHandler.categories())
-        if(category.type() == categoryName)
+        if(category.type() == categoryType)
             categories.push_back(&category);
 
     int result = 0;
@@ -316,7 +316,14 @@ int AppModel::getSumOfOperationsByCategoryType(const QVector<const OperationMode
 
 int AppModel::getSumOfAllEarnOperations() const
 {
-    return 1;//getSumOfOperationsByCategoryType(mOperationHandler.operations(), "earn");
+    int result = 0;
+    for(const auto &category : mCategoryHandler.categories())
+        if(category.type() == "earn")
+            for(const auto &operation : mOperationHandler.operations())
+                if(operation.category() == category.name())
+                    result += operation.amount();
+
+    return result;
 }
 
 int AppModel::getTodayPnL() const
