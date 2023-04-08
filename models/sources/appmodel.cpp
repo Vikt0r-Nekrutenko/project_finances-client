@@ -236,7 +236,7 @@ void AppModel::deleteOperation(int index)
 
 void AppModel::deleteCategory(int index)
 {
-    if(index >= mCategoryHandler.categories().size() || index < 0)
+    if(index >= (int)mCategoryHandler.categories().size() || index < 0)
         throw std::out_of_range("Category with that index does not exitst.");
     mCategoryHandler.deleteCategory(index);
 }
@@ -253,14 +253,14 @@ void AppModel::addNewDebt(const char *name, int amount)
 
 void AppModel::changeDebt(int index, const char *name, int amount)
 {
-    if(index >= mDebtHandler.debts().size() || index < 0)
+    if(index >= (int)mDebtHandler.debts().size() || index < 0)
         throw std::out_of_range("Debt with that index does not exitst.");
     mDebtHandler.updateDebt(index, name, amount);
 }
 
 void AppModel::deleteDebt(int index)
 {
-    if(index >= mDebtHandler.debts().size() || index < 0)
+    if(index >= (int)mDebtHandler.debts().size() || index < 0)
         throw std::out_of_range("Debt with that index does not exitst.");
     mDebtHandler.deleteDebt(index);
 }
@@ -269,7 +269,7 @@ int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) 
 {
     int result = 0;
     for(const auto &operation : mOperationHandler.operations()) {
-        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime opDate = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd");
         const QDateTime time   = QDateTime().currentDateTime().addDays(-30);
         const QDateTime today  = QDateTime().currentDateTime();
         if(opDate >= time && opDate <= today && operation.category() == category.name()) {
