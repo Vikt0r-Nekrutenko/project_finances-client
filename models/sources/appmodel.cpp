@@ -221,10 +221,10 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
 
 void AppModel::deleteOperation(int index)
 {
-    if(index >= mOperationHandler.operations().size() || index < 0)
+    if(index >= (int)mOperationHandler.operations().size() || index < 0)
         throw std::out_of_range("Operation with that index does not exitst.");
 
-    const QString &oldCategoryName = mOperationHandler.operations().at(index).category();
+    const std::string &oldCategoryName = mOperationHandler.operations().at(index).category();
     const int oldAmount = mOperationHandler.operations().at(index).amount();
     auto categoryModel = mCategoryHandler.findByName(oldCategoryName);
     auto depositModel = mDepositHandler.findByName(mOperationHandler.operations().at(index).deposit());
