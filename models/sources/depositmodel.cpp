@@ -3,7 +3,7 @@
 
 #include "depositmodel.hpp"
 
-DepositModel::DepositModel(const QString &name, int balance)
+DepositModel::DepositModel(const std::string &name, int balance)
     : mName{name}, mBalance{balance} {}
 
 void DepositModel::create()
@@ -51,7 +51,7 @@ void DepositModel::parseJsonObject(const QJsonObject &object)
     mBalance = object["balance"].toInt();
 }
 
-const QString &DepositModel::name() const
+const std::string &DepositModel::name() const
 {
     return mName;
 }
