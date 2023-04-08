@@ -3,14 +3,14 @@
 
 #include "categorymodel.hpp"
 
-CategoryModel::CategoryModel(const std::string &name, const QString &type)
+CategoryModel::CategoryModel(const std::string &name, const std::string &type)
     : mName{name}, mType{type} {}
 
 void CategoryModel::create()
 {
     QJsonObject newCategory {
-        {"name", mName },
-        {"type", mType }
+        {"name", mName.c_str() },
+        {"type", mType.c_str() }
     };
 
     QNetworkReply *reply = sendCRUDRequest("categories/", newCategory, "POST");
@@ -30,8 +30,8 @@ void CategoryModel::read()
 void CategoryModel::update()
 {
     QJsonObject selectedCategory {
-        {"name", mName },
-        {"type", mType }
+        {"name", mName.c_str() },
+        {"type", mType.c_str() }
     };
 
     QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', selectedCategory, "PUT");
@@ -46,8 +46,8 @@ void CategoryModel::remove()
 
 void CategoryModel::parseJsonObject(const QJsonObject &object)
 {
-    mName = object["name"].toString();
-    mType = object["type"].toString();
+    mName = object["name"].toString().toStdString();
+    mType = object["type"].toString().toStdString();
 }
 
 const std::string &CategoryModel::name() const

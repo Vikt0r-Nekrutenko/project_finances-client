@@ -9,7 +9,7 @@ class CategoryModel : public CRUDModel
 
 public:
 
-    CategoryModel(const std::string &name, const QString &type);
+    CategoryModel(const std::string &name, const std::string &type);
 
     void create() override;
     void read() override;
