@@ -8,19 +8,19 @@ class DepositModelHandler : public DataModelHandler
 {
 public:
     DepositModelHandler();
-    void addNewDeposit(const QString &name, int balance);
+    void addNewDeposit(const std::string &name, int balance);
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
-    const QVector<DepositModel> &deposits() const;
-    QVector<DepositModel> &deposits();
+    const std::vector<DepositModel> &deposits() const;
+    std::vector<DepositModel> &deposits();
 
-    QList<DepositModel>::iterator findByName(const QString &name);
+    std::vector<DepositModel>::iterator findByName(const std::string &name);
 
 private:
 
-    QVector<DepositModel> mDeposits;
+    std::vector<DepositModel> mDeposits;
 };
 
 #endif // DEPOSITMODELHANDLER_HPP

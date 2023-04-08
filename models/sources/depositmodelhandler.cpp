@@ -7,7 +7,7 @@ DepositModelHandler::DepositModelHandler()
     get("deposits/");
 }
 
-void DepositModelHandler::addNewDeposit(const QString &name, int balance)
+void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
     mDeposits.push_back(DepositModel{name, balance});
     mDeposits.back().create();
@@ -22,7 +22,7 @@ void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
 void DepositModelHandler::deleteDeposit(int depositIndex)
 {
     mDeposits[depositIndex].remove();
-    mDeposits.removeAt(depositIndex);
+    mDeposits.erase(mDeposits.begin() + depositIndex);
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -30,23 +30,23 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     mDeposits.clear();
     for (const auto &var : replyJsonArray) {
         mDeposits.push_back(DepositModel{
-            var.toObject()["name"].toString(),
+            var.toObject()["name"].toString().toStdString(),
             var.toObject()["balance"].toInt()
         });
     }
 }
 
-const QVector<DepositModel> &DepositModelHandler::deposits() const
+const std::vector<DepositModel> &DepositModelHandler::deposits() const
 {
     return mDeposits;
 }
 
-QVector<DepositModel> &DepositModelHandler::deposits()
+std::vector<DepositModel> &DepositModelHandler::deposits()
 {
     return mDeposits;
 }
 
-QList<DepositModel>::iterator DepositModelHandler::findByName(const QString &name)
+std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)
 {
     return std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
         return model.name() == name;

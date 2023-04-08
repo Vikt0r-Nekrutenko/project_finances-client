@@ -4,7 +4,7 @@
 
 #include "modelhandler.hpp"
 
-void DataModelHandler::get(const QString &additionalPath)
+void DataModelHandler::get(const std::string &additionalPath)
 {
     QNetworkReply *reply = sendCRUDRequest(additionalPath, {}, "GET");
     replyHandler(reply, "Get request successfully!");

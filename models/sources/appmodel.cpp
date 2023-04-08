@@ -1,37 +1,36 @@
 #include "appmodel.hpp"
-#include "renderer.hpp"
 
-const QVector<DepositModel> &AppModel::deposits() const
+const std::vector<DepositModel> &AppModel::deposits() const
 {
     return mDepositHandler.deposits();
 }
 
-const QVector<OperationModel> &AppModel::operations() const
+const std::vector<OperationModel> &AppModel::operations() const
 {
     return mOperationHandler.operations();
 }
 
-const QVector<CategoryModel> &AppModel::categories() const
+const std::vector<CategoryModel> &AppModel::categories() const
 {
     return mCategoryHandler.categories();
 }
 
-const QVector<CategoryModel> &AppModel::favCategories() const
+const std::vector<CategoryModel> &AppModel::favCategories() const
 {
     return mFavCategories;
 }
 
-const QVector<QPair<QString, int> > &AppModel::sumByFavCategories() const
+const std::vector<std::pair<std::string, int> > &AppModel::sumByFavCategories() const
 {
     return mSumByFavCategories;
 }
 
-const QVector<OperationModel> &AppModel::operationsByMonth() const
+const std::vector<OperationModel> &AppModel::operationsByMonth() const
 {
     return mOperationsByMonth;
 }
 
-const QVector<DebtModel> &AppModel::debts() const
+const std::vector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
 }
@@ -98,13 +97,14 @@ void AppModel::updateAllHandlers()
 
 void AppModel::selectFavCategories(int index1, int index2, int index3)
 {
-    if(index1 >= mCategoryHandler.categories().size() ||
-        index2 >= mCategoryHandler.categories().size() ||
-        index3 >= mCategoryHandler.categories().size())
+    if(index1 >= (int)mCategoryHandler.categories().size() ||
+        index2 >= (int)mCategoryHandler.categories().size() ||
+        index3 >= (int)mCategoryHandler.categories().size())
         throw std::out_of_range("category index doesn't exist");
 
     mFavCategories.clear();
-    mFavCategories.append({mCategoryHandler.categories().at(index1),
+    mFavCategories.insert(mFavCategories.end(), {
+                           mCategoryHandler.categories().at(index1),
                            mCategoryHandler.categories().at(index2),
                            mCategoryHandler.categories().at(index3)});
 }
@@ -119,7 +119,7 @@ void AppModel::getOperationsByMonth(int year, int month)
 {
     mOperationsByMonth.clear();
     for(const auto &operation : mOperationHandler.operations()) {
-        const QDate &date = QDateTime().fromString(operation.date(), "yyyy-MM-dd").date();
+        const QDate &date = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd").date();
         if(year == date.year() && month == date.month())
             mOperationsByMonth.push_back(operation);
     }
@@ -127,7 +127,7 @@ void AppModel::getOperationsByMonth(int year, int month)
 
 void AppModel::deleteDeposit(int index)
 {
-    if(index >= mDepositHandler.deposits().size() || index < 0)
+    if(index >= (int)mDepositHandler.deposits().size() || index < 0)
         throw std::out_of_range("Deposit with that index does not exitst.");
     mDepositHandler.deleteDeposit(index);
 }
@@ -139,7 +139,7 @@ void AppModel::addNewDeposit(const char *name, int balance)
 
 void AppModel::changeBalance(int index, int balance)
 {
-    if(index >= mDepositHandler.deposits().size() || index < 0)
+    if(index >= (int)mDepositHandler.deposits().size() || index < 0)
         throw std::out_of_range("Deposit with that index does not exitst.");
     mDepositHandler.updateBalance(index, balance);
 }
@@ -201,10 +201,10 @@ void AppModel::addNewOperation(const char *date, const char *deposit, int amount
 
 void AppModel::changeOperation(int index, const char *date, const char *deposit, int amount, const char *category)
 {
-    if(index >= mOperationHandler.operations().size() || index < 0)
+    if(index >= (int)mOperationHandler.operations().size() || index < 0)
         throw std::out_of_range("Operation with that index does not exitst.");
 
-    const QString &oldCategory = mOperationHandler.operations().at(index).category();
+    const std::string &oldCategory = mOperationHandler.operations().at(index).category();
     const int oldAmount = mOperationHandler.operations().at(index).amount();
     auto cat = mCategoryHandler.findByName(oldCategory);
     auto depo = mDepositHandler.findByName(deposit);
@@ -220,10 +220,10 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
 
 void AppModel::deleteOperation(int index)
 {
-    if(index >= mOperationHandler.operations().size() || index < 0)
+    if(index >= (int)mOperationHandler.operations().size() || index < 0)
         throw std::out_of_range("Operation with that index does not exitst.");
 
-    const QString &oldCategoryName = mOperationHandler.operations().at(index).category();
+    const std::string &oldCategoryName = mOperationHandler.operations().at(index).category();
     const int oldAmount = mOperationHandler.operations().at(index).amount();
     auto categoryModel = mCategoryHandler.findByName(oldCategoryName);
     auto depositModel = mDepositHandler.findByName(mOperationHandler.operations().at(index).deposit());
@@ -235,7 +235,7 @@ void AppModel::deleteOperation(int index)
 
 void AppModel::deleteCategory(int index)
 {
-    if(index >= mCategoryHandler.categories().size() || index < 0)
+    if(index >= (int)mCategoryHandler.categories().size() || index < 0)
         throw std::out_of_range("Category with that index does not exitst.");
     mCategoryHandler.deleteCategory(index);
 }
@@ -252,14 +252,14 @@ void AppModel::addNewDebt(const char *name, int amount)
 
 void AppModel::changeDebt(int index, const char *name, int amount)
 {
-    if(index >= mDebtHandler.debts().size() || index < 0)
+    if(index >= (int)mDebtHandler.debts().size() || index < 0)
         throw std::out_of_range("Debt with that index does not exitst.");
     mDebtHandler.updateDebt(index, name, amount);
 }
 
 void AppModel::deleteDebt(int index)
 {
-    if(index >= mDebtHandler.debts().size() || index < 0)
+    if(index >= (int)mDebtHandler.debts().size() || index < 0)
         throw std::out_of_range("Debt with that index does not exitst.");
     mDebtHandler.deleteDebt(index);
 }
@@ -268,7 +268,7 @@ int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) 
 {
     int result = 0;
     for(const auto &operation : mOperationHandler.operations()) {
-        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime opDate = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd");
         const QDateTime time   = QDateTime().currentDateTime().addDays(-30);
         const QDateTime today  = QDateTime().currentDateTime();
         if(opDate >= time && opDate <= today && operation.category() == category.name()) {
@@ -281,7 +281,7 @@ int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) 
 }
 
 
-void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount)
+void AppModel::updateDepositBalanceByCategoryType(std::vector<CategoryModel>::iterator &category, std::vector<DepositModel>::iterator &deposit, int amount)
 {
     if(category->type() == "negative") {
         deposit->decreaseBalance(amount);
@@ -290,7 +290,7 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
     }
 }
 
-int AppModel::getSumOfOperationsByCategoryType(const QVector<const OperationModel *> &operations, const QString &categoryType) const
+int AppModel::getSumOfOperationsByCategoryType(const std::vector<const OperationModel *> &operations, const std::string &categoryType) const
 {
     int result = 0;
     for(const auto &category : mCategoryHandler.categories())
@@ -337,16 +337,16 @@ int AppModel::getPnLByDays(int days) const
     if(mOperationHandler.operations().empty())
         return 0;
 
-    QVector<const OperationModel *> operations;
+    std::vector<const OperationModel *> operations;
     for(const auto &operation : mOperationHandler.operations()) {
-        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime opDate = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd");
         const QDateTime time   = QDateTime().currentDateTime().addDays(days);
         const QDateTime today  = QDateTime().currentDateTime();
         if(opDate >= time && opDate <= today)
             operations.push_back(&operation);
     }
 
-    const QString &today = QDateTime().currentDateTime().toString("yyyy-MM-dd");
+    const std::string &today = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
     int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
     int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
     return posOpSum - negOpSum;

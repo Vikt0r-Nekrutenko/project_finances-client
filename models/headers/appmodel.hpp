@@ -10,13 +10,13 @@
 class AppModel : public stf::smv::BaseModel
 {
 public:
-    const QVector<DepositModel> &deposits() const;
-    const QVector<OperationModel> &operations() const;
-    const QVector<CategoryModel> &categories() const;
-    const QVector<CategoryModel> &favCategories() const;
-    const QVector<QPair<QString, int>> &sumByFavCategories() const;
-    const QVector<OperationModel> &operationsByMonth() const;
-    const QVector<DebtModel> &debts() const;
+    const std::vector<DepositModel> &deposits() const;
+    const std::vector<OperationModel> &operations() const;
+    const std::vector<CategoryModel> &categories() const;
+    const std::vector<CategoryModel> &favCategories() const;
+    const std::vector<std::pair<std::string, int> > &sumByFavCategories() const;
+    const std::vector<OperationModel> &operationsByMonth() const;
+    const std::vector<DebtModel> &debts() const;
 
     int sumOfAllEarnOperations() const;
     int sumOfAllDeposits() const;
@@ -61,17 +61,17 @@ public:
 private:
 
     int getPnLByDays(int days) const;
-    int getSumOfOperationsByCategoryType(const QVector<const OperationModel *> &operations, const QString &categoryType) const;
-    void updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount);
+    int getSumOfOperationsByCategoryType(const std::vector<const OperationModel *> &operations, const std::string &categoryType) const;
+    void updateDepositBalanceByCategoryType(std::vector<CategoryModel>::iterator &category, std::vector<DepositModel>::iterator &deposit, int amount);
 
     OperationModelHandler mOperationHandler;
     DebtModelHandler mDebtHandler;
     DepositModelHandler mDepositHandler;
     CategoryModelHandler mCategoryHandler;
 
-    QVector<QPair<QString, int>> mSumByFavCategories;
-    QVector<CategoryModel> mFavCategories;
-    QVector<OperationModel> mOperationsByMonth;
+    std::vector<std::pair<std::string, int>> mSumByFavCategories;
+    std::vector<CategoryModel> mFavCategories;
+    std::vector<OperationModel> mOperationsByMonth;
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,

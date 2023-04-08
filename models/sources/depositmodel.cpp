@@ -3,13 +3,13 @@
 
 #include "depositmodel.hpp"
 
-DepositModel::DepositModel(const QString &name, int balance)
+DepositModel::DepositModel(const std::string &name, int balance)
     : mName{name}, mBalance{balance} {}
 
 void DepositModel::create()
 {
     QJsonObject newDepo {
-        {"name", mName },
+        {"name", mName.c_str() },
         {"balance", mBalance }
     };
 
@@ -30,7 +30,7 @@ void DepositModel::read()
 void DepositModel::update()
 {
     QJsonObject selectedDeposit {
-        {"name", mName },
+        {"name", mName.c_str() },
         {"balance", mBalance }
     };
 
@@ -47,11 +47,11 @@ void DepositModel::remove()
 
 void DepositModel::parseJsonObject(const QJsonObject &object)
 {
-    mName = object["name"].toString();
+    mName = object["name"].toString().toStdString();
     mBalance = object["balance"].toInt();
 }
 
-const QString &DepositModel::name() const
+const std::string &DepositModel::name() const
 {
     return mName;
 }

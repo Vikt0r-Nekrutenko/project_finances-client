@@ -53,7 +53,7 @@ void MenuView::show(stf::Renderer &renderer)
     for(const auto &favcat : m->sumByFavCategories()) {
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, 12 + i}, '.');
-        renderer.draw({BeginListX, 12 + i}, "%s", favcat.first.toStdString().c_str());
+        renderer.draw({BeginListX, 12 + i}, "%s", favcat.first.c_str());
         renderer.draw({BeginListX + 13, 12 + i}, "|..%m.00 UAH", favcat.second);
         renderer.draw({BeginListX + 34, 12 + i++}, "|..[%d%c]", inPercentage(favcat.second, m->monthPnL()), '%');
     }

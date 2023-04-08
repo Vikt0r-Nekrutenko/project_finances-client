@@ -9,18 +9,18 @@ class DebtModelHandler : public DataModelHandler
 public:
     DebtModelHandler();
 
-    void addNewDebt(const QString &name, int amount);
-    void updateDebt(int index, const QString &name, int amount);
+    void addNewDebt(const std::string &name, int amount);
+    void updateDebt(int index, const std::string &name, int amount);
     void deleteDebt(int index);
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
-    const QVector<DebtModel> &debts() const;
+    const std::vector<DebtModel> &debts() const;
 
-    QList<DebtModel>::iterator findByName(const QString &name);
+    std::vector<DebtModel>::iterator findByName(const std::string &name);
 
 private:
 
-    QVector<DebtModel> mDebts;
+    std::vector<DebtModel> mDebts;
 };
 
 #endif // DEBTMODELHANDLER_HPP

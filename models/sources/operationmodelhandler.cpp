@@ -8,7 +8,7 @@ OperationModelHandler::OperationModelHandler()
     get("operations/");
 }
 
-void OperationModelHandler::addNewOperation(const QString &date, const QString &deposit, int amount, const QString &category)
+void OperationModelHandler::addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
     mOperations.push_back(OperationModel(
                               mOperations.empty() ? 0 : mOperations.back().mId + 1,
@@ -19,7 +19,7 @@ void OperationModelHandler::addNewOperation(const QString &date, const QString &
     mOperations.back().create();
 }
 
-void OperationModelHandler::updateOperation(int index, const QString &date, const QString &deposit, int amount, const QString &category)
+void OperationModelHandler::updateOperation(int index, const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
     mOperations[index].mDate = date;
     mOperations[index].mDeposit = deposit;
@@ -31,7 +31,7 @@ void OperationModelHandler::updateOperation(int index, const QString &date, cons
 void OperationModelHandler::deleteOperation(int index)
 {
     mOperations[index].remove();
-    mOperations.removeAt(index);
+    mOperations.erase(mOperations.begin() + index);
 }
 
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -40,15 +40,15 @@ void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     for (const auto &var : replyJsonArray) {
         mOperations.push_back(OperationModel{
             var.toObject()["id"].toInt(),
-            var.toObject()["date"].toString(),
-            var.toObject()["deposit"].toString(),
+            var.toObject()["date"].toString().toStdString(),
+            var.toObject()["deposit"].toString().toStdString(),
             var.toObject()["amount"].toInt(),
-            var.toObject()["category"].toString()
+            var.toObject()["category"].toString().toStdString()
         });
     }
 }
 
-const QVector<OperationModel> &OperationModelHandler::operations() const
+const std::vector<OperationModel> &OperationModelHandler::operations() const
 {
     return mOperations;
 }

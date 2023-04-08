@@ -7,7 +7,7 @@ class DepositModel : public CRUDModel
 {
     friend class DepositModelHandler;
 public:
-    DepositModel(const QString &name, int balance);
+    DepositModel(const std::string &name, int balance);
 
     void create() override;
     void read() override;
@@ -15,7 +15,7 @@ public:
     void remove() override;
     void parseJsonObject(const QJsonObject &object) override;
 
-    const QString &name() const;
+    const std::string &name() const;
     int balance() const;
 
     void increaseBalance(int amount);
@@ -23,7 +23,7 @@ public:
 
 private:
 
-    QString mName;
+    std::string mName;
     int mBalance;
 };
 

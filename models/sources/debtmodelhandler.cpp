@@ -8,7 +8,7 @@ DebtModelHandler::DebtModelHandler()
     get("debts/");
 }
 
-void DebtModelHandler::addNewDebt(const QString &name, int amount)
+void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 {
     mDebts.push_back(DebtModel(
                               mDebts.empty() ? 0 : mDebts.back().mId + 1,
@@ -17,7 +17,7 @@ void DebtModelHandler::addNewDebt(const QString &name, int amount)
     mDebts.back().create();
 }
 
-void DebtModelHandler::updateDebt(int index, const QString &name, int amount)
+void DebtModelHandler::updateDebt(int index, const std::string &name, int amount)
 {
     mDebts[index].mName = name;
     mDebts[index].mAmount = amount;
@@ -27,7 +27,7 @@ void DebtModelHandler::updateDebt(int index, const QString &name, int amount)
 void DebtModelHandler::deleteDebt(int index)
 {
     mDebts[index].remove();
-    mDebts.removeAt(index);
+    mDebts.erase(mDebts.begin() + index);
 }
 
 void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -36,18 +36,18 @@ void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     for(const auto &var : replyJsonArray) {
         mDebts.push_back(DebtModel{
             var.toObject()["id"].toInt(),
-            var.toObject()["name"].toString(),
+            var.toObject()["name"].toString().toStdString(),
             var.toObject()["amount"].toInt()
         });
     }
 }
 
-const QVector<DebtModel> &DebtModelHandler::debts() const
+const std::vector<DebtModel> &DebtModelHandler::debts() const
 {
     return mDebts;
 }
 
-QList<DebtModel>::iterator DebtModelHandler::findByName(const QString &name)
+std::vector<DebtModel>::iterator DebtModelHandler::findByName(const std::string &name)
 {
     return std::find_if(mDebts.begin(), mDebts.end(), [&](const DebtModel &model){
         return model.name() == name;

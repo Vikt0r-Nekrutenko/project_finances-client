@@ -11,17 +11,17 @@ enum class RequestType
     DELETE_RQ
 };
 
-const QString MainPath = "https://grhin0.pythonanywhere.com/api/";
+const std::string MainPath = "https://grhin0.pythonanywhere.com/api/";
 
 class DataModel
 {
 public:
-    virtual QNetworkReply *sendCRUDRequest(const QString &additionalPath, const QJsonObject &data, const QString &request);
-    void replyHandler(QNetworkReply *reply, const QString &noErrorMsg) const;
+    virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request);
+    void replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
 
 private:
 
-    QString mAuthName, mAuthValue;
+    std::string mAuthName, mAuthValue;
 };
 
 #endif // DATAMODEL_HPP

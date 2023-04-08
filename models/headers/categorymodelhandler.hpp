@@ -10,18 +10,18 @@ public:
 
     CategoryModelHandler();
 
-    void addNewCategory(const QString &name, const QString &type);
+    void addNewCategory(const std::string &name, const std::string &type);
     void deleteCategory(int index);
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
-    const QVector<CategoryModel> &categories() const;
-    QVector<CategoryModel> &categories();
+    const std::vector<CategoryModel> &categories() const;
+    std::vector<CategoryModel> &categories();
 
-    QList<CategoryModel>::iterator findByName(const QString &name);
+    std::vector<CategoryModel>::iterator findByName(const std::string &name);
 
 private:
 
-    QVector<CategoryModel> mCategories;
+    std::vector<CategoryModel> mCategories;
 };
 
 #endif // CATEGORYMODELHANDLER_HPP

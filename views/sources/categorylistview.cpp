@@ -40,8 +40,8 @@ void CategoryListView::show(stf::Renderer &renderer)
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, y}, '.');
 
-        renderer.draw({BeginListX,  y}, "%d.%s", i + 1, category.name().toStdString().c_str());
-        renderer.draw({BeginListX + 15,  y}, "%s", category.type().toStdString().c_str());
+        renderer.draw({BeginListX,  y}, "%d.%s", i + 1, category.name().c_str());
+        renderer.draw({BeginListX + 15,  y}, "%s", category.type().c_str());
     }
 }
 

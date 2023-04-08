@@ -9,16 +9,16 @@ class OperationModelHandler : public DataModelHandler
 public:
     OperationModelHandler();
 
-    void addNewOperation(const QString &date, const QString &deposit, int amount, const QString &category);
-    void updateOperation(int index, const QString &date, const QString &deposit, int amount, const QString &category);
+    void addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category);
+    void updateOperation(int index, const std::string &date, const std::string &deposit, int amount, const std::string &category);
     void deleteOperation(int index);
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
-    const QVector<OperationModel> &operations() const;
+    const std::vector<OperationModel> &operations() const;
 
 private:
 
-    QVector<OperationModel> mOperations;
+    std::vector<OperationModel> mOperations;
 };
 
 #endif // OPERATIONMODELHANDLER_HPP
