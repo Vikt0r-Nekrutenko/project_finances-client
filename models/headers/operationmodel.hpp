@@ -7,7 +7,7 @@ class OperationModel : public CRUDModel
 {
     friend class OperationModelHandler;
 public:
-    OperationModel(int id, const QString &date, const QString &deposit, int amount, const QString &category);
+    OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category);
 
     void create() override;
     void read() override;
@@ -15,17 +15,17 @@ public:
     void remove() override;
     void parseJsonObject(const QJsonObject &) override;
 
-    const QString &date() const;
-    const QString &deposit() const;
-    const QString &category() const;
+    const std::string &date() const;
+    const std::string &deposit() const;
+    const std::string &category() const;
     int id() const;
     int amount() const;
 
 private:
 
-    QString mDate;
-    QString mDeposit;
-    QString mCategory;
+    std::string mDate;
+    std::string mDeposit;
+    std::string mCategory;
     int mId, mAmount;
 };
 

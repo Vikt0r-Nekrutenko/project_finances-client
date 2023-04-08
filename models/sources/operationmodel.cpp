@@ -3,7 +3,7 @@
 
 #include "operationmodel.hpp"
 
-OperationModel::OperationModel(int id, const QString &date, const QString &deposit, int amount, const QString &category)
+OperationModel::OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category)
     : mDate{date}, mDeposit{deposit}, mCategory{category}, mId{id}, mAmount{amount} {}
 
 void OperationModel::create()
@@ -64,12 +64,12 @@ int OperationModel::id() const
     return mId;
 }
 
-const QString &OperationModel::date() const
+const std::string &OperationModel::date() const
 {
     return mDate;
 }
 
-const QString &OperationModel::deposit() const
+const std::string &OperationModel::deposit() const
 {
     return mDeposit;
 }
@@ -79,7 +79,7 @@ int OperationModel::amount() const
     return mAmount;
 }
 
-const QString &OperationModel::category() const
+const std::string &OperationModel::category() const
 {
     return mCategory;
 }
