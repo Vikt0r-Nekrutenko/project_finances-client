@@ -28,7 +28,7 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
     QEventLoop loop;
 
     QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    QNetworkReply *reply = mManager.sendCustomRequest(mRequest, request.toUtf8(), QJsonDocument(data).toJson());
+    QNetworkReply *reply = mManager.sendCustomRequest(mRequest, request.c_str(), QJsonDocument(data).toJson());
 
     loop.exec();
 
@@ -38,7 +38,7 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
 void DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const
 {
     if(reply->error() == QNetworkReply::NoError) {
-        stf::Renderer::log << stf::endl << noErrorMsg.toStdString();
+        stf::Renderer::log << stf::endl << noErrorMsg;
     } else {
         stf::Renderer::log << stf::endl << reply->errorString().toStdString();
     }
