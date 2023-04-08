@@ -1,5 +1,4 @@
 #include "appmodel.hpp"
-#include "renderer.hpp"
 
 const std::vector<DepositModel> &AppModel::deposits() const
 {

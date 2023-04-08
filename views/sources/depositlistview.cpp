@@ -28,9 +28,9 @@ void DepositListView::show(stf::Renderer &renderer)
 
     renderer.drawText({BeginListX, BeginListY}, "Your deposits:");
 
-    const QVector<DepositModel> &deposits = app->deposits();
+    const std::vector<DepositModel> &deposits = app->deposits();
 
-    for(int i = 0; i < deposits.size(); ++i) {
+    for(int i = 0; i < (int)deposits.size(); ++i) {
         const int y = i + BeginListY + 1;
             if(y >= int(stf::Renderer::log.y() - 1))
                 continue;
@@ -38,7 +38,7 @@ void DepositListView::show(stf::Renderer &renderer)
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, y}, '.');
 
-        renderer.draw({BeginListX, y}, "%d.%s", i+1, deposits.at(i).name().toStdString().c_str());
+        renderer.draw({BeginListX, y}, "%d.%s", i+1, deposits.at(i).name().c_str());
         renderer.draw({BeginListX + 17, y}, "%m.00 UAH", deposits.at(i).balance());
     }
 }
