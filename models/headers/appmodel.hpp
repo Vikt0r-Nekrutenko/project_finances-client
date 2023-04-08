@@ -69,9 +69,9 @@ private:
     DepositModelHandler mDepositHandler;
     CategoryModelHandler mCategoryHandler;
 
-    QVector<QPair<QString, int>> mSumByFavCategories;
-    QVector<CategoryModel> mFavCategories;
-    QVector<OperationModel> mOperationsByMonth;
+    std::vector<std::pair<std::string, int>> mSumByFavCategories;
+    std::vector<CategoryModel> mFavCategories;
+    std::vector<OperationModel> mOperationsByMonth;
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,
