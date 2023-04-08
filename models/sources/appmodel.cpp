@@ -338,16 +338,16 @@ int AppModel::getPnLByDays(int days) const
     if(mOperationHandler.operations().empty())
         return 0;
 
-    QVector<const OperationModel *> operations;
+    std::vector<const OperationModel *> operations;
     for(const auto &operation : mOperationHandler.operations()) {
-        const QDateTime opDate = QDateTime().fromString(operation.date(), "yyyy-MM-dd");
+        const QDateTime opDate = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd");
         const QDateTime time   = QDateTime().currentDateTime().addDays(days);
         const QDateTime today  = QDateTime().currentDateTime();
         if(opDate >= time && opDate <= today)
             operations.push_back(&operation);
     }
 
-    const QString &today = QDateTime().currentDateTime().toString("yyyy-MM-dd");
+    const std::string &today = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
     int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
     int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
     return posOpSum - negOpSum;
