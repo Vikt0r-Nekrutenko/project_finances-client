@@ -3,7 +3,7 @@
 
 #include "categorymodel.hpp"
 
-CategoryModel::CategoryModel(const QString &name, const QString &type)
+CategoryModel::CategoryModel(const std::string &name, const QString &type)
     : mName{name}, mType{type} {}
 
 void CategoryModel::create()
@@ -50,12 +50,12 @@ void CategoryModel::parseJsonObject(const QJsonObject &object)
     mType = object["type"].toString();
 }
 
-const QString &CategoryModel::name() const
+const std::string &CategoryModel::name() const
 {
     return mName;
 }
 
-const QString &CategoryModel::type() const
+const std::string &CategoryModel::type() const
 {
     return mType;
 }

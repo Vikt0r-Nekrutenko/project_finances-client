@@ -9,7 +9,7 @@ class CategoryModel : public CRUDModel
 
 public:
 
-    CategoryModel(const QString &name, const QString &type);
+    CategoryModel(const std::string &name, const QString &type);
 
     void create() override;
     void read() override;
@@ -17,13 +17,13 @@ public:
     void remove() override;
     void parseJsonObject(const QJsonObject &object) override;
 
-    const QString &name() const;
-    const QString &type() const;
+    const std::string &name() const;
+    const std::string &type() const;
 
 private:
 
-    QString mName;
-    QString mType;
+    std::string mName;
+    std::string mType;
 };
 
 #endif // CATEGORYMODEL_HPP
