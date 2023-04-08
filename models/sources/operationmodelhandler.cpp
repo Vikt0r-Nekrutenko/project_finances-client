@@ -31,7 +31,7 @@ void OperationModelHandler::updateOperation(int index, const std::string &date, 
 void OperationModelHandler::deleteOperation(int index)
 {
     mOperations[index].remove();
-    mOperations.removeAt(index);
+    mOperations.erase(mOperations.begin() + index);
 }
 
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -40,10 +40,10 @@ void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     for (const auto &var : replyJsonArray) {
         mOperations.push_back(OperationModel{
             var.toObject()["id"].toInt(),
-            var.toObject()["date"].toString(),
-            var.toObject()["deposit"].toString(),
+            var.toObject()["date"].toString().toStdString(),
+            var.toObject()["deposit"].toString().toStdString(),
             var.toObject()["amount"].toInt(),
-            var.toObject()["category"].toString()
+            var.toObject()["category"].toString().toStdString()
         });
     }
 }
