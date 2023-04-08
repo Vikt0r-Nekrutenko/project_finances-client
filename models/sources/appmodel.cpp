@@ -98,13 +98,14 @@ void AppModel::updateAllHandlers()
 
 void AppModel::selectFavCategories(int index1, int index2, int index3)
 {
-    if(index1 >= mCategoryHandler.categories().size() ||
-        index2 >= mCategoryHandler.categories().size() ||
-        index3 >= mCategoryHandler.categories().size())
+    if(index1 >= (int)mCategoryHandler.categories().size() ||
+        index2 >= (int)mCategoryHandler.categories().size() ||
+        index3 >= (int)mCategoryHandler.categories().size())
         throw std::out_of_range("category index doesn't exist");
 
     mFavCategories.clear();
-    mFavCategories.append({mCategoryHandler.categories().at(index1),
+    mFavCategories.insert(mFavCategories.end(), {
+                           mCategoryHandler.categories().at(index1),
                            mCategoryHandler.categories().at(index2),
                            mCategoryHandler.categories().at(index3)});
 }
