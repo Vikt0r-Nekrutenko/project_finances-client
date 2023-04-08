@@ -1,37 +1,37 @@
 #include "appmodel.hpp"
 #include "renderer.hpp"
 
-const QVector<DepositModel> &AppModel::deposits() const
+const std::vector<DepositModel> &AppModel::deposits() const
 {
     return mDepositHandler.deposits();
 }
 
-const QVector<OperationModel> &AppModel::operations() const
+const std::vector<OperationModel> &AppModel::operations() const
 {
     return mOperationHandler.operations();
 }
 
-const QVector<CategoryModel> &AppModel::categories() const
+const std::vector<CategoryModel> &AppModel::categories() const
 {
     return mCategoryHandler.categories();
 }
 
-const QVector<CategoryModel> &AppModel::favCategories() const
+const std::vector<CategoryModel> &AppModel::favCategories() const
 {
     return mFavCategories;
 }
 
-const QVector<QPair<QString, int> > &AppModel::sumByFavCategories() const
+const std::vector<QPair<QString, int> > &AppModel::sumByFavCategories() const
 {
     return mSumByFavCategories;
 }
 
-const QVector<OperationModel> &AppModel::operationsByMonth() const
+const std::vector<OperationModel> &AppModel::operationsByMonth() const
 {
     return mOperationsByMonth;
 }
 
-const QVector<DebtModel> &AppModel::debts() const
+const std::vector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
 }

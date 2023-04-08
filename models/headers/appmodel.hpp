@@ -10,13 +10,13 @@
 class AppModel : public stf::smv::BaseModel
 {
 public:
-    const QVector<DepositModel> &deposits() const;
-    const QVector<OperationModel> &operations() const;
-    const QVector<CategoryModel> &categories() const;
-    const QVector<CategoryModel> &favCategories() const;
-    const QVector<QPair<QString, int>> &sumByFavCategories() const;
-    const QVector<OperationModel> &operationsByMonth() const;
-    const QVector<DebtModel> &debts() const;
+    const std::vector<DepositModel> &deposits() const;
+    const std::vector<OperationModel> &operations() const;
+    const std::vector<CategoryModel> &categories() const;
+    const std::vector<CategoryModel> &favCategories() const;
+    const std::vector<QPair<QString, int>> &sumByFavCategories() const;
+    const std::vector<OperationModel> &operationsByMonth() const;
+    const std::vector<DebtModel> &debts() const;
 
     int sumOfAllEarnOperations() const;
     int sumOfAllDeposits() const;
