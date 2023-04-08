@@ -8,7 +8,7 @@ OperationModelHandler::OperationModelHandler()
     get("operations/");
 }
 
-void OperationModelHandler::addNewOperation(const QString &date, const QString &deposit, int amount, const QString &category)
+void OperationModelHandler::addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
     mOperations.push_back(OperationModel(
                               mOperations.empty() ? 0 : mOperations.back().mId + 1,
@@ -19,7 +19,7 @@ void OperationModelHandler::addNewOperation(const QString &date, const QString &
     mOperations.back().create();
 }
 
-void OperationModelHandler::updateOperation(int index, const QString &date, const QString &deposit, int amount, const QString &category)
+void OperationModelHandler::updateOperation(int index, const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
     mOperations[index].mDate = date;
     mOperations[index].mDeposit = deposit;
@@ -48,7 +48,7 @@ void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     }
 }
 
-const QVector<OperationModel> &OperationModelHandler::operations() const
+const std::vector<OperationModel> &OperationModelHandler::operations() const
 {
     return mOperations;
 }
