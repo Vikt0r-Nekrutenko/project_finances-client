@@ -128,7 +128,7 @@ void AppModel::getOperationsByMonth(int year, int month)
 
 void AppModel::deleteDeposit(int index)
 {
-    if(index >= mDepositHandler.deposits().size() || index < 0)
+    if(index >= (int)mDepositHandler.deposits().size() || index < 0)
         throw std::out_of_range("Deposit with that index does not exitst.");
     mDepositHandler.deleteDeposit(index);
 }
@@ -140,7 +140,7 @@ void AppModel::addNewDeposit(const char *name, int balance)
 
 void AppModel::changeBalance(int index, int balance)
 {
-    if(index >= mDepositHandler.deposits().size() || index < 0)
+    if(index >= (int)mDepositHandler.deposits().size() || index < 0)
         throw std::out_of_range("Deposit with that index does not exitst.");
     mDepositHandler.updateBalance(index, balance);
 }
@@ -202,10 +202,10 @@ void AppModel::addNewOperation(const char *date, const char *deposit, int amount
 
 void AppModel::changeOperation(int index, const char *date, const char *deposit, int amount, const char *category)
 {
-    if(index >= mOperationHandler.operations().size() || index < 0)
+    if(index >= (int)mOperationHandler.operations().size() || index < 0)
         throw std::out_of_range("Operation with that index does not exitst.");
 
-    const QString &oldCategory = mOperationHandler.operations().at(index).category();
+    const std::string &oldCategory = mOperationHandler.operations().at(index).category();
     const int oldAmount = mOperationHandler.operations().at(index).amount();
     auto cat = mCategoryHandler.findByName(oldCategory);
     auto depo = mDepositHandler.findByName(deposit);
