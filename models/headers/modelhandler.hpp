@@ -6,7 +6,7 @@
 class DataModelHandler : public DataModel
 {
 public:
-    void get(const QString &additionalPath);
+    void get(const std::string &additionalPath);
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };
 
