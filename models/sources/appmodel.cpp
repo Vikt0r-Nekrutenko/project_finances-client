@@ -281,7 +281,7 @@ int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) 
 }
 
 
-void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount)
+void AppModel::updateDepositBalanceByCategoryType(std::vector::iterator &category, std::vector::iterator &deposit, int amount)
 {
     if(category->type() == "negative") {
         deposit->decreaseBalance(amount);
@@ -290,7 +290,7 @@ void AppModel::updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator
     }
 }
 
-int AppModel::getSumOfOperationsByCategoryType(const QVector<const OperationModel *> &operations, const QString &categoryType) const
+int AppModel::getSumOfOperationsByCategoryType(const std::vector<const OperationModel *> &operations, const std::string &categoryType) const
 {
     int result = 0;
     for(const auto &category : mCategoryHandler.categories())

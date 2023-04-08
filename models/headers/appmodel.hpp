@@ -61,8 +61,8 @@ public:
 private:
 
     int getPnLByDays(int days) const;
-    int getSumOfOperationsByCategoryType(const QVector<const OperationModel *> &operations, const QString &categoryType) const;
-    void updateDepositBalanceByCategoryType(QList<CategoryModel>::iterator &category, QList<DepositModel>::iterator &deposit, int amount);
+    int getSumOfOperationsByCategoryType(const std::vector<const OperationModel *> &operations, const std::string &categoryType) const;
+    void updateDepositBalanceByCategoryType(std::vector<CategoryModel>::iterator &category, std::vector<DepositModel>::iterator &deposit, int amount);
 
     OperationModelHandler mOperationHandler;
     DebtModelHandler mDebtHandler;
