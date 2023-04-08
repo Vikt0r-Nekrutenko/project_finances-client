@@ -8,7 +8,7 @@ DebtModelHandler::DebtModelHandler()
     get("debts/");
 }
 
-void DebtModelHandler::addNewDebt(const QString &name, int amount)
+void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 {
     mDebts.push_back(DebtModel(
                               mDebts.empty() ? 0 : mDebts.back().mId + 1,
@@ -17,7 +17,7 @@ void DebtModelHandler::addNewDebt(const QString &name, int amount)
     mDebts.back().create();
 }
 
-void DebtModelHandler::updateDebt(int index, const QString &name, int amount)
+void DebtModelHandler::updateDebt(int index, const std::string &name, int amount)
 {
     mDebts[index].mName = name;
     mDebts[index].mAmount = amount;
@@ -42,7 +42,7 @@ void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     }
 }
 
-const QVector<DebtModel> &DebtModelHandler::debts() const
+const std::vector<DebtModel> &DebtModelHandler::debts() const
 {
     return mDebts;
 }
