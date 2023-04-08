@@ -14,7 +14,7 @@ public:
     const std::vector<OperationModel> &operations() const;
     const std::vector<CategoryModel> &categories() const;
     const std::vector<CategoryModel> &favCategories() const;
-    const std::vector<QPair<QString, int>> &sumByFavCategories() const;
+    const std::vector<std::pair<std::string, int> > &sumByFavCategories() const;
     const std::vector<OperationModel> &operationsByMonth() const;
     const std::vector<DebtModel> &debts() const;
 

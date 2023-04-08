@@ -21,7 +21,7 @@ const std::vector<CategoryModel> &AppModel::favCategories() const
     return mFavCategories;
 }
 
-const std::vector<QPair<QString, int> > &AppModel::sumByFavCategories() const
+const std::vector<std::pair<std::string, int> > &AppModel::sumByFavCategories() const
 {
     return mSumByFavCategories;
 }
