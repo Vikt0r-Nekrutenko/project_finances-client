@@ -282,7 +282,7 @@ int AppModel::getSum30DaysOfOperationsByCategory(const CategoryModel &category) 
 }
 
 
-void AppModel::updateDepositBalanceByCategoryType(std::vector::iterator &category, std::vector::iterator &deposit, int amount)
+void AppModel::updateDepositBalanceByCategoryType(std::vector<CategoryModel>::iterator &category, std::vector<DepositModel>::iterator &deposit, int amount)
 {
     if(category->type() == "negative") {
         deposit->decreaseBalance(amount);
