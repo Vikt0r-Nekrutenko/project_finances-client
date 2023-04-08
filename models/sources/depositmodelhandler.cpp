@@ -30,7 +30,7 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     mDeposits.clear();
     for (const auto &var : replyJsonArray) {
         mDeposits.push_back(DepositModel{
-            var.toObject()["name"].toString(),
+            var.toObject()["name"].toString().toStdString(),
             var.toObject()["balance"].toInt()
         });
     }
@@ -46,7 +46,7 @@ std::vector<DepositModel> &DepositModelHandler::deposits()
     return mDeposits;
 }
 
-std::vector::iterator DepositModelHandler::findByName(const std::string &name)
+std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)
 {
     return std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
         return model.name() == name;
