@@ -120,7 +120,7 @@ void AppModel::getOperationsByMonth(int year, int month)
 {
     mOperationsByMonth.clear();
     for(const auto &operation : mOperationHandler.operations()) {
-        const QDate &date = QDateTime().fromString(operation.date(), "yyyy-MM-dd").date();
+        const QDate &date = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd").date();
         if(year == date.year() && month == date.month())
             mOperationsByMonth.push_back(operation);
     }
