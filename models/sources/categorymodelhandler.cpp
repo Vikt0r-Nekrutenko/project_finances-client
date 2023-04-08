@@ -7,7 +7,7 @@ CategoryModelHandler::CategoryModelHandler()
     get("categories/");
 }
 
-void CategoryModelHandler::addNewCategory(const QString &name, const QString &type)
+void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)
 {
     mCategories.push_back(CategoryModel{name, type});
     mCategories.back().create();
@@ -30,17 +30,17 @@ void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     }
 }
 
-const QVector<CategoryModel> &CategoryModelHandler::categories() const
+const std::vector<CategoryModel> &CategoryModelHandler::categories() const
 {
     return mCategories;
 }
 
-QVector<CategoryModel> &CategoryModelHandler::categories()
+std::vector<CategoryModel> &CategoryModelHandler::categories()
 {
     return mCategories;
 }
 
-QList<CategoryModel>::iterator CategoryModelHandler::findByName(const QString &name)
+std::vector::iterator CategoryModelHandler::findByName(const std::string &name)
 {
     return std::find_if(mCategories.begin(), mCategories.end(), [&](const CategoryModel &model){
         return model.name() == name;
