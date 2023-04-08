@@ -2,7 +2,7 @@
 #include <QJsonDocument>
 #include "debtmodel.hpp"
 
-DebtModel::DebtModel(int id, const QString &name, int amount)
+DebtModel::DebtModel(int id, const std::string &name, int amount)
     : mName{name}, mId{id}, mAmount{amount} {}
 
 void DebtModel::create()
@@ -52,7 +52,7 @@ void DebtModel::parseJsonObject(const QJsonObject &object)
     mAmount = object["amount"].toInt();
 }
 
-const QString &DebtModel::name() const
+const std::string &DebtModel::name() const
 {
     return mName;
 }
