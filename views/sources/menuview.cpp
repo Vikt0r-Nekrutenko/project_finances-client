@@ -13,6 +13,13 @@ MenuView::MenuView(AppModel *model)
 
 void MenuView::show(stf::Renderer &renderer)
 {
+    auto drawInRG = [&](int x, int y, int value, char sym = ' ', const char *addstr = ""){
+        if(sym == ' ')
+            renderer.draw({x, y}, value > 0 ? "%s%CG%m.00%CD UAH" : "%s%CR%m.00%CD UAH", addstr, value);
+        else
+            renderer.draw({x, y}, value > 0 ? "%s%CG%d%c%CD" : "%s%CR%d%c%CD", addstr, value, '%');
+    };
+
     renderer.drawText({0, 2}, "1.Deposits.");
     renderer.drawText({0, 3}, "2.Operations.");
     renderer.drawText({0, 4}, "3.Categories.");
@@ -28,24 +35,24 @@ void MenuView::show(stf::Renderer &renderer)
 
     renderer.drawSprite(mMainStatsTable, false, {BeginListX, 2});
     renderer.draw({BeginListX + 19,  2}, "%m.00 UAH", m->sumOfAllEarnOperations());
-    renderer.draw({BeginListX + 19,  3}, "%m.00 UAH", m->sumOfAllDeposits());
-    renderer.draw({BeginListX + 40,  3}, "[%d%c]", inPercentage(m->getSumOfAllDeposits(), m->sumOfAllEarnOperations()), '%');
-    renderer.draw({BeginListX + 19,  4}, "%m.00 UAH", m->totalPnL());
-    renderer.draw({BeginListX + 40,  4}, "[%d%c]", inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 19,  3, m->sumOfAllDeposits());
+    drawInRG(BeginListX + 40,  3, inPercentage(m->getSumOfAllDeposits(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 19,  4, m->totalPnL());
+    drawInRG(BeginListX + 40,  4, inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()), '%');
 
     renderer.drawSprite(mPnLStatsTable, false, {BeginListX, 6});
 
-    renderer.draw({BeginListX + 15,  7}, "%m.00 UAH", m->todayPnL());
-    renderer.draw({BeginListX + 36,  7}, "[%d%c]", inPercentage(m->todayPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  7, m->todayPnL());
+    drawInRG(BeginListX + 37,  7, inPercentage(m->todayPnL(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.draw({BeginListX + 15,  8}, "%m.00 UAH", m->weekPnL());
-    renderer.draw({BeginListX + 36,  8}, "[%d%c]", inPercentage(m->weekPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  8, m->weekPnL());
+    drawInRG(BeginListX + 37,  8, inPercentage(m->weekPnL(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.draw({BeginListX + 15,  9}, "%m.00 UAH", m->monthPnL());
-    renderer.draw({BeginListX + 36,  9}, "[%d%c]", inPercentage(m->monthPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  9, m->monthPnL());
+    drawInRG(BeginListX + 37,  9, inPercentage(m->monthPnL(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.draw({BeginListX + 15, 10}, "%m.00 UAH", m->yearPnL());
-    renderer.draw({BeginListX + 36, 10}, "[%d%c]", inPercentage(m->yearPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16, 10, m->yearPnL());
+    drawInRG(BeginListX + 37, 10, inPercentage(m->yearPnL(), m->sumOfAllEarnOperations()), '%');
 
     renderer.draw({BeginListX, 12}, "Favorite categories:");
     int i = 1;
@@ -54,8 +61,8 @@ void MenuView::show(stf::Renderer &renderer)
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, 12 + i}, '.');
         renderer.draw({BeginListX, 12 + i}, "%s", favcat.first.c_str());
-        renderer.draw({BeginListX + 13, 12 + i}, "|..%m.00 UAH", favcat.second);
-        renderer.draw({BeginListX + 34, 12 + i++}, "|..[%d%c]", inPercentage(favcat.second, m->monthPnL()), '%');
+        drawInRG(BeginListX + 13, 12 + i, favcat.second, ' ', "|..");
+        drawInRG(BeginListX + 34, 12 + i++, inPercentage(favcat.second, m->monthPnL()), '%', "|..");
     }
     ModelViewWithInputField::show(renderer);
 }
