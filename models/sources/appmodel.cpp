@@ -20,6 +20,11 @@ const std::vector<CategoryModel> &AppModel::favCategories() const
     return mFavCategories;
 }
 
+const std::pair<std::pair<int, std::string>, std::pair<int, std::string>> &AppModel::minMaxLosses() const
+{
+    return mMinMaxLosses;
+}
+
 const std::vector<std::pair<std::string, int> > &AppModel::sumByFavCategories() const
 {
     return mSumByFavCategories;
@@ -348,4 +353,39 @@ int AppModel::getPnLByDays(int days) const
     int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
     int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
     return posOpSum - negOpSum;
+}
+
+void AppModel::getMinMaxLossesBy30Days()
+{
+    if(mOperationHandler.operations().empty())
+        return;
+
+    std::vector<const OperationModel *> operations;
+    for(const auto &operation : mOperationHandler.operations()) {
+        const QDateTime opDate = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd");
+        const QDateTime time   = QDateTime().currentDateTime().addDays(-30);
+        const QDateTime today  = QDateTime().currentDateTime();
+        if(opDate >= time && opDate <= today)
+            operations.push_back(&operation);
+    }
+
+    std::vector<std::pair<int, std::string>> operationsSum;
+    for(size_t i = 0; i < operations.size() - 1; ++i) {
+        auto category = mCategoryHandler.findByName(operations.at(i)->category());
+        if(category->type() == "negative") {
+            operationsSum.push_back({operations.at(i)->amount(), operations.at(i)->category()});
+            for(size_t j = i + 1; j < operations.size(); ++j) {
+                if(operations.at(i)->category() == operations.at(j)->category())
+                    operationsSum.back().first += operations.at(j)->amount();
+            }
+        }
+    }
+    mMinMaxLosses.first = operationsSum.front(); //Min
+    mMinMaxLosses.second = operationsSum.front(); //Max
+    for(const auto& mm : operationsSum) {
+        if(mm.first < mMinMaxLosses.first.first)
+            mMinMaxLosses.first = mm;
+        else if(mm.first > mMinMaxLosses.second.first)
+            mMinMaxLosses.second = mm;
+    }
 }
