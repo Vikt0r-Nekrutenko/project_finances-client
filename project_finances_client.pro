@@ -67,5 +67,6 @@ HEADERS += \
     views/headers/modelviewwithinputfield.hpp \
 
 DISTFILES += \
+    sprs/losses.spr \
     sprs/main_stats.spr \
     sprs/pnl_stats.spr

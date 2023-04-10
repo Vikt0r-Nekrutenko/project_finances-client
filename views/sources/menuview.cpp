@@ -67,11 +67,11 @@ void MenuView::show(stf::Renderer &renderer)
 
     const auto minLoss = m->minMaxLosses().first;
     const auto maxLoss = m->minMaxLosses().second;
-    renderer.draw({BeginListX, 13 + i}, "_______Name________|_______Amount_______", '%');
-    renderer.draw({BeginListX, 14 + i}, "Max loss: %s", maxLoss.second.c_str());
-    drawInRG(BeginListX + 19, 14 + i, maxLoss.first, ' ', "|..");
-    renderer.draw({BeginListX, 15 + i}, "Min loss: %s", minLoss.second.c_str());
-    drawInRG(BeginListX + 19, 15 + i, minLoss.first, ' ', "|..");
+    renderer.drawSprite(mLossesTable, false, {BeginListX, 13 + i});
+    renderer.draw({BeginListX + 9, 14 + i}, "'%s'", maxLoss.second.c_str());
+    drawInRG(BeginListX + 22, 14 + i, -maxLoss.first);
+    renderer.draw({BeginListX + 9, 15 + i}, "'%s'", minLoss.second.c_str());
+    drawInRG(BeginListX + 22, 15 + i, -minLoss.first);
 
     ModelViewWithInputField::show(renderer);
 }
