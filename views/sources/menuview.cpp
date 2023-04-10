@@ -13,12 +13,11 @@ MenuView::MenuView(AppModel *model)
 
 void MenuView::show(stf::Renderer &renderer)
 {
-    auto drawInRGMoney = [&](int x, int y, int value){
-        renderer.draw({x, y}, value > 0 ? "%CG%m.00%CD UAH" : "%CR%m.00%CD UAH", value);
-    };
-
-    auto drawInRGPercetage = [&](int x, int y, int value){
-        renderer.draw({x, y}, value > 0 ? "%CG%d%c%CD" : "%CR%d%c%CD", value, '%');
+    auto drawInRG = [&](int x, int y, int value, char sym = ' '){
+        if(sym == ' ')
+            renderer.draw({x, y}, value > 0 ? "%CG%m.00%CD UAH" : "%CR%m.00%CD UAH", value);
+        else
+            renderer.draw({x, y}, value > 0 ? "%CG%d%c%CD" : "%CR%d%c%CD", value, '%');
     };
 
     renderer.drawText({0, 2}, "1.Deposits.");
@@ -36,10 +35,10 @@ void MenuView::show(stf::Renderer &renderer)
 
     renderer.drawSprite(mMainStatsTable, false, {BeginListX, 2});
     renderer.draw({BeginListX + 19,  2}, "%m.00 UAH", m->sumOfAllEarnOperations());
-    drawInRGMoney(BeginListX + 19,  3, m->sumOfAllDeposits());
-    drawInRGPercetage(BeginListX + 40,  3, inPercentage(m->getSumOfAllDeposits(), m->sumOfAllEarnOperations()));
-    drawInRGMoney(BeginListX + 19,  4, m->totalPnL());
-    drawInRGPercetage(BeginListX + 40,  4, inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()));
+    drawInRG(BeginListX + 19,  3, m->sumOfAllDeposits());
+    drawInRG(BeginListX + 40,  3, inPercentage(m->getSumOfAllDeposits(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 19,  4, m->totalPnL());
+    drawInRG(BeginListX + 40,  4, inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()), '%');
 
     renderer.drawSprite(mPnLStatsTable, false, {BeginListX, 6});
 
