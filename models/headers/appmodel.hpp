@@ -15,6 +15,7 @@ public:
     const std::vector<CategoryModel> &categories() const;
     const std::vector<CategoryModel> &favCategories() const;
     const std::vector<std::pair<std::string, int> > &sumByFavCategories() const;
+    const std::pair<std::pair<int, std::string>, std::pair<int, std::string>> &minMaxLosses() const;
     const std::vector<OperationModel> &operationsByMonth() const;
     const std::vector<DebtModel> &debts() const;
 
@@ -64,12 +65,14 @@ private:
     int getPnLByDays(int days) const;
     int getSumOfOperationsByCategoryType(const std::vector<const OperationModel *> &operations, const std::string &categoryType) const;
     void updateDepositBalanceByCategoryType(std::vector<CategoryModel>::iterator &category, std::vector<DepositModel>::iterator &deposit, int amount);
+    void getMinMaxLossesBy30Days();
 
     OperationModelHandler mOperationHandler;
     DebtModelHandler mDebtHandler;
     DepositModelHandler mDepositHandler;
     CategoryModelHandler mCategoryHandler;
 
+    std::pair<std::pair<int, std::string>, std::pair<int, std::string>> mMinMaxLosses;
     std::vector<std::pair<std::string, int>> mSumByFavCategories;
     std::vector<CategoryModel> mFavCategories;
     std::vector<OperationModel> mOperationsByMonth;

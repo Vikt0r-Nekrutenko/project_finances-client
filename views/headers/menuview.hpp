@@ -19,6 +19,7 @@ private:
 
     stf::Sprite mMainStatsTable = stf::Sprite("sprs/main_stats.spr");
     stf::Sprite mPnLStatsTable = stf::Sprite("sprs/pnl_stats.spr");
+    stf::Sprite mLossesTable = stf::Sprite("sprs/losses.spr");
 };
 
 #endif // MENUVIEW_HPP

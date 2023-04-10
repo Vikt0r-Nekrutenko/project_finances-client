@@ -56,7 +56,7 @@ void MenuView::show(stf::Renderer &renderer)
 
     renderer.draw({BeginListX, 12}, "Favorite categories:");
     int i = 1;
-    renderer.draw({BeginListX, 12 + i++}, "____Name_____|_________PnL________|__%c of total PnL by 30 days__________", '%');
+    renderer.draw({BeginListX, 12 + i++}, "____Name_____|_________PnL________|__%c_of_total_PnL_by_30_days__________", '%');
     for(const auto &favcat : m->sumByFavCategories()) {
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, 12 + i}, '.');
@@ -64,6 +64,15 @@ void MenuView::show(stf::Renderer &renderer)
         drawInRG(BeginListX + 13, 12 + i, favcat.second, ' ', "|..");
         drawInRG(BeginListX + 34, 12 + i++, inPercentage(favcat.second, m->monthPnL()), '%', "|..");
     }
+
+    const auto minLoss = m->minMaxLosses().first;
+    const auto maxLoss = m->minMaxLosses().second;
+    renderer.drawSprite(mLossesTable, false, {BeginListX, 13 + i});
+    renderer.draw({BeginListX + 9, 14 + i}, "'%s'", maxLoss.second.c_str());
+    drawInRG(BeginListX + 22, 14 + i, -maxLoss.first);
+    renderer.draw({BeginListX + 9, 15 + i}, "'%s'", minLoss.second.c_str());
+    drawInRG(BeginListX + 22, 15 + i, -minLoss.first);
+
     ModelViewWithInputField::show(renderer);
 }
 
