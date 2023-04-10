@@ -70,8 +70,9 @@ void MenuView::show(stf::Renderer &renderer)
     renderer.draw({BeginListX, 13 + i}, "_______Name________|_______Amount_______", '%');
     renderer.draw({BeginListX, 14 + i}, "Max loss: %s", maxLoss.second.c_str());
     drawInRG(BeginListX + 19, 14 + i, maxLoss.first, ' ', "|..");
+    renderer.draw({BeginListX, 15 + i}, "Min loss: %s", minLoss.second.c_str());
+    drawInRG(BeginListX + 19, 15 + i, minLoss.first, ' ', "|..");
 
-//    renderer.draw({BeginListX, 12 + i + 3}, "%s: %m", minLoss.second.c_str(), minLoss.first);
     ModelViewWithInputField::show(renderer);
 }
 
