@@ -157,27 +157,13 @@ int AppModel::getSumOfAllDeposits() const
 void AppModel::addNewLendOperation(const char *date, const char *deposit, int amount, const char *name)
 {
     addNewOperation(date, deposit, amount, "Lend");
-
-    auto debt = mDebtHandler.findByName(name);
-    if(debt == mDebtHandler.debts().end()) {
-        mDebtHandler.addNewDebt(name, amount);
-    } else {
-        debt->increase(amount);
-    }
-    debt->update();
+    addOrChangeDebtByName(name, amount, "Lend");
 }
 
 void AppModel::addNewRepayOperation(const char *date, const char *deposit, int amount, const char *name)
 {
     addNewOperation(date, deposit, amount, "Repay");
-
-    auto debt = mDebtHandler.findByName(name);
-    if(debt == mDebtHandler.debts().end()) {
-        mDebtHandler.addNewDebt(name, amount);
-    } else {
-        debt->decrease(amount);
-    }
-    debt->update();
+    addOrChangeDebtByName(name, amount, "Repay");
 }
 
 void AppModel::addNewOperation(const char *date, const char *deposit, int amount, const char *category)
@@ -324,6 +310,18 @@ int AppModel::getMonthPnL() const
 int AppModel::getYearPnl() const
 {
     return getPnLByDays(-365);
+}
+
+void AppModel::addOrChangeDebtByName(const char *name, const int amount, const char *lendOrRepay)
+{
+    auto debt = mDebtHandler.findByName(name);
+    if(debt == mDebtHandler.debts().end()) {
+        mDebtHandler.addNewDebt(name, amount);
+    } else if(std::string(lendOrRepay) == "Lend"){
+        debt->increase(amount);
+    } else if(std::string(lendOrRepay) == "Repay")
+        debt->decrease(amount);
+    debt->update();
 }
 
 int AppModel::getPnLByDays(int days) const

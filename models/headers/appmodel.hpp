@@ -60,6 +60,7 @@ public:
 
 private:
 
+    void addOrChangeDebtByName(const char *name, const int amount, const char *lendOrRepay);
     int getPnLByDays(int days) const;
     int getSumOfOperationsByCategoryType(const std::vector<const OperationModel *> &operations, const std::string &categoryType) const;
     void updateDepositBalanceByCategoryType(std::vector<CategoryModel>::iterator &category, std::vector<DepositModel>::iterator &deposit, int amount);
