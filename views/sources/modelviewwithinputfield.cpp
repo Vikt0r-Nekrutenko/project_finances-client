@@ -13,14 +13,14 @@ void ModelViewWithInputField::inputHandler(int key)
         mOption = 0;
     else if(key == ' ' && mInput.empty() && !mInputBackup.empty())
         mInput = mInputBackup;
-    else if(key == 13) {
+    else if(key == 13 || key == 10) {
         mInputBackup = mInput;
         onEnterHandler();
         mInput.clear();
         mOption = 0;
     } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-')
         mInput += key;
-    else if(key == 8 && !mInput.empty())
+    else if((key == 127 || key == 8) && !mInput.empty())
         mInput.pop_back();
 }
 
