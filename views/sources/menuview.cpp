@@ -13,11 +13,11 @@ MenuView::MenuView(AppModel *model)
 
 void MenuView::show(stf::Renderer &renderer)
 {
-    auto drawInRG = [&](int x, int y, int value, char sym = ' '){
+    auto drawInRG = [&](int x, int y, int value, char sym = ' ', const char *addstr = ""){
         if(sym == ' ')
-            renderer.draw({x, y}, value > 0 ? "%CG%m.00%CD UAH" : "%CR%m.00%CD UAH", value);
+            renderer.draw({x, y}, value > 0 ? "%s%CG%m.00%CD UAH" : "%s%CR%m.00%CD UAH", addstr, value);
         else
-            renderer.draw({x, y}, value > 0 ? "%CG%d%c%CD" : "%CR%d%c%CD", value, '%');
+            renderer.draw({x, y}, value > 0 ? "%s%CG%d%c%CD" : "%s%CR%d%c%CD", addstr, value, '%');
     };
 
     renderer.drawText({0, 2}, "1.Deposits.");
@@ -61,8 +61,8 @@ void MenuView::show(stf::Renderer &renderer)
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, 12 + i}, '.');
         renderer.draw({BeginListX, 12 + i}, "%s", favcat.first.c_str());
-        renderer.draw({BeginListX + 13, 12 + i}, "|..%m.00 UAH", favcat.second);
-        renderer.draw({BeginListX + 34, 12 + i++}, "|..[%d%c]", inPercentage(favcat.second, m->monthPnL()), '%');
+        drawInRG(BeginListX + 13, 12 + i, favcat.second, ' ', "|..");
+        drawInRG(BeginListX + 34, 12 + i++, inPercentage(favcat.second, m->monthPnL()), '%', "|..");
     }
     ModelViewWithInputField::show(renderer);
 }
