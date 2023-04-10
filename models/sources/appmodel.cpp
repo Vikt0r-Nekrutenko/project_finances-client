@@ -156,11 +156,7 @@ int AppModel::getSumOfAllDeposits() const
 
 void AppModel::addNewLendOperation(const char *date, const char *deposit, int amount, const char *name)
 {
-    mOperationHandler.addNewOperation(date, deposit, amount, "Lend");
-
-    auto depo = mDepositHandler.findByName(deposit);
-    depo->decreaseBalance(amount);
-    depo->update();
+    addNewOperation(date, deposit, amount, "Lend");
 
     auto debt = mDebtHandler.findByName(name);
     if(debt == mDebtHandler.debts().end()) {
@@ -173,11 +169,7 @@ void AppModel::addNewLendOperation(const char *date, const char *deposit, int am
 
 void AppModel::addNewRepayOperation(const char *date, const char *deposit, int amount, const char *name)
 {
-    mOperationHandler.addNewOperation(date, deposit, amount, "Repay");
-
-    auto depo = mDepositHandler.findByName(deposit);
-    depo->increaseBalance(amount);
-    depo->update();
+    addNewOperation(date, deposit, amount, "Repay");
 
     auto debt = mDebtHandler.findByName(name);
     if(debt == mDebtHandler.debts().end()) {
@@ -190,11 +182,13 @@ void AppModel::addNewRepayOperation(const char *date, const char *deposit, int a
 
 void AppModel::addNewOperation(const char *date, const char *deposit, int amount, const char *category)
 {
+    auto depo = mDepositHandler.findByName(deposit);
+    if(depo == mDepositHandler.deposits().end())
+        throw std::out_of_range("Deposit with that name does not exitst.");
+
     mOperationHandler.addNewOperation(date, deposit, amount, category);
 
     auto cat = mCategoryHandler.findByName(category);
-    auto depo = mDepositHandler.findByName(deposit);
-
     updateDepositBalanceByCategoryType(cat, depo, +amount);
     depo->update();
 }
