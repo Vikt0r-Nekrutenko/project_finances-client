@@ -379,12 +379,12 @@ void AppModel::getMinMaxLossesBy30Days()
     }
 
     mMinMaxLosses.first = //Min
-    mMinMaxLosses.second = { -operationsSum.begin()->second, operationsSum.begin()->first }; //Max
+    mMinMaxLosses.second = { operationsSum.begin()->second, operationsSum.begin()->first }; //Max
 
     for(const auto& mm : operationsSum) {
         if(mm.second < mMinMaxLosses.first.first)
-            mMinMaxLosses.first = { -mm.second, mm.first };
+            mMinMaxLosses.first = { mm.second, mm.first };
         if(mm.second > mMinMaxLosses.second.first)
-            mMinMaxLosses.second = { -mm.second, mm.first };
+            mMinMaxLosses.second = { mm.second, mm.first };
     }
 }
