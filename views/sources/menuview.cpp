@@ -64,6 +64,14 @@ void MenuView::show(stf::Renderer &renderer)
         drawInRG(BeginListX + 13, 12 + i, favcat.second, ' ', "|..");
         drawInRG(BeginListX + 34, 12 + i++, inPercentage(favcat.second, m->monthPnL()), '%', "|..");
     }
+
+    const auto minLoss = m->minMaxLosses().first;
+    const auto maxLoss = m->minMaxLosses().second;
+    renderer.draw({BeginListX, 13 + i}, "_______Name________|_______Amount_______", '%');
+    renderer.draw({BeginListX, 14 + i}, "Max loss: %s", maxLoss.second.c_str());
+    drawInRG(BeginListX + 19, 14 + i, maxLoss.first, ' ', "|..");
+
+//    renderer.draw({BeginListX, 12 + i + 3}, "%s: %m", minLoss.second.c_str(), minLoss.first);
     ModelViewWithInputField::show(renderer);
 }
 
