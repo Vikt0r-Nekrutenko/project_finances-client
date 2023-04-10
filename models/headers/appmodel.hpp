@@ -21,6 +21,7 @@ public:
 
     int sumOfAllEarnOperations() const;
     int sumOfAllDeposits() const;
+    int sumOfAllDebts() const;
     int totalPnL() const;
     int todayPnL() const;
     int weekPnL() const;
@@ -51,15 +52,17 @@ public:
     void changeDebt(int index, const char *name, int amount);
     void deleteDebt(int index);
 
+
+private:
+
     int getSum30DaysOfOperationsByCategory(const CategoryModel &category) const;
     int getSumOfAllEarnOperations() const;
     int getSumOfAllDeposits() const;
+    int getSumOfAllDebts() const;
     int getTodayPnL() const;
     int getWeekPnL() const;
     int getMonthPnL() const;
     int getYearPnl() const;
-
-private:
 
     void addOrChangeDebtByName(const char *name, const int amount, const char *lendOrRepay);
     int getPnLByDays(int days) const;
@@ -79,6 +82,7 @@ private:
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,
+        mSumOfAllDebts = 0,
         mTotalPnL = 0,
         mTodayPnL = 0,
         mWeekPnL = 0,

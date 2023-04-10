@@ -50,6 +50,11 @@ int AppModel::sumOfAllDeposits() const
     return mSumOfAllDeposits;
 }
 
+int AppModel::sumOfAllDebts() const
+{
+    return mSumOfAllDebts;
+}
+
 int AppModel::totalPnL() const
 {
     return mTotalPnL;
@@ -79,6 +84,7 @@ void AppModel::updateStats()
 {
     mSumOfAllEarnOperations = getSumOfAllEarnOperations();
     mSumOfAllDeposits = getSumOfAllDeposits();
+    mSumOfAllDebts = getSumOfAllDebts();
     mTodayPnL = getTodayPnL();
     mWeekPnL = getWeekPnL();
     mMonthPnL = getMonthPnL();
@@ -157,6 +163,16 @@ int AppModel::getSumOfAllDeposits() const
 
     for(const auto &deposit : deposits()) {
         result += deposit.balance();
+    }
+    return result;
+}
+
+int AppModel::getSumOfAllDebts() const
+{
+    int result = 0;
+
+    for(const auto &debt : mDebtHandler.debts()) {
+        result += debt.amount();
     }
     return result;
 }

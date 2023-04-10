@@ -36,7 +36,7 @@ void MenuView::show(stf::Renderer &renderer)
     renderer.drawSprite(mMainStatsTable, false, {BeginListX, 2});
     renderer.draw({BeginListX + 19,  2}, "%m.00 UAH", m->sumOfAllEarnOperations());
     drawInRG(BeginListX + 19,  3, m->sumOfAllDeposits());
-    drawInRG(BeginListX + 40,  3, inPercentage(m->getSumOfAllDeposits(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 40,  3, inPercentage(m->sumOfAllDeposits(), m->sumOfAllEarnOperations()), '%');
     drawInRG(BeginListX + 19,  4, m->totalPnL());
     drawInRG(BeginListX + 40,  4, inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()), '%');
 
