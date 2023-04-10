@@ -91,6 +91,7 @@ void AppModel::updateStats()
 
     getOperationsByCurrentMonth();
     getMinMaxLossesBy30Days();
+    getOperationsByCurrentMonth();
 }
 
 void AppModel::updateAllHandlers()
@@ -331,9 +332,11 @@ void AppModel::addOrChangeDebtByName(const char *name, const int amount, const c
         mDebtHandler.addNewDebt(name, amount);
     } else if(std::string(lendOrRepay) == "Lend"){
         debt->increase(amount);
-    } else if(std::string(lendOrRepay) == "Repay")
+        debt->update();
+    } else if(std::string(lendOrRepay) == "Repay"){
         debt->decrease(amount);
-    debt->update();
+        debt->update();
+    }
 }
 
 int AppModel::getPnLByDays(int days) const

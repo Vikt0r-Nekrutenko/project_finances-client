@@ -14,7 +14,7 @@ void DebtModel::create()
     };
 
     QNetworkReply *reply = sendCRUDRequest("debts/", newDebt, "POST");
-    replyHandler(reply, "Operation added successfully!");
+    replyHandler(reply, "Debt added successfully!");
 }
 
 void DebtModel::read()
