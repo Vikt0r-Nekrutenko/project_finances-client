@@ -189,10 +189,16 @@ void AppModel::changeOperation(int index, const char *date, const char *deposit,
     auto cat = mCategoryHandler.findByName(oldCategory);
     auto depo = mDepositHandler.findByName(deposit);
 
+    if(depo == mDepositHandler.deposits().end())
+        throw std::out_of_range("Deposit with that name does not exitst.");
+
     updateDepositBalanceByCategoryType(cat, depo, -oldAmount);
 
     mOperationHandler.updateOperation(index, date, deposit, amount, category);
     cat = mCategoryHandler.findByName(category);
+
+    if(cat == mCategoryHandler.categories().end())
+        throw std::out_of_range("Category with that name does not exitst.");
 
     updateDepositBalanceByCategoryType(cat, depo, +amount);
     depo->update();
