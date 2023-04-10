@@ -42,17 +42,17 @@ void MenuView::show(stf::Renderer &renderer)
 
     renderer.drawSprite(mPnLStatsTable, false, {BeginListX, 6});
 
-    renderer.draw({BeginListX + 15,  7}, "%m.00 UAH", m->todayPnL());
-    renderer.draw({BeginListX + 36,  7}, "[%d%c]", inPercentage(m->todayPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  7, m->todayPnL());
+    drawInRG(BeginListX + 37,  7, inPercentage(m->todayPnL(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.draw({BeginListX + 15,  8}, "%m.00 UAH", m->weekPnL());
-    renderer.draw({BeginListX + 36,  8}, "[%d%c]", inPercentage(m->weekPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  8, m->weekPnL());
+    drawInRG(BeginListX + 37,  8, inPercentage(m->weekPnL(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.draw({BeginListX + 15,  9}, "%m.00 UAH", m->monthPnL());
-    renderer.draw({BeginListX + 36,  9}, "[%d%c]", inPercentage(m->monthPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  9, m->monthPnL());
+    drawInRG(BeginListX + 37,  9, inPercentage(m->monthPnL(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.draw({BeginListX + 15, 10}, "%m.00 UAH", m->yearPnL());
-    renderer.draw({BeginListX + 36, 10}, "[%d%c]", inPercentage(m->yearPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16, 10, m->yearPnL());
+    drawInRG(BeginListX + 37, 10, inPercentage(m->yearPnL(), m->sumOfAllEarnOperations()), '%');
 
     renderer.draw({BeginListX, 12}, "Favorite categories:");
     int i = 1;
