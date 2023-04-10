@@ -38,8 +38,8 @@ void MenuView::show(stf::Renderer &renderer)
     renderer.draw({BeginListX + 19,  2}, "%m.00 UAH", m->sumOfAllEarnOperations());
     drawInRGMoney(BeginListX + 19,  3, m->sumOfAllDeposits());
     drawInRGPercetage(BeginListX + 40,  3, inPercentage(m->getSumOfAllDeposits(), m->sumOfAllEarnOperations()));
-    renderer.draw({BeginListX + 19,  4}, "%m.00 UAH", m->totalPnL());
-    renderer.draw({BeginListX + 40,  4}, "[%d%c]", inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRGMoney(BeginListX + 19,  4, m->totalPnL());
+    drawInRGPercetage(BeginListX + 40,  4, inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()));
 
     renderer.drawSprite(mPnLStatsTable, false, {BeginListX, 6});
 
