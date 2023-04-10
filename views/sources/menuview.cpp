@@ -29,7 +29,7 @@ void MenuView::show(stf::Renderer &renderer)
 
     AppModel *m = static_cast<AppModel*>(m_model);
 
-    for(int i = 2; i < 5; ++i)
+    for(int i = 2; i < 6; ++i)
         for(int j = BeginListX; j < renderer.Size.x; ++j)
             renderer.drawPixel({j, i}, '.');
 
@@ -39,39 +39,41 @@ void MenuView::show(stf::Renderer &renderer)
     drawInRG(BeginListX + 40,  3, inPercentage(m->sumOfAllDeposits(), m->sumOfAllEarnOperations()), '%');
     drawInRG(BeginListX + 19,  4, m->totalPnL());
     drawInRG(BeginListX + 40,  4, inPercentage(m->totalPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 19,  5, -m->sumOfAllDebts());
+    drawInRG(BeginListX + 40,  5, -inPercentage(m->sumOfAllDebts(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.drawSprite(mPnLStatsTable, false, {BeginListX, 6});
+    renderer.drawSprite(mPnLStatsTable, false, {BeginListX, 7});
 
-    drawInRG(BeginListX + 16,  7, m->todayPnL());
-    drawInRG(BeginListX + 37,  7, inPercentage(m->todayPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  8, m->todayPnL());
+    drawInRG(BeginListX + 37,  8, inPercentage(m->todayPnL(), m->sumOfAllEarnOperations()), '%');
 
-    drawInRG(BeginListX + 16,  8, m->weekPnL());
-    drawInRG(BeginListX + 37,  8, inPercentage(m->weekPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  9, m->weekPnL());
+    drawInRG(BeginListX + 37,  9, inPercentage(m->weekPnL(), m->sumOfAllEarnOperations()), '%');
 
-    drawInRG(BeginListX + 16,  9, m->monthPnL());
-    drawInRG(BeginListX + 37,  9, inPercentage(m->monthPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16,  10, m->monthPnL());
+    drawInRG(BeginListX + 37,  10, inPercentage(m->monthPnL(), m->sumOfAllEarnOperations()), '%');
 
-    drawInRG(BeginListX + 16, 10, m->yearPnL());
-    drawInRG(BeginListX + 37, 10, inPercentage(m->yearPnL(), m->sumOfAllEarnOperations()), '%');
+    drawInRG(BeginListX + 16, 11, m->yearPnL());
+    drawInRG(BeginListX + 37, 11, inPercentage(m->yearPnL(), m->sumOfAllEarnOperations()), '%');
 
-    renderer.draw({BeginListX, 12}, "Favorite categories:");
+    renderer.draw({BeginListX, 13}, "Favorite categories:");
     int i = 1;
-    renderer.draw({BeginListX, 12 + i++}, "____Name_____|_________PnL________|__%c_of_total_PnL_by_30_days__________", '%');
+    renderer.draw({BeginListX, 13 + i++}, "____Name_____|_________PnL________|__%c_of_total_PnL_by_30_days__________", '%');
     for(const auto &favcat : m->sumByFavCategories()) {
         for(int j = BeginListX; j < renderer.Size.x; ++j)
-            renderer.drawPixel({j, 12 + i}, '.');
-        renderer.draw({BeginListX, 12 + i}, "%s", favcat.first.c_str());
-        drawInRG(BeginListX + 13, 12 + i, favcat.second, ' ', "|..");
-        drawInRG(BeginListX + 34, 12 + i++, inPercentage(favcat.second, m->monthPnL()), '%', "|..");
+            renderer.drawPixel({j, 13 + i}, '.');
+        renderer.draw({BeginListX, 13 + i}, "%s", favcat.first.c_str());
+        drawInRG(BeginListX + 13, 13 + i, favcat.second, ' ', "|..");
+        drawInRG(BeginListX + 34, 13 + i++, inPercentage(favcat.second, m->monthPnL()), '%', "|..");
     }
 
     const auto minLoss = m->minMaxLosses().first;
     const auto maxLoss = m->minMaxLosses().second;
-    renderer.drawSprite(mLossesTable, false, {BeginListX, 13 + i});
-    renderer.draw({BeginListX + 9, 14 + i}, "'%s'", maxLoss.second.c_str());
-    drawInRG(BeginListX + 22, 14 + i, -maxLoss.first);
+    renderer.drawSprite(mLossesTable, false, {BeginListX, 14 + i});
+    renderer.draw({BeginListX + 9, 15 + i}, "'%s'", maxLoss.second.c_str());
+    drawInRG(BeginListX + 22, 15 + i, -maxLoss.first);
     renderer.draw({BeginListX + 9, 15 + i}, "'%s'", minLoss.second.c_str());
-    drawInRG(BeginListX + 22, 15 + i, -minLoss.first);
+    drawInRG(BeginListX + 22, 16 + i, -minLoss.first);
 
     ModelViewWithInputField::show(renderer);
 }
