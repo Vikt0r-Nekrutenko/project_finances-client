@@ -370,25 +370,21 @@ void AppModel::getMinMaxLossesBy30Days()
             operations.push_back(&operation);
     }
 
-//    std::vector<std::pair<int, std::string>> operationsSum;
     std::map<std::string, int> operationsSum;
     for(size_t i = 0; i < operations.size(); ++i) {
         auto category = mCategoryHandler.findByName(operations.at(i)->category());
         if(category->type() == "negative") {
-//            operationsSum.push_back({operations.at(i)->amount(), operations.at(i)->category()});
             operationsSum[operations.at(i)->category()] += operations.at(i)->amount();
-//            for(size_t j = i + 1; j < operations.size(); ++j) {
-//                if(operationsSum.back().second == operations.at(j)->category())
-//                    operationsSum.back().first += operations.at(j)->amount();
-//            }
         }
     }
-    mMinMaxLosses.first = {operationsSum.begin()->second, operationsSum.begin()->first}; //Min
-//    mMinMaxLosses.second = operationsSum.front(); //Max
-//    for(const auto& mm : operationsSum) {
-//        if(mm.first < mMinMaxLosses.first.first)
-//            mMinMaxLosses.first = mm;
-//        if(mm.first > mMinMaxLosses.second.first)
-//            mMinMaxLosses.second = mm;
-//    }
+
+    mMinMaxLosses.first = //Min
+    mMinMaxLosses.second = { operationsSum.begin()->second, operationsSum.begin()->first }; //Max
+
+    for(const auto& mm : operationsSum) {
+        if(mm.second < mMinMaxLosses.first.first)
+            mMinMaxLosses.first = { mm.second, mm.first };
+        if(mm.second > mMinMaxLosses.second.first)
+            mMinMaxLosses.second = { mm.second, mm.first };
+    }
 }
