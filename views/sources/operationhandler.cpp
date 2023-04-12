@@ -15,7 +15,7 @@ void AddNewOperationHandler::handle(AppModel *model, std::string &input)
     int amount = getIntFromInput();
     std::string category = getStrFromInput();
 
-    static_cast<AppModel*>(m_model)->addNewOperation(date.c_str(), deposit.c_str(), amount, category.c_str());
-    updateOperationsList(date);
+    model->addNewOperation(date.c_str(), deposit.c_str(), amount, category.c_str());
+    updateOperationsList(model, date);
 }
 
