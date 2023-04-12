@@ -9,7 +9,7 @@ class ModelViewWithInputField : public stf::smv::IView
 {
 public:
     const int BeginListY = 2;
-    const int BeginListX = 25;
+    const int BeginListX = 26;
     const int InputPrewievY;
     const int InputInfoY;
 
