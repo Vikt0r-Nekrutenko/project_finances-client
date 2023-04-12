@@ -11,12 +11,14 @@ public:
     std::string getStrFromInput(std::string &input);
     void updateOperationsList(AppModel *model, const std::string &date);
     virtual void handle(AppModel *model, std::string &input) = 0;
+    virtual const char *operationFieldsInfo() const = 0;
 };
 
 class AddNewOperationHandler : public OperationHandler
 {
 public:
     void handle(AppModel *model, std::string &input) override;
+    const char *operationFieldsInfo() const override;
 };
 
 #endif // OPERATIONHANDLER_HPP

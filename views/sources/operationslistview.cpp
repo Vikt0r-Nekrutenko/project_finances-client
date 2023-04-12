@@ -1,10 +1,18 @@
 #include "operationslistview.hpp"
 #include "appmodel.hpp"
+#include "operationhandler.hpp"
 
 OperationsListView::OperationsListView(AppModel *model)
     : ModelViewWithInputField(model)
 {
+    mMenu.push_back(new AddNewOperationHandler);
     mOptrionsCount = 9;
+}
+
+OperationsListView::~OperationsListView()
+{
+    for(auto option : mMenu)
+        delete option;
 }
 
 void OperationsListView::show(stf::Renderer &renderer)

@@ -43,3 +43,8 @@ void AddNewOperationHandler::handle(AppModel *model, std::string &input)
     updateOperationsList(model, date);
 }
 
+const char *AddNewOperationHandler::operationFieldsInfo() const
+{
+    return "Type 'date deposit amount category' or 'q' to step back";
+}
+
