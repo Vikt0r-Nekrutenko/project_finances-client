@@ -56,7 +56,9 @@ const char *AddNewOperationHandler::caption() const
 void DeleteOperationHandler::handle(AppModel *model, std::string &input)
 {
     int id = getIntFromInput(input) - 1;
+    const std::string &date = model->operations().at(id).date();
     model->deleteOperation(id);
+    updateOperationsList(model, date);
 }
 
 const char *DeleteOperationHandler::operationFieldsInfo() const
@@ -100,7 +102,6 @@ void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 
     model->addNewLendOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
     updateOperationsList(model, date);
-
 }
 
 const char *AddLendOperationHandler::operationFieldsInfo() const
