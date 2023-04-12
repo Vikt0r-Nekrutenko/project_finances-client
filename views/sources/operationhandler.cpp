@@ -185,7 +185,7 @@ const char *AddNewTodayBankPrivatLendOperationHandler::operationFieldsInfo() con
 
 const char *AddNewTodayBankPrivatLendOperationHandler::caption() const
 {
-    return "Today PrivatBank Lend";
+    return "Today PrivatBank Lend.";
 }
 
 void AddNewTodayBankPrivatRepayOperationHandler::handle(AppModel *model, std::string &input)
@@ -199,4 +199,9 @@ void AddNewTodayBankPrivatRepayOperationHandler::handle(AppModel *model, std::st
 const char *AddNewTodayBankPrivatRepayOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount name' or 'q' to step back:";
+}
+
+const char *AddNewTodayBankPrivatRepayOperationHandler::caption() const
+{
+    return "Today PrivatBank Repay.";
 }
