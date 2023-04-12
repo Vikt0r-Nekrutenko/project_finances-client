@@ -81,6 +81,11 @@ void OperationsListView::onEnterHandler()
         static_cast<AppModel*>(m_model)->getOperationsByMonth(year, month);
     };
 
+    if(mOption)
+        mMenu.at(mOption - 1)->handle(static_cast<AppModel *>(m_model), mInput);
+
+    return;
+
     switch (mOption) {
     case 1: {
         std::string date = getStrFromInput();
