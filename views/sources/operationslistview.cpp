@@ -4,7 +4,7 @@
 OperationsListView::OperationsListView(AppModel *model)
     : ModelViewWithInputField(model)
 {
-    mOptrionsCount = 6;
+    mOptrionsCount = 9;
 }
 
 void OperationsListView::show(stf::Renderer &renderer)
@@ -19,10 +19,10 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({0, 6}, "4.Lend operation.");
     renderer.drawText({0, 7}, "5.Repay operation.");
     renderer.drawText({0, 8}, "6.Select list.");
-    renderer.drawText({0, 10}, "Presets:");
-    renderer.drawText({0, 11}, "[Add]Today PrivatBank");
-    renderer.drawText({0, 12}, "[Add]Today Privat Lend");
-    renderer.drawText({0, 13}, "[Add]Today Privat Repay");
+    renderer.drawText({0, 10}, "Add operations Presets:");
+    renderer.drawText({0, 11}, "Today PrivatBank.");
+    renderer.drawText({0, 12}, "Today PrivatBank Lend.");
+    renderer.drawText({0, 13}, "Today PrivatBank Repay.");
     renderer.drawText({0, 14}, "q.Back to menu.");
 
     if(mOption == 1) {
@@ -37,6 +37,10 @@ void OperationsListView::show(stf::Renderer &renderer)
         renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
     } else if(mOption == 6) {
         renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
+    } else if(mOption == 7) {
+        renderer.drawText({0, InputInfoY}, "Type 'amount category' or 'q' to step back:");
+    } else if(mOption == 8 || mOption == 9) {
+        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
     }
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
