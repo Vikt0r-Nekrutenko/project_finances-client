@@ -5,7 +5,17 @@
 OperationsListView::OperationsListView(AppModel *model)
     : ModelViewWithInputField(model)
 {
-    mMenu.push_back(new AddNewOperationHandler);
+    mMenu.insert(mMenu.end(), {
+                     new AddNewOperationHandler,
+                     new DeleteOperationHandler,
+                     new ChangeOperationHandler,
+                     new AddLendOperationHandler,
+                     new AddRepayOperationHandler,
+                     new AddNewTodayBankPrivatOperationHandler,
+                     new AddNewTodayBankPrivatLendOperationHandler,
+                     new AddNewTodayBankPrivatRepayOperationHandler,
+                     new SelectListOperationHandler,
+                 });
     mOptrionsCount = 9;
 }
 
