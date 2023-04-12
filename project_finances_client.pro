@@ -16,6 +16,7 @@ SOURCES += \
         models/sources/modelhandler.cpp \
         models/sources/categorymodel.cpp \
         models/sources/operationmodel.cpp \
+        models/sources/operationhandler.cpp \
         models/sources/debtmodelhandler.cpp \
         models/sources/depositmodelhandler.cpp \
         models/sources/categorymodelhandler.cpp \
@@ -54,6 +55,7 @@ HEADERS += \
     models/headers/modelhandler.hpp \
     models/headers/categorymodel.hpp \
     models/headers/operationmodel.hpp \
+    models/headers/operationhandler.hpp \
     models/headers/debtmodelhandler.hpp \
     models/headers/depositmodelhandler.hpp \
     models/headers/categorymodelhandler.hpp \
