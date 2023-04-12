@@ -138,8 +138,10 @@ void AddNewTodayBankPrivatOperationHandler::handle(AppModel *model, std::string 
 {
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
+    std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
-    model->addNewOperation(QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString().c_str(), "PrivatBank", amount, category.c_str());
+    model->addNewOperation(date.c_str(), "PrivatBank", amount, category.c_str());
+    updateOperationsList(model, date);
 }
 
 const char *AddNewTodayBankPrivatOperationHandler::operationFieldsInfo() const
