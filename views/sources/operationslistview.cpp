@@ -140,10 +140,10 @@ void OperationsListView::onEnterHandler()
         break;
     }
     case 9: {
-        int year = getIntFromInput();
-        int month = getIntFromInput();
+        int amount = getIntFromInput();
+        std::string name = getStrFromInput();
 
-        static_cast<AppModel*>(m_model)->getOperationsByMonth(year, month);
+        static_cast<AppModel*>(m_model)->addNewRepayOperation(QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString().c_str(), "PrivatBank", amount, name.c_str());
         break;
     }
     };
