@@ -16,6 +16,7 @@ SOURCES += \
         models/sources/modelhandler.cpp \
         models/sources/categorymodel.cpp \
         models/sources/operationmodel.cpp \
+        models/sources/operationhandler.cpp \
         models/sources/debtmodelhandler.cpp \
         models/sources/depositmodelhandler.cpp \
         models/sources/categorymodelhandler.cpp \
@@ -25,7 +26,6 @@ SOURCES += \
         views/sources/debtlistview.cpp \
         views/sources/depositlistview.cpp \
         views/sources/categorylistview.cpp \
-    views/sources/operationhandler.cpp \
         views/sources/operationslistview.cpp \
         views/sources/modelviewwithinputfield.cpp \
         main.cpp \
@@ -55,6 +55,7 @@ HEADERS += \
     models/headers/modelhandler.hpp \
     models/headers/categorymodel.hpp \
     models/headers/operationmodel.hpp \
+    models/headers/operationhandler.hpp \
     models/headers/debtmodelhandler.hpp \
     models/headers/depositmodelhandler.hpp \
     models/headers/categorymodelhandler.hpp \
@@ -66,7 +67,6 @@ HEADERS += \
     views/headers/categorylistview.hpp \
     views/headers/operationslistview.hpp \
     views/headers/modelviewwithinputfield.hpp \
-    views/sources/operationhandler.hpp
 
 DISTFILES += \
     sprs/losses.spr \
