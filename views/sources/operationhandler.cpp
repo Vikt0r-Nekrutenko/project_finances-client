@@ -1,6 +1,23 @@
 #include "operationhandler.hpp"
 #include "appmodel.hpp"
 
+int OperationHandler::getIntFromInput()
+{
+
+}
+
+std::string OperationHandler::getStrFromInput()
+{
+    int pos = mInput.find(" ");
+    if(pos != int(mInput.npos)) {
+        std::string result = mInput.substr(0, pos);
+        mInput.erase(0, pos + 1);
+        return result;
+    } else {
+        return mInput.erase(0, pos + 1);
+    }
+}
+
 void OperationHandler::updateOperationsList(AppModel *model, const std::string &date)
 {
     const int year = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().year();
