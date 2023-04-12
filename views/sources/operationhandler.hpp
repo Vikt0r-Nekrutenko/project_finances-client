@@ -7,6 +7,7 @@ class AppModel;
 class OperationHandler
 {
 public:
+    void updateOperationsList(const std::string &date);
     virtual void handle(AppModel *model, std::string &input) = 0;
 };
 
