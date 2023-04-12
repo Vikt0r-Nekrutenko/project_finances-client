@@ -13,15 +13,15 @@ int OperationHandler::getIntFromInput(std::string &input)
     }
 }
 
-std::string OperationHandler::getStrFromInput()
+std::string OperationHandler::getStrFromInput(std::string &input)
 {
-    int pos = mInput.find(" ");
-    if(pos != int(mInput.npos)) {
-        std::string result = mInput.substr(0, pos);
-        mInput.erase(0, pos + 1);
+    int pos = input.find(" ");
+    if(pos != int(input.npos)) {
+        std::string result = input.substr(0, pos);
+        input.erase(0, pos + 1);
         return result;
     } else {
-        return mInput.erase(0, pos + 1);
+        return input.erase(0, pos + 1);
     }
 }
 
