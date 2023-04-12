@@ -59,3 +59,20 @@ const char *DeleteOperationHandler::operationFieldsInfo() const
 {
     return "Type 'id' or 'q' to step back:";
 }
+
+void ChangeOperationHandler::handle(AppModel *model, std::string &input)
+{
+    int id = getIntFromInput(input) - 1;
+    std::string date = getStrFromInput(input);
+    std::string deposit = getStrFromInput(input);
+    int amount = getIntFromInput(input);
+    std::string category = getStrFromInput(input);
+
+    static_cast<AppModel*>(model)->changeOperation(id, date.c_str(), deposit.c_str(), amount, category.c_str());
+    updateOperationsList(model, date);
+}
+
+const char *ChangeOperationHandler::operationFieldsInfo() const
+{
+
+}
