@@ -33,23 +33,25 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({0, 13}, "9.Today PrivatBank Repay.");
     renderer.drawText({0, 14}, "q.Back to menu.");
 
-    if(mOption == 1) {
-        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount category' or 'q' to step back:");
-    } else if(mOption == 2) {
-        renderer.drawText({0, InputInfoY}, "Type 'id' or 'q' to step back:");
-    } else if(mOption == 3) {
-        renderer.drawText({0, InputInfoY}, "Type 'id date deposit amount category' or 'q' to step back:");
-    } else if(mOption == 4) {
-        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
-    } else if(mOption == 5) {
-        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
-    } else if(mOption == 6) {
-        renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
-    } else if(mOption == 7) {
-        renderer.drawText({0, InputInfoY}, "Type 'amount category' or 'q' to step back:");
-    } else if(mOption == 8 || mOption == 9) {
-        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
-    }
+    if(mOption)
+        renderer.drawText({0, InputInfoY}, mMenu.at(mOption - 1)->operationFieldsInfo());
+//    if(mOption == 1) {
+//        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount category' or 'q' to step back:");
+//    } else if(mOption == 2) {
+//        renderer.drawText({0, InputInfoY}, "Type 'id' or 'q' to step back:");
+//    } else if(mOption == 3) {
+//        renderer.drawText({0, InputInfoY}, "Type 'id date deposit amount category' or 'q' to step back:");
+//    } else if(mOption == 4) {
+//        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+//    } else if(mOption == 5) {
+//        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+//    } else if(mOption == 6) {
+//        renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
+//    } else if(mOption == 7) {
+//        renderer.drawText({0, InputInfoY}, "Type 'amount category' or 'q' to step back:");
+//    } else if(mOption == 8 || mOption == 9) {
+//        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
+//    }
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
