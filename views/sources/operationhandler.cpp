@@ -64,6 +64,11 @@ const char *DeleteOperationHandler::operationFieldsInfo() const
     return "Type 'id' or 'q' to step back:";
 }
 
+const char *DeleteOperationHandler::caption() const
+{
+    return "Delete operation.";
+}
+
 void ChangeOperationHandler::handle(AppModel *model, std::string &input)
 {
     int id = getIntFromInput(input) - 1;
