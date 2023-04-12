@@ -43,4 +43,11 @@ public:
     const char *operationFieldsInfo() const override;
 };
 
+class AddRepayOperationHandler : public OperationHandler
+{
+public:
+    void handle(AppModel *model, std::string &input) override;
+    const char *operationFieldsInfo() const override;
+};
+
 #endif // OPERATIONHANDLER_HPP

@@ -78,7 +78,7 @@ const char *ChangeOperationHandler::operationFieldsInfo() const
 }
 
 //        renderer.drawText({0, InputInfoY}, );
-//        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+//        renderer.drawText({0, InputInfoY}, );
 //        renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
 //        renderer.drawText({0, InputInfoY}, "Type 'amount category' or 'q' to step back:");
 //        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
@@ -96,6 +96,22 @@ void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 }
 
 const char *AddLendOperationHandler::operationFieldsInfo() const
+{
+    return "Type 'date deposit amount name' or 'q' to step back:";
+}
+
+void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
+{
+    std::string date = getStrFromInput(input);
+    std::string deposit = getStrFromInput(input);
+    int amount = getIntFromInput(input);
+    std::string name = getStrFromInput(input);
+
+    model->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+    updateOperationsList(model, date);
+}
+
+const char *AddRepayOperationHandler::operationFieldsInfo() const
 {
     return "Type 'date deposit amount name' or 'q' to step back:";
 }
