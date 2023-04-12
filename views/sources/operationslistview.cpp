@@ -124,7 +124,29 @@ void OperationsListView::onEnterHandler()
 
         static_cast<AppModel*>(m_model)->getOperationsByMonth(year, month);
         break;
-    }};
+    }
+    case 7: {
+        int amount = getIntFromInput();
+        std::string category = getStrFromInput();
+
+        static_cast<AppModel*>(m_model)->addNewOperation(QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString().c_str(), "PrivatBank", amount, category.c_str());
+        break;
+    }
+    case 8: {
+        int year = getIntFromInput();
+        int month = getIntFromInput();
+
+        static_cast<AppModel*>(m_model)->getOperationsByMonth(year, month);
+        break;
+    }
+    case 9: {
+        int year = getIntFromInput();
+        int month = getIntFromInput();
+
+        static_cast<AppModel*>(m_model)->getOperationsByMonth(year, month);
+        break;
+    }
+    };
 }
 
 stf::smv::IView *OperationsListView::keyEventsHandler(const int key)
