@@ -10,6 +10,7 @@ public:
     virtual ~OperationHandler() = default;
     virtual void handle(AppModel *model, std::string &input) = 0;
     virtual const char *operationFieldsInfo() const = 0;
+    virtual const char *caption() const = 0;
 
 protected:
 
