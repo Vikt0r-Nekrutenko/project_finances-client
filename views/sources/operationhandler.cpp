@@ -147,6 +147,11 @@ const char *AddNewTodayBankPrivatOperationHandler::operationFieldsInfo() const
     return "Type 'amount category' or 'q' to step back:";
 }
 
+const char *AddNewTodayBankPrivatOperationHandler::caption() const
+{
+    return "Today PrivatBank.";
+}
+
 void SelectListOperationHandler::handle(AppModel *model, std::string &input)
 {
     int year = getIntFromInput(input);
@@ -176,6 +181,11 @@ void AddNewTodayBankPrivatLendOperationHandler::handle(AppModel *model, std::str
 const char *AddNewTodayBankPrivatLendOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount name' or 'q' to step back:";
+}
+
+const char *AddNewTodayBankPrivatLendOperationHandler::caption() const
+{
+    return "Today PrivatBank Lend";
 }
 
 void AddNewTodayBankPrivatRepayOperationHandler::handle(AppModel *model, std::string &input)

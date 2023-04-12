@@ -72,6 +72,7 @@ class AddNewTodayBankPrivatOperationHandler : public OperationHandler
 public:
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
+    const char *caption() const override;
 };
 
 class AddNewTodayBankPrivatLendOperationHandler : public OperationHandler
@@ -79,6 +80,7 @@ class AddNewTodayBankPrivatLendOperationHandler : public OperationHandler
 public:
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
+    const char *caption() const override;
 };
 
 class AddNewTodayBankPrivatRepayOperationHandler : public OperationHandler
