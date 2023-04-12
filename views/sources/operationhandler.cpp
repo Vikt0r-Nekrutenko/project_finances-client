@@ -126,7 +126,6 @@ void AddNewTodayBankPrivatOperationHandler::handle(AppModel *model, std::string 
 
 const char *AddNewTodayBankPrivatOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'year month' or 'q' to step back:";
 }
 
 void SelectListOperationHandler::handle(AppModel *model, std::string &input)
@@ -139,5 +138,5 @@ void SelectListOperationHandler::handle(AppModel *model, std::string &input)
 
 const char *SelectListOperationHandler::operationFieldsInfo() const
 {
-
+    return "Type 'year month' or 'q' to step back:";
 }
