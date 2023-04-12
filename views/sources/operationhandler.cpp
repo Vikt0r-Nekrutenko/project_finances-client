@@ -45,6 +45,17 @@ void AddNewOperationHandler::handle(AppModel *model, std::string &input)
 
 const char *AddNewOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'date deposit amount category' or 'q' to step back";
+    return "Type 'date deposit amount category' or 'q' to step back:";
 }
 
+
+void DeleteOperationHandler::handle(AppModel *model, std::string &input)
+{
+    int id = getIntFromInput(input) - 1;
+    model->deleteOperation(id);
+}
+
+const char *DeleteOperationHandler::operationFieldsInfo() const
+{
+    return "Type 'id' or 'q' to step back:";
+}
