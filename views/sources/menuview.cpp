@@ -72,7 +72,8 @@ void MenuView::show(stf::Renderer &renderer)
     renderer.drawSprite(mLossesTable, false, {BeginListX, 14 + i});
     renderer.draw({BeginListX + 9, 15 + i}, "'%s'", maxLoss.second.c_str());
     drawInRG(BeginListX + 22, 15 + i, -maxLoss.first);
-    renderer.draw({BeginListX + 9, 15 + i}, "'%s'", minLoss.second.c_str());
+    
+    renderer.draw({BeginListX + 9, 16 + i}, "'%s'", minLoss.second.c_str());
     drawInRG(BeginListX + 22, 16 + i, -minLoss.first);
 
     ModelViewWithInputField::show(renderer);
