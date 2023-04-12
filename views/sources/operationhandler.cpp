@@ -29,7 +29,7 @@ void OperationHandler::updateOperationsList(AppModel *model, const std::string &
 {
     const int year = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().year();
     const int month = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().month();
-    static_cast<AppModel*>(model)->getOperationsByMonth(year, month);
+    model->getOperationsByMonth(year, month);
 }
 
 void AddNewOperationHandler::handle(AppModel *model, std::string &input)
@@ -79,7 +79,7 @@ void ChangeOperationHandler::handle(AppModel *model, std::string &input)
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
 
-    static_cast<AppModel*>(model)->changeOperation(id, date.c_str(), deposit.c_str(), amount, category.c_str());
+    model->changeOperation(id, date.c_str(), deposit.c_str(), amount, category.c_str());
     updateOperationsList(model, date);
 }
 
