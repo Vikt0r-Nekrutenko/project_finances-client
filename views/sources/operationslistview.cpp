@@ -19,7 +19,11 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({0, 6}, "4.Lend operation.");
     renderer.drawText({0, 7}, "5.Repay operation.");
     renderer.drawText({0, 8}, "6.Select list.");
-    renderer.drawText({0, 9}, "q.Back to menu.");
+    renderer.drawText({0, 10}, "Presets:");
+    renderer.drawText({0, 11}, "[Add]Today PrivatBank");
+    renderer.drawText({0, 12}, "[Add]Today Privat Lend");
+    renderer.drawText({0, 13}, "[Add]Today Privat Repay");
+    renderer.drawText({0, 14}, "q.Back to menu.");
 
     if(mOption == 1) {
         renderer.drawText({0, InputInfoY}, "Type 'date deposit amount category' or 'q' to step back:");
