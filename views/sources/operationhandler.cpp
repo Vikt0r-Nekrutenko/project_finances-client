@@ -160,6 +160,11 @@ const char *SelectListOperationHandler::operationFieldsInfo() const
     return "Type 'year month' or 'q' to step back:";
 }
 
+const char *SelectListOperationHandler::caption() const
+{
+    return "Select list by month.";
+}
+
 void AddNewTodayBankPrivatLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
