@@ -79,7 +79,7 @@ const char *ChangeOperationHandler::operationFieldsInfo() const
 
 //        renderer.drawText({0, InputInfoY}, );
 //        renderer.drawText({0, InputInfoY}, );
-//        renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
+//        renderer.drawText({0, InputInfoY}, );
 //        renderer.drawText({0, InputInfoY}, "Type 'amount category' or 'q' to step back:");
 //        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
 
@@ -114,4 +114,17 @@ void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
 const char *AddRepayOperationHandler::operationFieldsInfo() const
 {
     return "Type 'date deposit amount name' or 'q' to step back:";
+}
+
+void AddNewTodayBankPrivatOperationHandler::handle(AppModel *model, std::string &input)
+{
+    int amount = getIntFromInput(input);
+    std::string category = getStrFromInput(input);
+
+    model->addNewOperation(QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString().c_str(), "PrivatBank", amount, category.c_str());
+}
+
+const char *AddNewTodayBankPrivatOperationHandler::operationFieldsInfo() const
+{
+    return "Type 'year month' or 'q' to step back:";
 }
