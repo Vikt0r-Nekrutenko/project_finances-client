@@ -1,15 +1,15 @@
 #include "operationhandler.hpp"
 #include "appmodel.hpp"
 
-int OperationHandler::getIntFromInput()
+int OperationHandler::getIntFromInput(std::string &input)
 {
-    int pos = mInput.find(" ");
-    if(pos != int(mInput.npos)) {
-        int result = std::stoi(mInput.substr(0, pos));
-        mInput.erase(0, pos + 1);
+    int pos = input.find(" ");
+    if(pos != int(input.npos)) {
+        int result = std::stoi(input.substr(0, pos));
+        input.erase(0, pos + 1);
         return result;
     } else {
-        return std::stoi(mInput.erase(0, pos + 1));
+        return std::stoi(input.erase(0, pos + 1));
     }
 }
 
