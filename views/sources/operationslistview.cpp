@@ -42,9 +42,10 @@ void OperationsListView::show(stf::Renderer &renderer)
     const auto &operations = app->operationsByMonth();
     const int listHeinght = operations.size();
 
-    for(int i = operations.size() - 1; i >= 0; --i) {
+    int y = 0;
+    for(int i = operations.size() - 1; i >= 0 && y < InputInfoY - 1; --i) {
         const auto &operation = operations.at(i);
-        const int y = std::abs(i - listHeinght) + BeginListY;
+        y = std::abs(i - listHeinght) + BeginListY;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;
 
