@@ -77,12 +77,6 @@ const char *ChangeOperationHandler::operationFieldsInfo() const
     return "Type 'id date deposit amount category' or 'q' to step back:";
 }
 
-//        renderer.drawText({0, InputInfoY}, );
-//        renderer.drawText({0, InputInfoY}, );
-//        renderer.drawText({0, InputInfoY}, );
-//        renderer.drawText({0, InputInfoY}, );
-//        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
-
 void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
@@ -140,4 +134,30 @@ void SelectListOperationHandler::handle(AppModel *model, std::string &input)
 const char *SelectListOperationHandler::operationFieldsInfo() const
 {
     return "Type 'year month' or 'q' to step back:";
+}
+
+void AddNewTodayBankPrivatLendOperationHandler::handle(AppModel *model, std::string &input)
+{
+    int amount = getIntFromInput(input);
+    std::string name = getStrFromInput(input);
+
+    model->addNewLendOperation(QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString().c_str(), "PrivatBank", amount, name.c_str());
+}
+
+const char *AddNewTodayBankPrivatLendOperationHandler::operationFieldsInfo() const
+{
+    return "Type 'amount name' or 'q' to step back:";
+}
+
+void AddNewTodayBankPrivatRepayOperationHandler::handle(AppModel *model, std::string &input)
+{
+    int amount = getIntFromInput(input);
+    std::string name = getStrFromInput(input);
+
+    model->addNewRepayOperation(QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString().c_str(), "PrivatBank", amount, name.c_str());
+}
+
+const char *AddNewTodayBankPrivatRepayOperationHandler::operationFieldsInfo() const
+{
+    return "Type 'amount name' or 'q' to step back:";
 }
