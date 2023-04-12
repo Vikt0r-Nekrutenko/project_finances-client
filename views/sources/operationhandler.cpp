@@ -129,6 +129,11 @@ const char *AddRepayOperationHandler::operationFieldsInfo() const
     return "Type 'date deposit amount name' or 'q' to step back:";
 }
 
+const char *AddRepayOperationHandler::caption() const
+{
+    return "Add new repay operation.";
+}
+
 void AddNewTodayBankPrivatOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
