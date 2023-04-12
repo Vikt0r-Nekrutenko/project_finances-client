@@ -21,17 +21,19 @@ void OperationsListView::show(stf::Renderer &renderer)
     AppModel *app = static_cast<AppModel*>(m_model);
 
     renderer.drawText({0, 2}, "Choose an option:");
-    renderer.drawText({0, 3}, "1.Add new operation.");
-    renderer.drawText({0, 4}, "2.Delete operation.");
-    renderer.drawText({0, 5}, "3.Change operation.");
-    renderer.drawText({0, 6}, "4.Lend operation.");
-    renderer.drawText({0, 7}, "5.Repay operation.");
-    renderer.drawText({0, 8}, "6.Select list.");
-    renderer.drawText({0, 10}, "Add operations Presets:");
-    renderer.drawText({0, 11}, "7.Today PrivatBank.");
-    renderer.drawText({0, 12}, "8.Today PrivatBank Lend.");
-    renderer.drawText({0, 13}, "9.Today PrivatBank Repay.");
-    renderer.drawText({0, 14}, "q.Back to menu.");
+//    renderer.drawText({0, 3}, "1.Add new operation.");
+//    renderer.drawText({0, 4}, "2.Delete operation.");
+//    renderer.drawText({0, 5}, "3.Change operation.");
+//    renderer.drawText({0, 6}, "4.Lend operation.");
+//    renderer.drawText({0, 7}, "5.Repay operation.");
+//    renderer.drawText({0, 8}, "6.Select list.");
+//    renderer.drawText({0, 10}, "Add operations Presets:");
+//    renderer.drawText({0, 11}, "7.Today PrivatBank.");
+//    renderer.drawText({0, 12}, "8.Today PrivatBank Lend.");
+//    renderer.drawText({0, 13}, "9.Today PrivatBank Repay.");
+//    renderer.drawText({0, 14}, "q.Back to menu.");
+    for(size_t i = 0; i < mMenu.size(); ++i)
+        renderer.draw({0, 3+i}, "%d.%s", i + 1,  mMenu.at(i)->caption());
 
     if(mOption)
         renderer.drawText({0, InputInfoY}, mMenu.at(mOption - 1)->operationFieldsInfo());
