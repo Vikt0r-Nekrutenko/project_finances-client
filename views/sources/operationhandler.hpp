@@ -8,11 +8,14 @@ class OperationHandler
 {
 public:
     virtual ~OperationHandler() = default;
-    int getIntFromInput(std::string &input);
-    std::string getStrFromInput(std::string &input);
-    void updateOperationsList(AppModel *model, const std::string &date);
     virtual void handle(AppModel *model, std::string &input) = 0;
     virtual const char *operationFieldsInfo() const = 0;
+
+protected:
+
+    void updateOperationsList(AppModel *model, const std::string &date);
+    int getIntFromInput(std::string &input);
+    std::string getStrFromInput(std::string &input);
 };
 
 class AddNewOperationHandler : public OperationHandler
