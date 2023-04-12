@@ -34,10 +34,10 @@ void OperationHandler::updateOperationsList(AppModel *model, const std::string &
 
 void AddNewOperationHandler::handle(AppModel *model, std::string &input)
 {
-    std::string date = getStrFromInput();
-    std::string deposit = getStrFromInput();
-    int amount = getIntFromInput();
-    std::string category = getStrFromInput();
+    std::string date = getStrFromInput(input);
+    std::string deposit = getStrFromInput(input);
+    int amount = getIntFromInput(input);
+    std::string category = getStrFromInput(input);
 
     model->addNewOperation(date.c_str(), deposit.c_str(), amount, category.c_str());
     updateOperationsList(model, date);
