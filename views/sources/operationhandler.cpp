@@ -74,5 +74,11 @@ void ChangeOperationHandler::handle(AppModel *model, std::string &input)
 
 const char *ChangeOperationHandler::operationFieldsInfo() const
 {
-
+    return "Type 'id date deposit amount category' or 'q' to step back:";
 }
+
+//        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+//        renderer.drawText({0, InputInfoY}, "Type 'date deposit amount name' or 'q' to step back:");
+//        renderer.drawText({0, InputInfoY}, "Type 'year month' or 'q' to step back:");
+//        renderer.drawText({0, InputInfoY}, "Type 'amount category' or 'q' to step back:");
+//        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
