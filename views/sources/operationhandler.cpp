@@ -86,6 +86,11 @@ const char *ChangeOperationHandler::operationFieldsInfo() const
     return "Type 'id date deposit amount category' or 'q' to step back:";
 }
 
+const char *ChangeOperationHandler::caption() const
+{
+    return "Change operation.";
+}
+
 void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
