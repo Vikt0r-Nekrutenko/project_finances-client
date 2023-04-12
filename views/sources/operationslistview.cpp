@@ -20,9 +20,9 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({0, 7}, "5.Repay operation.");
     renderer.drawText({0, 8}, "6.Select list.");
     renderer.drawText({0, 10}, "Add operations Presets:");
-    renderer.drawText({0, 11}, "Today PrivatBank.");
-    renderer.drawText({0, 12}, "Today PrivatBank Lend.");
-    renderer.drawText({0, 13}, "Today PrivatBank Repay.");
+    renderer.drawText({0, 11}, "7.Today PrivatBank.");
+    renderer.drawText({0, 12}, "8.Today PrivatBank Lend.");
+    renderer.drawText({0, 13}, "9.Today PrivatBank Repay.");
     renderer.drawText({0, 14}, "q.Back to menu.");
 
     if(mOption == 1) {
