@@ -80,7 +80,7 @@ const char *ChangeOperationHandler::operationFieldsInfo() const
 //        renderer.drawText({0, InputInfoY}, );
 //        renderer.drawText({0, InputInfoY}, );
 //        renderer.drawText({0, InputInfoY}, );
-//        renderer.drawText({0, InputInfoY}, "Type 'amount category' or 'q' to step back:");
+//        renderer.drawText({0, InputInfoY}, );
 //        renderer.drawText({0, InputInfoY}, "Type 'amount name' or 'q' to step back:");
 
 void AddLendOperationHandler::handle(AppModel *model, std::string &input)
@@ -126,6 +126,7 @@ void AddNewTodayBankPrivatOperationHandler::handle(AppModel *model, std::string 
 
 const char *AddNewTodayBankPrivatOperationHandler::operationFieldsInfo() const
 {
+    return "Type 'amount category' or 'q' to step back:";
 }
 
 void SelectListOperationHandler::handle(AppModel *model, std::string &input)
