@@ -108,6 +108,11 @@ const char *AddLendOperationHandler::operationFieldsInfo() const
     return "Type 'date deposit amount name' or 'q' to step back:";
 }
 
+const char *AddLendOperationHandler::caption() const
+{
+    return "Add new lend operation.";
+}
+
 void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
