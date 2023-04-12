@@ -25,6 +25,7 @@ SOURCES += \
         views/sources/debtlistview.cpp \
         views/sources/depositlistview.cpp \
         views/sources/categorylistview.cpp \
+    views/sources/operationhandler.cpp \
         views/sources/operationslistview.cpp \
         views/sources/modelviewwithinputfield.cpp \
         main.cpp \
@@ -65,6 +66,7 @@ HEADERS += \
     views/headers/categorylistview.hpp \
     views/headers/operationslistview.hpp \
     views/headers/modelviewwithinputfield.hpp \
+    views/sources/operationhandler.hpp
 
 DISTFILES += \
     sprs/losses.spr \
