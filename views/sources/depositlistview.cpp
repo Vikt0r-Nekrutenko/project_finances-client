@@ -1,4 +1,5 @@
 #include "depositlistview.hpp"
+#include "operationslistview.hpp"
 #include "appmodel.hpp"
 
 DepositListView::DepositListView(AppModel *model)
@@ -66,7 +67,8 @@ stf::smv::IView *DepositListView::onEnterHandler()
     }
     case 4: {
         int id = getIntFromInput() - 1;
-        // TODO: return new OperationsListView(AppModel->deposits().at(id))
+        AppModel *appModel = static_cast<AppModel *>(m_model);
+        return new OperationsListView(appModel, &appModel->deposits().at(id));
     }}
     return this;
 }

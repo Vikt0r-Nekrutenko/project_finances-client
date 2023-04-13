@@ -40,6 +40,11 @@ const std::vector<DebtModel> &AppModel::debts() const
     return mDebtHandler.debts();
 }
 
+std::vector<DepositModel> &AppModel::deposits()
+{
+    return mDepositHandler.deposits();
+}
+
 int AppModel::sumOfAllEarnOperations() const
 {
     return mSumOfAllEarnOperations;
