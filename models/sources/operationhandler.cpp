@@ -191,42 +191,42 @@ const char *SelectListOperationHandler::caption() const
     return "Select list by month.";
 }
 
-void AddNewTodayBankPrivatLendOperationHandler::handle(AppModel *model, std::string &input)
+void AddNewTodayLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
-    model->addNewLendOperation(date.c_str(), "PrivatBank", amount, name.c_str());
+    model->addNewLendOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
-const char *AddNewTodayBankPrivatLendOperationHandler::operationFieldsInfo() const
+const char *AddNewTodayLendOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount name' or 'q' to step back:";
 }
 
-const char *AddNewTodayBankPrivatLendOperationHandler::caption() const
+const char *AddNewTodayLendOperationHandler::caption() const
 {
-    return "Today PrivatBank Lend.";
+    return "Today lend.";
 }
 
-void AddNewTodayBankPrivatRepayOperationHandler::handle(AppModel *model, std::string &input)
+void AddNewTodayRepayOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
-    model->addNewRepayOperation(date.c_str(), "PrivatBank", amount, name.c_str());
+    model->addNewRepayOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
-const char *AddNewTodayBankPrivatRepayOperationHandler::operationFieldsInfo() const
+const char *AddNewTodayRepayOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount name' or 'q' to step back:";
 }
 
-const char *AddNewTodayBankPrivatRepayOperationHandler::caption() const
+const char *AddNewTodayRepayOperationHandler::caption() const
 {
-    return "Today PrivatBank Repay.";
+    return "Today repay.";
 }

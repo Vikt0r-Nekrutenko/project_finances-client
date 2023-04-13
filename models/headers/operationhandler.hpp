@@ -85,7 +85,7 @@ public:
     const char *caption() const override;
 };
 
-class AddNewTodayBankPrivatLendOperationHandler : public OperationHandler
+class AddNewTodayLendOperationHandler : public OperationHandler
 {
 public:
     void handle(AppModel *model, std::string &input) override;
@@ -93,7 +93,7 @@ public:
     const char *caption() const override;
 };
 
-class AddNewTodayBankPrivatRepayOperationHandler : public OperationHandler
+class AddNewTodayRepayOperationHandler : public OperationHandler
 {
 public:
     void handle(AppModel *model, std::string &input) override;
