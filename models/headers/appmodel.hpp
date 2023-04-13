@@ -19,6 +19,10 @@ public:
         QueryResult(AppModel *model);
         QueryResult &select();
         QueryResult &filterByDeposit(const std::string &deposit);
+        QueryResult &filterByCurrentMonth();
+        QueryResult &filterByCurrentYear();
+        QueryResult &filterByCurrentDay();
+
         QueryResult &filterByYear(const int year);
         QueryResult &filterByMonth(const int month);
         QueryResult &filterByDay(const int day);

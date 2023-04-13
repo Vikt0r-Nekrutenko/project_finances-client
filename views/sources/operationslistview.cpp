@@ -41,6 +41,7 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
     const auto &operations = app->operationsByMonth();
+    const auto &result = app->query.select().filterByMonth()
     const int listHeinght = operations.size();
 
     int y = 0;

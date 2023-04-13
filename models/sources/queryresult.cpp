@@ -18,6 +18,24 @@ AppModel::QueryResult &AppModel::QueryResult::filterByDeposit(const std::string 
     return *this;
 }
 
+AppModel::QueryResult &AppModel::QueryResult::filterByCurrentYear()
+{
+    const QDate &currentDate = QDate().currentDate();
+    return filterByYear(currentDate.year());
+}
+
+AppModel::QueryResult &AppModel::QueryResult::filterByCurrentMonth()
+{
+    const QDate &currentDate = QDate().currentDate();
+    return filterByMonth(currentDate.month());
+}
+
+AppModel::QueryResult &AppModel::QueryResult::filterByCurrentDay()
+{
+    const QDate &currentDate = QDate().currentDate();
+    return filterByDay(currentDate.day());
+}
+
 AppModel::QueryResult &AppModel::QueryResult::filterByYear(const int year)
 {
     for(QueryResult::iterator it = begin(); it != end(); )
