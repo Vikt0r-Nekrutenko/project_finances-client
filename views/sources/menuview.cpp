@@ -3,7 +3,6 @@
 #include "closeview.hpp"
 #include "debtlistview.hpp"
 #include "depositlistview.hpp"
-#include "operationslistview.hpp"
 #include "categorylistview.hpp"
 
 #define inPercentage(a, b) int(a / (float)b * 100.f)
