@@ -2,19 +2,19 @@
 #include "appmodel.hpp"
 #include "operationhandler.hpp"
 
-OperationsListView::OperationsListView(AppModel *model)
+OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
     : ModelViewWithInputField(model)
 {
     mMenu.insert(mMenu.end(), {
-                     new AddNewOperationHandler,
-                     new DeleteOperationHandler,
-                     new ChangeOperationHandler,
-                     new AddLendOperationHandler,
-                     new AddRepayOperationHandler,
-                     new AddNewTodayBankPrivatOperationHandler,
-                     new AddNewTodayBankPrivatLendOperationHandler,
-                     new AddNewTodayBankPrivatRepayOperationHandler,
-                     new SelectListOperationHandler,
+                     new AddNewOperationHandler(deposit),
+                     new DeleteOperationHandler(deposit),
+                     new ChangeOperationHandler(deposit),
+                     new AddLendOperationHandler(deposit),
+                     new AddRepayOperationHandler(deposit),
+                     new SelectListOperationHandler(deposit),
+//                     new AddNewTodayBankPrivatOperationHandler(deposit),
+//                     new AddNewTodayBankPrivatLendOperationHandler(deposit),
+//                     new AddNewTodayBankPrivatRepayOperationHandler(deposit),
                  });
     mOptrionsCount = 9;
 }
