@@ -45,7 +45,7 @@ void CategoryListView::show(stf::Renderer &renderer)
     }
 }
 
-void CategoryListView::onEnterHandler()
+stf::smv::IView *CategoryListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
@@ -68,6 +68,7 @@ void CategoryListView::onEnterHandler()
         static_cast<AppModel*>(m_model)->selectFavCategories(id1, id2, id3);
         break;
     }};
+    return this;
 }
 
 stf::smv::IView *CategoryListView::keyEventsHandler(const int key)
