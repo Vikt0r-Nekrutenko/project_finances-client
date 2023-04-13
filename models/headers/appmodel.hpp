@@ -17,7 +17,6 @@ public:
     const std::vector<CategoryModel> &favCategories() const;
     const std::vector<std::pair<std::string, int> > &sumByFavCategories() const;
     const std::pair<std::pair<int, std::string>, std::pair<int, std::string>> &minMaxLosses() const;
-    const std::vector<OperationModel> &operationsByMonth() const;
     const std::vector<DebtModel> &debts() const;
     std::vector<DepositModel> &deposits();
 

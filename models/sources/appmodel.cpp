@@ -30,11 +30,6 @@ const std::vector<std::pair<std::string, int> > &AppModel::sumByFavCategories() 
     return mSumByFavCategories;
 }
 
-const std::vector<OperationModel> &AppModel::operationsByMonth() const
-{
-    return mOperationsByMonth;
-}
-
 const std::vector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
