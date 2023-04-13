@@ -44,7 +44,7 @@ void DebtListView::show(stf::Renderer &renderer)
     }
 }
 
-void DebtListView::onEnterHandler()
+stf::smv::IView *DebtListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
@@ -67,6 +67,7 @@ void DebtListView::onEnterHandler()
         static_cast<AppModel*>(m_model)->changeDebt(id, name.c_str(), amount);
         break;
     }};
+    return this;
 }
 
 stf::smv::IView *DebtListView::keyEventsHandler(const int key)

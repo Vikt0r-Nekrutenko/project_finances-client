@@ -1,20 +1,21 @@
 #include "operationslistview.hpp"
 #include "appmodel.hpp"
+#include "depositlistview.hpp"
 #include "operationhandler.hpp"
 
-OperationsListView::OperationsListView(AppModel *model)
+OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
     : ModelViewWithInputField(model)
 {
     mMenu.insert(mMenu.end(), {
-                     new AddNewOperationHandler,
-                     new DeleteOperationHandler,
-                     new ChangeOperationHandler,
-                     new AddLendOperationHandler,
-                     new AddRepayOperationHandler,
-                     new AddNewTodayBankPrivatOperationHandler,
-                     new AddNewTodayBankPrivatLendOperationHandler,
-                     new AddNewTodayBankPrivatRepayOperationHandler,
-                     new SelectListOperationHandler,
+                     new AddNewOperationHandler(deposit),
+                     new DeleteOperationHandler(deposit),
+                     new ChangeOperationHandler(deposit),
+                     new AddLendOperationHandler(deposit),
+                     new AddRepayOperationHandler(deposit),
+                     new SelectListOperationHandler(deposit),
+                     new AddNewTodayOperationHandler(deposit),
+                     new AddNewTodayLendOperationHandler(deposit),
+                     new AddNewTodayRepayOperationHandler(deposit),
                  });
     mOptrionsCount = 9;
 }
@@ -58,10 +59,16 @@ void OperationsListView::show(stf::Renderer &renderer)
     }
 }
 
-void OperationsListView::onEnterHandler()
+stf::smv::IView *OperationsListView::onEnterHandler()
 {
     if(mOption)
         mMenu.at(mOption - 1)->handle(static_cast<AppModel *>(m_model), mInput);
+    return this;
+}
+
+stf::smv::IView *OperationsListView::onQPressHandler() const
+{
+    return new DepositListView(static_cast<AppModel*>(m_model));
 }
 
 stf::smv::IView *OperationsListView::keyEventsHandler(const int key)

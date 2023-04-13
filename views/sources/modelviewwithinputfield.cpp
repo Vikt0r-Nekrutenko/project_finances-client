@@ -7,7 +7,7 @@ ModelViewWithInputField::ModelViewWithInputField(AppModel *model)
       InputPrewievY(stf::Renderer::log.y() - 2),
       InputInfoY(stf::Renderer::log.y() - 3) {}
 
-void ModelViewWithInputField::inputHandler(int key)
+stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
 {
     if(key == 'q' && mInput.empty())
         mOption = 0;
@@ -15,13 +15,20 @@ void ModelViewWithInputField::inputHandler(int key)
         mInput = mInputBackup;
     else if(key == 13 || key == 10) {
         mInputBackup = mInput;
-        onEnterHandler();
+        stf::smv::IView *resultView = onEnterHandler();
         mInput.clear();
         mOption = 0;
+        return resultView;
     } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-')
         mInput += key;
     else if((key == 127 || key == 8) && !mInput.empty())
         mInput.pop_back();
+    return this;
+}
+
+stf::smv::IView *ModelViewWithInputField::onQPressHandler() const
+{
+    return new MenuView(static_cast<AppModel*>(m_model));
 }
 
 stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
@@ -31,10 +38,10 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
             if(key == '0' + i)
                 mOption = key - '0';
         if(key == 'q')
-            return new MenuView(static_cast<AppModel*>(m_model));
+            return onQPressHandler();
     } else {
         try {
-            inputHandler(key);
+            return inputHandler(key);
         } catch(const std::exception &msg) {
             stf::Renderer::log << stf::endl << msg.what();
         }

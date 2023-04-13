@@ -10,7 +10,7 @@ class CategoryListView : public ModelViewWithInputField
 public:
     CategoryListView(AppModel *model);
     void show(stf::Renderer &renderer) override;
-    void onEnterHandler() override;
+    stf::smv::IView *onEnterHandler() override;
     stf::smv::IView *keyEventsHandler(const int key) override;
 };
 

@@ -1,4 +1,5 @@
 #include "operationhandler.hpp"
+#include "depositmodel.hpp"
 #include "appmodel.hpp"
 
 int OperationHandler::getIntFromInput(std::string &input)
@@ -25,6 +26,9 @@ std::string OperationHandler::getStrFromInput(std::string &input)
     }
 }
 
+OperationHandler::OperationHandler(DepositModel *deposit)
+    : mDeposit{deposit} {}
+
 void OperationHandler::updateOperationsList(AppModel *model, const std::string &date)
 {
     const int year = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().year();
@@ -32,26 +36,31 @@ void OperationHandler::updateOperationsList(AppModel *model, const std::string &
     model->getOperationsByMonth(year, month);
 }
 
+AddNewOperationHandler::AddNewOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void AddNewOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
 
-    model->addNewOperation(date.c_str(), deposit.c_str(), amount, category.c_str());
+    model->addNewOperation(date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
     updateOperationsList(model, date);
 }
 
 const char *AddNewOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'date deposit amount category' or 'q' to step back:";
+    return "Type 'date amount category' or 'q' to step back:";
 }
 
 const char *AddNewOperationHandler::caption() const
 {
     return "Add new operation.";
 }
+
+DeleteOperationHandler::DeleteOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
 
 void DeleteOperationHandler::handle(AppModel *model, std::string &input)
 {
@@ -71,21 +80,23 @@ const char *DeleteOperationHandler::caption() const
     return "Delete operation.";
 }
 
+ChangeOperationHandler::ChangeOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void ChangeOperationHandler::handle(AppModel *model, std::string &input)
 {
     int id = getIntFromInput(input) - 1;
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
 
-    model->changeOperation(id, date.c_str(), deposit.c_str(), amount, category.c_str());
+    model->changeOperation(id, date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
     updateOperationsList(model, date);
 }
 
 const char *ChangeOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'id date deposit amount category' or 'q' to step back:";
+    return "Type 'id date amount category' or 'q' to step back:";
 }
 
 const char *ChangeOperationHandler::caption() const
@@ -93,20 +104,22 @@ const char *ChangeOperationHandler::caption() const
     return "Change operation.";
 }
 
+AddLendOperationHandler::AddLendOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
 
-    model->addNewLendOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+    model->addNewLendOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
 const char *AddLendOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'date deposit amount name' or 'q' to step back:";
+    return "Type 'date amount name' or 'q' to step back:";
 }
 
 const char *AddLendOperationHandler::caption() const
@@ -114,20 +127,22 @@ const char *AddLendOperationHandler::caption() const
     return "Add new lend operation.";
 }
 
+AddRepayOperationHandler::AddRepayOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
 
-    model->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+    model->addNewRepayOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
 const char *AddRepayOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'date deposit amount name' or 'q' to step back:";
+    return "Type 'date amount name' or 'q' to step back:";
 }
 
 const char *AddRepayOperationHandler::caption() const
@@ -135,25 +150,31 @@ const char *AddRepayOperationHandler::caption() const
     return "Add new repay operation.";
 }
 
-void AddNewTodayBankPrivatOperationHandler::handle(AppModel *model, std::string &input)
+AddNewTodayOperationHandler::AddNewTodayOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
+void AddNewTodayOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
-    model->addNewOperation(date.c_str(), "PrivatBank", amount, category.c_str());
+    model->addNewOperation(date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
     updateOperationsList(model, date);
 }
 
-const char *AddNewTodayBankPrivatOperationHandler::operationFieldsInfo() const
+const char *AddNewTodayOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount category' or 'q' to step back:";
 }
 
-const char *AddNewTodayBankPrivatOperationHandler::caption() const
+const char *AddNewTodayOperationHandler::caption() const
 {
-    return "Today PrivatBank.";
+    return "Today operation.";
 }
+
+SelectListOperationHandler::SelectListOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
 
 void SelectListOperationHandler::handle(AppModel *model, std::string &input)
 {
@@ -173,42 +194,48 @@ const char *SelectListOperationHandler::caption() const
     return "Select list by month.";
 }
 
-void AddNewTodayBankPrivatLendOperationHandler::handle(AppModel *model, std::string &input)
+AddNewTodayLendOperationHandler::AddNewTodayLendOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
+void AddNewTodayLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
-    model->addNewLendOperation(date.c_str(), "PrivatBank", amount, name.c_str());
+    model->addNewLendOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
-const char *AddNewTodayBankPrivatLendOperationHandler::operationFieldsInfo() const
+const char *AddNewTodayLendOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount name' or 'q' to step back:";
 }
 
-const char *AddNewTodayBankPrivatLendOperationHandler::caption() const
+const char *AddNewTodayLendOperationHandler::caption() const
 {
-    return "Today PrivatBank Lend.";
+    return "Today lend.";
 }
 
-void AddNewTodayBankPrivatRepayOperationHandler::handle(AppModel *model, std::string &input)
+AddNewTodayRepayOperationHandler::AddNewTodayRepayOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
+void AddNewTodayRepayOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
-    model->addNewRepayOperation(date.c_str(), "PrivatBank", amount, name.c_str());
+    model->addNewRepayOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
-const char *AddNewTodayBankPrivatRepayOperationHandler::operationFieldsInfo() const
+const char *AddNewTodayRepayOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount name' or 'q' to step back:";
 }
 
-const char *AddNewTodayBankPrivatRepayOperationHandler::caption() const
+const char *AddNewTodayRepayOperationHandler::caption() const
 {
-    return "Today PrivatBank Repay.";
+    return "Today repay.";
 }

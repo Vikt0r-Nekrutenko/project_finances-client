@@ -1,10 +1,11 @@
 #include "depositlistview.hpp"
+#include "operationslistview.hpp"
 #include "appmodel.hpp"
 
 DepositListView::DepositListView(AppModel *model)
     : ModelViewWithInputField(model)
 {
-    mOptrionsCount = 3;
+    mOptrionsCount = 4;
 }
 
 void DepositListView::show(stf::Renderer &renderer)
@@ -16,7 +17,8 @@ void DepositListView::show(stf::Renderer &renderer)
     renderer.drawText({0, 3}, "1.Add new deposit.");
     renderer.drawText({0, 4}, "2.Delete deposit.");
     renderer.drawText({0, 5}, "3.Change balance.");
-    renderer.drawText({0, 6}, "q.Back to menu.");
+    renderer.drawText({0, 6}, "4.Select deposit.");
+    renderer.drawText({0, 7}, "q.Back to menu.");
 
     if(mOption == 1) {
         renderer.drawText({0, InputInfoY}, "Type 'name balance' or 'q' to step back:");
@@ -24,6 +26,8 @@ void DepositListView::show(stf::Renderer &renderer)
         renderer.drawText({0, InputInfoY}, "Type deposit id or 'q' to step back:");
     } else if(mOption == 3) {
         renderer.drawText({0, InputInfoY}, "Type 'id balance' or 'q' to step back:");
+    } else if(mOption == 4) {
+        renderer.drawText({0, InputInfoY}, "Type 'id' or 'q' to step back:");
     }
 
     renderer.drawText({BeginListX, BeginListY}, "Your deposits:");
@@ -43,7 +47,7 @@ void DepositListView::show(stf::Renderer &renderer)
     }
 }
 
-void DepositListView::onEnterHandler()
+stf::smv::IView *DepositListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
@@ -60,7 +64,13 @@ void DepositListView::onEnterHandler()
         int balance = getIntFromInput();
         static_cast<AppModel*>(m_model)->changeBalance(id, balance);
         break;
+    }
+    case 4: {
+        int id = getIntFromInput() - 1;
+        AppModel *appModel = static_cast<AppModel *>(m_model);
+        return new OperationsListView(appModel, &appModel->deposits().at(id));
     }}
+    return this;
 }
 
 stf::smv::IView *DepositListView::keyEventsHandler(const int key)

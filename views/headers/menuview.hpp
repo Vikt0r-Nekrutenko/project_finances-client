@@ -12,7 +12,7 @@ class MenuView : public ModelViewWithInputField
 public:
     MenuView(AppModel *model);
     void show(stf::Renderer &renderer) override;
-    void onEnterHandler() override {};
+    stf::smv::IView *onEnterHandler() override;
     stf::smv::IView *keyEventsHandler(const int key) override;
 
 private:

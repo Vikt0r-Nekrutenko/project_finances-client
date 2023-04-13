@@ -3,10 +3,12 @@
 
 #include <string>
 class AppModel;
+class DepositModel;
 
 class OperationHandler
 {
 public:
+    OperationHandler(DepositModel *deposit);
     virtual ~OperationHandler() = default;
     virtual void handle(AppModel *model, std::string &input) = 0;
     virtual const char *operationFieldsInfo() const = 0;
@@ -17,11 +19,14 @@ protected:
     void updateOperationsList(AppModel *model, const std::string &date);
     int getIntFromInput(std::string &input);
     std::string getStrFromInput(std::string &input);
+
+    DepositModel *mDeposit;
 };
 
 class AddNewOperationHandler : public OperationHandler
 {
 public:
+    AddNewOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
@@ -30,6 +35,7 @@ public:
 class DeleteOperationHandler : public OperationHandler
 {
 public:
+    DeleteOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
@@ -38,6 +44,7 @@ public:
 class ChangeOperationHandler : public OperationHandler
 {
 public:
+    ChangeOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
@@ -46,6 +53,7 @@ public:
 class AddLendOperationHandler : public OperationHandler
 {
 public:
+    AddLendOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
@@ -54,6 +62,7 @@ public:
 class AddRepayOperationHandler : public OperationHandler
 {
 public:
+    AddRepayOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
@@ -62,30 +71,34 @@ public:
 class SelectListOperationHandler : public OperationHandler
 {
 public:
+    SelectListOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
 };
 
-class AddNewTodayBankPrivatOperationHandler : public OperationHandler
+class AddNewTodayOperationHandler : public OperationHandler
 {
 public:
+    AddNewTodayOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
 };
 
-class AddNewTodayBankPrivatLendOperationHandler : public OperationHandler
+class AddNewTodayLendOperationHandler : public OperationHandler
 {
 public:
+    AddNewTodayLendOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
 };
 
-class AddNewTodayBankPrivatRepayOperationHandler : public OperationHandler
+class AddNewTodayRepayOperationHandler : public OperationHandler
 {
 public:
+    AddNewTodayRepayOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
