@@ -58,10 +58,11 @@ void OperationsListView::show(stf::Renderer &renderer)
     }
 }
 
-void OperationsListView::onEnterHandler()
+stf::smv::IView *OperationsListView::onEnterHandler()
 {
     if(mOption)
         mMenu.at(mOption - 1)->handle(static_cast<AppModel *>(m_model), mInput);
+    return this;
 }
 
 stf::smv::IView *OperationsListView::keyEventsHandler(const int key)

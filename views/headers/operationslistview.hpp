@@ -12,7 +12,7 @@ public:
     OperationsListView(AppModel *model);
     ~OperationsListView() override;
     void show(stf::Renderer &renderer) override;
-    void onEnterHandler() override;
+    stf::smv::IView *onEnterHandler() override;
     stf::smv::IView *keyEventsHandler(const int key) override;
 
 private:
