@@ -3,10 +3,12 @@
 
 #include <string>
 class AppModel;
+class DepositModel;
 
 class OperationHandler
 {
 public:
+    OperationHandler(DepositModel *deposit);
     virtual ~OperationHandler() = default;
     virtual void handle(AppModel *model, std::string &input) = 0;
     virtual const char *operationFieldsInfo() const = 0;
@@ -17,6 +19,8 @@ protected:
     void updateOperationsList(AppModel *model, const std::string &date);
     int getIntFromInput(std::string &input);
     std::string getStrFromInput(std::string &input);
+
+    DepositModel *mDeposit;
 };
 
 class AddNewOperationHandler : public OperationHandler

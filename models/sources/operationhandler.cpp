@@ -1,4 +1,5 @@
 #include "operationhandler.hpp"
+#include "depositmodel.hpp"
 #include "appmodel.hpp"
 
 int OperationHandler::getIntFromInput(std::string &input)
@@ -24,6 +25,9 @@ std::string OperationHandler::getStrFromInput(std::string &input)
         return input.erase(0, pos + 1);
     }
 }
+
+OperationHandler::OperationHandler(DepositModel *deposit)
+    : mDeposit{deposit} {}
 
 void OperationHandler::updateOperationsList(AppModel *model, const std::string &date)
 {
