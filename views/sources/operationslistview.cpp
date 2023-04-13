@@ -5,7 +5,7 @@
 #include "queryresult.hpp"
 
 OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
-    : ModelViewWithInputField(model), mOperationsList{model}, mDeposit{deposit}
+    : ModelViewWithInputField(model), mOperationsList{model->operationHandler()}, mDeposit{deposit}
 {
     mMenu.insert(mMenu.end(), {
                      new AddNewOperationHandler(deposit),

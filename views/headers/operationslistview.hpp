@@ -21,7 +21,7 @@ public:
 private:
 
     std::vector<OperationHandler *> mMenu;
-    QueryResult mOperationsList;
+    OperationHandlerQuery mOperationsList;
     DepositModel *mDeposit;
 };
 

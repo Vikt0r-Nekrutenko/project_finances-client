@@ -1,60 +1,60 @@
-#include "appmodel.hpp"
+#include "operationmodelhandler.hpp"
 #include "queryresult.hpp"
 
-QueryResult::QueryResult(AppModel *model)
+OperationHandlerQuery::OperationHandlerQuery(OperationModelHandler *model)
     : mModel{model} {}
 
-QueryResult &QueryResult::select()
+OperationHandlerQuery &OperationHandlerQuery::select()
 {
     clear();
-    std::vector<OperationModel> &operations = mModel->mOperationHandler.operations();
+    std::vector<OperationModel> &operations = mModel->mOperations;
     for(size_t i = 0; i < operations.size(); ++i)
         push_back(&operations.at(i));
     return *this;
 }
 
-QueryResult &QueryResult::filterByDeposit(const std::string &deposit)
+OperationHandlerQuery &OperationHandlerQuery::filterByDeposit(const std::string &deposit)
 {
-    for(QueryResult::iterator it = begin(); it != end(); )
+    for(OperationHandlerQuery::iterator it = begin(); it != end(); )
         it = ((*it)->deposit() != deposit) ? erase(it) : ++it;
     return *this;
 }
 
-QueryResult &QueryResult::filterByCurrentYear()
+OperationHandlerQuery &OperationHandlerQuery::filterByCurrentYear()
 {
     const QDate &currentDate = QDate().currentDate();
     return filterByYear(currentDate.year());
 }
 
-QueryResult &QueryResult::filterByCurrentMonth()
+OperationHandlerQuery &OperationHandlerQuery::filterByCurrentMonth()
 {
     const QDate &currentDate = QDate().currentDate();
     return filterByMonth(currentDate.month());
 }
 
-QueryResult &QueryResult::filterByCurrentDay()
+OperationHandlerQuery &OperationHandlerQuery::filterByCurrentDay()
 {
     const QDate &currentDate = QDate().currentDate();
     return filterByDay(currentDate.day());
 }
 
-QueryResult &QueryResult::filterByYear(const int year)
+OperationHandlerQuery &OperationHandlerQuery::filterByYear(const int year)
 {
-    for(QueryResult::iterator it = begin(); it != end(); )
+    for(OperationHandlerQuery::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().year() != year) ? erase(it) : ++it;
     return *this;
 }
 
-QueryResult &QueryResult::filterByMonth(const int month)
+OperationHandlerQuery &OperationHandlerQuery::filterByMonth(const int month)
 {
-    for(QueryResult::iterator it = begin(); it != end(); )
+    for(OperationHandlerQuery::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().month() != month) ? erase(it) : ++it;
     return *this;
 }
 
-QueryResult &QueryResult::filterByDay(const int day)
+OperationHandlerQuery &OperationHandlerQuery::filterByDay(const int day)
 {
-    for(QueryResult::iterator it = begin(); it != end(); )
+    for(OperationHandlerQuery::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
     return *this;
 }

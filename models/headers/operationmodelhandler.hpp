@@ -6,7 +6,10 @@
 
 class OperationModelHandler : public DataModelHandler
 {
+    friend class OperationHandlerQuery;
+
 public:
+
     OperationModelHandler();
 
     void addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category);

@@ -45,6 +45,11 @@ std::vector<DepositModel> &AppModel::deposits()
     return mDepositHandler.deposits();
 }
 
+OperationModelHandler *AppModel::operationHandler()
+{
+    return &mOperationHandler;
+}
+
 int AppModel::sumOfAllEarnOperations() const
 {
     return mSumOfAllEarnOperations;

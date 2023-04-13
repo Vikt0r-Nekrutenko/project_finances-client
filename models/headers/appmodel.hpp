@@ -9,8 +9,6 @@
 
 class AppModel : public stf::smv::BaseModel
 {
-    friend class QueryResult;
-
 public:
 
     const std::vector<DepositModel> &deposits() const;
@@ -22,6 +20,8 @@ public:
     const std::vector<OperationModel> &operationsByMonth() const;
     const std::vector<DebtModel> &debts() const;
     std::vector<DepositModel> &deposits();
+
+    OperationModelHandler *operationHandler();
 
     int sumOfAllEarnOperations() const;
     int sumOfAllDeposits() const;

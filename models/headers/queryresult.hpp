@@ -5,25 +5,25 @@
 #include <string>
 
 class OperationModel;
-class AppModel;
+class OperationModelHandler;
 
-class QueryResult : public std::list<OperationModel *>
+class OperationHandlerQuery : public std::list<OperationModel *>
 {
 public:
-    QueryResult(AppModel *model);
-    QueryResult &select();
-    QueryResult &filterByDeposit(const std::string &deposit);
-    QueryResult &filterByCurrentMonth();
-    QueryResult &filterByCurrentYear();
-    QueryResult &filterByCurrentDay();
+    OperationHandlerQuery(OperationModelHandler *model);
+    OperationHandlerQuery &select();
+    OperationHandlerQuery &filterByDeposit(const std::string &deposit);
+    OperationHandlerQuery &filterByCurrentMonth();
+    OperationHandlerQuery &filterByCurrentYear();
+    OperationHandlerQuery &filterByCurrentDay();
 
-    QueryResult &filterByYear(const int year);
-    QueryResult &filterByMonth(const int month);
-    QueryResult &filterByDay(const int day);
+    OperationHandlerQuery &filterByYear(const int year);
+    OperationHandlerQuery &filterByMonth(const int month);
+    OperationHandlerQuery &filterByDay(const int day);
 
 protected:
 
-    AppModel *mModel;
+    OperationModelHandler *mModel;
 };
 
 #endif // QUERYRESULT_HPP
