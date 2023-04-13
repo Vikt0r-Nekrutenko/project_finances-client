@@ -68,6 +68,7 @@ stf::smv::IView *DepositListView::onEnterHandler()
         int id = getIntFromInput() - 1;
         // TODO: return new OperationsListView(AppModel->deposits().at(id))
     }}
+    return this;
 }
 
 stf::smv::IView *DepositListView::keyEventsHandler(const int key)
