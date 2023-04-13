@@ -88,7 +88,7 @@ int AppModel::yearPnL() const
 
 void AppModel::updateStats()
 {
-    mSumOfAllEarnOperations = OperationHandlerQuery(&mOperationHandler).select().join(CategoryHandlerQuery(&mCategoryHandler).filterByType("earn")).sum();//getSumOfAllEarnOperations();
+    mSumOfAllEarnOperations = getSumOfAllEarnOperations();
     mSumOfAllDeposits = getSumOfAllDeposits();
     mSumOfAllDebts = getSumOfAllDebts();
     mTodayPnL = getTodayPnL();
