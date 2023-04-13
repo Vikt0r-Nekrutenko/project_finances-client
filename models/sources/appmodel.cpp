@@ -1,4 +1,5 @@
 #include "appmodel.hpp"
+#include "queryresult.hpp"
 
 const std::vector<DepositModel> &AppModel::deposits() const
 {
@@ -87,7 +88,7 @@ int AppModel::yearPnL() const
 
 void AppModel::updateStats()
 {
-    mSumOfAllEarnOperations = getSumOfAllEarnOperations();
+    mSumOfAllEarnOperations = OperationHandlerQuery(&mOperationHandler).select().join(CategoryHandlerQuery(&mCategoryHandler).filterByType("earn")).sum();//getSumOfAllEarnOperations();
     mSumOfAllDeposits = getSumOfAllDeposits();
     mSumOfAllDebts = getSumOfAllDebts();
     mTodayPnL = getTodayPnL();
@@ -356,7 +357,6 @@ int AppModel::getPnLByDays(int days) const
             operations.push_back(&operation);
     }
 
-    const std::string &today = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
     int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
     int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
     return posOpSum - negOpSum;
