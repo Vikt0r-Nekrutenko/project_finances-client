@@ -13,12 +13,11 @@ OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
                      new ChangeOperationHandler(deposit),
                      new AddLendOperationHandler(deposit),
                      new AddRepayOperationHandler(deposit),
-                     new SelectListOperationHandler(deposit),
                      new AddNewTodayOperationHandler(deposit),
                      new AddNewTodayLendOperationHandler(deposit),
                      new AddNewTodayRepayOperationHandler(deposit),
                  });
-    mOptrionsCount = 9;
+    mOptrionsCount = 8;
 
     mOperationsList.select().filterByCurrentYear().filterByCurrentMonth().filterByDeposit(mDeposit->name());
 }
@@ -32,14 +31,16 @@ OperationsListView::~OperationsListView()
 void OperationsListView::show(stf::Renderer &renderer)
 {
     ModelViewWithInputField::show(renderer);
-    AppModel *app = static_cast<AppModel*>(m_model);
 
     renderer.drawText({0, 2}, "Choose an option:");
+    renderer.drawText({0, 3}, "1.Select a list.");
     for(size_t i = 0; i < mMenu.size(); ++i)
-        renderer.draw({0, 3+i}, "%d.%s", i + 1,  mMenu.at(i)->caption());
+        renderer.draw({0, 4+i}, "%d.%s", i + 2,  mMenu.at(i)->caption());
 
-    if(mOption)
-        renderer.drawText({0, InputInfoY}, mMenu.at(mOption - 1)->operationFieldsInfo());
+    if(mOption == 1) {
+        renderer.drawText({0, InputInfoY}, "Type 'year month'");
+    } else if(mOption > 1)
+        renderer.drawText({0, InputInfoY}, mMenu.at(mOption - 2)->operationFieldsInfo());
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
@@ -63,8 +64,14 @@ void OperationsListView::show(stf::Renderer &renderer)
 
 stf::smv::IView *OperationsListView::onEnterHandler()
 {
-    if(mOption)
+    if(mOption == 1) {
+        int year = getIntFromInput();
+        int month = getIntFromInput();
+        mOperationsList.select().filterByYear(year).filterByMonth(month).filterByDeposit(mDeposit->name());
+    } else if(mOption > 1) {
         mMenu.at(mOption - 1)->handle(static_cast<AppModel *>(m_model), mInput);
+        mOperationsList.select().filterByCurrentYear().filterByCurrentMonth().filterByDeposit(mDeposit->name());
+    }
     return this;
 }
 
