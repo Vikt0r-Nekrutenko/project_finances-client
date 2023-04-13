@@ -36,6 +36,9 @@ void OperationHandler::updateOperationsList(AppModel *model, const std::string &
     model->getOperationsByMonth(year, month);
 }
 
+AddNewOperationHandler::AddNewOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void AddNewOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
@@ -57,6 +60,9 @@ const char *AddNewOperationHandler::caption() const
     return "Add new operation.";
 }
 
+DeleteOperationHandler::DeleteOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void DeleteOperationHandler::handle(AppModel *model, std::string &input)
 {
     int id = getIntFromInput(input) - 1;
@@ -74,6 +80,9 @@ const char *DeleteOperationHandler::caption() const
 {
     return "Delete operation.";
 }
+
+ChangeOperationHandler::ChangeOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
 
 void ChangeOperationHandler::handle(AppModel *model, std::string &input)
 {
@@ -97,6 +106,9 @@ const char *ChangeOperationHandler::caption() const
     return "Change operation.";
 }
 
+AddLendOperationHandler::AddLendOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
@@ -117,6 +129,9 @@ const char *AddLendOperationHandler::caption() const
 {
     return "Add new lend operation.";
 }
+
+AddRepayOperationHandler::AddRepayOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
 
 void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
 {
@@ -158,6 +173,9 @@ const char *AddNewTodayBankPrivatOperationHandler::caption() const
 {
     return "Today PrivatBank.";
 }
+
+SelectListOperationHandler::SelectListOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
 
 void SelectListOperationHandler::handle(AppModel *model, std::string &input)
 {
