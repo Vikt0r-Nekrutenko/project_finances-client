@@ -51,7 +51,7 @@ void AddNewOperationHandler::handle(AppModel *model, std::string &input)
 
 const char *AddNewOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'date deposit amount category' or 'q' to step back:";
+    return "Type 'date amount category' or 'q' to step back:";
 }
 
 const char *AddNewOperationHandler::caption() const
@@ -96,7 +96,7 @@ void ChangeOperationHandler::handle(AppModel *model, std::string &input)
 
 const char *ChangeOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'id date deposit amount category' or 'q' to step back:";
+    return "Type 'id date amount category' or 'q' to step back:";
 }
 
 const char *ChangeOperationHandler::caption() const
@@ -119,7 +119,7 @@ void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 
 const char *AddLendOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'date deposit amount name' or 'q' to step back:";
+    return "Type 'date amount name' or 'q' to step back:";
 }
 
 const char *AddLendOperationHandler::caption() const
@@ -142,7 +142,7 @@ void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
 
 const char *AddRepayOperationHandler::operationFieldsInfo() const
 {
-    return "Type 'date deposit amount name' or 'q' to step back:";
+    return "Type 'date amount name' or 'q' to step back:";
 }
 
 const char *AddRepayOperationHandler::caption() const
