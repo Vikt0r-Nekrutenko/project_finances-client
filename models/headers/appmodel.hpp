@@ -94,6 +94,13 @@ private:
     CategoryModelHandler mCategoryHandler;
 
     std::pair<std::pair<int, std::string>, std::pair<int, std::string>> mMinMaxLosses;
+
+public:
+
+    QueryResult query = QueryResult(this);
+
+private:
+
     std::vector<std::pair<std::string, int>> mSumByFavCategories;
     std::vector<CategoryModel> mFavCategories;
     std::vector<OperationModel> mOperationsByMonth;
