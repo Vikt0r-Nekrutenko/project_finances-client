@@ -46,7 +46,7 @@ void DepositListView::show(stf::Renderer &renderer)
     }
 }
 
-void DepositListView::onEnterHandler()
+stf::smv::IView *DepositListView::onEnterHandler()
 {
     switch (mOption) {
     case 1: {
