@@ -14,6 +14,7 @@ public:
     ~OperationsListView() override;
     void show(stf::Renderer &renderer) override;
     stf::smv::IView *onEnterHandler() override;
+    stf::smv::IView *onQPressHandler() const override;
     stf::smv::IView *keyEventsHandler(const int key) override;
 
 private:

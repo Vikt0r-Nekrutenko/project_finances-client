@@ -1,5 +1,6 @@
 #include "operationslistview.hpp"
 #include "appmodel.hpp"
+#include "depositlistview.hpp"
 #include "operationhandler.hpp"
 
 OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
@@ -63,6 +64,11 @@ stf::smv::IView *OperationsListView::onEnterHandler()
     if(mOption)
         mMenu.at(mOption - 1)->handle(static_cast<AppModel *>(m_model), mInput);
     return this;
+}
+
+stf::smv::IView *OperationsListView::onQPressHandler() const
+{
+    return new DepositListView(static_cast<AppModel*>(m_model));
 }
 
 stf::smv::IView *OperationsListView::keyEventsHandler(const int key)

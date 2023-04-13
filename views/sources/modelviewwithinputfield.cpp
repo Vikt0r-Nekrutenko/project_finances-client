@@ -26,6 +26,11 @@ stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
     return this;
 }
 
+stf::smv::IView *ModelViewWithInputField::onQPressHandler() const
+{
+    return new MenuView(static_cast<AppModel*>(m_model));
+}
+
 stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
 {
     if(mOption == 0) {
@@ -33,7 +38,7 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
             if(key == '0' + i)
                 mOption = key - '0';
         if(key == 'q')
-            return new MenuView(static_cast<AppModel*>(m_model));
+            return onQPressHandler();
     } else {
         try {
             return inputHandler(key);
