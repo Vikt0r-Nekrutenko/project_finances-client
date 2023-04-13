@@ -23,10 +23,11 @@ AppModel::QueryResult &AppModel::QueryResult::filterByDeposit(const std::string 
 
 AppModel::QueryResult &AppModel::QueryResult::filterByYear(const int year)
 {
-    auto operations = mModel->mOperationHandler.operations();
-    for(size_t i = 0; i < operations.size(); ++i)
-        if(QDateTime().fromString(operations.at(i).date().c_str(), "yyyy-MM-dd").date().year() == year)
-            push_back(&operations.at(i));
+    for(QueryResult::iterator it = begin(); it != end(); )
+        if(QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().year() == year)
+            it = erase(it);
+        else
+            ++it;
     return *this;
 }
 
