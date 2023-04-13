@@ -21,6 +21,7 @@ SOURCES += \
         models/sources/depositmodelhandler.cpp \
         models/sources/categorymodelhandler.cpp \
         models/sources/operationmodelhandler.cpp \
+    models/sources/queryresult.cpp \
         views/sources/menuview.cpp \
         views/sources/closeview.cpp \
         views/sources/debtlistview.cpp \

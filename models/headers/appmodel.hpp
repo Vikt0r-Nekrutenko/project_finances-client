@@ -9,7 +9,21 @@
 
 class AppModel : public stf::smv::BaseModel
 {
+    friend class QueryResult;
+
 public:
+
+    class QueryResult : public std::vector<OperationModel *>
+    {
+    public:
+        QueryResult(AppModel *model);
+        QueryResult &filterByDeposit(const std::string &deposit);
+
+    protected:
+
+        AppModel *mModel;
+    };
+
     const std::vector<DepositModel> &deposits() const;
     const std::vector<OperationModel> &operations() const;
     const std::vector<CategoryModel> &categories() const;
