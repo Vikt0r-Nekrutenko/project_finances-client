@@ -34,8 +34,10 @@ void OperationsListView::show(stf::Renderer &renderer)
 
     renderer.drawText({0, 2}, "Choose an option:");
     renderer.drawText({0, 3}, "1.Select a list.");
-    for(size_t i = 0; i < mMenu.size(); ++i)
+    int i = 0;
+    for(; i < (int)mMenu.size(); ++i)
         renderer.draw({0, 4+i}, "%d.%s", i + 2,  mMenu.at(i)->caption());
+    renderer.drawText({0, 4+i}, "q.Back to deposits.");
 
     if(mOption == 1) {
         renderer.drawText({0, InputInfoY}, "Type 'year month'");
@@ -45,7 +47,8 @@ void OperationsListView::show(stf::Renderer &renderer)
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
     const int listHeinght = mOperationsList.size();
-    int y = 0, i = mOperationsList.size() - 1;
+    int y = 0;
+    i = mOperationsList.size() - 1;
 
     for(auto it = mOperationsList.rbegin(); it != mOperationsList.rend() && y < InputInfoY - 1; ++it, --i){
         const auto &operation = **it;
