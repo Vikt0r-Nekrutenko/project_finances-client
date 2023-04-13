@@ -16,7 +16,7 @@ CategoryHandlerQuery &CategoryHandlerQuery::select()
 CategoryHandlerQuery &CategoryHandlerQuery::filterByType(const std::string &type)
 {
     for(CategoryHandlerQuery::iterator it = begin(); it != end(); )
-        it = ((*it)->type() != type) ? it = erase(it) : ++it;
+        it = ((*it)->type() != type) ? erase(it) : ++it;
     return *this;
 }
 
@@ -75,6 +75,14 @@ OperationHandlerQuery &OperationHandlerQuery::filterByDay(const int day)
 {
     for(OperationHandlerQuery::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
+    return *this;
+}
+
+OperationHandlerQuery &OperationHandlerQuery::join(const CategoryHandlerQuery &query)
+{
+    for(CategoryHandlerQuery::const_iterator cit = query.begin(); cit != query.end(); ++cit)
+        for(OperationHandlerQuery::iterator oit = begin(); oit != end(); )
+            oit = ((*oit)->category() != (*cit)->name()) ? erase(oit) : ++oit;
     return *this;
 }
 
