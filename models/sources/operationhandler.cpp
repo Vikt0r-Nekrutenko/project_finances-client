@@ -150,24 +150,24 @@ const char *AddRepayOperationHandler::caption() const
     return "Add new repay operation.";
 }
 
-void AddNewTodayBankPrivatOperationHandler::handle(AppModel *model, std::string &input)
+void AddNewTodayOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
-    model->addNewOperation(date.c_str(), "PrivatBank", amount, category.c_str());
+    model->addNewOperation(date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
     updateOperationsList(model, date);
 }
 
-const char *AddNewTodayBankPrivatOperationHandler::operationFieldsInfo() const
+const char *AddNewTodayOperationHandler::operationFieldsInfo() const
 {
     return "Type 'amount category' or 'q' to step back:";
 }
 
-const char *AddNewTodayBankPrivatOperationHandler::caption() const
+const char *AddNewTodayOperationHandler::caption() const
 {
-    return "Today PrivatBank.";
+    return "Today operation.";
 }
 
 SelectListOperationHandler::SelectListOperationHandler(DepositModel *deposit)

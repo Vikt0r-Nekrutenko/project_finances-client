@@ -77,7 +77,7 @@ public:
     const char *caption() const override;
 };
 
-class AddNewTodayBankPrivatOperationHandler : public OperationHandler
+class AddNewTodayOperationHandler : public OperationHandler
 {
 public:
     void handle(AppModel *model, std::string &input) override;
