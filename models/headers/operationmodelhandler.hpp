@@ -15,6 +15,7 @@ public:
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
     const std::vector<OperationModel> &operations() const;
+    std::vector<OperationModel> &operations();
 
 private:
 
