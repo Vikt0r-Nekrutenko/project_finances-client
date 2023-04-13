@@ -12,9 +12,9 @@ OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
                      new AddLendOperationHandler(deposit),
                      new AddRepayOperationHandler(deposit),
                      new SelectListOperationHandler(deposit),
-//                     new AddNewTodayBankPrivatOperationHandler(deposit),
-//                     new AddNewTodayBankPrivatLendOperationHandler(deposit),
-//                     new AddNewTodayBankPrivatRepayOperationHandler(deposit),
+                     new AddNewTodayOperationHandler(deposit),
+                     new AddNewTodayLendOperationHandler(deposit),
+                     new AddNewTodayRepayOperationHandler(deposit),
                  });
     mOptrionsCount = 6;
 }

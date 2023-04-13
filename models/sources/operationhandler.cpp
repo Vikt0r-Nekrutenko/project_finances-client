@@ -150,6 +150,9 @@ const char *AddRepayOperationHandler::caption() const
     return "Add new repay operation.";
 }
 
+AddNewTodayOperationHandler::AddNewTodayOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void AddNewTodayOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
@@ -191,6 +194,9 @@ const char *SelectListOperationHandler::caption() const
     return "Select list by month.";
 }
 
+AddNewTodayLendOperationHandler::AddNewTodayLendOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
+
 void AddNewTodayLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     int amount = getIntFromInput(input);
@@ -210,6 +216,9 @@ const char *AddNewTodayLendOperationHandler::caption() const
 {
     return "Today lend.";
 }
+
+AddNewTodayRepayOperationHandler::AddNewTodayRepayOperationHandler(DepositModel *deposit)
+    : OperationHandler(deposit) {}
 
 void AddNewTodayRepayOperationHandler::handle(AppModel *model, std::string &input)
 {

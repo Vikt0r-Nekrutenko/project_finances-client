@@ -80,6 +80,7 @@ public:
 class AddNewTodayOperationHandler : public OperationHandler
 {
 public:
+    AddNewTodayOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
@@ -88,6 +89,7 @@ public:
 class AddNewTodayLendOperationHandler : public OperationHandler
 {
 public:
+    AddNewTodayLendOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
@@ -96,6 +98,7 @@ public:
 class AddNewTodayRepayOperationHandler : public OperationHandler
 {
 public:
+    AddNewTodayRepayOperationHandler(DepositModel *deposit);
     void handle(AppModel *model, std::string &input) override;
     const char *operationFieldsInfo() const override;
     const char *caption() const override;
