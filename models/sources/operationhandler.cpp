@@ -42,11 +42,10 @@ AddNewOperationHandler::AddNewOperationHandler(DepositModel *deposit)
 void AddNewOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
 
-    model->addNewOperation(date.c_str(), deposit.c_str(), amount, category.c_str());
+    model->addNewOperation(date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
     updateOperationsList(model, date);
 }
 
@@ -88,11 +87,10 @@ void ChangeOperationHandler::handle(AppModel *model, std::string &input)
 {
     int id = getIntFromInput(input) - 1;
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string category = getStrFromInput(input);
 
-    model->changeOperation(id, date.c_str(), deposit.c_str(), amount, category.c_str());
+    model->changeOperation(id, date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
     updateOperationsList(model, date);
 }
 
@@ -112,11 +110,10 @@ AddLendOperationHandler::AddLendOperationHandler(DepositModel *deposit)
 void AddLendOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
 
-    model->addNewLendOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+    model->addNewLendOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
@@ -136,11 +133,10 @@ AddRepayOperationHandler::AddRepayOperationHandler(DepositModel *deposit)
 void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
 {
     std::string date = getStrFromInput(input);
-    std::string deposit = getStrFromInput(input);
     int amount = getIntFromInput(input);
     std::string name = getStrFromInput(input);
 
-    model->addNewRepayOperation(date.c_str(), deposit.c_str(), amount, name.c_str());
+    model->addNewRepayOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
     updateOperationsList(model, date);
 }
 
