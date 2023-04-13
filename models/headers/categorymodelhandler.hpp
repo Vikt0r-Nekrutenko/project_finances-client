@@ -6,6 +6,8 @@
 
 class CategoryModelHandler : public DataModelHandler
 {
+    friend class CategoryHandlerQuery;
+
 public:
 
     CategoryModelHandler();
