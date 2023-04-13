@@ -13,10 +13,11 @@ class AppModel : public stf::smv::BaseModel
 
 public:
 
-    class QueryResult : public std::vector<OperationModel *>
+    class QueryResult : public std::list<OperationModel *>
     {
     public:
         QueryResult(AppModel *model);
+        QueryResult &select();
         QueryResult &filterByDeposit(const std::string &deposit);
         QueryResult &filterByYear(const int year);
         QueryResult &filterByMonth(const int month);
