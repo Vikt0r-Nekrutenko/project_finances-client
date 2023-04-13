@@ -4,7 +4,7 @@
 #include "operationhandler.hpp"
 
 OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
-    : ModelViewWithInputField(model)
+    : ModelViewWithInputField(model), mDeposit{deposit}
 {
     mMenu.insert(mMenu.end(), {
                      new AddNewOperationHandler(deposit),
@@ -40,13 +40,13 @@ void OperationsListView::show(stf::Renderer &renderer)
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
-    const auto &operations = app->operationsByMonth();
-    const auto &result = app->query.select().filterByMonth()
+    const auto &operations = app->query.select().filterByCurrentYear().filterByCurrentMonth().filterByDeposit(mDeposit->name());
     const int listHeinght = operations.size();
 
-    int y = 0;
-    for(int i = operations.size() - 1; i >= 0 && y < InputInfoY - 1; --i) {
-        const auto &operation = operations.at(i);
+    int y = 0, i = operations.size() - 1;
+    for(auto it = operations.rbegin(); it != operations.rend() && y < InputInfoY - 1; ++it, --i)
+    {
+        const auto &operation = **it;
         y = std::abs(i - listHeinght) + BeginListY;
         if(y >= int(stf::Renderer::log.y() - 1))
             continue;

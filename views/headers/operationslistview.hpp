@@ -20,6 +20,7 @@ public:
 private:
 
     std::vector<OperationHandler *> mMenu;
+    DepositModel *mDeposit;
 };
 
 #endif // OPERATIONSLISTVIEW_HPP
