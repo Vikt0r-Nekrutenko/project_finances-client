@@ -6,6 +6,7 @@
 class AppModel;
 class OperationHandler;
 class DepositModel;
+class QueryResult;
 
 class OperationsListView : public ModelViewWithInputField
 {
@@ -20,6 +21,7 @@ public:
 private:
 
     std::vector<OperationHandler *> mMenu;
+    QueryResult *mOperationsList;
     DepositModel *mDeposit;
 };
 

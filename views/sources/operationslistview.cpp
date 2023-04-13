@@ -2,6 +2,7 @@
 #include "appmodel.hpp"
 #include "depositlistview.hpp"
 #include "operationhandler.hpp"
+#include "queryresult.hpp"
 
 OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
     : ModelViewWithInputField(model), mDeposit{deposit}
@@ -18,6 +19,8 @@ OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
                      new AddNewTodayRepayOperationHandler(deposit),
                  });
     mOptrionsCount = 9;
+
+//    mOperationsList = &QueryResult(static_cast<AppModel*>(m_model)).select().filterByCurrentYear().filterByCurrentMonth().filterByDeposit(mDeposit->name());
 }
 
 OperationsListView::~OperationsListView()
@@ -40,12 +43,10 @@ void OperationsListView::show(stf::Renderer &renderer)
 
     renderer.drawText({BeginListX, BeginListY}, "Your operations:");
 
-    const auto &operations = app->query.select().filterByCurrentYear().filterByCurrentMonth().filterByDeposit(mDeposit->name());
-    const int listHeinght = operations.size();
+    const int listHeinght = mOperationsList->size();
+    int y = 0, i = mOperationsList->size() - 1;
 
-    int y = 0, i = operations.size() - 1;
-    for(auto it = operations.rbegin(); it != operations.rend() && y < InputInfoY - 1; ++it, --i)
-    {
+    for(auto it = mOperationsList->rbegin(); it != mOperationsList->rend() && y < InputInfoY - 1; ++it, --i){
         const auto &operation = **it;
         y = std::abs(i - listHeinght) + BeginListY;
         if(y >= int(stf::Renderer::log.y() - 1))
