@@ -15,7 +15,9 @@ CategoryHandlerQuery &CategoryHandlerQuery::select()
 
 CategoryHandlerQuery &CategoryHandlerQuery::filterByType(const std::string &type)
 {
-
+    for(CategoryHandlerQuery::iterator it = begin(); it != end(); )
+        it = ((*it)->type() != type) ? it = erase(it) : ++it;
+    return *this;
 }
 
 OperationHandlerQuery::OperationHandlerQuery(OperationModelHandler *model)
