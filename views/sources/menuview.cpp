@@ -79,6 +79,11 @@ void MenuView::show(stf::Renderer &renderer)
     ModelViewWithInputField::show(renderer);
 }
 
+stf::smv::IView *MenuView::onEnterHandler()
+{
+    return this;
+}
+
 stf::smv::IView *MenuView::keyEventsHandler(const int key)
 {
     switch (key) {
