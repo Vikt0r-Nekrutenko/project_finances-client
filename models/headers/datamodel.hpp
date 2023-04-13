@@ -3,14 +3,6 @@
 
 #include <QNetworkReply>
 
-enum class RequestType
-{
-    GET_RQ,
-    POST_RQ,
-    PUT_RQ,
-    DELETE_RQ
-};
-
 const std::string MainPath = "https://grhin0.pythonanywhere.com/api/";
 
 class DataModel
