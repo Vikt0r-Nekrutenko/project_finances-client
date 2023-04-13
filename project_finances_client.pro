@@ -61,6 +61,7 @@ HEADERS += \
     models/headers/depositmodelhandler.hpp \
     models/headers/categorymodelhandler.hpp \
     models/headers/operationmodelhandler.hpp \
+    models/headers/queryresult.hpp \
     views/headers/menuview.hpp \
     views/headers/closeview.hpp \
     views/headers/debtlistview.hpp \

@@ -13,25 +13,6 @@ class AppModel : public stf::smv::BaseModel
 
 public:
 
-    class QueryResult : public std::list<OperationModel *>
-    {
-    public:
-        QueryResult(AppModel *model);
-        QueryResult &select();
-        QueryResult &filterByDeposit(const std::string &deposit);
-        QueryResult &filterByCurrentMonth();
-        QueryResult &filterByCurrentYear();
-        QueryResult &filterByCurrentDay();
-
-        QueryResult &filterByYear(const int year);
-        QueryResult &filterByMonth(const int month);
-        QueryResult &filterByDay(const int day);
-
-    protected:
-
-        AppModel *mModel;
-    };
-
     const std::vector<DepositModel> &deposits() const;
     const std::vector<OperationModel> &operations() const;
     const std::vector<CategoryModel> &categories() const;
@@ -99,13 +80,6 @@ private:
     CategoryModelHandler mCategoryHandler;
 
     std::pair<std::pair<int, std::string>, std::pair<int, std::string>> mMinMaxLosses;
-
-public:
-
-    QueryResult query = QueryResult(this);
-
-private:
-
     std::vector<std::pair<std::string, int>> mSumByFavCategories;
     std::vector<CategoryModel> mFavCategories;
     std::vector<OperationModel> mOperationsByMonth;

@@ -1,9 +1,10 @@
 #include "appmodel.hpp"
+#include "queryresult.hpp"
 
-AppModel::QueryResult::QueryResult(AppModel *model)
+QueryResult::QueryResult(AppModel *model)
     : mModel{model} {}
 
-AppModel::QueryResult &AppModel::QueryResult::select()
+QueryResult &QueryResult::select()
 {
     clear();
     std::vector<OperationModel> &operations = mModel->mOperationHandler.operations();
@@ -12,46 +13,46 @@ AppModel::QueryResult &AppModel::QueryResult::select()
     return *this;
 }
 
-AppModel::QueryResult &AppModel::QueryResult::filterByDeposit(const std::string &deposit)
+QueryResult &QueryResult::filterByDeposit(const std::string &deposit)
 {
     for(QueryResult::iterator it = begin(); it != end(); )
         it = ((*it)->deposit() != deposit) ? erase(it) : ++it;
     return *this;
 }
 
-AppModel::QueryResult &AppModel::QueryResult::filterByCurrentYear()
+QueryResult &QueryResult::filterByCurrentYear()
 {
     const QDate &currentDate = QDate().currentDate();
     return filterByYear(currentDate.year());
 }
 
-AppModel::QueryResult &AppModel::QueryResult::filterByCurrentMonth()
+QueryResult &QueryResult::filterByCurrentMonth()
 {
     const QDate &currentDate = QDate().currentDate();
     return filterByMonth(currentDate.month());
 }
 
-AppModel::QueryResult &AppModel::QueryResult::filterByCurrentDay()
+QueryResult &QueryResult::filterByCurrentDay()
 {
     const QDate &currentDate = QDate().currentDate();
     return filterByDay(currentDate.day());
 }
 
-AppModel::QueryResult &AppModel::QueryResult::filterByYear(const int year)
+QueryResult &QueryResult::filterByYear(const int year)
 {
     for(QueryResult::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().year() != year) ? erase(it) : ++it;
     return *this;
 }
 
-AppModel::QueryResult &AppModel::QueryResult::filterByMonth(const int month)
+QueryResult &QueryResult::filterByMonth(const int month)
 {
     for(QueryResult::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().month() != month) ? erase(it) : ++it;
     return *this;
 }
 
-AppModel::QueryResult &AppModel::QueryResult::filterByDay(const int day)
+QueryResult &QueryResult::filterByDay(const int day)
 {
     for(QueryResult::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
