@@ -2,6 +2,7 @@
 #define OPERATIONSLISTVIEW_HPP
 
 #include "modelviewwithinputfield.hpp"
+#include "queryresult.hpp"
 
 class AppModel;
 class OperationHandler;
@@ -20,6 +21,8 @@ public:
 private:
 
     std::vector<OperationHandler *> mMenu;
+    OperationHandlerQuery mOperationsList;
+    DepositModel *mDeposit;
 };
 
 #endif // OPERATIONSLISTVIEW_HPP

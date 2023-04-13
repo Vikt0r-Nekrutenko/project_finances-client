@@ -52,3 +52,8 @@ const std::vector<OperationModel> &OperationModelHandler::operations() const
 {
     return mOperations;
 }
+
+std::vector<OperationModel> &OperationModelHandler::operations()
+{
+    return mOperations;
+}

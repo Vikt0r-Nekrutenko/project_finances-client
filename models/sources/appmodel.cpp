@@ -1,4 +1,5 @@
 #include "appmodel.hpp"
+#include "queryresult.hpp"
 
 const std::vector<DepositModel> &AppModel::deposits() const
 {
@@ -30,11 +31,6 @@ const std::vector<std::pair<std::string, int> > &AppModel::sumByFavCategories() 
     return mSumByFavCategories;
 }
 
-const std::vector<OperationModel> &AppModel::operationsByMonth() const
-{
-    return mOperationsByMonth;
-}
-
 const std::vector<DebtModel> &AppModel::debts() const
 {
     return mDebtHandler.debts();
@@ -43,6 +39,11 @@ const std::vector<DebtModel> &AppModel::debts() const
 std::vector<DepositModel> &AppModel::deposits()
 {
     return mDepositHandler.deposits();
+}
+
+OperationModelHandler *AppModel::operationHandler()
+{
+    return &mOperationHandler;
 }
 
 int AppModel::sumOfAllEarnOperations() const
@@ -100,9 +101,7 @@ void AppModel::updateStats()
     for(const auto &favcat : mFavCategories)
         mSumByFavCategories.push_back({favcat.name(), getSum30DaysOfOperationsByCategory(favcat)});
 
-    getOperationsByCurrentMonth();
     getMinMaxLossesBy30Days();
-    getOperationsByCurrentMonth();
 }
 
 void AppModel::updateAllHandlers()
@@ -125,22 +124,6 @@ void AppModel::selectFavCategories(int index1, int index2, int index3)
                            mCategoryHandler.categories().at(index1),
                            mCategoryHandler.categories().at(index2),
                            mCategoryHandler.categories().at(index3)});
-}
-
-void AppModel::getOperationsByCurrentMonth()
-{
-    const QDate &currentDate = QDate().currentDate();
-    getOperationsByMonth(currentDate.year(), currentDate.month());
-}
-
-void AppModel::getOperationsByMonth(int year, int month)
-{
-    mOperationsByMonth.clear();
-    for(const auto &operation : mOperationHandler.operations()) {
-        const QDate &date = QDateTime().fromString(operation.date().c_str(), "yyyy-MM-dd").date();
-        if(year == date.year() && month == date.month())
-            mOperationsByMonth.push_back(operation);
-    }
 }
 
 void AppModel::deleteDeposit(int index)
@@ -374,7 +357,6 @@ int AppModel::getPnLByDays(int days) const
             operations.push_back(&operation);
     }
 
-    const std::string &today = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
     int negOpSum = getSumOfOperationsByCategoryType(operations, "negative");
     int posOpSum = getSumOfOperationsByCategoryType(operations, "positive") + getSumOfOperationsByCategoryType(operations, "earn");
     return posOpSum - negOpSum;

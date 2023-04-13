@@ -6,7 +6,10 @@
 
 class OperationModelHandler : public DataModelHandler
 {
+    friend class OperationHandlerQuery;
+
 public:
+
     OperationModelHandler();
 
     void addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category);
@@ -15,6 +18,7 @@ public:
     void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
     const std::vector<OperationModel> &operations() const;
+    std::vector<OperationModel> &operations();
 
 private:
 
