@@ -58,3 +58,11 @@ OperationHandlerQuery &OperationHandlerQuery::filterByDay(const int day)
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
     return *this;
 }
+
+int OperationHandlerQuery::sum() const
+{
+    int result = 0;
+    for(OperationHandlerQuery::const_iterator it = begin(); it != end(); ++it)
+        result += (*it)->amount();
+    return result;
+}

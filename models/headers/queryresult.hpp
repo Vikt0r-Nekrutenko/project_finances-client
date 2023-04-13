@@ -21,6 +21,8 @@ public:
     OperationHandlerQuery &filterByMonth(const int month);
     OperationHandlerQuery &filterByDay(const int day);
 
+    int sum() const;
+
 protected:
 
     OperationModelHandler *mModel;
