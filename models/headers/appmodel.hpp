@@ -18,6 +18,9 @@ public:
     public:
         QueryResult(AppModel *model);
         QueryResult &filterByDeposit(const std::string &deposit);
+        QueryResult &filterByYear(const int year);
+        QueryResult &filterByMonth(const int month);
+        QueryResult &filterByDay(const int day);
 
     protected:
 
