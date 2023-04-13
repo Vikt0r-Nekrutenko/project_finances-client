@@ -33,8 +33,6 @@ public:
 
     void updateStats();
     void updateAllHandlers();
-    void getOperationsByCurrentMonth();
-    void getOperationsByMonth(int year, int month);
     void selectFavCategories(int index1, int index2, int index3);
 
     void deleteDeposit(int index);
@@ -81,7 +79,6 @@ private:
     std::pair<std::pair<int, std::string>, std::pair<int, std::string>> mMinMaxLosses;
     std::vector<std::pair<std::string, int>> mSumByFavCategories;
     std::vector<CategoryModel> mFavCategories;
-    std::vector<OperationModel> mOperationsByMonth;
 
     int mSumOfAllEarnOperations = 0,
         mSumOfAllDeposits = 0,

@@ -29,13 +29,6 @@ std::string OperationHandler::getStrFromInput(std::string &input)
 OperationHandler::OperationHandler(DepositModel *deposit)
     : mDeposit{deposit} {}
 
-void OperationHandler::updateOperationsList(AppModel *model, const std::string &date)
-{
-    const int year = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().year();
-    const int month = QDateTime().fromString(date.c_str(), "yyyy-MM-dd").date().month();
-    model->getOperationsByMonth(year, month);
-}
-
 AddNewOperationHandler::AddNewOperationHandler(DepositModel *deposit)
     : OperationHandler(deposit) {}
 
@@ -46,7 +39,6 @@ void AddNewOperationHandler::handle(AppModel *model, std::string &input)
     std::string category = getStrFromInput(input);
 
     model->addNewOperation(date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
-    updateOperationsList(model, date);
 }
 
 const char *AddNewOperationHandler::operationFieldsInfo() const
@@ -65,9 +57,7 @@ DeleteOperationHandler::DeleteOperationHandler(DepositModel *deposit)
 void DeleteOperationHandler::handle(AppModel *model, std::string &input)
 {
     int id = getIntFromInput(input) - 1;
-    const std::string &date = model->operations().at(id).date();
     model->deleteOperation(id);
-    updateOperationsList(model, date);
 }
 
 const char *DeleteOperationHandler::operationFieldsInfo() const
@@ -91,7 +81,6 @@ void ChangeOperationHandler::handle(AppModel *model, std::string &input)
     std::string category = getStrFromInput(input);
 
     model->changeOperation(id, date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
-    updateOperationsList(model, date);
 }
 
 const char *ChangeOperationHandler::operationFieldsInfo() const
@@ -114,7 +103,6 @@ void AddLendOperationHandler::handle(AppModel *model, std::string &input)
     std::string name = getStrFromInput(input);
 
     model->addNewLendOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
-    updateOperationsList(model, date);
 }
 
 const char *AddLendOperationHandler::operationFieldsInfo() const
@@ -137,7 +125,6 @@ void AddRepayOperationHandler::handle(AppModel *model, std::string &input)
     std::string name = getStrFromInput(input);
 
     model->addNewRepayOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
-    updateOperationsList(model, date);
 }
 
 const char *AddRepayOperationHandler::operationFieldsInfo() const
@@ -160,7 +147,6 @@ void AddNewTodayOperationHandler::handle(AppModel *model, std::string &input)
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
     model->addNewOperation(date.c_str(), mDeposit->name().c_str(), amount, category.c_str());
-    updateOperationsList(model, date);
 }
 
 const char *AddNewTodayOperationHandler::operationFieldsInfo() const
@@ -173,27 +159,6 @@ const char *AddNewTodayOperationHandler::caption() const
     return "Today operation.";
 }
 
-SelectListOperationHandler::SelectListOperationHandler(DepositModel *deposit)
-    : OperationHandler(deposit) {}
-
-void SelectListOperationHandler::handle(AppModel *model, std::string &input)
-{
-    int year = getIntFromInput(input);
-    int month = getIntFromInput(input);
-
-    model->getOperationsByMonth(year, month);
-}
-
-const char *SelectListOperationHandler::operationFieldsInfo() const
-{
-    return "Type 'year month' or 'q' to step back:";
-}
-
-const char *SelectListOperationHandler::caption() const
-{
-    return "Select list by month.";
-}
-
 AddNewTodayLendOperationHandler::AddNewTodayLendOperationHandler(DepositModel *deposit)
     : OperationHandler(deposit) {}
 
@@ -204,7 +169,6 @@ void AddNewTodayLendOperationHandler::handle(AppModel *model, std::string &input
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
     model->addNewLendOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
-    updateOperationsList(model, date);
 }
 
 const char *AddNewTodayLendOperationHandler::operationFieldsInfo() const
@@ -227,7 +191,6 @@ void AddNewTodayRepayOperationHandler::handle(AppModel *model, std::string &inpu
     std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
 
     model->addNewRepayOperation(date.c_str(), mDeposit->name().c_str(), amount, name.c_str());
-    updateOperationsList(model, date);
 }
 
 const char *AddNewTodayRepayOperationHandler::operationFieldsInfo() const
