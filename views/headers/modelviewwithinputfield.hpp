@@ -14,8 +14,8 @@ public:
     const int InputInfoY;
 
     ModelViewWithInputField(AppModel *model);
-    virtual void inputHandler(int key);
-    virtual void onEnterHandler() = 0;
+    virtual stf::smv::IView *inputHandler(int key);
+    virtual stf::smv::IView *onEnterHandler() = 0;
 
     stf::smv::IView *keyEventsHandler(const int key) override;
     void show(stf::Renderer &renderer) override;
