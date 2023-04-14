@@ -72,7 +72,7 @@ stf::smv::IView *OperationsListView::onEnterHandler()
         int month = getIntFromInput();
         mOperationsList.select().filterByYear(year).filterByMonth(month).filterByDeposit(mDeposit->name());
     } else if(mOption > 1) {
-        mMenu.at(mOption - 1)->handle(static_cast<AppModel *>(m_model), mInput);
+        mMenu.at(mOption - 2)->handle(static_cast<AppModel *>(m_model), mInput);
         mOperationsList.select().filterByCurrentYear().filterByCurrentMonth().filterByDeposit(mDeposit->name());
     }
     return this;
