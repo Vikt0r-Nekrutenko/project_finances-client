@@ -16,6 +16,7 @@ public:
 
 protected:
 
+    int getExpressionResultFromInput(std::string &input);
     int getIntFromInput(std::string &input);
     std::string getStrFromInput(std::string &input);
 

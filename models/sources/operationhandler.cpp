@@ -2,8 +2,38 @@
 #include "depositmodel.hpp"
 #include "appmodel.hpp"
 
+int OperationHandler::getExpressionResultFromInput(std::string &input)
+{
+    std::string expression = getStrFromInput(input);
+    std::vector<char> operators;
+    std::vector<int> operands;
+    std::string::iterator it = expression.begin(), jt = expression.begin();
+
+    for(; it != expression.end(); ++it) {
+        if(*it == '+' || *it == '-') {
+            operators.push_back(*it);
+            operands.push_back(std::stoi(std::string(jt, it)));
+            jt = it + 1;
+        }
+    }
+    operands.push_back(std::stoi(std::string(jt, it)));
+
+    int result = operands.at(0);
+    std::vector<int>::iterator operand = operands.begin() + 1;
+
+    for(auto op : operators) {
+        switch (op) {
+        case '+': result += *operand; break;
+        case '-': result -= *operand; break;
+        }
+        ++operand;
+    }
+    return result;
+}
+
 int OperationHandler::getIntFromInput(std::string &input)
 {
+    return getExpressionResultFromInput(input);
     int pos = input.find(" ");
     if(pos != int(input.npos)) {
         int result = std::stoi(input.substr(0, pos));
