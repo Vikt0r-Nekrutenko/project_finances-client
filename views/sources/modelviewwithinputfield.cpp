@@ -19,7 +19,7 @@ stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
         mInput.clear();
         mOption = 0;
         return resultView;
-    } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-')
+    } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+')
         mInput += key;
     else if((key == 127 || key == 8) && !mInput.empty())
         mInput.pop_back();
