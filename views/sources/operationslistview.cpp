@@ -17,7 +17,7 @@ OperationsListView::OperationsListView(AppModel *model, DepositModel *deposit)
                      new AddNewTodayLendOperationHandler(deposit),
                      new AddNewTodayRepayOperationHandler(deposit),
                  });
-    mOptrionsCount = 8;
+    mOptrionsCount = 9;
 
     mOperationsList.select().filterByCurrentYear().filterByCurrentMonth().filterByDeposit(mDeposit->name());
 }
