@@ -34,14 +34,6 @@ int OperationHandler::getExpressionResultFromInput(std::string &input)
 int OperationHandler::getIntFromInput(std::string &input)
 {
     return getExpressionResultFromInput(input);
-    int pos = input.find(" ");
-    if(pos != int(input.npos)) {
-        int result = std::stoi(input.substr(0, pos));
-        input.erase(0, pos + 1);
-        return result;
-    } else {
-        return std::stoi(input.erase(0, pos + 1));
-    }
 }
 
 std::string OperationHandler::getStrFromInput(std::string &input)
