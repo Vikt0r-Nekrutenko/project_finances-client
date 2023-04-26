@@ -7,6 +7,9 @@ class InputField
 {
 public:
 
+    const int X, Y;
+
+    InputField(int x, int y) : X{x}, Y{y} { }
     virtual ~InputField() = default;
     virtual void keyEventsHandler(const int) = 0;
     virtual void show(stf::Renderer &) = 0;
