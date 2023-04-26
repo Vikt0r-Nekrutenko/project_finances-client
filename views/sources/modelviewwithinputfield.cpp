@@ -33,7 +33,7 @@ stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
     return this;
 }
 
-stf::smv::IView *ModelViewWithInputField::onQPressHandler() const
+stf::smv::IView *ModelViewWithInputField::onQPressHandler()
 {
     if(mInputField->text().empty()) {
 

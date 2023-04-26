@@ -17,7 +17,7 @@ public:
     ModelViewWithInputField(AppModel *model);
     virtual stf::smv::IView *inputHandler(int key);
     virtual stf::smv::IView *onEnterHandler() = 0;
-    virtual stf::smv::IView *onQPressHandler() const;
+    virtual stf::smv::IView *onQPressHandler();
 
     stf::smv::IView *keyEventsHandler(const int key) override;
     void show(stf::Renderer &renderer) override;
