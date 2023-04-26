@@ -1,7 +1,7 @@
 #ifndef INPUTFIELDS_H
 #define INPUTFIELDS_H
 
-#include "renderer.hpp"
+#include "smv/iview.hpp"
 
 class InputField
 {
@@ -14,6 +14,7 @@ public:
     InputField(int x, int y);
     virtual ~InputField() = default;
     virtual InputField *keyEventsHandler(const int) = 0;
+    virtual stf::smv::IView *keyEventsHandler(stf::smv::IView *sender, const int key) = 0;
     virtual void show(stf::Renderer &) const = 0;
     virtual InputField *changeState() const = 0;
 
@@ -31,6 +32,7 @@ class InactiveInputField : public InputField
 public:
     InactiveInputField(int x, int y);
     InputField *keyEventsHandler(const int) override;
+    stf::smv::IView *keyEventsHandler(stf::smv::IView *sender, const int key) override;
     void show(stf::Renderer &) const override;
     InputField *changeState() const override;
 };
@@ -41,6 +43,7 @@ public:
 
     ActiveInputField(int x, int y);
     InputField *keyEventsHandler(const int key) override;
+    stf::smv::IView *keyEventsHandler(stf::smv::IView *sender, const int key) override;
     void show(stf::Renderer &renderer) const override;
     InputField *changeState() const override;
 };

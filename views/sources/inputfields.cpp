@@ -41,6 +41,11 @@ InactiveInputField::InactiveInputField(int x, int y) : InputField(x, y) { }
 
 InputField *InactiveInputField::keyEventsHandler(const int) { return this; }
 
+stf::smv::IView *InactiveInputField::keyEventsHandler(stf::smv::IView *sender, const int)
+{
+    return sender;
+}
+
 void InactiveInputField::show(stf::Renderer &) const { return; }
 
 InputField *InactiveInputField::changeState() const
@@ -67,6 +72,11 @@ InputField *ActiveInputField::keyEventsHandler(const int key)
         return this;
     mText.insert(mCursor++, 1, char(key));
     return this;
+}
+
+stf::smv::IView *ActiveInputField::keyEventsHandler(stf::smv::IView *sender, const int key)
+{
+
 }
 
 void ActiveInputField::show(stf::Renderer &renderer) const
