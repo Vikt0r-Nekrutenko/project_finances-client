@@ -21,7 +21,8 @@ stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
         mOption = 0;
         return resultView;
     } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+')
-        mInput += key;
+//        mInput += key;
+        mInputField->keyEventsHandler(key);
     else if((key == 127 || key == 8) && !mInput.empty())
         mInput.pop_back();
     return this;
@@ -61,8 +62,9 @@ void ModelViewWithInputField::show(stf::Renderer &renderer)
     for(int i = 2; i < int(stf::Renderer::log.y() - 3); ++i)
         renderer.drawPixel({BeginListX - 1, i}, '|');
 
-    if(mOption != 0)
-        renderer.draw({0, InputPrewievY}, ">> %s", mInput.c_str());
+//    if(mOption != 0)
+//        renderer.draw({0, InputPrewievY}, ">> %s", mInput.c_str());
+    mInputField->show(renderer);
 }
 
 int ModelViewWithInputField::option() const
