@@ -28,7 +28,6 @@ stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
     }
 //    } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+')
 //        mInput += key;
-        mInputField->keyEventsHandler(key);
 //    else if((key == 127 || key == 8) && !mInput.empty())
 //        mInput.pop_back();
     return this;
@@ -41,21 +40,22 @@ stf::smv::IView *ModelViewWithInputField::onQPressHandler() const
 
 stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
 {
-    if(mOption == 0) {
-        if(key == 'q')
-            return onQPressHandler();
-        mOption = key - '0';
-        if(mOption != 0) {
+    try {
+        if(mOption == 0) {
+            if(key == 'q')
+                return onQPressHandler();
+            int tmpOption = key - '0';
+            if(tmpOption < 1 || tmpOption > mOptrionsCount)
+                return this;
+            mOption = tmpOption;
             InputField *newState = mInputField->changeState();
             delete mInputField;
             mInputField = newState;
+        } else {
+            mInputField->keyEventsHandler(key);
         }
-    } else {
-        try {
-            return inputHandler(key);
-        } catch(const std::exception &msg) {
-            stf::Renderer::log << stf::endl << msg.what();
-        }
+    } catch(const std::exception &msg) {
+        stf::Renderer::log << stf::endl << msg.what();
     }
     return this;
 }
