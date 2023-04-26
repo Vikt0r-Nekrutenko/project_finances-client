@@ -23,6 +23,7 @@ protected:
 class InactiveInputField : public InputField
 {
 public:
+    InactiveInputField(int x, int y) : InputField(x,y) { }
     void keyEventsHandler(const int) override { return; }
     void show(stf::Renderer &) override { return; }
 };
