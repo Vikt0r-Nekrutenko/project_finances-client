@@ -49,11 +49,22 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
             if(tmpOption < 1 || tmpOption > mOptrionsCount)
                 return this;
             mOption = tmpOption;
-            InputField *newState = mInputField->changeState();
             delete mInputField;
-            mInputField = newState;
+            mInputField = new ActiveInputField(0, InputPrewievY);
         } else {
-            mInputField->keyEventsHandler(key);
+            if(key == 'q' && mInputField->text().empty()) {
+                delete mInputField;
+                mInputField = new InactiveInputField(0, InputPrewievY);
+                mOption = 0;
+            } else if(key == 13 || key == 10) {
+                mInputBackup = mInput;
+                stf::smv::IView *resultView = onEnterHandler();
+                mInput.clear();
+                mOption = 0;
+                return resultView;
+            } else {
+                mInputField->keyEventsHandler(key);
+            }
         }
     } catch(const std::exception &msg) {
         stf::Renderer::log << stf::endl << msg.what();
