@@ -21,6 +21,8 @@ public:
     stf::smv::IView *keyEventsHandler(const int key) override;
     void show(stf::Renderer &renderer) override;
     int option() const;
+    void setOption(int value);
+    void setInputField(InputField *newIF);
 
 protected:
 

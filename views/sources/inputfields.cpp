@@ -1,4 +1,5 @@
 #include "inputfields.hpp"
+#include "modelviewwithinputfield.hpp"
 
 
 const std::string &InputField::text() const
@@ -76,7 +77,18 @@ InputField *ActiveInputField::keyEventsHandler(const int key)
 
 stf::smv::IView *ActiveInputField::keyEventsHandler(stf::smv::IView *sender, const int key)
 {
-
+    auto view = static_cast<ModelViewWithInputField *>(sender);
+    if(key == 'q' && mText.empty()) {
+        view->setOption(0);
+        view->setInputField(new InactiveInputField(X, Y));
+    } else if(key == 13 || key == 10) {
+        view = static_cast<ModelViewWithInputField *>(view->onEnterHandler());
+        view->setOption(0);
+        view->setInputField(new InactiveInputField(X, Y));
+    } else {
+        keyEventsHandler(key);
+    }
+    return view;
 }
 
 void ActiveInputField::show(stf::Renderer &renderer) const

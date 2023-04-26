@@ -28,20 +28,21 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
             delete mInputField;
             mInputField = new ActiveInputField(0, InputPrewievY);
         } else {
-            if(key == 'q' && mInputField->text().empty()) {
-                delete mInputField;
-                mInputField = new InactiveInputField(0, InputPrewievY);
-                mOption = 0;
-            } else if(key == 13 || key == 10) {
-//                mInputBackup = mInput;
-                stf::smv::IView *resultView = onEnterHandler();
-                delete mInputField;
-                mInputField = new InactiveInputField(0, InputPrewievY);
-                mOption = 0;
-                return resultView;
-            } else {
-                mInputField->keyEventsHandler(key);
-            }
+//            if(key == 'q' && mInputField->text().empty()) {
+//                delete mInputField;
+//                mInputField = new InactiveInputField(0, InputPrewievY);
+//                mOption = 0;
+//            } else if(key == 13 || key == 10) {
+////                mInputBackup = mInput;
+//                stf::smv::IView *resultView = onEnterHandler();
+//                delete mInputField;
+//                mInputField = new InactiveInputField(0, InputPrewievY);
+//                mOption = 0;
+//                return resultView;
+//            } else {
+//                mInputField->keyEventsHandler(key);
+//            }
+            return mInputField->keyEventsHandler(this, key);
         }
     } catch(const std::exception &msg) {
         stf::Renderer::log << stf::endl << msg.what();
@@ -68,6 +69,17 @@ void ModelViewWithInputField::show(stf::Renderer &renderer)
 int ModelViewWithInputField::option() const
 {
     return mOption;
+}
+
+void ModelViewWithInputField::setOption(int value)
+{
+    mOption = value;
+}
+
+void ModelViewWithInputField::setInputField(InputField *newIF)
+{
+    delete mInputField;
+    mInputField = newIF;
 }
 
 std::string ModelViewWithInputField::getStrFromInput()
