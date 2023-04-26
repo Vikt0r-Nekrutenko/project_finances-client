@@ -35,6 +35,9 @@ stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
 
 stf::smv::IView *ModelViewWithInputField::onQPressHandler() const
 {
+    if(mInputField->text().empty()) {
+
+    }
     return new MenuView(static_cast<AppModel*>(m_model));
 }
 
