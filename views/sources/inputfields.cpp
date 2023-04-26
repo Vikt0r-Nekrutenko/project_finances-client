@@ -6,6 +6,11 @@ const std::string &InputField::text() const
     return mText;
 }
 
+std::string &InputField::text()
+{
+    return mText;
+}
+
 InputField::InputField(int x, int y) : X{x}, Y{y} { }
 
 int InputField::getInt()

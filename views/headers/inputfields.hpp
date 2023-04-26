@@ -9,6 +9,7 @@ public:
 
     const int X, Y;
     const std::string &text() const;
+    std::string &text();
 
     InputField(int x, int y);
     virtual ~InputField() = default;
