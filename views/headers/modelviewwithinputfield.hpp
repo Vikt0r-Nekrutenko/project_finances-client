@@ -33,6 +33,7 @@ class ActiveInputField : public InputField
 public:
 
     ActiveInputField(int x, int y) : InputField(x, y) { }
+
     void keyEventsHandler(const int key) override
     {
 
@@ -40,7 +41,8 @@ public:
 
     void show(stf::Renderer &renderer) override
     {
-
+        renderer.draw({X, Y}, ">> %s", mText.c_str());
+        renderer.draw({3 + X + mCursor, Y}, "%CR%c", mCursor >= int(mText.length()) ? ' ' : mText.at(mCursor));
     }
 };
 
