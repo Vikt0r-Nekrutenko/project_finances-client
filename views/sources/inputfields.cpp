@@ -8,6 +8,30 @@ const std::string &InputField::text() const
 
 InputField::InputField(int x, int y) : X{x}, Y{y} { }
 
+int InputField::getInt()
+{
+    int pos = mText.find(" ");
+    if(pos != int(mText.npos)) {
+        int result = std::stoi(mText.substr(0, pos));
+        mText.erase(0, pos + 1);
+        return result;
+    } else {
+        return std::stoi(mText.erase(0, pos + 1));
+    }
+}
+
+std::string InputField::getStr()
+{
+    int pos = mText.find(" ");
+    if(pos != int(mText.npos)) {
+        std::string result = mText.substr(0, pos);
+        mText.erase(0, pos + 1);
+        return result;
+    } else {
+        return mText.erase(0, pos + 1);
+    }
+}
+
 InactiveInputField::InactiveInputField(int x, int y) : InputField(x, y) { }
 
 InputField *InactiveInputField::keyEventsHandler(const int) { return this; }

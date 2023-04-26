@@ -16,6 +16,9 @@ public:
     virtual void show(stf::Renderer &) const = 0;
     virtual InputField *changeState() const = 0;
 
+    int getInt();
+    std::string getStr();
+
 protected:
 
     std::string mText;
