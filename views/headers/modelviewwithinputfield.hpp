@@ -29,8 +29,8 @@ protected:
     int getIntFromInput();
 
     InputField *mInputField;
-    std::string mInput;
-    std::string mInputBackup;
+//    std::string mInput;
+//    std::string mInputBackup;
     int mOption = 0, mOptrionsCount = 0;
 };
 

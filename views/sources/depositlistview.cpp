@@ -56,9 +56,11 @@ stf::smv::IView *DepositListView::onEnterHandler()
         static_cast<AppModel*>(m_model)->addNewDeposit(name.c_str(), balance);
         break;
     }
-    case 2:
-        static_cast<AppModel*>(m_model)->deleteDeposit(std::stoi(mInput) - 1);
+    case 2: {
+        int id = getIntFromInput() - 1;
+        static_cast<AppModel*>(m_model)->deleteDeposit(id);
         break;
+    }
     case 3: {
         int id = getIntFromInput() - 1;
         int balance = getIntFromInput();
