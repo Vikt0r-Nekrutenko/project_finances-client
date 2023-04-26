@@ -62,6 +62,7 @@ HEADERS += \
     models/headers/categorymodelhandler.hpp \
     models/headers/operationmodelhandler.hpp \
     models/headers/queryresult.hpp \
+    views/headers/inputfields.hpp \
     views/headers/menuview.hpp \
     views/headers/closeview.hpp \
     views/headers/debtlistview.hpp \

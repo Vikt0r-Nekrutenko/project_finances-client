@@ -2,49 +2,7 @@
 #define MODELVIEWWITHINPUTFIELD_HPP
 
 #include "smv/iview.hpp"
-
-class InputField
-{
-public:
-
-    const int X, Y;
-
-    InputField(int x, int y) : X{x}, Y{y} { }
-    virtual ~InputField() = default;
-    virtual void keyEventsHandler(const int) = 0;
-    virtual void show(stf::Renderer &) = 0;
-
-protected:
-
-    std::string mText;
-    int mCursor = 0;
-};
-
-class InactiveInputField : public InputField
-{
-public:
-    InactiveInputField(int x, int y) : InputField(x, y) { }
-    void keyEventsHandler(const int) override { return; }
-    void show(stf::Renderer &) override { return; }
-};
-
-class ActiveInputField : public InputField
-{
-public:
-
-    ActiveInputField(int x, int y) : InputField(x, y) { }
-
-    void keyEventsHandler(const int key) override
-    {
-        mText.insert(mCursor++, 1, key);
-    }
-
-    void show(stf::Renderer &renderer) override
-    {
-        renderer.draw({X, Y}, ">> %s", mText.c_str());
-        renderer.draw({3 + X + mCursor, Y}, "%CR%c", mCursor >= int(mText.length()) ? ' ' : mText.at(mCursor));
-    }
-};
+#include "inputfields.hpp"
 
 class AppModel;
 
