@@ -59,7 +59,8 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
             } else if(key == 13 || key == 10) {
 //                mInputBackup = mInput;
                 stf::smv::IView *resultView = onEnterHandler();
-//                mInput.clear();
+                delete mInputField;
+                mInputField = new InactiveInputField(0, InputPrewievY);
                 mOption = 0;
                 return resultView;
             } else {
