@@ -12,7 +12,8 @@ std::string &InputField::text()
     return mText;
 }
 
-InputField::InputField(int x, int y) : X{x}, Y{y} { }
+InputField::InputField(int x, int y)
+    : X{x}, Y{y} { }
 
 int InputField::getInt()
 {
@@ -38,18 +39,26 @@ std::string InputField::getStr()
     }
 }
 
-InactiveInputField::InactiveInputField(int x, int y) : InputField(x, y) { }
+InactiveInputField::InactiveInputField(int x, int y)
+    : InputField(x, y) { }
 
-InputField *InactiveInputField::keyEventsHandler(const int) { return this; }
+InputField *InactiveInputField::keyEventsHandler(const int)
+{
+    return this;
+}
 
 stf::smv::IView *InactiveInputField::keyEventsHandler(stf::smv::IView *sender, const int)
 {
     return sender;
 }
 
-void InactiveInputField::show(stf::Renderer &) const { return; }
+void InactiveInputField::show(stf::Renderer &) const
+{
+    return;
+}
 
-ActiveInputField::ActiveInputField(int x, int y) : InputField(x, y) { }
+ActiveInputField::ActiveInputField(int x, int y)
+    : InputField(x, y) { }
 
 InputField *ActiveInputField::keyEventsHandler(const int key)
 {
