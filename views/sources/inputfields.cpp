@@ -10,7 +10,7 @@ InputField::InputField(int x, int y) : X{x}, Y{y} { }
 
 InactiveInputField::InactiveInputField(int x, int y) : InputField(x, y) { }
 
-InputField *InactiveInputField::keyEventsHandler(const int) { return new ActiveInputField(X, Y); }
+InputField *InactiveInputField::keyEventsHandler(const int) { return this; }
 
 void InactiveInputField::show(stf::Renderer &) const { return; }
 
