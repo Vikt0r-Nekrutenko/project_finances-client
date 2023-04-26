@@ -1,6 +1,7 @@
 #include "modelviewwithinputfield.hpp"
 #include "appmodel.hpp"
 #include "menuview.hpp"
+#include "inputfields.hpp"
 
 ModelViewWithInputField::ModelViewWithInputField(AppModel *model)
     : stf::smv::IView(model),
@@ -36,11 +37,9 @@ stf::smv::IView *ModelViewWithInputField::onQPressHandler() const
 stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
 {
     if(mOption == 0) {
-        for(int i = 1; i <= mOptrionsCount; ++i)
-            if(key == '0' + i)
-                mOption = key - '0';
         if(key == 'q')
             return onQPressHandler();
+        mOption = key - '0';
     } else {
         try {
             return inputHandler(key);

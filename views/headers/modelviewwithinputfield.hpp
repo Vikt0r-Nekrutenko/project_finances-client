@@ -2,9 +2,9 @@
 #define MODELVIEWWITHINPUTFIELD_HPP
 
 #include "smv/iview.hpp"
-#include "inputfields.hpp"
 
 class AppModel;
+class InputField;
 
 class ModelViewWithInputField : public stf::smv::IView
 {
