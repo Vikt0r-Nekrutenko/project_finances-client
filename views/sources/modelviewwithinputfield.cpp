@@ -42,6 +42,9 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
         mOption = key - '0';
     } else {
         try {
+            InputField *newState = mInputField->changeState();
+            delete mInputField;
+            mInputField = newState;
             return inputHandler(key);
         } catch(const std::exception &msg) {
             stf::Renderer::log << stf::endl << msg.what();
