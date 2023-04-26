@@ -40,11 +40,13 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
         if(key == 'q')
             return onQPressHandler();
         mOption = key - '0';
-    } else {
-        try {
+        if(mOption != 0) {
             InputField *newState = mInputField->changeState();
             delete mInputField;
             mInputField = newState;
+        }
+    } else {
+        try {
             return inputHandler(key);
         } catch(const std::exception &msg) {
             stf::Renderer::log << stf::endl << msg.what();
