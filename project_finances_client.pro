@@ -22,6 +22,7 @@ SOURCES += \
         models/sources/categorymodelhandler.cpp \
         models/sources/operationmodelhandler.cpp \
     models/sources/queryresult.cpp \
+    views/sources/inputfields.cpp \
         views/sources/menuview.cpp \
         views/sources/closeview.cpp \
         views/sources/debtlistview.cpp \
@@ -62,6 +63,7 @@ HEADERS += \
     models/headers/categorymodelhandler.hpp \
     models/headers/operationmodelhandler.hpp \
     models/headers/queryresult.hpp \
+    views/headers/inputfields.hpp \
     views/headers/menuview.hpp \
     views/headers/closeview.hpp \
     views/headers/debtlistview.hpp \
