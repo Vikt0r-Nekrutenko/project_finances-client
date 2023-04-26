@@ -10,7 +10,7 @@ InputField::InputField(int x, int y) : X{x}, Y{y} { }
 
 InactiveInputField::InactiveInputField(int x, int y) : InputField(x, y) { }
 
-InputField *InactiveInputField::keyEventsHandler(const int) { return; }
+InputField *InactiveInputField::keyEventsHandler(const int) { return new ActiveInputField(X, Y); }
 
 void InactiveInputField::show(stf::Renderer &) const { return; }
 
@@ -26,17 +26,18 @@ InputField *ActiveInputField::keyEventsHandler(const int key)
     if(key == ',') {
         if(mCursor > 0)
             --mCursor;
-        return;
+        return this;
     } else if(key == '.') {
         if(mCursor < int(mText.length()))
             ++mCursor;
-        return;
+        return this;
     } else if((key == 127 || key == 8) && mCursor > 0) {
         mText.erase(--mCursor, 1);
-        return;
+        return this;
     } else if((key < '0' || key > 'z') && key != ' ' && key != '-' && key != '+')
-        return;
+        return this;
     mText.insert(mCursor++, 1, char(key));
+    return this;
 }
 
 void ActiveInputField::show(stf::Renderer &renderer) const
