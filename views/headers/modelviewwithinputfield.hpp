@@ -19,10 +19,12 @@ public:
     virtual stf::smv::IView *onQPressHandler();
 
     stf::smv::IView *keyEventsHandler(const int key) override;
+    const std::string &getIFBackup() const;
     void show(stf::Renderer &renderer) override;
     int option() const;
     void setOption(int value);
     void setInputField(InputField *newIF);
+    void setIFBackup(const std::string &str);
 
 protected:
 
@@ -30,6 +32,7 @@ protected:
     int getIntFromInput();
 
     InputField *mInputField;
+    std::string mInputFieldBackup;
     int mOption = 0, mOptrionsCount = 0;
 };
 

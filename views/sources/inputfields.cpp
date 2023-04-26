@@ -81,7 +81,10 @@ stf::smv::IView *ActiveInputField::keyEventsHandler(stf::smv::IView *sender, con
     if(key == 'q' && mText.empty()) {
         view->setOption(0);
         view->setInputField(new InactiveInputField(X, Y));
+    } else if(key == ' ' && mText.empty()) {
+        mText = view->getIFBackup();
     } else if(key == 13 || key == 10) {
+        view->setIFBackup(mText);
         view = static_cast<ModelViewWithInputField *>(view->onEnterHandler());
         view->setOption(0);
         view->setInputField(new InactiveInputField(X, Y));

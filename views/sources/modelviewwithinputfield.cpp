@@ -35,6 +35,11 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
     return this;
 }
 
+const std::string &ModelViewWithInputField::getIFBackup() const
+{
+    return mInputFieldBackup;
+}
+
 void ModelViewWithInputField::show(stf::Renderer &renderer)
 {
     for(int i = 0; i < renderer.Size.x; ++i)
@@ -63,6 +68,11 @@ void ModelViewWithInputField::setInputField(InputField *newIF)
 {
     delete mInputField;
     mInputField = newIF;
+}
+
+void ModelViewWithInputField::setIFBackup(const std::string &str)
+{
+    mInputFieldBackup = str;
 }
 
 std::string ModelViewWithInputField::getStrFromInput()
