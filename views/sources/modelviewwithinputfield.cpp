@@ -5,7 +5,8 @@
 ModelViewWithInputField::ModelViewWithInputField(AppModel *model)
     : stf::smv::IView(model),
       InputPrewievY(stf::Renderer::log.y() - 2),
-      InputInfoY(stf::Renderer::log.y() - 3) {}
+      InputInfoY(stf::Renderer::log.y() - 3),
+      mInputField(new InactiveInputField(0, InputPrewievY)) {}
 
 stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
 {

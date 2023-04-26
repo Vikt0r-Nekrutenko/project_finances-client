@@ -70,6 +70,7 @@ protected:
     std::string getStrFromInput();
     int getIntFromInput();
 
+    InputField *mInputField;
     std::string mInput;
     std::string mInputBackup;
     int mOption = 0, mOptrionsCount = 0;
