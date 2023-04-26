@@ -3,6 +3,20 @@
 
 #include "smv/iview.hpp"
 
+class InputField
+{
+public:
+
+    virtual ~InputField() = default;
+    virtual void keyEventsHandler(const int) = 0;
+    virtual void show(stf::Renderer &) = 0;
+
+protected:
+
+    std::string mText;
+    int mCursor = 0;
+};
+
 class AppModel;
 
 class ModelViewWithInputField : public stf::smv::IView
