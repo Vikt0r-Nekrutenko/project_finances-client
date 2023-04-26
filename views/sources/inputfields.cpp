@@ -1,6 +1,11 @@
 #include "inputfields.hpp"
 
 
+const std::string &InputField::text() const
+{
+    return mText;
+}
+
 InputField::InputField(int x, int y) : X{x}, Y{y} { }
 
 InactiveInputField::InactiveInputField(int x, int y) : InputField(x, y) { }

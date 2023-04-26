@@ -8,6 +8,7 @@ class InputField
 public:
 
     const int X, Y;
+    const std::string &text() const;
 
     InputField(int x, int y);
     virtual ~InputField() = default;
