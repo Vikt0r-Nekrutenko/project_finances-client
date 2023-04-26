@@ -9,30 +9,6 @@ ModelViewWithInputField::ModelViewWithInputField(AppModel *model)
       InputInfoY(stf::Renderer::log.y() - 3),
       mInputField(new InactiveInputField(0, InputPrewievY)) {}
 
-stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
-{
-//    if(key == 'q' && mInput.empty()) {
-//        mOption = 0;
-
-//        InputField *newState = mInputField->changeState();
-//        delete mInputField;
-//        mInputField = newState;
-//    else if(key == ' ' && mInput.empty() && !mInputBackup.empty())
-//        mInput = mInputBackup;
-//    } else if(key == 13 || key == 10) {
-//        mInputBackup = mInput;
-//        stf::smv::IView *resultView = onEnterHandler();
-//        mInput.clear();
-//        mOption = 0;
-//        return resultView;
-//    }
-//    } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+')
-//        mInput += key;
-//    else if((key == 127 || key == 8) && !mInput.empty())
-//        mInput.pop_back();
-    return this;
-}
-
 stf::smv::IView *ModelViewWithInputField::onQPressHandler()
 {
     return new MenuView(static_cast<AppModel*>(m_model));

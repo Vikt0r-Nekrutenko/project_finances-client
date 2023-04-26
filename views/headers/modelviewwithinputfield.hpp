@@ -15,7 +15,6 @@ public:
     const int InputInfoY;
 
     ModelViewWithInputField(AppModel *model);
-    virtual stf::smv::IView *inputHandler(int key);
     virtual stf::smv::IView *onEnterHandler() = 0;
     virtual stf::smv::IView *onQPressHandler();
 
@@ -29,8 +28,6 @@ protected:
     int getIntFromInput();
 
     InputField *mInputField;
-//    std::string mInput;
-//    std::string mInputBackup;
     int mOption = 0, mOptrionsCount = 0;
 };
 
