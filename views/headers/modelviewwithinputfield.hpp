@@ -36,7 +36,7 @@ public:
 
     void keyEventsHandler(const int key) override
     {
-
+        mText.insert(mCursor++, 1, key);
     }
 
     void show(stf::Renderer &renderer) override
