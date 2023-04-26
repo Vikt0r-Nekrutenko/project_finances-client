@@ -78,7 +78,7 @@ stf::smv::IView *OperationsListView::onEnterHandler()
     return this;
 }
 
-stf::smv::IView *OperationsListView::onQPressHandler() const
+stf::smv::IView *OperationsListView::onQPressHandler()
 {
     return new DepositListView(static_cast<AppModel*>(m_model));
 }
