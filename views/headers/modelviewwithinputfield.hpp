@@ -17,6 +17,13 @@ protected:
     int mCursor = 0;
 };
 
+class InactiveInputField : public InputField
+{
+public:
+    void keyEventsHandler(const int) override { return; }
+    void show(stf::Renderer &) override { return; }
+};
+
 class AppModel;
 
 class ModelViewWithInputField : public stf::smv::IView
