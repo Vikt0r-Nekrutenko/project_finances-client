@@ -10,7 +10,7 @@ InputField::InputField(int x, int y) : X{x}, Y{y} { }
 
 InactiveInputField::InactiveInputField(int x, int y) : InputField(x, y) { }
 
-void InactiveInputField::keyEventsHandler(const int) { return; }
+InputField *InactiveInputField::keyEventsHandler(const int) { return; }
 
 void InactiveInputField::show(stf::Renderer &) const { return; }
 
@@ -21,7 +21,7 @@ InputField *InactiveInputField::changeState() const
 
 ActiveInputField::ActiveInputField(int x, int y) : InputField(x, y) { }
 
-void ActiveInputField::keyEventsHandler(const int key)
+InputField *ActiveInputField::keyEventsHandler(const int key)
 {
     if(key == ',') {
         if(mCursor > 0)
