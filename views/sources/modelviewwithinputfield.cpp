@@ -35,12 +35,6 @@ stf::smv::IView *ModelViewWithInputField::inputHandler(int key)
 
 stf::smv::IView *ModelViewWithInputField::onQPressHandler()
 {
-    if(mInputField->text().empty()) {
-        InputField *newState = mInputField->changeState();
-        delete mInputField;
-        mInputField = newState;
-        return this;
-    }
     return new MenuView(static_cast<AppModel*>(m_model));
 }
 
@@ -48,12 +42,16 @@ stf::smv::IView *ModelViewWithInputField::keyEventsHandler(const int key)
 {
     try {
         if(mOption == 0) {
-            if(key == 'q')
+            if(key == 'q') {
                 return onQPressHandler();
+            }
             int tmpOption = key - '0';
             if(tmpOption < 1 || tmpOption > mOptrionsCount)
                 return this;
             mOption = tmpOption;
+            InputField *newState = mInputField->changeState();
+            delete mInputField;
+            mInputField = newState;
         } else {
             mInputField->keyEventsHandler(key);
         }
