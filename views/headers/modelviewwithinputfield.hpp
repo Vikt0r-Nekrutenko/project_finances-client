@@ -24,6 +24,20 @@ public:
     void show(stf::Renderer &) override { return; }
 };
 
+class ActiveInputField : public InputField
+{
+public:
+    void keyEventsHandler(const int key) override
+    {
+
+    }
+
+    void show(stf::Renderer &renderer) override
+    {
+
+    }
+};
+
 class AppModel;
 
 class ModelViewWithInputField : public stf::smv::IView
