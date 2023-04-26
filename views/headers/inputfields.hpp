@@ -16,7 +16,6 @@ public:
     virtual InputField *keyEventsHandler(const int) = 0;
     virtual stf::smv::IView *keyEventsHandler(stf::smv::IView *sender, const int key) = 0;
     virtual void show(stf::Renderer &) const = 0;
-    virtual InputField *changeState() const = 0;
 
     int getInt();
     std::string getStr();
@@ -34,7 +33,6 @@ public:
     InputField *keyEventsHandler(const int) override;
     stf::smv::IView *keyEventsHandler(stf::smv::IView *sender, const int key) override;
     void show(stf::Renderer &) const override;
-    InputField *changeState() const override;
 };
 
 class ActiveInputField : public InputField
@@ -45,7 +43,6 @@ public:
     InputField *keyEventsHandler(const int key) override;
     stf::smv::IView *keyEventsHandler(stf::smv::IView *sender, const int key) override;
     void show(stf::Renderer &renderer) const override;
-    InputField *changeState() const override;
 };
 
 #endif // INPUTFIELDS_H

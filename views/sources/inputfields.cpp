@@ -49,11 +49,6 @@ stf::smv::IView *InactiveInputField::keyEventsHandler(stf::smv::IView *sender, c
 
 void InactiveInputField::show(stf::Renderer &) const { return; }
 
-InputField *InactiveInputField::changeState() const
-{
-    return new ActiveInputField(X, Y);
-}
-
 ActiveInputField::ActiveInputField(int x, int y) : InputField(x, y) { }
 
 InputField *ActiveInputField::keyEventsHandler(const int key)
@@ -98,9 +93,4 @@ void ActiveInputField::show(stf::Renderer &renderer) const
 {
     renderer.draw({X, Y}, ">> %s", mText.c_str());
     renderer.draw({3 + X + mCursor, Y}, "%CR%c", mCursor >= int(mText.length()) ? ' ' : mText.at(mCursor));
-}
-
-InputField *ActiveInputField::changeState() const
-{
-    return new InactiveInputField(X, Y);
 }
