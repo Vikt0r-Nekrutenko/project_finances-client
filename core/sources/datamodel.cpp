@@ -4,6 +4,11 @@
 #include <QJsonObject>
 #include "datamodel.hpp"
 
+const std::vector<std::string> &log()
+{
+    return CoreLog;
+}
+
 std::string DataModel::AuthName, DataModel::AuthValue;
 
 QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request)

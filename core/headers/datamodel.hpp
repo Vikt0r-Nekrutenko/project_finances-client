@@ -9,6 +9,8 @@
 static std::string MainPath = "https://grhin0.pythonanywhere.com/api/";
 static std::vector<std::string> CoreLog;
 
+const std::vector<std::string> CORE_EXPORT &log();
+
 class CORE_EXPORT DataModel
 {
 public:
