@@ -1,4 +1,5 @@
 #include <QCoreApplication>
+#include "headers/depositmodel.hpp"
 
 int main(int argc, char *argv[])
 {
