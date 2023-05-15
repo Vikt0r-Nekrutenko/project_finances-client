@@ -3,7 +3,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "datamodel.hpp"
-#include "renderer.hpp"
 
 QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request)
 {
@@ -38,9 +37,9 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
 void DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const
 {
     if(reply->error() == QNetworkReply::NoError) {
-        stf::Renderer::log << stf::endl << noErrorMsg;
+        CoreLog.push_back(noErrorMsg);
     } else {
-        stf::Renderer::log << stf::endl << reply->errorString().toStdString();
+        CoreLog.push_back(reply->errorString().toStdString());
     }
     reply->deleteLater();
 }

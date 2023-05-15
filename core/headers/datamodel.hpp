@@ -2,8 +2,10 @@
 #define DATAMODEL_HPP
 
 #include <QNetworkReply>
+#include <vector>
 
 const std::string MainPath = "https://grhin0.pythonanywhere.com/api/";
+std::vector<std::string> CoreLog;
 
 class DataModel
 {
