@@ -3,7 +3,7 @@
 
 #include "datamodel.hpp"
 
-class CRUDModel : public DataModel
+class CORE_EXPORT CRUDModel : public DataModel
 {
 public:
     virtual void create() = 0;

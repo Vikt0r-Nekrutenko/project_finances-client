@@ -4,10 +4,12 @@
 #include <QNetworkReply>
 #include <vector>
 
-const std::string MainPath = "https://grhin0.pythonanywhere.com/api/";
-std::vector<std::string> CoreLog;
+#include "core_global.h"
 
-class DataModel
+static std::string MainPath = "https://grhin0.pythonanywhere.com/api/";
+static std::vector<std::string> CoreLog;
+
+class CORE_EXPORT DataModel
 {
 public:
     virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request);

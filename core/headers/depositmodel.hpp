@@ -3,7 +3,7 @@
 
 #include "crudmodel.hpp"
 
-class DepositModel : public CRUDModel
+class CORE_EXPORT DepositModel : public CRUDModel
 {
     friend class DepositModelHandler;
 public:
