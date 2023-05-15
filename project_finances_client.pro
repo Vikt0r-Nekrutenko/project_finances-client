@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
 #QT -= gui
-#QT += network
 
 #CONFIG += c++17 console
 #CONFIG -= app_bundle
@@ -79,4 +78,5 @@ TEMPLATE = subdirs
 #    sprs/pnl_stats.spr
 
 SUBDIRS += \
-    core
+    core \
+    gui
