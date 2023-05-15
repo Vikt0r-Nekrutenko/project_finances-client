@@ -42,6 +42,6 @@ void DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg
     } else {
         CoreLog.push_back(reply->errorString().toStdString());
         reply->deleteLater();
-        throw reply->errorString().toStdString();
+        throw CoreLog.back();
     }
 }
