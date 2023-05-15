@@ -1,4 +1,4 @@
-CONFIG -= qt
+QT += network
 
 TEMPLATE = lib
 DEFINES += CORE_LIBRARY
