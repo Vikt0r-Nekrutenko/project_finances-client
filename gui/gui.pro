@@ -7,8 +7,18 @@ CONFIG += c++17 cmdline
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += \
+    $$PWD/../core \
+    headers \
+    sources \
+
+DEPENDPATH += \
+    $$PWD/../core \
+    headers \
+    sources \
+
 SOURCES += \
-        main.cpp
+    sources\main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -17,6 +27,3 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../core/release/ -lcore
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../core/debug/ -lcore
-
-INCLUDEPATH += $$PWD/../core
-DEPENDPATH += $$PWD/../core

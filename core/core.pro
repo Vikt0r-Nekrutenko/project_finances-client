@@ -17,10 +17,15 @@ DEPENDPATH += \
     headers \
     sources \
 
-SOURCES +=
+SOURCES += \
+    sources/datamodel.cpp \
+    sources/depositmodel.cpp \
 
 HEADERS += \
-    headers\core_global.h
+    headers/core_global.h \
+    headers/datamodel.hpp \
+    headers/depositmodel.hpp \
+    headers/crudmodel.hpp \
 
 # Default rules for deployment.
 unix {
