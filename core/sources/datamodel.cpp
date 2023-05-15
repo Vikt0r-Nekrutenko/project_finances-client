@@ -12,17 +12,17 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     mRequest.setRawHeader("accept", "application/json");
 
-    if(!mAuthName.length() || !mAuthValue.length()) {
+    if(!AuthName.length() || !AuthValue.length()) {
         QFile authFile("auth_tokens.json");
         authFile.open(QIODevice::ReadOnly | QIODevice::Text);
         if(!authFile.isOpen())
             throw std::invalid_argument("file: " + authFile.fileName().toStdString() + " doesn't opened!");
 
         QJsonObject obj = QJsonDocument::fromJson(QString(authFile.readAll()).toUtf8()).object();
-        mAuthName = obj["name"].toString().toStdString();
-        mAuthValue = obj["value"].toString().toStdString();
+        AuthName = obj["name"].toString().toStdString();
+        AuthValue = obj["value"].toString().toStdString();
     }
-    mRequest.setRawHeader(mAuthName.c_str(), mAuthValue.c_str());
+    mRequest.setRawHeader(AuthName.c_str(), AuthValue.c_str());
 
     QEventLoop loop;
 

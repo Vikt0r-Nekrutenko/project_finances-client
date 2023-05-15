@@ -15,7 +15,7 @@ public:
 
 private:
 
-    std::string mAuthName, mAuthValue;
+    static std::string AuthName, AuthValue;
 };
 
 #endif // DATAMODEL_HPP
