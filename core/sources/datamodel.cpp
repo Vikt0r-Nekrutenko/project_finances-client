@@ -38,8 +38,10 @@ void DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg
 {
     if(reply->error() == QNetworkReply::NoError) {
         CoreLog.push_back(noErrorMsg);
+        reply->deleteLater();
     } else {
         CoreLog.push_back(reply->errorString().toStdString());
+        reply->deleteLater();
+        throw reply->errorString().toStdString();
     }
-    reply->deleteLater();
 }
