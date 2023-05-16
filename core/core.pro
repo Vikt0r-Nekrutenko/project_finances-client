@@ -20,11 +20,13 @@ DEPENDPATH += \
 SOURCES += \
     sources/datamodel.cpp \
     sources/depositmodel.cpp \
+    sources/depositmodelhandler.cpp \
 
 HEADERS += \
     headers/core_global.h \
     headers/datamodel.hpp \
     headers/depositmodel.hpp \
+    headers/depositmodelhandler.hpp \
     headers/crudmodel.hpp \
 
 # Default rules for deployment.
