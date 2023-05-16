@@ -4,10 +4,11 @@
 #include "depositmodel.hpp"
 #include "modelhandler.hpp"
 
-class DepositModelHandler : public DataModelHandler
+class CORE_EXPORT DepositModelHandler : public DataModelHandler
 {
 public:
     DepositModelHandler();
+    ~DepositModelHandler() override;
     void addNewDeposit(const std::string &name, int balance);
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);

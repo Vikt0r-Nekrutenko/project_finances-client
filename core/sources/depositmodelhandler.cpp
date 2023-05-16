@@ -14,7 +14,17 @@ DepositModelHandler::DepositModelHandler()
                 tmp.load(file);
             }
         }
+        file.close();
     }
+}
+
+DepositModelHandler::~DepositModelHandler()
+{
+    std::ofstream file("deposits.txt");
+    for(auto &model : mDeposits) {
+        model.save(file);
+    }
+    file.close();
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)

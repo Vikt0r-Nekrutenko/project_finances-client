@@ -6,6 +6,7 @@
 class DataModelHandler : public DataModel
 {
 public:
+    virtual ~DataModelHandler() = default;
     void get(const std::string &additionalPath);
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };

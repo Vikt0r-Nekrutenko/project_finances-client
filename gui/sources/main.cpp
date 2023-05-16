@@ -1,21 +1,22 @@
 #include <QCoreApplication>
 #include <iostream>
-#include "headers/depositmodel.hpp"
+#include "headers/depositmodelhandler.hpp"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    DepositModel privat("PrivatBank", 0);
-    privat.read();
+    DepositModelHandler depo;
 
     for(const auto &str : log()) {
         std::cout << str << std::endl;
     }
 
-    std::cout << privat.balance() << " "
-              << privat.mIsCreated << " "
-              << privat.mIsChanched << " "
-              << privat.mIsDeleted << std::endl;
+    for(const auto &depo : depo.deposits())
+        std::cout << depo.name() << "\t"
+              << depo.balance() << " "
+              << depo.mIsCreated << " "
+              << depo.mIsChanched << " "
+              << depo.mIsDeleted << std::endl;
 
-    return a.exec();
+    return 0;//a.exec();
 }
