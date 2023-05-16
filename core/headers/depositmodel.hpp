@@ -3,6 +3,17 @@
 
 #include "crudmodel.hpp"
 
+class LocalModel
+{
+public:
+
+protected:
+
+    bool mIsCreated = false;
+    bool mIsChanched = false;
+    bool mIsDeleted = false;
+};
+
 class CORE_EXPORT DepositModel : public CRUDModel
 {
     friend class DepositModelHandler;
