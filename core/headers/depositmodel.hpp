@@ -17,6 +17,11 @@ public:
              << mIsDeleted << std::endl;
     }
 
+    virtual void load(std::ifstream &file)
+    {
+        file >> mIsCreated >> mIsChanched >> mIsDeleted;
+    }
+
 protected:
 
     bool mIsCreated = false;
