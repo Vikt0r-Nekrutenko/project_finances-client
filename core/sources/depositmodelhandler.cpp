@@ -4,7 +4,17 @@
 
 DepositModelHandler::DepositModelHandler()
 {
-    get("deposits/");
+    try {
+        get("deposits/");
+    } catch(...) {
+        std::ifstream file("deposits.txt");
+        if(file.is_open()) {
+            while(!file.eof()) {
+                DepositModel tmp("", 0);
+                tmp.load(file);
+            }
+        }
+    }
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)

@@ -22,14 +22,14 @@ public:
         file >> mIsCreated >> mIsChanched >> mIsDeleted;
     }
 
-protected:
+//protected:
 
     bool mIsCreated = false;
     bool mIsChanched = false;
     bool mIsDeleted = false;
 };
 
-class CORE_EXPORT DepositModel : public CRUDModel
+class CORE_EXPORT DepositModel : public CRUDModel, public LocalModel
 {
     friend class DepositModelHandler;
 public:
@@ -40,6 +40,12 @@ public:
     void update() override;
     void remove() override;
     void parseJsonObject(const QJsonObject &object) override;
+
+    void load(std::ifstream &file) override
+    {
+        file >> mName >> mBalance;
+        LocalModel::load(file);
+    }
 
     const std::string &name() const;
     int balance() const;

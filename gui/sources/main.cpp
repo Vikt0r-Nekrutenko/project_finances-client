@@ -12,7 +12,10 @@ int main(int argc, char *argv[])
         std::cout << str << std::endl;
     }
 
-    std::cout << privat.balance() << std::endl;
+    std::cout << privat.balance() << " "
+              << privat.mIsCreated << " "
+              << privat.mIsChanched << " "
+              << privat.mIsDeleted << std::endl;
 
     return a.exec();
 }
