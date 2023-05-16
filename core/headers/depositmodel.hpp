@@ -3,9 +3,19 @@
 
 #include "crudmodel.hpp"
 
+#include <fstream>
+
 class LocalModel
 {
 public:
+
+    virtual void save(std::ofstream &file)
+    {
+        file << " "
+             << mIsCreated << " "
+             << mIsChanched << " "
+             << mIsDeleted << std::endl;
+    }
 
 protected:
 
