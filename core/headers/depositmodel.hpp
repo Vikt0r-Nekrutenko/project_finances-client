@@ -48,7 +48,7 @@ public:
     }
     void save(std::ofstream &file) override
     {
-        file << mName << mBalance;
+        file << mName << " " << mBalance;
         LocalModel::save(file);
     }
 
