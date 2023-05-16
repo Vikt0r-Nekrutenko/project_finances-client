@@ -12,6 +12,9 @@ DepositModelHandler::DepositModelHandler()
             while(!file.eof()) {
                 DepositModel tmp("", 0);
                 tmp.load(file);
+                if(file.eof())
+                    break;
+                mDeposits.push_back(tmp);
             }
         }
         file.close();
