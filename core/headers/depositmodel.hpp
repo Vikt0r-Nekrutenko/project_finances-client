@@ -46,6 +46,11 @@ public:
         file >> mName >> mBalance;
         LocalModel::load(file);
     }
+    void save(std::ofstream &file) override
+    {
+        file << mName << mBalance;
+        LocalModel::save(file);
+    }
 
     const std::string &name() const;
     int balance() const;
