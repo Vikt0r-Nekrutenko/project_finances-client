@@ -9,7 +9,7 @@ DepositModelHandler::DepositModelHandler()
     } catch(...) {
         std::ifstream file("deposits.txt");
         if(file.is_open()) {
-            while(!file.eof()) {
+            while(true) {
                 DepositModel tmp("", 0);
                 tmp.load(file);
                 if(file.eof())
