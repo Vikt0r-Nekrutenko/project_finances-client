@@ -41,7 +41,7 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
     return reply;
 }
 
-void DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const
+RemoteStatus DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const
 {
     if(reply->error() == QNetworkReply::NoError) {
         CoreLog.push_back(noErrorMsg);

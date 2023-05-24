@@ -20,7 +20,7 @@ class CORE_EXPORT DataModel
 {
 public:
     virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request);
-    void replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
+    RemoteStatus replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
 
 private:
 
