@@ -3,11 +3,16 @@
 
 #include "datamodel.hpp"
 
+enum class RemoteStatus
+{
+    Success, Failure,
+};
+
 class DataModelHandler : public DataModel
 {
 public:
     virtual ~DataModelHandler() = default;
-    void get(const std::string &additionalPath);
+    RemoteStatus get(const std::string &additionalPath);
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };
 
