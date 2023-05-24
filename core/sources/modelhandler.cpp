@@ -7,11 +7,9 @@
 RemoteStatus DataModelHandler::get(const std::string &additionalPath)
 {
     QNetworkReply *reply = sendCRUDRequest(additionalPath, {}, "GET");
-    try {
-        replyHandler(reply, "Get request successfully!");
-    } catch (...) {
+    RemoteStatus status = replyHandler(reply, "Get request successfully!");
+    if(status == RemoteStatus::Failure)
         return RemoteStatus::Failure;
-    }
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
 
