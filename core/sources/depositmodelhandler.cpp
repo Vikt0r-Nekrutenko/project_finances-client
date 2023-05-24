@@ -4,9 +4,10 @@
 
 DepositModelHandler::DepositModelHandler()
 {
-    try {
-        get("deposits/");
-    } catch(...) {
+    switch(get("deposits/"))
+    {
+    case RemoteStatus::Failure:
+    {
         std::ifstream file("deposits.txt");
         if(file.is_open()) {
             while(true) {
@@ -18,6 +19,11 @@ DepositModelHandler::DepositModelHandler()
             }
         }
         file.close();
+    }
+    case RemoteStatus::Success:
+    {
+
+    }
     }
 }
 
