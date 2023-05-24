@@ -3,11 +3,6 @@
 
 #include "datamodel.hpp"
 
-enum class RemoteStatus
-{
-    Success, Failure,
-};
-
 class DataModelHandler : public DataModel
 {
 public:

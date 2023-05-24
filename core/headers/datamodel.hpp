@@ -11,6 +11,11 @@ static std::vector<std::string> CoreLog;
 
 const std::vector<std::string> CORE_EXPORT &log();
 
+enum class RemoteStatus
+{
+    Success, Failure,
+};
+
 class CORE_EXPORT DataModel
 {
 public:
