@@ -4,26 +4,25 @@
 
 DepositModelHandler::DepositModelHandler()
 {
-    switch(get("deposits/"))
-    {
-    case RemoteStatus::Failure:
-    {
-        std::ifstream file("deposits.txt");
-        if(file.is_open()) {
-            while(true) {
-                DepositModel tmp("", 0);
-                tmp.load(file);
-                if(file.eof())
-                    break;
+    RemoteStatus status = get("deposits/");
+    std::ifstream file("deposits.txt");
+    if(file.is_open()) {
+        while(true) {
+            DepositModel tmp("", 0);
+            tmp.load(file);
+
+            if(file.eof()) {
+                break;
+            } else if(status == RemoteStatus::Failure) {
                 mDeposits.push_back(tmp);
+            } else if(status == RemoteStatus::Success) {
+                if(tmp.mIsCreated)
+                    addNewDeposit(tmp.mName, tmp.mBalance);
+                else if(tmp.mIsChanched || tmp.mIsDeleted)
+                    mDeposits.push_back(tmp);
             }
         }
         file.close();
-    }
-    case RemoteStatus::Success:
-    {
-
-    }
     }
 }
 
