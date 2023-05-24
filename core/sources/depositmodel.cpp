@@ -15,6 +15,7 @@ void DepositModel::create()
 
     QNetworkReply *reply = sendCRUDRequest("deposits/", newDepo, "POST");
     replyHandler(reply, "Deposit added successfully!");
+    mIsCreated = false;
 }
 
 void DepositModel::read()
