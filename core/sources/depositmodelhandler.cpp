@@ -38,11 +38,7 @@ DepositModelHandler::~DepositModelHandler()
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
     mDeposits.push_back(DepositModel{name, balance});
-    try {
-        mDeposits.back().create();
-    } catch(...) {
-        mDeposits.back().mIsCreated = true;
-    }
+    mDeposits.back().create();
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
