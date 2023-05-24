@@ -46,10 +46,10 @@ RemoteStatus DataModel::replyHandler(QNetworkReply *reply, const std::string &no
     if(reply->error() == QNetworkReply::NoError) {
         CoreLog.push_back(noErrorMsg);
         reply->deleteLater();
-//        throw std::string();
+        return RemoteStatus::Success;
     } else {
         CoreLog.push_back(reply->errorString().toStdString());
         reply->deleteLater();
-        throw CoreLog.back();
+        return RemoteStatus::Failure;
     }
 }
