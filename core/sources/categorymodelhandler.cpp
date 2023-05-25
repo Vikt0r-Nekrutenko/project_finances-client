@@ -7,6 +7,15 @@ CategoryModelHandler::CategoryModelHandler()
     get("categories/");
 }
 
+CategoryModelHandler::~CategoryModelHandler()
+{
+    std::ofstream file("categories.txt");
+    for(auto &model : mCategories) {
+        model.save(file);
+    }
+    file.close();
+}
+
 void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)
 {
     mCategories.push_back(CategoryModel{name, type});

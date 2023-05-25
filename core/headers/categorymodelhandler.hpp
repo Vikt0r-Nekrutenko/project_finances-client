@@ -11,6 +11,7 @@ class CategoryModelHandler : public DataModelHandler
 public:
 
     CategoryModelHandler();
+    ~CategoryModelHandler() override;
 
     void addNewCategory(const std::string &name, const std::string &type);
     void deleteCategory(int index);
