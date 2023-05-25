@@ -106,6 +106,11 @@ DepositModel &OperationModel::rawDeposit(DepositModelHandler &handler)
     return *handler.findByName(mDeposit);
 }
 
+CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler)
+{
+    return *handler.findByName(mCategory);
+}
+
 const std::string &OperationModel::category() const
 {
     return mCategory;

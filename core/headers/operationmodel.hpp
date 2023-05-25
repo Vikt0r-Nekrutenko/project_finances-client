@@ -32,7 +32,7 @@ public:
 
     QDateTime rawDate() const;
     DepositModel &rawDeposit(DepositModelHandler &handler);
-    CategoryModel *rawCategory(CategoryModelHandler &handler) const;
+    CategoryModel &rawCategory(CategoryModelHandler &handler);
 
 private:
 
