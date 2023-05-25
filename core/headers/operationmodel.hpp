@@ -31,7 +31,7 @@ public:
     int amount() const;
 
     QDateTime rawDate() const;
-    DepositModel *rawDeposit(DepositModelHandler &handler) const;
+    DepositModel &rawDeposit(DepositModelHandler &handler);
     CategoryModel *rawCategory(CategoryModelHandler &handler) const;
 
 private:
