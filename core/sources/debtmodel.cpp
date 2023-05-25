@@ -60,7 +60,8 @@ void DebtModel::load(std::ifstream &file)
 
 void DebtModel::save(std::ofstream &file)
 {
-
+    file << mId << " " << mName << " " << mAmount;
+    LocalModel::save(file);
 }
 
 const std::string &DebtModel::name() const
