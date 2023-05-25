@@ -2,6 +2,7 @@
 #define DEPOSITMODEL_HPP
 
 #include "crudmodel.hpp"
+#include "localmodel.hpp"
 
 class CORE_EXPORT DepositModel : public CRUDModel, public LocalModel
 {
