@@ -5,7 +5,28 @@
 
 DebtModelHandler::DebtModelHandler()
 {
-    get("debts/");
+    RemoteStatus status = get("debts/");
+    std::ifstream file("debts.txt");
+    if(file.is_open()) {
+        while(true) {
+            DebtModel tmp(0, "", 0);
+            tmp.load(file);
+
+            if(file.eof()){
+                break;
+            } else if(status == RemoteStatus::Failure) {
+                mDebts.push_back(tmp);
+            } else if(status == RemoteStatus::Success) {
+                if(tmp.mIsCreated)
+                    addNewDebt(tmp.mName, tmp.mAmount);
+                if(tmp.mIsChanched)
+                    updateDebt(tmp.mId, tmp.mName, tmp.mAmount);
+                if(tmp.mIsDeleted)
+                    deleteDebt(tmp.mId);
+            }
+        }
+        file.close();
+    }
 }
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
