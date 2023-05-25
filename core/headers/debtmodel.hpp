@@ -4,7 +4,7 @@
 #include "crudmodel.hpp"
 #include "localmodel.hpp"
 
-class DebtModel : public CRUDModel, public LocalModel
+class CORE_EXPORT DebtModel : public CRUDModel, public LocalModel
 {
     friend class DebtModelHandler;
 public:

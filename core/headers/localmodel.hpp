@@ -2,8 +2,9 @@
 #define LOCALMODEL_HPP
 
 #include <fstream>
+#include "core_global.h"
 
-class LocalModel
+class CORE_EXPORT LocalModel
 {
 public:
 

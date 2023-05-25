@@ -4,7 +4,7 @@
 #include "modelhandler.hpp"
 #include "debtmodel.hpp"
 
-class DebtModelHandler : public DataModelHandler
+class CORE_EXPORT DebtModelHandler : public DataModelHandler
 {
 public:
     DebtModelHandler();
