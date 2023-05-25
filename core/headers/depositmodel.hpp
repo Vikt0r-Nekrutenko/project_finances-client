@@ -17,11 +17,7 @@ public:
     void parseJsonObject(const QJsonObject &object) override;
 
     void load(std::ifstream &file) override;
-    void save(std::ofstream &file) override
-    {
-        file << mName << " " << mBalance;
-        LocalModel::save(file);
-    }
+    void save(std::ofstream &file) override;
 
     const std::string &name() const;
     int balance() const;

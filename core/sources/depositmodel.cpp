@@ -59,6 +59,12 @@ void DepositModel::load(std::ifstream &file)
     LocalModel::load(file);
 }
 
+void DepositModel::save(std::ofstream &file)
+{
+    file << mName << " " << mBalance;
+    LocalModel::save(file);
+}
+
 const std::string &DepositModel::name() const
 {
     return mName;
