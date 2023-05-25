@@ -24,6 +24,8 @@ SOURCES += \
     sources/debtmodelhandler.cpp \
     sources/depositmodel.cpp \
     sources/depositmodelhandler.cpp \
+    sources/categorymodel.cpp \
+    sources/categorymodelhandler.cpp \
     sources/modelhandler.cpp \
 #    sources/operationmodel.cpp \
 #    sources/operationmodelhandler.cpp
@@ -35,6 +37,8 @@ HEADERS += \
     headers/debtmodelhandler.hpp \
     headers/depositmodel.hpp \
     headers/depositmodelhandler.hpp \
+    headers/categorymodel.hpp \
+    headers/categorymodelhandler.hpp \
     headers/localmodel.hpp \
     headers/modelhandler.hpp \
     headers/crudmodel.hpp \
