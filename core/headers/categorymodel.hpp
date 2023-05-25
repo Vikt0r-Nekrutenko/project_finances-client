@@ -2,8 +2,9 @@
 #define CATEGORYMODEL_HPP
 
 #include "crudmodel.hpp"
+#include "localmodel.hpp"
 
-class CategoryModel : public CRUDModel
+class CORE_EXPORT CategoryModel : public CRUDModel, public LocalModel
 {
     friend class CategoryModelHandler;
 
@@ -16,6 +17,9 @@ public:
     void update() override;
     void remove() override;
     void parseJsonObject(const QJsonObject &object) override;
+
+    void load(std::ifstream &file) override;
+    void save(std::ofstream &file) override;
 
     const std::string &name() const;
     const std::string &type() const;
