@@ -25,6 +25,8 @@ SOURCES += \
     sources/depositmodel.cpp \
     sources/depositmodelhandler.cpp \
     sources/modelhandler.cpp \
+    sources/operationmodel.cpp \
+    sources/operationmodelhandler.cpp
 
 HEADERS += \
     headers/core_global.h \
@@ -36,6 +38,8 @@ HEADERS += \
     headers/localmodel.hpp \
     headers/modelhandler.hpp \
     headers/crudmodel.hpp \
+    headers/operationmodel.hpp \
+    headers/operationmodelhandler.hpp
 
 # Default rules for deployment.
 unix {
