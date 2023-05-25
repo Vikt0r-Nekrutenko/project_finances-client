@@ -25,8 +25,6 @@ public:
     OperationHandlerQuery &filterByMonth(const int month);
     OperationHandlerQuery &filterByDay(const int day);
 
-    OperationHandlerQuery &join(const CategoryHandlerQuery &query);
-
     int sum() const;
 
 protected:

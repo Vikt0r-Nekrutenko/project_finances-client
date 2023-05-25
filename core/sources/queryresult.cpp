@@ -67,14 +67,6 @@ OperationHandlerQuery &OperationHandlerQuery::filterByDay(const int day)
     return *this;
 }
 
-OperationHandlerQuery &OperationHandlerQuery::join(const CategoryHandlerQuery &query)
-{
-    for(CategoryHandlerQuery::const_iterator cit = query.begin(); cit != query.end(); ++cit)
-        for(OperationHandlerQuery::iterator oit = begin(); oit != end(); )
-            oit = ((*oit)->category() != (*cit)->name()) ? erase(oit) : ++oit;
-    return *this;
-}
-
 int OperationHandlerQuery::sum() const
 {
     int result = 0;
