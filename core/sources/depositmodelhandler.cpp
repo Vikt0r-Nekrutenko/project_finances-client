@@ -55,7 +55,8 @@ void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
 void DepositModelHandler::deleteDeposit(int depositIndex)
 {
     mDeposits[depositIndex].remove();
-    mDeposits.erase(mDeposits.begin() + depositIndex);
+    if(mDeposits[depositIndex].mIsDeleted == false)
+        mDeposits.erase(mDeposits.begin() + depositIndex);
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
