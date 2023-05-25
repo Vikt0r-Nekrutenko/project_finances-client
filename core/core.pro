@@ -18,6 +18,7 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/localmodel.cpp \
     sources/datamodel.cpp \
     sources/debtmodel.cpp \
     sources/debtmodelhandler.cpp \

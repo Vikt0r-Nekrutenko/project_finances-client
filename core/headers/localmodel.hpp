@@ -20,7 +20,7 @@ public:
         file >> mIsCreated >> mIsChanched >> mIsDeleted;
     }
 
-    //protected:
+protected:
 
     bool mIsCreated = false;
     bool mIsChanched = false;
