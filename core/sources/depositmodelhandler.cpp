@@ -6,6 +6,8 @@ DepositModelHandler::DepositModelHandler()
 {
     RemoteStatus status = get("deposits/");
     std::ifstream file("deposits.txt");
+    unsigned index = 0;
+
     if(file.is_open()) {
         while(true) {
             DepositModel tmp("", 0);
@@ -18,12 +20,15 @@ DepositModelHandler::DepositModelHandler()
             } else if(status == RemoteStatus::Success) {
                 if(tmp.mIsCreated)
                     tmp.create();
-                if(tmp.mIsChanched)
+                if(tmp.mIsChanched) {
                     tmp.update();
+                    mDeposits.at(index).read();
+                }
 //                if(tmp.mIsDeleted)
 //                    tmp.remove();
 //                mDeposits.push_back(tmp);
             }
+            ++index;
         }
         file.close();
     }
