@@ -4,6 +4,8 @@
 #include <fstream>
 #include "core_global.h"
 
+const std::string LocalPath = "local/";
+
 class CORE_EXPORT LocalModel
 {
 public:
