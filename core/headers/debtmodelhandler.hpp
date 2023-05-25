@@ -8,6 +8,7 @@ class DebtModelHandler : public DataModelHandler
 {
 public:
     DebtModelHandler();
+    ~DebtModelHandler() override;
 
     void addNewDebt(const std::string &name, int amount);
     void updateDebt(int index, const std::string &name, int amount);

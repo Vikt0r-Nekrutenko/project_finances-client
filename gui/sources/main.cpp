@@ -1,20 +1,21 @@
 #include <QCoreApplication>
 #include <iostream>
-#include "headers/depositmodelhandler.hpp"
+#include "headers/debtmodelhandler.hpp"
 
-void show(DepositModelHandler &depo) {
-    for(const auto &depo : depo.deposits())
-        std::cout << depo.name() << "\t"
-                  << depo.balance() << " "
-                  << depo.mIsCreated << " "
-                  << depo.mIsChanched << " "
-                  << depo.mIsDeleted << std::endl;
+void show(DebtModelHandler &depo) {
+    for(const auto &depo : depo.debts())
+        std::cout << depo.id() << " "
+                  << depo.name() << "\t"
+                  << depo.amount() << " "
+                  << depo.isCreated() << " "
+                  << depo.isChanched() << " "
+                  << depo.isDeleted() << std::endl;
 }
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    DepositModelHandler depo;
+    DebtModelHandler depo;
 
     for(const auto &str : log()) {
         std::cout << str << std::endl;
@@ -22,7 +23,8 @@ int main(int argc, char *argv[])
 
     show(depo);
 
-//    depo.addNewDeposit("Test", 100);
+//    depo.deleteDeposit(5);
+
 //    show(depo);
 
     return 0;//a.exec();
