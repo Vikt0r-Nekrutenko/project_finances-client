@@ -19,14 +19,11 @@ DepositModelHandler::DepositModelHandler()
                 mDeposits.push_back(tmp);
             } else if(status == RemoteStatus::Success) {
                 if(tmp.mIsCreated)
-                    tmp.create();
-                if(tmp.mIsChanched) {
-                    tmp.update();
-                    mDeposits.at(index).read();
-                }
-//                if(tmp.mIsDeleted)
-//                    tmp.remove();
-//                mDeposits.push_back(tmp);
+                    addNewDeposit(tmp.name(), tmp.balance());
+                if(tmp.mIsChanched)
+                    updateBalance(index, tmp.balance());
+                if(tmp.mIsDeleted)
+                    deleteDeposit(index);
             }
             ++index;
         }
