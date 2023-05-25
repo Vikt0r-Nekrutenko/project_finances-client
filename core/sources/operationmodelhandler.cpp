@@ -8,6 +8,15 @@ OperationModelHandler::OperationModelHandler()
     get("operations/");
 }
 
+OperationModelHandler::~OperationModelHandler()
+{
+    std::ofstream file("operations.txt");
+    for(auto &model : mOperations) {
+        model.save(file);
+    }
+    file.close();
+}
+
 void OperationModelHandler::addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
     mOperations.push_back(OperationModel(
