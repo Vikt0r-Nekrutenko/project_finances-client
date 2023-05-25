@@ -65,6 +65,12 @@ void OperationModel::save(std::ofstream &file)
     LocalModel::save(file);
 }
 
+void OperationModel::load(std::ifstream &file)
+{
+    file >> mId >> mDate >> mDeposit >> mAmount >> mCategory;
+    LocalModel::load(file);
+}
+
 int OperationModel::id() const
 {
     return mId;
