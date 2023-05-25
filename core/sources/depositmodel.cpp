@@ -36,8 +36,8 @@ void DepositModel::update()
     };
 
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', selectedDeposit, "PUT");
-    replyHandler(reply, "Balance updated successfully!");
-
+    RemoteStatus status = replyHandler(reply, "Balance updated successfully!");
+    mIsChanched = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::remove()
