@@ -6,7 +6,7 @@
 OperationModelHandler::OperationModelHandler()
 {
     RemoteStatus status = get("operations/");
-    std::ifstream file("operations.txt");
+    std::ifstream file(LocalPath + "operations.txt");
     unsigned index = 0;
 
     if(file.is_open()) {
@@ -34,7 +34,7 @@ OperationModelHandler::OperationModelHandler()
 
 OperationModelHandler::~OperationModelHandler()
 {
-    std::ofstream file("operations.txt");
+    std::ofstream file(LocalPath + "operations.txt");
     for(auto &model : mOperations) {
         model.save(file);
     }
