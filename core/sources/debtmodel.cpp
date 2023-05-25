@@ -52,6 +52,17 @@ void DebtModel::parseJsonObject(const QJsonObject &object)
     mAmount = object["amount"].toInt();
 }
 
+void DebtModel::load(std::ifstream &file)
+{
+    file >> mId >> mName >> mAmount;
+    LocalModel::load(file);
+}
+
+void DebtModel::save(std::ofstream &file)
+{
+
+}
+
 const std::string &DebtModel::name() const
 {
     return mName;
