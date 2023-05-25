@@ -4,6 +4,9 @@
 #include "crudmodel.hpp"
 #include "localmodel.hpp"
 
+class DepositModel;
+class CategoryModel;
+
 class CORE_EXPORT OperationModel : public CRUDModel, public LocalModel
 {
     friend class OperationModelHandler;
@@ -24,6 +27,10 @@ public:
     const std::string &category() const;
     int id() const;
     int amount() const;
+
+    QDateTime rawDate() const;
+    DepositModel *rawDeposit() const;
+    CategoryModel *rawCategory() const;
 
 private:
 
