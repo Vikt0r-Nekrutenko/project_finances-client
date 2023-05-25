@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include "core_global.h"
 
 class CategoryModel;
 class OperationModel;
@@ -22,12 +23,13 @@ protected:
     CategoryModelHandler *mHandler;
 };
 
-class OperationHandlerQuery : public std::list<OperationModel *>
+class CORE_EXPORT OperationHandlerQuery : public std::list<OperationModel *>
 {
 public:
     OperationHandlerQuery(OperationModelHandler *model);
     OperationHandlerQuery &select();
     OperationHandlerQuery &filterByDeposit(const std::string &deposit);
+    OperationHandlerQuery &filterByCategoryType(CategoryModelHandler &handler, const std::string &type);
     OperationHandlerQuery &filterByCurrentMonth();
     OperationHandlerQuery &filterByCurrentYear();
     OperationHandlerQuery &filterByCurrentDay();

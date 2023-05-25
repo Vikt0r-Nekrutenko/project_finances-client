@@ -39,6 +39,13 @@ OperationHandlerQuery &OperationHandlerQuery::filterByDeposit(const std::string 
     return *this;
 }
 
+OperationHandlerQuery &OperationHandlerQuery::filterByCategoryType(CategoryModelHandler &handler, const std::string &type)
+{
+    for(OperationHandlerQuery::iterator it = begin(); it != end(); )
+        it = ((*it)->rawCategory(handler).type() != type) ? erase(it) : ++it;
+    return *this;
+}
+
 OperationHandlerQuery &OperationHandlerQuery::filterByCurrentYear()
 {
     const QDate &currentDate = QDate().currentDate();
