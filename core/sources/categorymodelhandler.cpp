@@ -5,7 +5,7 @@
 CategoryModelHandler::CategoryModelHandler()
 {
     RemoteStatus status = get("categories/");
-    std::ifstream file("categories.txt");
+    std::ifstream file(LocalPath + "categories.txt");
     unsigned index = 0;
 
     if(file.is_open()) {
@@ -31,7 +31,7 @@ CategoryModelHandler::CategoryModelHandler()
 
 CategoryModelHandler::~CategoryModelHandler()
 {
-    std::ofstream file("categories.txt");
+    std::ofstream file(LocalPath + "categories.txt");
     for(auto &model : mCategories) {
         model.save(file);
     }
