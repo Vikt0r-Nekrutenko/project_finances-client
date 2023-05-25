@@ -6,7 +6,7 @@
 DebtModelHandler::DebtModelHandler()
 {
     RemoteStatus status = get("debts/");
-    std::ifstream file("debts.txt");
+    std::ifstream file(LocalPath + "debts.txt");
     unsigned index = 0;
 
     if(file.is_open()) {
