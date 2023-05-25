@@ -37,7 +37,8 @@ void DebtModel::update()
     };
 
     QNetworkReply *reply = sendCRUDRequest("debts/" + std::to_string(mId) + '/', selectedDebt, "PUT");
-    replyHandler(reply, "Debt updated successfully!");
+    RemoteStatus status = replyHandler(reply, "Debt updated successfully!");
+    mIsChanched = status == RemoteStatus::Failure ? true : false;
 }
 
 void DebtModel::remove()
