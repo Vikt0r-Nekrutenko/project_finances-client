@@ -13,3 +13,18 @@ void LocalModel::load(std::ifstream &file)
 {
     file >> mIsCreated >> mIsChanched >> mIsDeleted;
 }
+
+bool LocalModel::isCreated() const
+{
+    return mIsCreated;
+}
+
+bool LocalModel::isChanched() const
+{
+    return mIsChanched;
+}
+
+bool LocalModel::isDeleted() const
+{
+    return mIsDeleted;
+}

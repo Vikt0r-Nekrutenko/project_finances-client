@@ -11,6 +11,12 @@ public:
 
     virtual void load(std::ifstream &file);
 
+    bool isCreated() const;
+
+    bool isChanched() const;
+
+    bool isDeleted() const;
+
 protected:
 
     bool mIsCreated = false;
