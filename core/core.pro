@@ -19,6 +19,8 @@ DEPENDPATH += \
 
 SOURCES += \
     sources/datamodel.cpp \
+    sources/debtmodel.cpp \
+    sources/debtmodelhandler.cpp \
     sources/depositmodel.cpp \
     sources/depositmodelhandler.cpp \
     sources/modelhandler.cpp \
@@ -26,6 +28,8 @@ SOURCES += \
 HEADERS += \
     headers/core_global.h \
     headers/datamodel.hpp \
+    headers/debtmodel.hpp \
+    headers/debtmodelhandler.hpp \
     headers/depositmodel.hpp \
     headers/depositmodelhandler.hpp \
     headers/modelhandler.hpp \
