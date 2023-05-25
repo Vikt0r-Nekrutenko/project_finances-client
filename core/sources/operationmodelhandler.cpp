@@ -5,7 +5,31 @@
 
 OperationModelHandler::OperationModelHandler()
 {
-    get("operations/");
+    RemoteStatus status = get("operations/");
+    std::ifstream file("operations.txt");
+    unsigned index = 0;
+
+    if(file.is_open()) {
+        while(true) {
+            OperationModel tmp(0, "", "", 0, "");
+            tmp.load(file);
+
+            if(file.eof()){
+                break;
+            } else if(status == RemoteStatus::Failure) {
+                mOperations.push_back(tmp);
+            } else if(status == RemoteStatus::Success) {
+                if(tmp.mIsCreated)
+                    addNewOperation(tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
+                if(tmp.mIsChanched)
+                    updateOperation(index, tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
+                if(tmp.mIsDeleted)
+                    deleteOperation(index);
+            }
+            ++index;
+        }
+        file.close();
+    }
 }
 
 OperationModelHandler::~OperationModelHandler()
