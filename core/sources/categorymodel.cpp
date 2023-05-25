@@ -14,7 +14,8 @@ void CategoryModel::create()
     };
 
     QNetworkReply *reply = sendCRUDRequest("categories/", newCategory, "POST");
-    replyHandler(reply, "Category added successfully!");
+    RemoteStatus status = replyHandler(reply, "Category added successfully!");
+    mIsCreated = status == RemoteStatus::Failure ? true : false;
 }
 
 void CategoryModel::read()
