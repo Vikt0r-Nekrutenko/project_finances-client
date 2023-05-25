@@ -48,7 +48,8 @@ void DebtModelHandler::updateDebt(int index, const std::string &name, int amount
 void DebtModelHandler::deleteDebt(int index)
 {
     mDebts[index].remove();
-    mDebts.erase(mDebts.begin() + index);
+    if(mDebts[index].mIsDeleted == false)
+        mDebts.erase(mDebts.begin() + index);
 }
 
 void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
