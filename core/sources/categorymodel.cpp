@@ -43,7 +43,8 @@ void CategoryModel::update()
 void CategoryModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', {}, "DELETE");
-    replyHandler(reply, "Category deleted successfully!");
+    RemoteStatus status = replyHandler(reply, "Category deleted successfully!");
+    mIsDeleted = status == RemoteStatus::Failure ? true : false;
 }
 
 void CategoryModel::parseJsonObject(const QJsonObject &object)
