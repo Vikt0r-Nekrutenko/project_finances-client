@@ -94,6 +94,11 @@ int OperationModel::amount() const
     return mAmount;
 }
 
+QDateTime OperationModel::rawDate() const
+{
+    return QDateTime().fromString(mDate.c_str(), "yyyy-MM-dd");
+}
+
 const std::string &OperationModel::category() const
 {
     return mCategory;
