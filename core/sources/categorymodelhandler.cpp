@@ -4,7 +4,29 @@
 
 CategoryModelHandler::CategoryModelHandler()
 {
-    get("categories/");
+    RemoteStatus status = get("categories/");
+    std::ifstream file("categories.txt");
+    unsigned index = 0;
+
+    if(file.is_open()) {
+        while(true) {
+            CategoryModel tmp("", "");
+            tmp.load(file);
+
+            if(file.eof()){
+                break;
+            } else if(status == RemoteStatus::Failure) {
+                mCategories.push_back(tmp);
+            } else if(status == RemoteStatus::Success) {
+                if(tmp.mIsCreated)
+                    addNewCategory(tmp.mName, tmp.mType);
+                if(tmp.mIsDeleted)
+                    deleteCategory(index);
+            }
+            ++index;
+        }
+        file.close();
+    }
 }
 
 CategoryModelHandler::~CategoryModelHandler()
