@@ -16,11 +16,7 @@ public:
     void remove() override;
     void parseJsonObject(const QJsonObject &object) override;
 
-    void load(std::ifstream &file) override
-    {
-        file >> mName >> mBalance;
-        LocalModel::load(file);
-    }
+    void load(std::ifstream &file) override;
     void save(std::ofstream &file) override
     {
         file << mName << " " << mBalance;

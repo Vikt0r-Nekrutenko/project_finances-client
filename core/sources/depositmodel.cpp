@@ -53,6 +53,12 @@ void DepositModel::parseJsonObject(const QJsonObject &object)
     mBalance = object["balance"].toInt();
 }
 
+void DepositModel::load(std::ifstream &file)
+{
+    file >> mName >> mBalance;
+    LocalModel::load(file);
+}
+
 const std::string &DepositModel::name() const
 {
     return mName;
