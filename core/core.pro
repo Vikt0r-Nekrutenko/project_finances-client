@@ -28,7 +28,8 @@ SOURCES += \
     sources/categorymodelhandler.cpp \
     sources/modelhandler.cpp \
     sources/operationmodel.cpp \
-    sources/operationmodelhandler.cpp
+    sources/operationmodelhandler.cpp \
+    sources/queryresult.cpp
 
 HEADERS += \
     headers/core_global.h \
@@ -43,7 +44,8 @@ HEADERS += \
     headers/modelhandler.hpp \
     headers/crudmodel.hpp \
     headers/operationmodel.hpp \
-    headers/operationmodelhandler.hpp
+    headers/operationmodelhandler.hpp \
+    headers/queryresult.hpp
 
 # Default rules for deployment.
 unix {

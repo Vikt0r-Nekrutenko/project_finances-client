@@ -1,31 +1,18 @@
 #include <QCoreApplication>
 #include <iostream>
-#include "headers/debtmodelhandler.hpp"
-
-void show(DebtModelHandler &depo) {
-    for(const auto &depo : depo.debts())
-        std::cout << depo.id() << " "
-                  << depo.name() << "\t"
-                  << depo.amount() << " "
-                  << depo.isCreated() << " "
-                  << depo.isChanched() << " "
-                  << depo.isDeleted() << std::endl;
-}
+#include "headers/depositmodelhandler.hpp"
+#include "headers/categorymodelhandler.hpp"
+#include "headers/operationmodelhandler.hpp"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    DebtModelHandler depo;
+    DepositModelHandler depo;
+    CategoryModelHandler cats;
+    OperationModelHandler oper;
 
-    for(const auto &str : log()) {
-        std::cout << str << std::endl;
-    }
-
-    show(depo);
-
-//    depo.deleteDeposit(5);
-
-//    show(depo);
+    auto &op = oper.operations().back();
+    std::cout << op.rawCategory(cats).name() << std::endl;
 
     return 0;//a.exec();
 }
