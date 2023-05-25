@@ -4,13 +4,14 @@
 #include "modelhandler.hpp"
 #include "operationmodel.hpp"
 
-class OperationModelHandler : public DataModelHandler
+class CORE_EXPORT OperationModelHandler : public DataModelHandler
 {
     friend class OperationHandlerQuery;
 
 public:
 
     OperationModelHandler();
+    ~OperationModelHandler() override;
 
     void addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category);
     void updateOperation(int index, const std::string &date, const std::string &deposit, int amount, const std::string &category);
