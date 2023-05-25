@@ -10,19 +10,6 @@ class OperationModel;
 class OperationModelHandler;
 class CategoryModelHandler;
 
-class CategoryHandlerQuery : public std::list<CategoryModel *>
-{
-public:
-
-    CategoryHandlerQuery(CategoryModelHandler *handler);
-    CategoryHandlerQuery &select();
-    CategoryHandlerQuery &filterByType(const std::string &type);
-
-protected:
-
-    CategoryModelHandler *mHandler;
-};
-
 class CORE_EXPORT OperationHandlerQuery : public std::list<OperationModel *>
 {
 public:
