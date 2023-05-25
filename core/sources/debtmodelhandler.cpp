@@ -7,6 +7,8 @@ DebtModelHandler::DebtModelHandler()
 {
     RemoteStatus status = get("debts/");
     std::ifstream file("debts.txt");
+    unsigned index = 0;
+
     if(file.is_open()) {
         while(true) {
             DebtModel tmp(0, "", 0);
@@ -20,10 +22,11 @@ DebtModelHandler::DebtModelHandler()
                 if(tmp.mIsCreated)
                     addNewDebt(tmp.mName, tmp.mAmount);
                 if(tmp.mIsChanched)
-                    updateDebt(tmp.mId, tmp.mName, tmp.mAmount);
+                    updateDebt(index, tmp.mName, tmp.mAmount);
                 if(tmp.mIsDeleted)
-                    deleteDebt(tmp.mId);
+                    deleteDebt(index);
             }
+            ++index;
         }
         file.close();
     }
