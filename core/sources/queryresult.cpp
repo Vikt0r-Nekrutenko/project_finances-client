@@ -2,24 +2,6 @@
 #include "categorymodelhandler.hpp"
 #include "queryresult.hpp"
 
-CategoryHandlerQuery::CategoryHandlerQuery(CategoryModelHandler *handler)
-    : mHandler{handler} {}
-
-CategoryHandlerQuery &CategoryHandlerQuery::select()
-{
-    clear();
-    for(size_t i = 0; i < mHandler->mCategories.size(); ++i)
-        push_back(&mHandler->mCategories.at(i));
-    return *this;
-}
-
-CategoryHandlerQuery &CategoryHandlerQuery::filterByType(const std::string &type)
-{
-    for(CategoryHandlerQuery::iterator it = begin(); it != end(); )
-        it = ((*it)->type() != type) ? erase(it) : ++it;
-    return *this;
-}
-
 OperationHandlerQuery::OperationHandlerQuery(OperationModelHandler *model)
     : mModel{model} {}
 
