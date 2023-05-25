@@ -17,7 +17,8 @@ void OperationModel::create()
     };
 
     QNetworkReply *reply = sendCRUDRequest("operations/", newOperation, "POST");
-    replyHandler(reply, "Operation added successfully!");
+    RemoteStatus status = replyHandler(reply, "Operation added successfully!");
+    mIsCreated = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::read()
@@ -41,13 +42,15 @@ void OperationModel::update()
     };
 
     QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', selectedOperation, "PUT");
-    replyHandler(reply, "Operation updated successfully!");
+    RemoteStatus status = replyHandler(reply, "Operation updated successfully!");
+    mIsChanched = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', {}, "DELETE");
-    replyHandler(reply, "Operation delete successfully!");
+    RemoteStatus status = replyHandler(reply, "Operation delete successfully!");
+    mIsDeleted = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::parseJsonObject(const QJsonObject &object)
@@ -57,6 +60,18 @@ void OperationModel::parseJsonObject(const QJsonObject &object)
     mDeposit = object["deposit"].toString().toStdString();
     mAmount = object["amount"].toInt();
     mCategory = object["category"].toString().toStdString();
+}
+
+void OperationModel::save(std::ofstream &file)
+{
+    file << mId << " " << mDate << " " << mDeposit << " " << mAmount << " " << mCategory;
+    LocalModel::save(file);
+}
+
+void OperationModel::load(std::ifstream &file)
+{
+    file >> mId >> mDate >> mDeposit >> mAmount >> mCategory;
+    LocalModel::load(file);
 }
 
 int OperationModel::id() const
