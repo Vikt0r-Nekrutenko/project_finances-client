@@ -56,6 +56,12 @@ void CategoryModel::load(std::ifstream &file)
     LocalModel::load(file);
 }
 
+void CategoryModel::save(std::ofstream &file)
+{
+    file << mName << " " << mType;
+    LocalModel::save(file);
+}
+
 const std::string &CategoryModel::name() const
 {
     return mName;
