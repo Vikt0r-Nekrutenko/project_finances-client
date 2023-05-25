@@ -43,7 +43,8 @@ void DepositModel::update()
 void DepositModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "DELETE");
-    replyHandler(reply, "Deposit deleted successfully!");
+    RemoteStatus status = replyHandler(reply, "Deposit deleted successfully!");
+    mIsDeleted = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::parseJsonObject(const QJsonObject &object)
