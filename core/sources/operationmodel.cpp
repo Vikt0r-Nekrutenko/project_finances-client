@@ -59,6 +59,12 @@ void OperationModel::parseJsonObject(const QJsonObject &object)
     mCategory = object["category"].toString().toStdString();
 }
 
+void OperationModel::save(std::ofstream &file)
+{
+    file << mId << " " << mDate << " " << mDeposit << " " << mAmount << " " << mCategory;
+    LocalModel::save(file);
+}
+
 int OperationModel::id() const
 {
     return mId;
