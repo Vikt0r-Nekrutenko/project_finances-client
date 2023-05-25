@@ -5,7 +5,7 @@
 DepositModelHandler::DepositModelHandler()
 {
     RemoteStatus status = get("deposits/");
-    std::ifstream file("deposits.txt");
+    std::ifstream file(LocalPath + "deposits.txt");
     unsigned index = 0;
 
     if(file.is_open()) {
@@ -33,7 +33,7 @@ DepositModelHandler::DepositModelHandler()
 
 DepositModelHandler::~DepositModelHandler()
 {
-    std::ofstream file("deposits.txt");
+    std::ofstream file(LocalPath + "deposits.txt");
     for(auto &model : mDeposits) {
         model.save(file);
     }
