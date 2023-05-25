@@ -2,8 +2,9 @@
 #define DEBTMODEL_HPP
 
 #include "crudmodel.hpp"
+#include "localmodel.hpp"
 
-class DebtModel : public CRUDModel
+class DebtModel : public CRUDModel, public LocalModel
 {
     friend class DebtModelHandler;
 public:
@@ -14,6 +15,9 @@ public:
     void update() override;
     void remove() override;
     void parseJsonObject(const QJsonObject &) override;
+
+    void load(std::ifstream &file) override;
+    void save(std::ofstream &file) override;
 
     const std::string &name() const;
     int amount() const;
