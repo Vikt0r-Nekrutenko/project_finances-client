@@ -14,7 +14,8 @@ void DepositModel::create()
     };
 
     QNetworkReply *reply = sendCRUDRequest("deposits/", newDepo, "POST");
-    replyHandler(reply, "Deposit added successfully!");
+    RemoteStatus status = replyHandler(reply, "Deposit added successfully!");
+    mIsCreated = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::read()
@@ -35,20 +36,33 @@ void DepositModel::update()
     };
 
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', selectedDeposit, "PUT");
-    replyHandler(reply, "Balance updated successfully!");
-
+    RemoteStatus status = replyHandler(reply, "Balance updated successfully!");
+    mIsChanched = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "DELETE");
-    replyHandler(reply, "Deposit deleted successfully!");
+    RemoteStatus status = replyHandler(reply, "Deposit deleted successfully!");
+    mIsDeleted = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::parseJsonObject(const QJsonObject &object)
 {
     mName = object["name"].toString().toStdString();
     mBalance = object["balance"].toInt();
+}
+
+void DepositModel::load(std::ifstream &file)
+{
+    file >> mName >> mBalance;
+    LocalModel::load(file);
+}
+
+void DepositModel::save(std::ofstream &file)
+{
+    file << mName << " " << mBalance;
+    LocalModel::save(file);
 }
 
 const std::string &DepositModel::name() const

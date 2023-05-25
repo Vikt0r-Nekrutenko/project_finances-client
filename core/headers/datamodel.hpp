@@ -11,11 +11,16 @@ static std::vector<std::string> CoreLog;
 
 const std::vector<std::string> CORE_EXPORT &log();
 
+enum class RemoteStatus
+{
+    Success, Failure,
+};
+
 class CORE_EXPORT DataModel
 {
 public:
     virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request);
-    void replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
+    RemoteStatus replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
 
 private:
 

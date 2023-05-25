@@ -1,14 +1,16 @@
-#ifndef DEPOSITMODEL_HPP
-#define DEPOSITMODEL_HPP
+#ifndef CATEGORYMODEL_HPP
+#define CATEGORYMODEL_HPP
 
 #include "crudmodel.hpp"
 #include "localmodel.hpp"
 
-class CORE_EXPORT DepositModel : public CRUDModel, public LocalModel
+class CORE_EXPORT CategoryModel : public CRUDModel, public LocalModel
 {
-    friend class DepositModelHandler;
+    friend class CategoryModelHandler;
+
 public:
-    DepositModel(const std::string &name, int balance);
+
+    CategoryModel(const std::string &name, const std::string &type);
 
     void create() override;
     void read() override;
@@ -20,15 +22,12 @@ public:
     void save(std::ofstream &file) override;
 
     const std::string &name() const;
-    int balance() const;
-
-    void increaseBalance(int amount);
-    void decreaseBalance(int amount);
+    const std::string &type() const;
 
 private:
 
     std::string mName;
-    int mBalance;
+    std::string mType;
 };
 
-#endif // DEPOSITMODEL_HPP
+#endif // CATEGORYMODEL_HPP

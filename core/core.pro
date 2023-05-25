@@ -18,14 +18,32 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/localmodel.cpp \
     sources/datamodel.cpp \
+    sources/debtmodel.cpp \
+    sources/debtmodelhandler.cpp \
     sources/depositmodel.cpp \
+    sources/depositmodelhandler.cpp \
+    sources/categorymodel.cpp \
+    sources/categorymodelhandler.cpp \
+    sources/modelhandler.cpp \
+    sources/operationmodel.cpp \
+    sources/operationmodelhandler.cpp
 
 HEADERS += \
     headers/core_global.h \
     headers/datamodel.hpp \
+    headers/debtmodel.hpp \
+    headers/debtmodelhandler.hpp \
     headers/depositmodel.hpp \
+    headers/depositmodelhandler.hpp \
+    headers/categorymodel.hpp \
+    headers/categorymodelhandler.hpp \
+    headers/localmodel.hpp \
+    headers/modelhandler.hpp \
     headers/crudmodel.hpp \
+    headers/operationmodel.hpp \
+    headers/operationmodelhandler.hpp
 
 # Default rules for deployment.
 unix {
