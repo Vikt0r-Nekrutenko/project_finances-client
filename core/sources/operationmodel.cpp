@@ -49,7 +49,8 @@ void OperationModel::update()
 void OperationModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', {}, "DELETE");
-    replyHandler(reply, "Operation delete successfully!");
+    RemoteStatus status = replyHandler(reply, "Operation delete successfully!");
+    mIsDeleted = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::parseJsonObject(const QJsonObject &object)
