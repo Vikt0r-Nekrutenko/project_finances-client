@@ -47,7 +47,8 @@ void CategoryModelHandler::addNewCategory(const std::string &name, const std::st
 void CategoryModelHandler::deleteCategory(int index)
 {
     mCategories[index].remove();
-    mCategories.erase(mCategories.begin() + index);
+    if(mCategories[index].mIsDeleted == false)
+        mCategories.erase(mCategories.begin() + index);
 }
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
