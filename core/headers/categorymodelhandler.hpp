@@ -4,7 +4,7 @@
 #include "categorymodel.hpp"
 #include "modelhandler.hpp"
 
-class CategoryModelHandler : public DataModelHandler
+class CORE_EXPORT CategoryModelHandler : public DataModelHandler
 {
     friend class CategoryHandlerQuery;
 
