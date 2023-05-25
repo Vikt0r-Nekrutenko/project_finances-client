@@ -50,6 +50,12 @@ void CategoryModel::parseJsonObject(const QJsonObject &object)
     mType = object["type"].toString().toStdString();
 }
 
+void CategoryModel::load(std::ifstream &file)
+{
+    file >> mName >> mType;
+    LocalModel::load(file);
+}
+
 const std::string &CategoryModel::name() const
 {
     return mName;
