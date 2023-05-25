@@ -6,6 +6,8 @@
 
 class DepositModel;
 class CategoryModel;
+class DepositModelHandler;
+class CategoryModelHandler;
 
 class CORE_EXPORT OperationModel : public CRUDModel, public LocalModel
 {
@@ -29,8 +31,8 @@ public:
     int amount() const;
 
     QDateTime rawDate() const;
-    DepositModel *rawDeposit() const;
-    CategoryModel *rawCategory() const;
+    DepositModel *rawDeposit(DepositModelHandler &handler) const;
+    CategoryModel *rawCategory(CategoryModelHandler &handler) const;
 
 private:
 
