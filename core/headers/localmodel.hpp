@@ -7,18 +7,9 @@ class LocalModel
 {
 public:
 
-    virtual void save(std::ofstream &file)
-    {
-        file << " "
-             << mIsCreated << " "
-             << mIsChanched << " "
-             << mIsDeleted << std::endl;
-    }
+    virtual void save(std::ofstream &file);
 
-    virtual void load(std::ifstream &file)
-    {
-        file >> mIsCreated >> mIsChanched >> mIsDeleted;
-    }
+    virtual void load(std::ifstream &file);
 
 protected:
 
