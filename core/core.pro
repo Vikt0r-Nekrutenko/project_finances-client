@@ -32,6 +32,7 @@ HEADERS += \
     headers/debtmodelhandler.hpp \
     headers/depositmodel.hpp \
     headers/depositmodelhandler.hpp \
+    headers/localmodel.hpp \
     headers/modelhandler.hpp \
     headers/crudmodel.hpp \
 
