@@ -22,3 +22,8 @@ void ActiveMenu::show(stf::Renderer &renderer)
     }
     IMenu::show(renderer);
 }
+
+bool ActiveMenu::isActive() const
+{
+    return true;
+}
