@@ -9,6 +9,7 @@ class IView
 {
 public:
 
+    virtual ~IView();
     void show(stf::Renderer &) const;
 
 protected:
