@@ -13,7 +13,13 @@ void IMenu::show(stf::Renderer &renderer)
 }
 
 ActiveMenu::ActiveMenu(const MenuBar *mbar)
-    : IMenu(mbar) { }
+    : IMenu(mbar)
+{
+    for(const auto &option : *mMenuBar) {
+        if(option->caption().length() > Width)
+            Width = option->caption().length() + 4;
+    }
+}
 
 void ActiveMenu::show(stf::Renderer &renderer)
 {
