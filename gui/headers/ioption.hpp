@@ -7,6 +7,7 @@ class IOption
 {
 public:
 
+    virtual ~IOption() = default;
     virtual std::string caption() const;
 };
 
