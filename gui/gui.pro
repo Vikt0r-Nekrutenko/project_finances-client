@@ -33,3 +33,6 @@ win32:CONFIG(release, debug|release): LIBS += \
 else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$OUT_PWD/../core/debug/ -lcore \
     -L$$PWD/../../stf/debug/ -lstf
+
+HEADERS += \
+    headers/iview.hpp
