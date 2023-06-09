@@ -4,9 +4,9 @@
 #include "renderer.hpp"
 #include <vector>
 
-class Option;
+class IOption;
 
-using MenuBar = std::vector<Option *>;
+using MenuBar = std::vector<IOption *>;
 
 class IMenu
 {
