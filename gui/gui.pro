@@ -36,4 +36,5 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
 
 HEADERS += \
     headers/imenu.hpp \
+    headers/ioption.hpp \
     headers/iview.hpp
