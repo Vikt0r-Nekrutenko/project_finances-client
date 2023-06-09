@@ -13,9 +13,9 @@ public:
 protected:
 
     MenuBar mMenuBar;
-//    Menu *mActiveMenuBar = new ActiveMenu{&bar};
-//    Menu *mInactiveMenuBar = new InactiveMenu{&bar};
-    IMenu *MenuBar ;//mInactiveMenuBar;
+    ActiveMenu *mActiveMenuBar = new ActiveMenu{&mMenuBar};
+    InactiveMenu *mInactiveMenuBar = new InactiveMenu{&mMenuBar};
+    IMenu *MenuBar = mInactiveMenuBar;
 };
 
 #endif // IVIEW_HPP
