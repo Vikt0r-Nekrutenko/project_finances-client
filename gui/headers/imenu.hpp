@@ -15,15 +15,15 @@ public:
     size_t Width = 3;
     size_t Selector;
 
-    IMenu(MenuBar *mbar);
-    virtual ~IMenu();
+    IMenu(const MenuBar *mbar);
+    virtual ~IMenu() = default;
 
     virtual void show(stf::Renderer &renderer);
     virtual bool isActive() const = 0;
 
 protected:
 
-    MenuBar mMenuBar;
+    const MenuBar *mMenuBar;
 };
 
 #endif // IMENU_H
