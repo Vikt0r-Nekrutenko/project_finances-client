@@ -3,7 +3,7 @@
 
 #include <string>
 
-class Option
+class IOption
 {
 public:
 

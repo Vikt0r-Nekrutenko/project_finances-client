@@ -20,6 +20,7 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/ioption.cpp \
     sources\main.cpp
 
 # Default rules for deployment.
