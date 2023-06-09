@@ -22,6 +22,7 @@ DEPENDPATH += \
 SOURCES += \
     sources/imenu.cpp \
     sources/ioption.cpp \
+    sources/iview.cpp \
     sources\main.cpp
 
 # Default rules for deployment.
