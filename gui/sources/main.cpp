@@ -6,43 +6,29 @@
 #include "headers/debtmodelhandler.hpp"
 
 #include "window.hpp"
-
-class AppModel;
-
-class Option;
-
-using MenuBar_t = std::vector<Option *>;
-
-class IView
-{
-public:
-
-    IView(AppModel* model) : mModel{model} {}
-    virtual void show(stf::Renderer &) = 0;
-    virtual IView* keyHandler(int) = 0;
-
-protected:
-
-    AppModel *mModel;
-};
-
-class ViewWithMenu : public IView
-{
-public:
-    void show(stf::Renderer &) override;
-    IView *keyHandler(int) override;
-
-protected:
-
-    MenuBar_t mMenuBar;
-};
+#include "iview.hpp"
 
 class App : public stf::Window
 {
 public:
-    bool onUpdate(const float dt) override { return true; }
-    void keyEvents(const int key) override { }
-    void mouseEvents(const stf::MouseRecord &mr) override { }
+
+    IView view;
+
+    bool onUpdate(const float dt) override
+    {
+        view.show(renderer);
+        return true;
+    }
+
+    void keyEvents(const int key) override
+    {
+
+    }
+
+    void mouseEvents(const stf::MouseRecord &mr) override
+    {
+
+    }
 };
 
 int main(int argc, char *argv[])

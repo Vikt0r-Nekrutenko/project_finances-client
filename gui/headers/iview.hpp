@@ -3,6 +3,7 @@
 
 #include "renderer.hpp"
 #include "imenu.hpp"
+#include "ioption.hpp"
 
 class IView
 {
@@ -12,7 +13,7 @@ public:
 
 protected:
 
-    MenuBar mMenuBar;
+    MenuBar mMenuBar {new IOption, new IOption, new IOption};
     ActiveMenu *mActiveMenuBar = new ActiveMenu{&mMenuBar};
     InactiveMenu *mInactiveMenuBar = new InactiveMenu{&mMenuBar};
     IMenu *MenuBar = mInactiveMenuBar;
