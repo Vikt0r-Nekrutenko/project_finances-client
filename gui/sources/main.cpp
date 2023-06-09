@@ -9,6 +9,10 @@
 
 class AppModel;
 
+class Option;
+
+using MenuBar_t = std::vector<Option *>;
+
 class IView
 {
 public:
