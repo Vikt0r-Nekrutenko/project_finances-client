@@ -26,6 +26,17 @@ protected:
     AppModel *mModel;
 };
 
+class ViewWithMenu : public IView
+{
+public:
+    void show(stf::Renderer &) override;
+    IView *keyHandler(int) override;
+
+protected:
+
+    MenuBar_t mMenuBar;
+};
+
 class App : public stf::Window
 {
 public:
