@@ -40,8 +40,8 @@ ActiveMenu::ActiveMenu(const MenuBar *mbar)
 
 void ActiveMenu::show(stf::Renderer &renderer)
 {
-    for(size_t i = 0, it = 0; i < mMenuBar->size(); ++i) {
-        renderer.draw({1, 2 + it++}, "%d.%s", it, mMenuBar->at(i)->caption().c_str());
+    for(size_t i = 0; i < mMenuBar->size(); ++i) {
+        renderer.draw({1, 2 + i}, "%d.%s", i+1, mMenuBar->at(i)->caption().c_str());
     }
     IMenu::show(renderer);
 }
@@ -56,8 +56,8 @@ InactiveMenu::InactiveMenu(const MenuBar *mbar)
 
 void InactiveMenu::show(stf::Renderer &renderer)
 {
-    for(size_t i = 0, it = 0; i < mMenuBar->size(); ++i) {
-        renderer.draw({1, 2 + it++}, "%d", it);
+    for(size_t i = 0; i < mMenuBar->size(); ++i) {
+        renderer.draw({1, 2 + i}, "%d", i+1);
     }
     IMenu::show(renderer);
 }
