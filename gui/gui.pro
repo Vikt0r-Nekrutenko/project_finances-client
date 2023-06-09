@@ -9,11 +9,13 @@ CONFIG += c++17 cmdline
 
 INCLUDEPATH += \
     $$PWD/../core \
+    $$PWD/../../stf \
     headers \
     sources \
 
 DEPENDPATH += \
     $$PWD/../core \
+    $$PWD/../../stf \
     headers \
     sources \
 
@@ -25,5 +27,9 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../core/release/ -lcore
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../core/debug/ -lcore
+win32:CONFIG(release, debug|release): LIBS += \
+    -L$$OUT_PWD/../core/release/ -lcore \
+    -L$$PWD/../../stf/release/ -lstf
+else:win32:CONFIG(debug, debug|release): LIBS += \
+    -L$$OUT_PWD/../core/debug/ -lcore \
+    -L$$PWD/../../stf/debug/ -lstf

@@ -5,9 +5,19 @@
 #include "headers/operationmodelhandler.hpp"
 #include "headers/debtmodelhandler.hpp"
 
+#include "window.hpp"
+
+class App : public stf::Window
+{
+public:
+    bool onUpdate(const float dt) override { return true; }
+    void keyEvents(const int key) override { }
+    void mouseEvents(const stf::MouseRecord &mr) override { }
+};
+
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    /*QCoreApplication a(argc, argv);
     DepositModelHandler depo;
     CategoryModelHandler cats;
     OperationModelHandler oper;
@@ -42,6 +52,6 @@ int main(int argc, char *argv[])
 
             break;
         }
-    } while(option);
-    return 0;//a.exec();
+    } while(option);*/
+    return App().run();//a.exec();
 }
