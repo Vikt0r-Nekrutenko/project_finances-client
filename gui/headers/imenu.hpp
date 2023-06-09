@@ -12,10 +12,14 @@ class IMenu
 {
 public:
 
+    size_t Width = 3;
+    size_t Selector;
+
     IMenu(MenuBar *mbar);
     virtual ~IMenu();
 
     virtual void show(stf::Renderer &renderer);
+    virtual bool isActive() const = 0;
 
 protected:
 
