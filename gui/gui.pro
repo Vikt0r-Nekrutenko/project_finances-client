@@ -20,6 +20,7 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/imenu.cpp \
     sources/ioption.cpp \
     sources\main.cpp
 
