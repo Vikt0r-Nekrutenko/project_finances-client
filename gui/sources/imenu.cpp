@@ -12,6 +12,23 @@ void IMenu::show(stf::Renderer &renderer)
     renderer.drawPixel({Width - 1, 2 + Selector}, ']');
 }
 
+void IMenu::keyHandler(int key)
+{
+    if(key == 'w')
+        if(Selector == 0)
+            Selector = mMenuBar->size() - 1;
+        else
+            --Selector;
+    else if(key == 's')
+        if(Selector == mMenuBar->size() - 1)
+            Selector = 0;
+        else
+            ++Selector;
+    else if(key >= '1' && key <= '9' && size_t(key - '0' - 1) < mMenuBar->size()) {
+        Selector = key - '0' - 1;
+    }
+}
+
 ActiveMenu::ActiveMenu(const MenuBar *mbar)
     : IMenu(mbar)
 {

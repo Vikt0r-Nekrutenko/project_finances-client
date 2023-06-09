@@ -21,6 +21,8 @@ public:
     virtual void show(stf::Renderer &renderer);
     virtual bool isActive() const = 0;
 
+    void keyHandler(int key);
+
 protected:
 
     const MenuBar *mMenuBar;
