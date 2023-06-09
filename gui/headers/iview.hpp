@@ -3,22 +3,29 @@
 
 #include "renderer.hpp"
 #include "imenu.hpp"
-#include "ioption.hpp"
+
+class ViewHolder;
+class AppModel;
 
 class IView
 {
 public:
 
+    IView(AppModel *model, ViewHolder *holder);
     virtual ~IView();
     void show(stf::Renderer &) const;
     void keyHandler(int key);
 
+    ViewHolder *holder() const;
+
 protected:
 
-    MenuBar mMenuBar {new IOption, new IOption, new IOption};
+    MenuBar mMenuBar;
     ActiveMenu *mActiveMenuBar = new ActiveMenu{&mMenuBar};
     InactiveMenu *mInactiveMenuBar = new InactiveMenu{&mMenuBar};
     IMenu *MenuBar = mInactiveMenuBar;
+    AppModel *mModel;
+    ViewHolder *mHolder;
 };
 
 #endif // IVIEW_HPP
