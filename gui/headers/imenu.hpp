@@ -5,6 +5,7 @@
 #include <vector>
 
 class IOption;
+class IView;
 
 using MenuBar = std::vector<IOption *>;
 
@@ -24,7 +25,7 @@ public:
     virtual void show(stf::Renderer &renderer);
     virtual bool isActive() const = 0;
 
-    void keyHandler(int key);
+    IView *keyHandler(IView *sender, int key);
 
 protected:
 

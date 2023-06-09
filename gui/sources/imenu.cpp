@@ -12,7 +12,7 @@ void IMenu::show(stf::Renderer &renderer)
     renderer.drawPixel({Width - 1, 2 + Selector}, ']');
 }
 
-void IMenu::keyHandler(int key)
+IView *IMenu::keyHandler(IView *sender, int key)
 {
     if(key == 'w')
         if(Selector == 0)
@@ -25,10 +25,12 @@ void IMenu::keyHandler(int key)
         else
             ++Selector;
     else if(key == VK_ENTER1 || key == VK_ENTER2) {
-        // TODO return mMenuBar->at(Selector).exec(this);
+        return mMenuBar->at(Selector)->execute(sender);
     } else if(key >= '1' && key <= '9' && size_t(key - '0' - 1) < mMenuBar->size()) {
         Selector = key - '0' - 1;
+        return mMenuBar->at(Selector)->execute(sender);
     }
+    return sender;
 }
 
 ActiveMenu::ActiveMenu(const MenuBar *mbar)
