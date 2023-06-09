@@ -35,4 +35,5 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../stf/debug/ -lstf
 
 HEADERS += \
+    headers/imenu.hpp \
     headers/iview.hpp
