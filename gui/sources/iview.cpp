@@ -1,5 +1,5 @@
 #include "iview.hpp"
-
+#include "ioption.hpp"
 
 IView::IView(AppModel *model, ViewHolder *holder)
     : mModel{model}, mHolder{holder} { }
@@ -25,7 +25,7 @@ IView *IView::keyHandler(int key)
             MenuBar = mActiveMenuBar;
     }
 
-    return MenuBar->keyHandler(key);
+    return MenuBar->keyHandler(this, key);
 }
 
 ViewHolder *IView::holder() const

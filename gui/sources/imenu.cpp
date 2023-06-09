@@ -8,8 +8,11 @@ IMenu::IMenu(const MenuBar *mbar)
 void IMenu::show(stf::Renderer &renderer)
 {
     renderer.drawLine({Width, 1}, {Width, renderer.Size.y}, '|');
-    renderer.drawPixel({0, 2 + Selector}, '[');
-    renderer.drawPixel({Width - 1, 2 + Selector}, ']');
+
+    if(!mMenuBar->empty()) {
+        renderer.drawPixel({0, 2 + Selector}, '[');
+        renderer.drawPixel({Width - 1, 2 + Selector}, ']');
+    }
 }
 
 IView *IMenu::keyHandler(IView *sender, int key)

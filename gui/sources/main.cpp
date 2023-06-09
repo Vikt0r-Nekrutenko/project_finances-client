@@ -8,11 +8,17 @@
 #include "window.hpp"
 #include "iview.hpp"
 
+class AppModel {};
+
+class ViewHolder {};
+
 class App : public stf::Window
 {
 public:
+    AppModel appModel;
+    ViewHolder viewHolder;
 
-    IView view;
+    IView view = IView(&appModel, &viewHolder);
 
     bool onUpdate(const float dt) override
     {
