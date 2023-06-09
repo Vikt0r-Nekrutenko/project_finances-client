@@ -12,3 +12,8 @@ void IView::show(stf::Renderer &renderer) const
 {
     MenuBar->show(renderer);
 }
+
+void IView::keyHandler(int key)
+{
+    MenuBar->keyHandler(key);
+}

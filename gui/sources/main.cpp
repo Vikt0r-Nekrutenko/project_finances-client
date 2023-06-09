@@ -22,7 +22,7 @@ public:
 
     void keyEvents(const int key) override
     {
-
+        view.keyHandler(key);
     }
 
     void mouseEvents(const stf::MouseRecord &mr) override

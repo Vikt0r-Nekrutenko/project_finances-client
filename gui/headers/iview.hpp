@@ -11,6 +11,7 @@ public:
 
     virtual ~IView();
     void show(stf::Renderer &) const;
+    void keyHandler(int key);
 
 protected:
 
