@@ -16,18 +16,16 @@ void IView::show(stf::Renderer &renderer) const
     MenuBar->show(renderer);
 }
 
-void IView::keyHandler(int key)
+IView *IView::keyHandler(int key)
 {
-    MenuBar->keyHandler(key);
-
-    if(key != 'm')
-        return;
-
-    if(MenuBar->isActive()) {
-        MenuBar = mInactiveMenuBar;
-    } else {
-        MenuBar = mActiveMenuBar;
+    if(key == 'm') {
+        if(MenuBar->isActive())
+            MenuBar = mInactiveMenuBar;
+        else
+            MenuBar = mActiveMenuBar;
     }
+
+    return MenuBar->keyHandler(key);
 }
 
 ViewHolder *IView::holder() const

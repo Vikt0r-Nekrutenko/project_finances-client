@@ -14,7 +14,7 @@ public:
     IView(AppModel *model, ViewHolder *holder);
     virtual ~IView();
     void show(stf::Renderer &) const;
-    void keyHandler(int key);
+    IView *keyHandler(int key);
 
     ViewHolder *holder() const;
 
