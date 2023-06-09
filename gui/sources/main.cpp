@@ -6,29 +6,31 @@
 #include "headers/debtmodelhandler.hpp"
 
 #include "window.hpp"
-#include "iview.hpp"
-
-class AppModel {};
-
-class ViewHolder {};
+#include "viewholder.hpp"
+#include "appmodel.hpp"
 
 class App : public stf::Window
 {
 public:
-    AppModel appModel;
-    ViewHolder viewHolder;
 
-    IView view = IView(&appModel, &viewHolder);
+    AppModel model;
+    ViewHolder viewHolder = ViewHolder(&model);
+    IView *currentView;
+
+    App()
+    {
+        currentView = viewHolder.getStartedView();
+    }
 
     bool onUpdate(const float dt) override
     {
-        view.show(renderer);
+        currentView->show(renderer);
         return true;
     }
 
     void keyEvents(const int key) override
     {
-        view.keyHandler(key);
+        currentView->keyHandler(key);
     }
 
     void mouseEvents(const stf::MouseRecord &mr) override

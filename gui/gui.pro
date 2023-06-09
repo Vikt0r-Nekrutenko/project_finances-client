@@ -38,6 +38,10 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
     -L$$PWD/../../stf/debug/ -lstf
 
 HEADERS += \
+    headers/appmodel.hpp \
+    headers/depositview.hpp \
     headers/imenu.hpp \
     headers/ioption.hpp \
-    headers/iview.hpp
+    headers/iview.hpp \
+    headers/mainview.hpp \
+    headers/viewholder.hpp
