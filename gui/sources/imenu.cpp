@@ -24,7 +24,9 @@ void IMenu::keyHandler(int key)
             Selector = 0;
         else
             ++Selector;
-    else if(key >= '1' && key <= '9' && size_t(key - '0' - 1) < mMenuBar->size()) {
+    else if(key == VK_ENTER1 || key == VK_ENTER2) {
+        // TODO return mMenuBar->at(Selector).exec(this);
+    } else if(key >= '1' && key <= '9' && size_t(key - '0' - 1) < mMenuBar->size()) {
         Selector = key - '0' - 1;
     }
 }

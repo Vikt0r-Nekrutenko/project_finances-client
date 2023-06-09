@@ -8,6 +8,9 @@ class IOption;
 
 using MenuBar = std::vector<IOption *>;
 
+constexpr int VK_ENTER1 = 13;
+constexpr int VK_ENTER2 = 10;
+
 class IMenu
 {
 public:
