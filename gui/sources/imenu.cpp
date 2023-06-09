@@ -27,3 +27,19 @@ bool ActiveMenu::isActive() const
 {
     return true;
 }
+
+InactiveMenu::InactiveMenu(const MenuBar *mbar)
+    : IMenu(mbar) { }
+
+void InactiveMenu::show(stf::Renderer &renderer)
+{
+    for(size_t i = 0, it = 0; i < mMenuBar->size(); ++i) {
+        renderer.draw({1, 2 + it++}, "%d", it);
+    }
+    IMenu::show(renderer);
+}
+
+bool InactiveMenu::isActive() const
+{
+    return false;
+}
