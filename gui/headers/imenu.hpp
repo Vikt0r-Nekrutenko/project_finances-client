@@ -26,4 +26,13 @@ protected:
     const MenuBar *mMenuBar;
 };
 
+class ActiveMenu : public IMenu
+{
+public:
+
+    ActiveMenu(const MenuBar *mbar);
+    void show(stf::Renderer &renderer) override;
+    bool isActive() const override;
+};
+
 #endif // IMENU_H
