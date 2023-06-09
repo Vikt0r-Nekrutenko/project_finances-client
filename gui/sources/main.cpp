@@ -7,6 +7,21 @@
 
 #include "window.hpp"
 
+class AppModel;
+
+class IView
+{
+public:
+
+    IView(AppModel* model) : mModel{model} {}
+    virtual void show(stf::Renderer &) = 0;
+    virtual IView* keyHandler(int) = 0;
+
+protected:
+
+    AppModel *mModel;
+};
+
 class App : public stf::Window
 {
 public:
