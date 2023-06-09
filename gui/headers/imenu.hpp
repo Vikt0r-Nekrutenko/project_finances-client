@@ -35,4 +35,13 @@ public:
     bool isActive() const override;
 };
 
+class InactiveMenu : public IMenu
+{
+public:
+
+    InactiveMenu(const MenuBar *mbar);
+    void show(stf::Renderer &renderer) override;
+    bool isActive() const override;
+};
+
 #endif // IMENU_H
