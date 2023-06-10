@@ -17,7 +17,17 @@ public:
     virtual void show(stf::Renderer &renderer) = 0;
     virtual IView *keyHandler(IView *sender, int key) = 0;
 
-    std::string getStr();
+    std::string getStr()
+    {
+        int pos = Text.find(" ");
+        if(pos != int(Text.npos)) {
+            std::string result = Text.substr(0, pos);
+            Text.erase(0, pos + 1);
+            return result;
+        } else {
+            return Text.erase(0, pos + 1);
+        }
+    }
 
 protected:
 
