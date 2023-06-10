@@ -26,6 +26,15 @@ public:
     IView *execute(IView *sender) override;
 };
 
+class Exit : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
 }}
 
 #endif // IOPTION_HPP
