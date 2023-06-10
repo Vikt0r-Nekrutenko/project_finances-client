@@ -37,3 +37,8 @@ ViewHolder *IView::holder() const
 {
     return mHolder;
 }
+
+bool CloseView::isContinue() const
+{
+    return false;
+}

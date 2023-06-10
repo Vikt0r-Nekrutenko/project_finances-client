@@ -25,7 +25,7 @@ public:
     bool onUpdate(const float dt) override
     {
         currentView->show(renderer);
-        return true;
+        return currentView->isContinue();
     }
 
     void keyEvents(const int key) override

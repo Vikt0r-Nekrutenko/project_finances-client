@@ -29,4 +29,11 @@ protected:
     ViewHolder *mHolder;
 };
 
+class CloseView : public IView
+{
+public:
+
+    bool isContinue() const override;
+};
+
 #endif // IVIEW_HPP
