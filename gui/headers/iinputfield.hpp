@@ -5,12 +5,12 @@
 
 class IView;
 
-constexpr int VK_UPWARDS_ARROW = 24;
-constexpr int VK_DOWNWARDS_ARROW = 25;
-constexpr int VK_RIGHT_ARROW = 26;
-constexpr int VK_LEFT_ARROW = 27;
+constexpr int VK_RIGHT_ARROW = '.';
+constexpr int VK_LEFT_ARROW = ',';
 constexpr int VK_BACKSPACE1 = 127;
 constexpr int VK_BACKSPACE2 = 8;
+constexpr int VK_ESCAPE1 = 27;
+constexpr int VK_TAB1 = 9;
 
 class IInputField
 {

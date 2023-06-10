@@ -28,6 +28,7 @@ public:
     IView *keyHandler(int key) override
     {
         switchMenuBar(key);
+        mInputField->keyHandler(this, key);
         return mMenuBar->keyHandler(this, key);
     }
 };
