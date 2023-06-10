@@ -4,7 +4,7 @@
 #include "ioption.hpp"
 #include "iview.hpp"
 
-class MainView : public IView, public IViewWithMenuItem, public IViewWithLogItem
+class MainView : public IView, public IViewWithMenuItem, public IViewWithLogItem, public IViewWithInputField
 {
 public:
     MainView(AppModel *model, ViewHolder *holder)
@@ -22,6 +22,7 @@ public:
         renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
         mMenuBar->show(renderer);
         drawLogItem(renderer, mMenuBar->Width);
+        drawInputField(renderer, mMenuBar->Width);
     }
 
     IView *keyHandler(int key) override
