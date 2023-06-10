@@ -4,7 +4,7 @@
 #include "ioption.hpp"
 #include "iview.hpp"
 
-class MainView : public IView, public IViewWithMenuItem, public IViewWithLogItem, public IViewWithInputField
+class MainView : public IView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
     MainView(AppModel *model, ViewHolder *holder)
@@ -12,6 +12,7 @@ public:
     {
         mOptionsList.insert(mOptionsList.end(), {
                                                  new options::main_view::Deposits,
+                                                 new options::deposits_view::AddNewDeposit,
                                                  new options::main_view::Exit
                                                 });
         mActiveMenuBar->recalculateBarWidth();
@@ -22,13 +23,11 @@ public:
         renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
         mMenuBar->show(renderer);
         drawLogItem(renderer, mMenuBar->Width);
-        drawInputField(renderer, mMenuBar->Width);
     }
 
     IView *keyHandler(int key) override
     {
         switchMenuBar(key);
-        mInputField->keyHandler(this, key);
         return mMenuBar->keyHandler(this, key);
     }
 };

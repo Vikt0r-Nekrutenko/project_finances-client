@@ -12,7 +12,8 @@ public:
     ViewHolder(AppModel *model)
         : mMainView{model, this},
         mDepositView{model, this},
-        mCloseView{model, this}
+        mCloseView{model, this},
+        mAddNewDepositView{model, this}
     {}
 
     IView *getStartedView()
@@ -30,11 +31,17 @@ public:
         return &mCloseView;
     }
 
+    IView *getAddNewDepositView()
+    {
+        return &mAddNewDepositView;
+    }
+
 private:
 
     MainView mMainView;
     DepositView mDepositView;
     CloseView mCloseView;
+    AddNewDepositView mAddNewDepositView;
 };
 
 #endif // VIEWHOLDER_HPP

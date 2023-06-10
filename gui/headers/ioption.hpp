@@ -35,6 +35,17 @@ public:
     IView *execute(IView *sender) override;
 };
 
-}}
+}
+
+namespace deposits_view {
+class AddNewDeposit : public IOption
+{
+public:
+
+    std::string caption() const override { return "Add new deposit"; }
+    IView *execute(IView *sender) override;
+};
+}
+}
 
 #endif // IOPTION_HPP

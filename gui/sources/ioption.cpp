@@ -23,3 +23,8 @@ IView *options::main_view::Exit::execute(IView *sender)
 {
     return sender->holder()->getCloseView();
 }
+
+IView *options::deposits_view::AddNewDeposit::execute(IView *sender)
+{
+    return sender->holder()->getAddNewDepositView();
+}
