@@ -48,7 +48,7 @@ public:
     CloseView(AppModel *model, ViewHolder *holder);
     bool isContinue() const override;
     void show(stf::Renderer &) override {}
-    IView *keyHandler(int key) override {return this;}
+    IView *keyHandler(int) override {return this;}
 };
 
 class IViewWithLogItem
