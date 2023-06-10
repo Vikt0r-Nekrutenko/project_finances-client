@@ -24,6 +24,11 @@ public:
         return &mDepositView;
     }
 
+    IView *getCloseView()
+    {
+        return &mCloseView;
+    }
+
 private:
 
     MainView mMainView;
