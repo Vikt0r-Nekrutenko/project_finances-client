@@ -33,7 +33,7 @@ class CloseView : public IView
 {
 public:
 
-    CloseView();
+    CloseView(AppModel *model, ViewHolder *holder);
     bool isContinue() const override;
 };
 
@@ -47,7 +47,7 @@ public:
     void show(stf::Renderer &renderer) const override
     {
         renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - 4},
-                          {renderer.Size.x, renderer.Size.y - 4}, '-');
+                          {renderer.Size.x - 1, renderer.Size.y - 4}, '-');
         IView::show(renderer);
     }
 

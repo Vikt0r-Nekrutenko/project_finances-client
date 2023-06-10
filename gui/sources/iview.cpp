@@ -6,6 +6,9 @@ IView::IView(AppModel *model, ViewHolder *holder)
 
 IView::~IView()
 {
+    delete mActiveMenuBar;
+    delete mInactiveMenuBar;
+
     for(size_t i = 0; i < mOptionsList.size(); ++i) {
         delete mOptionsList.at(i);
     }
@@ -38,8 +41,8 @@ ViewHolder *IView::holder() const
     return mHolder;
 }
 
-CloseView::CloseView()
-    : IView(nullptr, nullptr) { }
+CloseView::CloseView(AppModel *model, ViewHolder *holder)
+    : IView(model, holder) { }
 
 bool CloseView::isContinue() const
 {

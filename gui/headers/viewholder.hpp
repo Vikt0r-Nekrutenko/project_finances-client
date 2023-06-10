@@ -11,7 +11,8 @@ public:
 
     ViewHolder(AppModel *model)
         : mMainView{model, this},
-        mDepositView{model, this}
+        mDepositView{model, this},
+        mCloseView{model, this}
     {}
 
     IView *getStartedView()
