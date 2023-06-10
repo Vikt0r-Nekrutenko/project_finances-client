@@ -11,10 +11,8 @@ public:
 
     std::string Text;
 
-    IInputField() {}
     virtual ~IInputField() = default;
-
-    virtual void show(stf::Renderer &renderer) = 0;
+    virtual void show(stf::Renderer &renderer, int x, int y) = 0;
     virtual IView *keyHandler(IView *sender, int key) = 0;
 
     std::string getStr()
@@ -32,6 +30,17 @@ public:
 protected:
 
     int mCursor = 0;
+};
+
+class ActiveInputField : public IInputField
+{
+public:
+
+    void show(stf::Renderer &renderer, int x, int y) override
+    {
+        renderer.draw({x, y}, ">> %s", Text.c_str());
+        renderer.draw({3 + x + mCursor, y}, "%CR%c", mCursor >= int(Text.length()) ? ' ' : Text.at(mCursor));
+    }
 };
 
 #endif // IINPUTFIELD_HPP
