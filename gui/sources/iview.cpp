@@ -1,5 +1,6 @@
 #include "iview.hpp"
 #include "ioption.hpp"
+#include "headers/datamodel.hpp"
 
 IView::IView(AppModel *model, ViewHolder *holder)
     : mModel{model}, mHolder{holder} { }
@@ -47,4 +48,21 @@ CloseView::CloseView(AppModel *model, ViewHolder *holder)
 bool CloseView::isContinue() const
 {
     return false;
+}
+
+ViewWithLogItem::ViewWithLogItem(AppModel *model, ViewHolder *holder)
+    : IView{model, holder} { }
+
+void ViewWithLogItem::show(stf::Renderer &renderer)
+{
+    renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - LogHeight - 1},
+                      {renderer.Size.x - 1, renderer.Size.y - LogHeight - 1}, '-');
+
+    for(int i = int(log().size()) - LogHeight, j = LogHeight; i < int(log().size()); ++i, --j) {
+        if(i < 0)
+            continue;
+        renderer.draw({mMenuBar->Width + 1, renderer.Size.y - j}, "%d.%s", i, log().at(i).c_str());
+    }
+
+    IView::show(renderer);
 }

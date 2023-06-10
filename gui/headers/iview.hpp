@@ -37,30 +37,15 @@ public:
     bool isContinue() const override;
 };
 
-#include "headers/datamodel.hpp"
-
 class ViewWithLogItem : public IView
 {
 public:
 
     static constexpr int LogHeight = 4;
 
-    ViewWithLogItem(AppModel *model, ViewHolder *holder)
-        : IView{model, holder} { }
+    ViewWithLogItem(AppModel *model, ViewHolder *holder);
 
-    void show(stf::Renderer &renderer) override
-    {
-        renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - LogHeight - 1},
-                          {renderer.Size.x - 1, renderer.Size.y - LogHeight - 1}, '-');
-
-        for(int i = int(log().size()) - LogHeight, j = LogHeight; i < int(log().size()); ++i, --j) {
-            if(i < 0)
-                continue;
-            renderer.draw({mMenuBar->Width + 1, renderer.Size.y - j}, "%d.%s", i, log().at(i).c_str());
-        }
-
-        IView::show(renderer);
-    }
+    void show(stf::Renderer &renderer) override;
 };
 
 #endif // IVIEW_HPP
