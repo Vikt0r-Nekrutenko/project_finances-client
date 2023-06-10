@@ -17,7 +17,6 @@ class IMenu
 public:
 
     size_t Width = 3;
-    size_t Selector;
 
     IMenu(const MenuBar *mbar);
     virtual ~IMenu() = default;
@@ -30,6 +29,7 @@ public:
 protected:
 
     const MenuBar *mMenuBar;
+    size_t Selector;
 };
 
 class ActiveMenu : public IMenu
