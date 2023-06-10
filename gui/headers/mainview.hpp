@@ -4,11 +4,11 @@
 #include "ioption.hpp"
 #include "iview.hpp"
 
-class MainView : public IView
+class MainView : public ViewWithLogItem
 {
 public:
     MainView(AppModel *model, ViewHolder *holder)
-        : IView{model, holder}
+        : ViewWithLogItem{model, holder}
     {
         mOptionsList.insert(mOptionsList.end(), {
                                                  new options::main_view::Deposits,
@@ -20,7 +20,7 @@ public:
     void show(stf::Renderer &renderer) const override
     {
         renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
-        IView::show(renderer);
+        ViewWithLogItem::show(renderer);
     }
 };
 

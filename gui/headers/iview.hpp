@@ -37,4 +37,23 @@ public:
     bool isContinue() const override;
 };
 
+class ViewWithLogItem : public IView
+{
+public:
+
+    ViewWithLogItem(AppModel *model, ViewHolder *holder)
+        : IView{model, holder} { }
+
+    void show(stf::Renderer &renderer) const override
+    {
+        renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - 4},
+                          {renderer.Size.x, renderer.Size.y - 4}, '-');
+        IView::show(renderer);
+    }
+
+private:
+
+    int mLastLogSize = 0;
+};
+
 #endif // IVIEW_HPP
