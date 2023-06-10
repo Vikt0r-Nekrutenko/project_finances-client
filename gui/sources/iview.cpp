@@ -6,26 +6,26 @@ IView::IView(AppModel *model, ViewHolder *holder)
 
 IView::~IView()
 {
-    for(size_t i = 0; i < mMenuBar.size(); ++i) {
-        delete mMenuBar.at(i);
+    for(size_t i = 0; i < mOptionsList.size(); ++i) {
+        delete mOptionsList.at(i);
     }
 }
 
 void IView::show(stf::Renderer &renderer) const
 {
-    MenuBar->show(renderer);
+    mMenuBar->show(renderer);
 }
 
 IView *IView::keyHandler(int key)
 {
     if(key == 'm') {
-        if(MenuBar->isActive())
-            MenuBar = mInactiveMenuBar;
+        if(mMenuBar->isActive())
+            mMenuBar = mInactiveMenuBar;
         else
-            MenuBar = mActiveMenuBar;
+            mMenuBar = mActiveMenuBar;
     }
 
-    return MenuBar->keyHandler(this, key);
+    return mMenuBar->keyHandler(this, key);
 }
 
 ViewHolder *IView::holder() const

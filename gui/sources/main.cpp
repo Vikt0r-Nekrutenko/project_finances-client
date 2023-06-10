@@ -30,7 +30,7 @@ public:
 
     void keyEvents(const int key) override
     {
-        currentView->keyHandler(key);
+        currentView = currentView->keyHandler(key);
     }
 
     void mouseEvents(const stf::MouseRecord &mr) override

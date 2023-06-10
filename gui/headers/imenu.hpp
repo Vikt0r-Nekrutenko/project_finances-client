@@ -26,7 +26,6 @@ public:
     virtual bool isActive() const = 0;
 
     IView *keyHandler(IView *sender, int key);
-    void recalculateBarWidth();
 
 protected:
 
@@ -38,6 +37,7 @@ class ActiveMenu : public IMenu
 public:
 
     ActiveMenu(const MenuBar *mbar);
+    void recalculateBarWidth();
     void show(stf::Renderer &renderer) override;
     bool isActive() const override;
 };

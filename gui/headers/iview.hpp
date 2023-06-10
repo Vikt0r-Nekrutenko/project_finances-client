@@ -13,17 +13,17 @@ public:
 
     IView(AppModel *model, ViewHolder *holder);
     virtual ~IView();
-    void show(stf::Renderer &) const;
+    virtual void show(stf::Renderer &) const;
     IView *keyHandler(int key);
 
     ViewHolder *holder() const;
 
 protected:
 
-    MenuBar mMenuBar;
-    ActiveMenu *mActiveMenuBar = new ActiveMenu{&mMenuBar};
-    InactiveMenu *mInactiveMenuBar = new InactiveMenu{&mMenuBar};
-    IMenu *MenuBar = mInactiveMenuBar;
+    MenuBar mOptionsList;
+    ActiveMenu *mActiveMenuBar = new ActiveMenu{&mOptionsList};
+    InactiveMenu *mInactiveMenuBar = new InactiveMenu{&mOptionsList};
+    IMenu *mMenuBar = mInactiveMenuBar;
     AppModel *mModel;
     ViewHolder *mHolder;
 };

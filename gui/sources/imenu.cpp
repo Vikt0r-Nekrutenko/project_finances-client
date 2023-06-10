@@ -36,14 +36,6 @@ IView *IMenu::keyHandler(IView *sender, int key)
     return sender;
 }
 
-void IMenu::recalculateBarWidth()
-{
-    for(size_t i = 0; i < mMenuBar->size(); ++i) {
-        if(mMenuBar->at(i)->caption().length() > Width)
-            Width = mMenuBar->at(i)->caption().length() + 4;
-    }
-}
-
 ActiveMenu::ActiveMenu(const MenuBar *mbar)
     : IMenu(mbar) { }
 
@@ -53,6 +45,14 @@ void ActiveMenu::show(stf::Renderer &renderer)
         renderer.draw({1, 2 + i}, "%d.%s", i+1, mMenuBar->at(i)->caption().c_str());
     }
     IMenu::show(renderer);
+}
+
+void ActiveMenu::recalculateBarWidth()
+{
+    for(size_t i = 0; i < mMenuBar->size(); ++i) {
+        if(mMenuBar->at(i)->caption().length() > Width)
+            Width = mMenuBar->at(i)->caption().length() + 4;
+    }
 }
 
 bool ActiveMenu::isActive() const

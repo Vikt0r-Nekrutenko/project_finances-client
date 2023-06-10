@@ -8,6 +8,12 @@ class DepositView : public IView
 public:
     DepositView(AppModel *model, ViewHolder *holder)
         : IView{model, holder} { }
+
+    void show(stf::Renderer &renderer) const override
+    {
+        renderer.draw({5, 1}, "Deposit View");
+        IView::show(renderer);
+    }
 };
 
 #endif // DEPOSITVIEW_HPP

@@ -14,4 +14,18 @@ public:
     virtual IView *execute(IView *sender) = 0;
 };
 
+namespace options {
+namespace main_view {
+
+class Deposits : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+}}
+
 #endif // IOPTION_HPP

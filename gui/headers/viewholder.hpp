@@ -19,6 +19,11 @@ public:
         return &mMainView;
     }
 
+    IView *getDepositView()
+    {
+        return &mDepositView;
+    }
+
 private:
 
     MainView mMainView;
