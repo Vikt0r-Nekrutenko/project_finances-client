@@ -12,12 +12,26 @@ class IView
 public:
 
     IView(AppModel *model, ViewHolder *holder);
-    virtual ~IView();
-    virtual void show(stf::Renderer &);
+    virtual ~IView() = default;
+    virtual void show(stf::Renderer &) = 0;
+    virtual IView *keyHandler(int key) = 0;
     virtual bool isContinue() const;
-    IView *keyHandler(int key);
 
     ViewHolder *holder() const;
+
+protected:
+
+    AppModel *mModel;
+    ViewHolder *mHolder;
+};
+
+class IViewWithMenuItem
+{
+public:
+
+    virtual ~IViewWithMenuItem();
+
+    void switchMenuBar(int key);
 
 protected:
 
@@ -25,8 +39,6 @@ protected:
     ActiveMenu *mActiveMenuBar = new ActiveMenu{&mOptionsList};
     InactiveMenu *mInactiveMenuBar = new InactiveMenu{&mOptionsList};
     IMenu *mMenuBar = mInactiveMenuBar;
-    AppModel *mModel;
-    ViewHolder *mHolder;
 };
 
 class CloseView : public IView
@@ -35,17 +47,17 @@ public:
 
     CloseView(AppModel *model, ViewHolder *holder);
     bool isContinue() const override;
+    void show(stf::Renderer &) override {}
+    IView *keyHandler(int key) override {return this;}
 };
 
-class ViewWithLogItem : public IView
+class IViewWithLogItem
 {
 public:
 
     static constexpr int LogHeight = 4;
 
-    ViewWithLogItem(AppModel *model, ViewHolder *holder);
-
-    void show(stf::Renderer &renderer) override;
+    void drawLogItem(stf::Renderer &renderer, int menuWidth);
 };
 
 #endif // IVIEW_HPP

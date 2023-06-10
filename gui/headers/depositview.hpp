@@ -3,7 +3,7 @@
 
 #include "iview.hpp"
 
-class DepositView : public IView
+class DepositView : public IView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
     DepositView(AppModel *model, ViewHolder *holder)
@@ -12,7 +12,12 @@ public:
     void show(stf::Renderer &renderer) override
     {
         renderer.draw({5, 1}, "Deposit View");
-        IView::show(renderer);
+    }
+
+    IView *keyHandler(int key) override
+    {
+        switchMenuBar(key);
+        return mMenuBar->keyHandler(this, key);
     }
 };
 

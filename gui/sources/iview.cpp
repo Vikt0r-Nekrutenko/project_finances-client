@@ -5,7 +5,7 @@
 IView::IView(AppModel *model, ViewHolder *holder)
     : mModel{model}, mHolder{holder} { }
 
-IView::~IView()
+IViewWithMenuItem::~IViewWithMenuItem()
 {
     delete mActiveMenuBar;
     delete mInactiveMenuBar;
@@ -15,17 +15,12 @@ IView::~IView()
     }
 }
 
-void IView::show(stf::Renderer &renderer)
-{
-    mMenuBar->show(renderer);
-}
-
 bool IView::isContinue() const
 {
     return true;
 }
 
-IView *IView::keyHandler(int key)
+void IViewWithMenuItem::switchMenuBar(int key)
 {
     if(key == 'm') {
         if(mMenuBar->isActive())
@@ -33,8 +28,6 @@ IView *IView::keyHandler(int key)
         else
             mMenuBar = mActiveMenuBar;
     }
-
-    return mMenuBar->keyHandler(this, key);
 }
 
 ViewHolder *IView::holder() const
@@ -50,19 +43,14 @@ bool CloseView::isContinue() const
     return false;
 }
 
-ViewWithLogItem::ViewWithLogItem(AppModel *model, ViewHolder *holder)
-    : IView{model, holder} { }
-
-void ViewWithLogItem::show(stf::Renderer &renderer)
+void IViewWithLogItem::drawLogItem(stf::Renderer &renderer, int menuWidth)
 {
-    renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - LogHeight - 1},
+    renderer.drawLine({menuWidth + 1, renderer.Size.y - LogHeight - 1},
                       {renderer.Size.x - 1, renderer.Size.y - LogHeight - 1}, '-');
 
     for(int i = int(log().size()) - LogHeight, j = LogHeight; i < int(log().size()); ++i, --j) {
         if(i < 0)
             continue;
-        renderer.draw({mMenuBar->Width + 1, renderer.Size.y - j}, "%d.%s", i, log().at(i).c_str());
+        renderer.draw({menuWidth + 1, renderer.Size.y - j}, "%d.%s", i, log().at(i).c_str());
     }
-
-    IView::show(renderer);
 }
