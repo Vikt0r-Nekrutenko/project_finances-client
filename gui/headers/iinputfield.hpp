@@ -66,4 +66,16 @@ public:
     }
 };
 
+class InactiveInputField : public IInputField
+{
+public:
+
+    void show(stf::Renderer &renderer, int x, int y) override { }
+
+    IView *keyHandler(IView *sender, int key) override
+    {
+        return sender;
+    }
+};
+
 #endif // IINPUTFIELD_HPP

@@ -3,6 +3,7 @@
 
 #include "renderer.hpp"
 #include "imenu.hpp"
+#include "iinputfield.hpp"
 
 class ViewHolder;
 class AppModel;
@@ -58,6 +59,19 @@ public:
     static constexpr int LogHeight = 4;
 
     void drawLogItem(stf::Renderer &renderer, int menuWidth);
+};
+
+class IViewWithInputField
+{
+public:
+
+    void drawInputField(stf::Renderer &renderer, int menuWidth);
+
+protected:
+
+    ActiveInputField *mActiveInputField = new ActiveInputField;
+    InactiveInputField *mInactiveInputField = new InactiveInputField;
+    IInputField *mInputField = mInactiveInputField;
 };
 
 #endif // IVIEW_HPP

@@ -54,3 +54,9 @@ void IViewWithLogItem::drawLogItem(stf::Renderer &renderer, int menuWidth)
         renderer.draw({menuWidth + 1, renderer.Size.y - j}, "%d.%s", i, log().at(i).c_str());
     }
 }
+
+void IViewWithInputField::drawInputField(stf::Renderer &renderer, int menuWidth)
+{
+    renderer.drawLine({menuWidth + 1, renderer.Size.y - 5}, {renderer.Size.x - 1, renderer.Size.y - 5}, '-');
+    mInputField->show(renderer, menuWidth + 1, renderer.Size.y - 4);
+}
