@@ -28,6 +28,7 @@ private:
 
     MainView mMainView;
     DepositView mDepositView;
+    CloseView mCloseView;
 };
 
 #endif // VIEWHOLDER_HPP

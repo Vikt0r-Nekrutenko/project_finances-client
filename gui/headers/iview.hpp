@@ -33,6 +33,7 @@ class CloseView : public IView
 {
 public:
 
+    CloseView();
     bool isContinue() const override;
 };
 
