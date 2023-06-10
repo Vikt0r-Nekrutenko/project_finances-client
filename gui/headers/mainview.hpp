@@ -10,7 +10,10 @@ public:
     MainView(AppModel *model, ViewHolder *holder)
         : IView{model, holder}
     {
-        mOptionsList.push_back(new options::main_view::Deposits);
+        mOptionsList.insert(mOptionsList.end(), {
+                                                 new options::main_view::Deposits,
+                                                 new options::main_view::Exit
+                                                });
         mActiveMenuBar->recalculateBarWidth();
     }
 
