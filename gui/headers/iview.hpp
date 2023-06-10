@@ -14,6 +14,7 @@ public:
     IView(AppModel *model, ViewHolder *holder);
     virtual ~IView();
     virtual void show(stf::Renderer &) const;
+    virtual bool isContinue() const;
     IView *keyHandler(int key);
 
     ViewHolder *holder() const;

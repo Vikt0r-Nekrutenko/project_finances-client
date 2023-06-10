@@ -16,6 +16,11 @@ void IView::show(stf::Renderer &renderer) const
     mMenuBar->show(renderer);
 }
 
+bool IView::isContinue() const
+{
+    return true;
+}
+
 IView *IView::keyHandler(int key)
 {
     if(key == 'm') {
