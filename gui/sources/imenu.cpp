@@ -36,14 +36,16 @@ IView *IMenu::keyHandler(IView *sender, int key)
     return sender;
 }
 
-ActiveMenu::ActiveMenu(const MenuBar *mbar)
-    : IMenu(mbar)
+void IMenu::recalculateBarWidth()
 {
     for(size_t i = 0; i < mMenuBar->size(); ++i) {
         if(mMenuBar->at(i)->caption().length() > Width)
             Width = mMenuBar->at(i)->caption().length() + 4;
     }
 }
+
+ActiveMenu::ActiveMenu(const MenuBar *mbar)
+    : IMenu(mbar) { }
 
 void ActiveMenu::show(stf::Renderer &renderer)
 {

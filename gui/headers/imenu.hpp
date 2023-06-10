@@ -26,6 +26,7 @@ public:
     virtual bool isActive() const = 0;
 
     IView *keyHandler(IView *sender, int key);
+    void recalculateBarWidth();
 
 protected:
 
