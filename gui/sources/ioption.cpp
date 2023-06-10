@@ -14,6 +14,11 @@ IView *options::main_view::Deposits::execute(IView *sender)
     return sender->holder()->getDepositView();
 }
 
+std::string options::main_view::Exit::caption() const
+{
+    return "Exit";
+}
+
 IView *options::main_view::Exit::execute(IView *sender)
 {
     return sender->holder()->getCloseView();
