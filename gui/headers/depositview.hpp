@@ -9,7 +9,7 @@ public:
     DepositView(AppModel *model, ViewHolder *holder)
         : IView{model, holder} { }
 
-    void show(stf::Renderer &renderer) const override
+    void show(stf::Renderer &renderer) override
     {
         renderer.draw({5, 1}, "Deposit View");
         IView::show(renderer);

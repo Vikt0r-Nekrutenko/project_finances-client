@@ -14,7 +14,7 @@ IView::~IView()
     }
 }
 
-void IView::show(stf::Renderer &renderer) const
+void IView::show(stf::Renderer &renderer)
 {
     mMenuBar->show(renderer);
 }

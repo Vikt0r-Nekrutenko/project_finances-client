@@ -17,7 +17,7 @@ public:
         mActiveMenuBar->recalculateBarWidth();
     }
 
-    void show(stf::Renderer &renderer) const override
+    void show(stf::Renderer &renderer) override
     {
         renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
         ViewWithLogItem::show(renderer);

@@ -17,6 +17,8 @@ public:
     ViewHolder viewHolder = ViewHolder(&model);
     IView *currentView;
 
+    DepositModelHandler depo;
+
     App()
     {
         currentView = viewHolder.getStartedView();
@@ -41,8 +43,8 @@ public:
 
 int main(int argc, char *argv[])
 {
-    /*QCoreApplication a(argc, argv);
-    DepositModelHandler depo;
+    QCoreApplication a(argc, argv);
+    /*DepositModelHandler depo;
     CategoryModelHandler cats;
     OperationModelHandler oper;
     DebtModelHandler debts;
