@@ -28,8 +28,10 @@ public:
         if(pos != int(Text.npos)) {
             std::string result = Text.substr(0, pos);
             Text.erase(0, pos + 1);
+            mCursor = Text.length() - 1;
             return result;
         } else {
+            mCursor = 0;
             return Text.erase(0, pos + 1);
         }
     }
@@ -89,7 +91,7 @@ public:
                 ++mCursor;
         } else if((key == VK_BACKSPACE1 || key == VK_BACKSPACE2) && mCursor > 0) {
             Text.erase(--mCursor, 1);
-        } else if((key > '0' && key < 'z') || key == ' ' || key == '-' || key == '+') {
+        } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+') {
             Text.insert(mCursor++, 1, char(key));
         }
         return sender;
