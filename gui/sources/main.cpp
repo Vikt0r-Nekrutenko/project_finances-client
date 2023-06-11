@@ -1,6 +1,6 @@
 #include <QCoreApplication>
 #include <iostream>
-#include "headers/depositmodelhandler.hpp"
+
 #include "headers/categorymodelhandler.hpp"
 #include "headers/operationmodelhandler.hpp"
 #include "headers/debtmodelhandler.hpp"

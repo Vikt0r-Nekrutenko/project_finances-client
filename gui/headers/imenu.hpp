@@ -30,7 +30,7 @@ public:
 protected:
 
     const MenuBar *mMenuBar;
-    size_t Selector;
+    size_t Selector = 0;
 };
 
 class ActiveMenu : public IMenu
