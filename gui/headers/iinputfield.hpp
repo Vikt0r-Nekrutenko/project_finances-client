@@ -85,49 +85,9 @@ public:
         return result;
     }
 
-
 protected:
 
     int mCursor = 0;
-};
-
-class ActiveInputField : public IInputField
-{
-public:
-
-    void show(stf::Renderer &renderer, int x, int y) override
-    {
-        renderer.draw({x, y}, ">> %s", Text.c_str());
-        renderer.draw({3 + x + mCursor, y}, "%CR%c", mCursor >= int(Text.length()) ? ' ' : Text.at(mCursor));
-    }
-
-    IView *keyHandler(IView *sender, int key) override
-    {
-        if(key == VK_LEFT_ARROW) {
-            if(mCursor > 0)
-                --mCursor;
-        } else if(key == VK_RIGHT_ARROW) {
-            if(mCursor < int(Text.length()))
-                ++mCursor;
-        } else if((key == VK_BACKSPACE1 || key == VK_BACKSPACE2) && mCursor > 0) {
-            Text.erase(--mCursor, 1);
-        } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+') {
-            Text.insert(mCursor++, 1, char(key));
-        }
-        return sender;
-    }
-};
-
-class InactiveInputField : public IInputField
-{
-public:
-
-    void show(stf::Renderer &renderer, int x, int y) override { }
-
-    IView *keyHandler(IView *sender, int key) override
-    {
-        return sender;
-    }
 };
 
 #endif // IINPUTFIELD_HPP
