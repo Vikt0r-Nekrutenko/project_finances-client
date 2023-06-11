@@ -42,7 +42,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
 
 HEADERS += \
     headers/appmodel.hpp \
-    headers/depositview.hpp \
+    headers/depositsview.hpp \
     headers/imenu.hpp \
     headers/inputfield.hpp \
     headers/ioption.hpp \

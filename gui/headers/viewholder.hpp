@@ -2,7 +2,7 @@
 #define VIEWHOLDER_HPP
 
 #include "mainview.hpp"
-#include "depositview.hpp"
+#include "depositsview.hpp"
 #include "appmodel.hpp"
 
 class ViewHolder

@@ -1,5 +1,5 @@
-#ifndef DEPOSITVIEW_HPP
-#define DEPOSITVIEW_HPP
+#ifndef DEPOSITSVIEW_H
+#define DEPOSITSVIEW_H
 
 #include "iview.hpp"
 
@@ -42,4 +42,4 @@ public:
     IView *keyHandler(int key) override;
 };
 
-#endif // DEPOSITVIEW_HPP
+#endif // DEPOSITSVIEW_H
