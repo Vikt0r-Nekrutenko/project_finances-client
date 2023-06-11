@@ -24,6 +24,7 @@ SOURCES += \
     sources/imenu.cpp \
     sources/ioption.cpp \
     sources/iview.cpp \
+    sources/mainview.cpp \
     sources\main.cpp
 
 # Default rules for deployment.

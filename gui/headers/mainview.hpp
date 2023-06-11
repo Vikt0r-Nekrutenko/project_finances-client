@@ -1,36 +1,17 @@
 #ifndef MAINVIEW_HPP
 #define MAINVIEW_HPP
 
-#include "ioption.hpp"
 #include "iview.hpp"
 
 class MainView : public IView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
-    MainView(AppModel *model, ViewHolder *holder)
-        : IView{model, holder}
-    {
-        mOptionsList.insert(mOptionsList.end(), {
-                                                 new options::main_view::Deposits,
-                                                 new options::deposits_view::AddNewDeposit,
-                                                 new options::main_view::Exit
-                                                });
-        mActiveMenuBar->recalculateBarWidth();
-    }
 
-    void show(stf::Renderer &renderer) override
-    {
-        IView::show(renderer);
-        renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
-        mMenuBar->show(renderer);
-        drawLogItem(renderer, mMenuBar->Width);
-    }
+    MainView(AppModel *model, ViewHolder *holder);
 
-    IView *keyHandler(int key) override
-    {
-        switchMenuBar(key);
-        return mMenuBar->keyHandler(this, key);
-    }
+    void show(stf::Renderer &renderer) override;
+
+    IView *keyHandler(int key) override;
 };
 
 #endif // MAINVIEW_HPP
