@@ -50,7 +50,7 @@ void ActiveMenu::show(stf::Renderer &renderer)
 void ActiveMenu::recalculateBarWidth()
 {
     for(size_t i = 0; i < mMenuBar->size(); ++i) {
-        if(mMenuBar->at(i)->caption().length() > Width)
+        if(mMenuBar->at(i)->caption().length() > size_t(Width))
             Width = mMenuBar->at(i)->caption().length() + 4;
     }
 }
