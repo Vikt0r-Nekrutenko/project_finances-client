@@ -3,7 +3,7 @@
 
 #include "renderer.hpp"
 #include "imenu.hpp"
-#include "iinputfield.hpp"
+#include "inputfield.hpp"
 
 class ViewHolder;
 class AppModel;
@@ -68,8 +68,8 @@ public:
     void drawInputField(stf::Renderer &renderer, int menuWidth);
 
 protected:
-
-    IInputField mInputField;
+    
+    InputField mInputField;
 };
 
 #endif // IVIEW_HPP

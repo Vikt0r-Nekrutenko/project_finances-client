@@ -22,6 +22,7 @@ DEPENDPATH += \
 SOURCES += \
     sources/depositsview.cpp \
     sources/imenu.cpp \
+    sources/inputfield.cpp \
     sources/ioption.cpp \
     sources/iview.cpp \
     sources/mainview.cpp \
@@ -42,8 +43,8 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
 HEADERS += \
     headers/appmodel.hpp \
     headers/depositview.hpp \
-    headers/iinputfield.hpp \
     headers/imenu.hpp \
+    headers/inputfield.hpp \
     headers/ioption.hpp \
     headers/iview.hpp \
     headers/mainview.hpp \

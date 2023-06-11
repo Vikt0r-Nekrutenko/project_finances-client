@@ -1,5 +1,5 @@
-#ifndef IINPUTFIELD_HPP
-#define IINPUTFIELD_HPP
+#ifndef INPUTFIELD_H
+#define INPUTFIELD_H
 
 #include "renderer.hpp"
 
@@ -12,13 +12,13 @@ constexpr int VK_BACKSPACE2 = 8;
 constexpr int VK_ESCAPE1 = 27;
 constexpr int VK_TAB1 = 9;
 
-class IInputField
+class InputField
 {
 public:
 
     std::string Text;
 
-    virtual ~IInputField() = default;
+    virtual ~InputField() = default;
 
     virtual void show(stf::Renderer &renderer, int x, int y)
     {
@@ -90,4 +90,4 @@ protected:
     int mCursor = 0;
 };
 
-#endif // IINPUTFIELD_HPP
+#endif // INPUTFIELD_H
