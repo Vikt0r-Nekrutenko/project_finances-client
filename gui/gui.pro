@@ -20,6 +20,7 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/depositsview.cpp \
     sources/imenu.cpp \
     sources/ioption.cpp \
     sources/iview.cpp \

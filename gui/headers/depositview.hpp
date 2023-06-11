@@ -28,8 +28,6 @@ class AddNewDepositView : public DepositsView, public IViewWithInputField
 {
 public:
 
-    std::string name; int balance;
-
     AddNewDepositView(AppModel *model, ViewHolder *holder)
         : DepositsView{model, holder} { }
 
@@ -37,21 +35,11 @@ public:
     {
         IView::show(renderer);
         renderer.draw({5, 1}, "Deposit View");
-        renderer.draw({5, 2}, "%s %m.00 UAH", name.c_str(), balance);
         drawLogItem(renderer, 0);
         drawInputField(renderer, 0);
     }
 
-    IView *keyHandler(int key) override
-    {
-        mInputField.keyHandler(this, key);
-        if(key == VK_ENTER1 || key == VK_ENTER2) {
-            name = mInputField.getStr();
-            balance = mInputField.getExpressionResult();
-        }
-            //return mHolder->getDepositView();
-        return this;
-    }
+    IView *keyHandler(int key) override;
 };
 
 #endif // DEPOSITVIEW_HPP
