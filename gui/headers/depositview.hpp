@@ -44,10 +44,10 @@ public:
 
     IView *keyHandler(int key) override
     {
-        mInputField->keyHandler(this, key);
+        mInputField.keyHandler(this, key);
         if(key == VK_ENTER1 || key == VK_ENTER2) {
-            name = mInputField->getStr();
-            balance = mInputField->getExpressionResult();
+            name = mInputField.getStr();
+            balance = mInputField.getExpressionResult();
         }
             //return mHolder->getDepositView();
         return this;
