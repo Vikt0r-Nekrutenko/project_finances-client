@@ -3,10 +3,10 @@
 
 #include "iview.hpp"
 
-class DepositView : public IView, public IViewWithMenuItem, public IViewWithLogItem
+class DepositsView : public IView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
-    DepositView(AppModel *model, ViewHolder *holder)
+    DepositsView(AppModel *model, ViewHolder *holder)
         : IView{model, holder} { }
 
     void show(stf::Renderer &renderer) override
@@ -24,14 +24,14 @@ public:
     }
 };
 
-class AddNewDepositView : public DepositView, public IViewWithInputField
+class AddNewDepositView : public DepositsView, public IViewWithInputField
 {
 public:
 
     std::string name; int balance;
 
     AddNewDepositView(AppModel *model, ViewHolder *holder)
-        : DepositView{model, holder} { }
+        : DepositsView{model, holder} { }
 
     void show(stf::Renderer &renderer) override
     {

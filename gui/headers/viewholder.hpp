@@ -39,7 +39,7 @@ public:
 private:
 
     MainView mMainView;
-    DepositView mDepositView;
+    DepositsView mDepositView;
     CloseView mCloseView;
     AddNewDepositView mAddNewDepositView;
 };
