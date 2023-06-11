@@ -11,13 +11,13 @@ using MenuBar = std::vector<IOption *>;
 
 constexpr int VK_ENTER1 = 13;
 constexpr int VK_ENTER2 = 10;
-constexpr size_t DEFAULT_MENU_WIDTH = 3;
+constexpr int DEFAULT_MENU_WIDTH = 3;
 
 class IMenu
 {
 public:
 
-    size_t Width = DEFAULT_MENU_WIDTH;
+    int Width = DEFAULT_MENU_WIDTH;
 
     IMenu(const MenuBar *mbar);
     virtual ~IMenu() = default;
