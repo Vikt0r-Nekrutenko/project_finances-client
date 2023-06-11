@@ -6,22 +6,12 @@
 class DepositsView : public IView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
-    DepositsView(AppModel *model, ViewHolder *holder)
-        : IView{model, holder} { }
 
-    void show(stf::Renderer &renderer) override
-    {
-        IView::show(renderer);
-        renderer.draw({5, 1}, "Deposit View");
-        mMenuBar->show(renderer);
-        drawLogItem(renderer, mMenuBar->Width);
-    }
+    DepositsView(AppModel *model, ViewHolder *holder);
 
-    IView *keyHandler(int key) override
-    {
-        switchMenuBar(key);
-        return mMenuBar->keyHandler(this, key);
-    }
+    void show(stf::Renderer &renderer) override;
+
+    IView *keyHandler(int key) override;
 };
 
 class AddNewDepositView : public DepositsView, public IViewWithInputField
