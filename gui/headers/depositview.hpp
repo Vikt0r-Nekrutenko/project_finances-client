@@ -11,6 +11,7 @@ public:
 
     void show(stf::Renderer &renderer) override
     {
+        IView::show(renderer);
         renderer.draw({5, 1}, "Deposit View");
         mMenuBar->show(renderer);
         drawLogItem(renderer, mMenuBar->Width);
@@ -32,6 +33,7 @@ public:
 
     void show(stf::Renderer &renderer) override
     {
+        IView::show(renderer);
         renderer.draw({5, 1}, "Deposit View");
         drawLogItem(renderer, 0);
         drawInputField(renderer, 0);
@@ -41,7 +43,7 @@ public:
     {
         mInputField->keyHandler(this, key);
         if(key == VK_ENTER1 || key == VK_ENTER2)
-            // TODO return mHolder->getDepositView();
+            //return mHolder->getDepositView();
         return this;
     }
 };

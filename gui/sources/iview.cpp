@@ -5,6 +5,11 @@
 IView::IView(AppModel *model, ViewHolder *holder)
     : mModel{model}, mHolder{holder} { }
 
+void IView::show(stf::Renderer &renderer)
+{
+    renderer.drawLine({0, 1}, {renderer.Size.x - 1, 1}, '-');
+}
+
 IViewWithMenuItem::~IViewWithMenuItem()
 {
     delete mActiveMenuBar;

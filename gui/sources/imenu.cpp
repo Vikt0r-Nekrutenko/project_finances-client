@@ -7,7 +7,7 @@ IMenu::IMenu(const MenuBar *mbar)
 
 void IMenu::show(stf::Renderer &renderer)
 {
-    renderer.drawLine({Width, 1}, {Width, renderer.Size.y}, '|');
+    renderer.drawLine({Width, 2}, {Width, renderer.Size.y}, '|');
 
     if(!mMenuBar->empty()) {
         renderer.drawPixel({0, 2 + Selector}, '[');

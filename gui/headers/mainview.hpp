@@ -20,6 +20,7 @@ public:
 
     void show(stf::Renderer &renderer) override
     {
+        IView::show(renderer);
         renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
         mMenuBar->show(renderer);
         drawLogItem(renderer, mMenuBar->Width);
