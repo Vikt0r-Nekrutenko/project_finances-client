@@ -69,9 +69,7 @@ public:
 
 protected:
 
-    ActiveInputField *mActiveInputField = new ActiveInputField;
-    InactiveInputField *mInactiveInputField = new InactiveInputField;
-    IInputField *mInputField = mActiveInputField;
+    IInputField mInputField;
 };
 
 #endif // IVIEW_HPP
