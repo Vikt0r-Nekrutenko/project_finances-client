@@ -35,6 +35,8 @@ IView *DepositsView::keyHandler(int key)
     return mMenuBar->keyHandler(this, key);
 }
 
+using namespace input_views::deposits_views;
+
 AddNewDepositView::AddNewDepositView(AppModel *model, ViewHolder *holder)
     : DepositsView{model, holder} { }
 

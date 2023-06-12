@@ -14,6 +14,9 @@ public:
     IView *keyHandler(int key) override;
 };
 
+namespace input_views {
+namespace deposits_views {
+
 class AddNewDepositView : public DepositsView, public IViewWithInputField
 {
 public:
@@ -26,5 +29,7 @@ public:
 
     IView *onEnterPressHandler() override;
 };
+
+}}
 
 #endif // DEPOSITSVIEW_H
