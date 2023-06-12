@@ -122,3 +122,31 @@ IView *DeleteDepositView::onEnterPressHandler()
     }
     return mHolder->getDepositView();
 }
+
+SelectDepositView::SelectDepositView(AppModel *model, ViewHolder *holder)
+    : DepositsView{model, holder} { }
+
+void SelectDepositView::show(stf::Renderer &renderer)
+{
+    DepositsView::show(renderer);
+    drawInputField(renderer, mMenuBar->Width, "Enter 'Id' or press ESC to back up");
+}
+
+IView *SelectDepositView::keyHandler(int key)
+{
+    return onKeyPressHandler(key, this, mHolder->getDepositView());
+}
+
+IView *SelectDepositView::onEnterPressHandler()
+{
+    int id = mInputField.getExpressionResult();
+
+    --id;
+
+    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+        mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+    return //mHolder->getOperationsView();
+}

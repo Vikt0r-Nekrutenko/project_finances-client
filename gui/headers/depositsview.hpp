@@ -56,6 +56,19 @@ public:
     IView *onEnterPressHandler() override;
 };
 
+class SelectDepositView : public DepositsView, public IViewWithInputField
+{
+public:
+
+    SelectDepositView(AppModel *model, ViewHolder *holder);
+
+    void show(stf::Renderer &renderer) override;
+
+    IView *keyHandler(int key) override;
+
+    IView *onEnterPressHandler() override;
+};
+
 }}
 
 #endif // DEPOSITSVIEW_H
