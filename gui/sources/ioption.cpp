@@ -36,7 +36,7 @@ IView *options::deposits_view::AddNewDeposit::execute(IView *sender)
 
 std::string options::BackToStartView::caption() const
 {
-    return "Back to main view";
+    return "Back to start view";
 }
 
 IView *options::BackToStartView::execute(IView *sender)
