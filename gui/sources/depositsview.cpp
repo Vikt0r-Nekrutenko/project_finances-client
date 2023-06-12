@@ -54,7 +54,7 @@ IView *AddNewDepositView::keyHandler(int key)
         int balance = mInputField.getExpressionResult();
 
         if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end())
-            mLogItem << "WARNING! Entered name is exist!" << lendl;
+            mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
         return mHolder->getDepositView();
     }
     return this;

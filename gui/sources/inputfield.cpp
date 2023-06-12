@@ -1,4 +1,5 @@
 #include "inputfield.hpp"
+#include "imenu.hpp"
 
 void InputField::show(stf::Renderer &renderer, int x, int y)
 {
@@ -18,6 +19,8 @@ IView *InputField::keyHandler(IView *sender, int key)
         Text.erase(--mCursor, 1);
     } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+') {
         Text.insert(mCursor++, 1, char(key));
+    } else if(key == VK_ENTER1 || key == VK_ENTER2) {
+        mBackupText = Text;
     }
     return sender;
 }

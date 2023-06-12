@@ -30,6 +30,7 @@ public:
 
 protected:
 
+    std::string mBackupText;
     int mCursor = 0;
 };
 
