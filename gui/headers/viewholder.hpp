@@ -42,6 +42,11 @@ public:
         return &mChangeBalanceView;
     }
 
+    IView *getDeleteDepositView()
+    {
+        return &mDeleteDepositView;
+    }
+
 private:
 
     MainView mMainView;
@@ -50,6 +55,7 @@ private:
 
     input_views::deposits_views::AddNewDepositView mAddNewDepositView;
     input_views::deposits_views::ChangeBalanceView mChangeBalanceView;
+    input_views::deposits_views::DeleteDepositView mDeleteDepositView;
 };
 
 #endif // VIEWHOLDER_HPP
