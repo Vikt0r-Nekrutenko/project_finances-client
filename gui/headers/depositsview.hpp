@@ -23,6 +23,8 @@ public:
     void show(stf::Renderer &renderer) override;
 
     IView *keyHandler(int key) override;
+
+    IView *onEnterPressHandler() override;
 };
 
 #endif // DEPOSITSVIEW_H

@@ -81,3 +81,14 @@ void IViewWithInputField::drawInputField(stf::Renderer &renderer, int menuWidth,
     renderer.drawText({menuWidth + 1, renderer.Size.y - 7}, title.c_str());
     mInputField.show(renderer, menuWidth + 1, renderer.Size.y - 6);
 }
+
+IView *IViewWithInputField::onKeyPressHandler(int key, IView *sender, IView *onEscPressView)
+{
+    mInputField.keyHandler(sender, key);
+    if(key == VK_ESCAPE1)
+        return onEscPressView;
+    else if(key == VK_ENTER1 || key == VK_ENTER2) {
+        return onEnterPressHandler();
+    }
+    return sender;
+}

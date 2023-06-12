@@ -72,6 +72,8 @@ class IViewWithInputField
 public:
 
     void drawInputField(stf::Renderer &renderer, int menuWidth, const std::string &title = "");
+    virtual IView *onEnterPressHandler() = 0;
+    virtual IView *onKeyPressHandler(int key, IView *sender, IView *onEscPressView);
 
 protected:
     

@@ -46,19 +46,18 @@ void AddNewDepositView::show(stf::Renderer &renderer)
 
 IView *AddNewDepositView::keyHandler(int key)
 {
-    mInputField.keyHandler(this, key);
-    if(key == VK_ESCAPE1)
-        return mHolder->getDepositView();
-    else if(key == VK_ENTER1 || key == VK_ENTER2) {
-        std::string name = mInputField.getStr();
-        int balance = mInputField.getExpressionResult();
+    return onKeyPressHandler(key, this, mHolder->getDepositView());
+}
 
-        if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end()) {
-            mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
-            mInputField.restoreText();
-            return this;
-        }
-        return mHolder->getDepositView();
+IView *AddNewDepositView::onEnterPressHandler()
+{
+    std::string name = mInputField.getStr();
+    int balance = mInputField.getExpressionResult();
+
+    if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end()) {
+        mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
+        mInputField.restoreText();
+        return this;
     }
-    return this;
+    return mHolder->getDepositView();
 }
