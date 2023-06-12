@@ -43,3 +43,13 @@ IView *options::BackToStartView::execute(IView *sender)
 {
     return sender->holder()->getStartView();
 }
+
+std::string options::deposits_view::ChangeBalance::caption() const
+{
+    return "Change balance";
+}
+
+IView *options::deposits_view::ChangeBalance::execute(IView *sender)
+{
+    return sender->holder()->getChangeBalanceView();
+}
