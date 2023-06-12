@@ -63,3 +63,13 @@ IView *options::deposits_view::DeleteDeposit::execute(IView *sender)
 {
     return sender->holder()->getDeleteDepositView();
 }
+
+std::string options::deposits_view::SelectDeposit::caption() const
+{
+    return "Select deposit";
+}
+
+IView *options::deposits_view::SelectDeposit::execute(IView *sender)
+{
+    return sender->holder()->getSelectDepositView();
+}
