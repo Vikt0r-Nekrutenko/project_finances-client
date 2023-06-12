@@ -23,9 +23,11 @@ public:
 
     LogItem &operator << (char value)
     {
-        if(value == '\n')
+        if(value == '\n') {
             push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString()});
-        return pushToStream(std::to_string(value));
+            return *this;
+        }
+        return pushToStream(std::string().append(1, value));
     }
 
 protected:

@@ -50,6 +50,9 @@ bool CloseView::isContinue() const
     return false;
 }
 
+LogItem IViewWithLogItem::mLogItem;
+int IViewWithLogItem::mLastCoreLogSize = 0;
+
 void IViewWithLogItem::drawLogItem(stf::Renderer &renderer, int menuWidth)
 {
     renderer.drawLine({menuWidth + 1, renderer.Size.y - LogHeight - 1},
@@ -57,11 +60,11 @@ void IViewWithLogItem::drawLogItem(stf::Renderer &renderer, int menuWidth)
 
     if(log().size() > size_t(mLastCoreLogSize)) {
         for(size_t i = mLastCoreLogSize; i < log().size(); ++i)
-            mLogItem.push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString(), *(log().begin() + i)});
+            mLogItem << *(log().begin() + i) << lendl;
     }
     mLastCoreLogSize = log().size();
 
-    for(int i = int(mLogItem.size()) - LogHeight, j = LogHeight; i < int(mLogItem.size()); ++i, --j) {
+    for(int i = int(mLogItem.size() - 1) - LogHeight, j = LogHeight; i < int(mLogItem.size() - 1); ++i, --j) {
         if(i < 0)
             continue;
         int offset = 0;

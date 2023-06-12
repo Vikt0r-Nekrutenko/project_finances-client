@@ -63,8 +63,8 @@ public:
 
 protected:
 
-    LogItem mLogItem;
-    int mLastCoreLogSize = 0;
+    static LogItem mLogItem;
+    static int mLastCoreLogSize;
 };
 
 class IViewWithInputField
