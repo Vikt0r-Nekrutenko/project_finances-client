@@ -4,6 +4,7 @@
 #include "renderer.hpp"
 #include "imenu.hpp"
 #include "inputfield.hpp"
+#include "logitem.hpp"
 
 class ViewHolder;
 class AppModel;
@@ -62,7 +63,7 @@ public:
 
 protected:
 
-    std::vector<std::vector<std::string>> mLogItem;
+    LogItem mLogItem;
     int mLastCoreLogSize = 0;
 };
 

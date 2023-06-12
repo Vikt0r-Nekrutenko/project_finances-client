@@ -47,5 +47,6 @@ HEADERS += \
     headers/inputfield.hpp \
     headers/ioption.hpp \
     headers/iview.hpp \
+    headers/logitem.hpp \
     headers/mainview.hpp \
     headers/viewholder.hpp
