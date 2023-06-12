@@ -26,6 +26,7 @@ SOURCES += \
     sources/ioption.cpp \
     sources/iview.cpp \
     sources/mainview.cpp \
+    sources/viewholder.cpp \
     sources\main.cpp
 
 # Default rules for deployment.

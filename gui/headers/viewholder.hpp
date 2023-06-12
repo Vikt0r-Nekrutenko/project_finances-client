@@ -9,57 +9,23 @@ class ViewHolder
 {
 public:
 
-    ViewHolder(AppModel *model)
-        : mMainView{model, this},
-        mDepositView{model, this},
-        mCloseView{model, this},
-        mAddNewDepositView{model, this},
-        mChangeBalanceView{model, this},
-        mDeleteDepositView{model, this},
-        mSelectDepositView{model, this}
-    {}
+    ViewHolder(AppModel *model);
     
-    IView *getStartView()
-    {
-        return &mMainView;
-    }
+    IView *getStartView();
+    IView *getCloseView();
 
-    IView *getDepositView()
-    {
-        return &mDepositView;
-    }
-
-    IView *getCloseView()
-    {
-        return &mCloseView;
-    }
-
-    IView *getAddNewDepositView()
-    {
-        return &mAddNewDepositView;
-    }
-
-    IView *getChangeBalanceView()
-    {
-        return &mChangeBalanceView;
-    }
-
-    IView *getDeleteDepositView()
-    {
-        return &mDeleteDepositView;
-    }
-
-    IView *getSelectDepositView()
-    {
-        return &mSelectDepositView;
-    }
+    IView *getDepositView();
+    IView *getAddNewDepositView();
+    IView *getChangeBalanceView();
+    IView *getDeleteDepositView();
+    IView *getSelectDepositView();
 
 private:
 
     MainView mMainView;
-    DepositsView mDepositView;
     CloseView mCloseView;
 
+    DepositsView mDepositView;
     input_views::deposits_views::AddNewDepositView mAddNewDepositView;
     input_views::deposits_views::ChangeBalanceView mChangeBalanceView;
     input_views::deposits_views::DeleteDepositView mDeleteDepositView;
