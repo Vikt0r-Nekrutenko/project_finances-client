@@ -8,6 +8,7 @@ DepositsView::DepositsView(AppModel *model, ViewHolder *holder)
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::deposits_view::AddNewDeposit,
+                                             new options::deposits_view::ChangeBalance,
                                              new options::BackToStartView,
                                              new options::main_view::Exit
                                             });
@@ -86,7 +87,7 @@ IView *ChangeBalanceView::onEnterPressHandler()
     --id;
 
     if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
-        mLogItem << "WARNING! Entered id [" << id << "] is wrong!" << lendl;
+        mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
