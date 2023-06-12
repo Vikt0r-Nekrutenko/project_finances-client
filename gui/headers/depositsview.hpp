@@ -18,16 +18,9 @@ class AddNewDepositView : public DepositsView, public IViewWithInputField
 {
 public:
 
-    AddNewDepositView(AppModel *model, ViewHolder *holder)
-        : DepositsView{model, holder} { }
+    AddNewDepositView(AppModel *model, ViewHolder *holder);
 
-    void show(stf::Renderer &renderer) override
-    {
-        IView::show(renderer);
-        renderer.draw({5, 1}, "Deposit View");
-        drawLogItem(renderer, 0);
-        drawInputField(renderer, 0);
-    }
+    void show(stf::Renderer &renderer) override;
 
     IView *keyHandler(int key) override;
 };

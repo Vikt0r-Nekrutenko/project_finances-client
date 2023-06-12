@@ -15,6 +15,15 @@ public:
 };
 
 namespace options {
+
+class BackToStartView : public IOption
+{
+public:
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
 namespace main_view {
 
 class Deposits : public IOption

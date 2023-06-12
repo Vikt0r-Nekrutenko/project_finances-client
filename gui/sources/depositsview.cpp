@@ -34,6 +34,15 @@ IView *DepositsView::keyHandler(int key)
     return mMenuBar->keyHandler(this, key);
 }
 
+AddNewDepositView::AddNewDepositView(AppModel *model, ViewHolder *holder)
+    : DepositsView{model, holder} { }
+
+void AddNewDepositView::show(stf::Renderer &renderer)
+{
+    DepositsView::show(renderer);
+    drawInputField(renderer, mMenuBar->Width);
+}
+
 IView *AddNewDepositView::keyHandler(int key)
 {
     mInputField.keyHandler(this, key);

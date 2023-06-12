@@ -15,8 +15,8 @@ public:
         mCloseView{model, this},
         mAddNewDepositView{model, this}
     {}
-
-    IView *getStartedView()
+    
+    IView *getStartView()
     {
         return &mMainView;
     }

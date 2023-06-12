@@ -19,7 +19,7 @@ public:
 
     App()
     {
-        currentView = viewHolder.getStartedView();
+        currentView = viewHolder.getStartView();
     }
 
     bool onUpdate(const float) override
