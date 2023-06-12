@@ -24,6 +24,8 @@ public:
 
     virtual IView *keyHandler(IView *sender, int key);
 
+    void restoreText();
+
     std::string getStr();
 
     int getExpressionResult();

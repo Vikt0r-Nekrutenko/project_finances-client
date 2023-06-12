@@ -25,6 +25,12 @@ IView *InputField::keyHandler(IView *sender, int key)
     return sender;
 }
 
+void InputField::restoreText()
+{
+    Text = mBackupText;
+    mCursor = Text.length();
+}
+
 std::string InputField::getStr()
 {
     int pos = Text.find(" ");

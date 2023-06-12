@@ -53,8 +53,11 @@ IView *AddNewDepositView::keyHandler(int key)
         std::string name = mInputField.getStr();
         int balance = mInputField.getExpressionResult();
 
-        if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end())
+        if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end()) {
             mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
+            mInputField.restoreText();
+            return this;
+        }
         return mHolder->getDepositView();
     }
     return this;
