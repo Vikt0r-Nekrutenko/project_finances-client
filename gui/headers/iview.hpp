@@ -59,13 +59,18 @@ public:
     static constexpr int LogHeight = 4;
 
     void drawLogItem(stf::Renderer &renderer, int menuWidth);
+
+protected:
+
+    std::vector<std::vector<std::string>> mLogItem;
+    int mLastCoreLogSize = 0;
 };
 
 class IViewWithInputField
 {
 public:
 
-    void drawInputField(stf::Renderer &renderer, int menuWidth);
+    void drawInputField(stf::Renderer &renderer, int menuWidth, const std::string &title = "");
 
 protected:
     

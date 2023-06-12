@@ -2,6 +2,8 @@
 #include "ioption.hpp"
 #include "headers/datamodel.hpp"
 
+#include <QDateTime>
+
 IView::IView(AppModel *model, ViewHolder *holder)
     : mModel{model}, mHolder{holder} { }
 
@@ -53,15 +55,26 @@ void IViewWithLogItem::drawLogItem(stf::Renderer &renderer, int menuWidth)
     renderer.drawLine({menuWidth + 1, renderer.Size.y - LogHeight - 1},
                       {renderer.Size.x - 1, renderer.Size.y - LogHeight - 1}, '-');
 
-    for(int i = int(log().size()) - LogHeight, j = LogHeight; i < int(log().size()); ++i, --j) {
+    if(log().size() > size_t(mLastCoreLogSize)) {
+        for(size_t i = mLastCoreLogSize; i < log().size(); ++i)
+            mLogItem.push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString(), *(log().begin() + i)});
+    }
+    mLastCoreLogSize = log().size();
+
+    for(int i = int(mLogItem.size()) - LogHeight, j = LogHeight; i < int(mLogItem.size()); ++i, --j) {
         if(i < 0)
             continue;
-        renderer.draw({menuWidth + 1, renderer.Size.y - j}, "%d.%s", i, log().at(i).c_str());
+        int offset = 0;
+        for(size_t t = 0; t < mLogItem.at(i).size(); ++t) {
+            renderer.draw({menuWidth + 1 + offset, renderer.Size.y - j}, "%s", mLogItem.at(i).at(t).c_str());
+            offset += mLogItem.at(i).at(t).length() + 1;
+        }
     }
 }
 
-void IViewWithInputField::drawInputField(stf::Renderer &renderer, int menuWidth)
+void IViewWithInputField::drawInputField(stf::Renderer &renderer, int menuWidth, const std::string &title)
 {
     renderer.drawLine({menuWidth + 1, renderer.Size.y - 7}, {renderer.Size.x - 1, renderer.Size.y - 7}, '-');
+    renderer.drawText({menuWidth + 1, renderer.Size.y - 7}, title.c_str());
     mInputField.show(renderer, menuWidth + 1, renderer.Size.y - 6);
 }

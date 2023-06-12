@@ -41,14 +41,20 @@ AddNewDepositView::AddNewDepositView(AppModel *model, ViewHolder *holder)
 void AddNewDepositView::show(stf::Renderer &renderer)
 {
     DepositsView::show(renderer);
-    drawInputField(renderer, mMenuBar->Width);
+    drawInputField(renderer, mMenuBar->Width, "Enter 'Name Balance' or press ESC to back up");
 }
 
 IView *AddNewDepositView::keyHandler(int key)
 {
     mInputField.keyHandler(this, key);
-    if(key == VK_ENTER1 || key == VK_ENTER2 || key == VK_ESCAPE1) {
+    if(key == VK_ESCAPE1)
         return mHolder->getDepositView();
+    else if(key == VK_ENTER1 || key == VK_ENTER2) {
+        std::string name = mInputField.getStr();
+        int balance = mInputField.getExpressionResult();
+
+        if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end())
+            return mHolder->getDepositView();
     }
     return this;
 }
