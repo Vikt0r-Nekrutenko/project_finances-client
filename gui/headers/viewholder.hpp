@@ -41,7 +41,8 @@ private:
     MainView mMainView;
     DepositsView mDepositView;
     CloseView mCloseView;
-    AddNewDepositView mAddNewDepositView;
+
+    input_views::deposits_views::AddNewDepositView mAddNewDepositView;
 };
 
 #endif // VIEWHOLDER_HPP

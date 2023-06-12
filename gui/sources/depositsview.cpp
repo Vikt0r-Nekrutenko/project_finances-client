@@ -63,3 +63,32 @@ IView *AddNewDepositView::onEnterPressHandler()
     }
     return mHolder->getDepositView();
 }
+
+ChangeBalanceView::ChangeBalanceView(AppModel *model, ViewHolder *holder)
+    : DepositsView{model, holder} { }
+
+void ChangeBalanceView::show(stf::Renderer &renderer)
+{
+    DepositsView::show(renderer);
+    drawInputField(renderer, mMenuBar->Width, "Enter 'Id New balance' or press ESC to back up");
+}
+
+IView *ChangeBalanceView::keyHandler(int key)
+{
+    return onKeyPressHandler(key, this, mHolder->getDepositView());
+}
+
+IView *ChangeBalanceView::onEnterPressHandler()
+{
+    int id = mInputField.getExpressionResult();
+    int balance = mInputField.getExpressionResult();
+
+    --id;
+
+    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+        mLogItem << "WARNING! Entered id [" << id << "] is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+    return mHolder->getDepositView();
+}
