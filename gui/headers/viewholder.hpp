@@ -15,7 +15,8 @@ public:
         mCloseView{model, this},
         mAddNewDepositView{model, this},
         mChangeBalanceView{model, this},
-        mDeleteDepositView{model, this}
+        mDeleteDepositView{model, this},
+        mSelectDepositView{model, this}
     {}
     
     IView *getStartView()
@@ -48,6 +49,11 @@ public:
         return &mDeleteDepositView;
     }
 
+    IView *getSelectDepositView()
+    {
+        return &mSelectDepositView;
+    }
+
 private:
 
     MainView mMainView;
@@ -57,6 +63,7 @@ private:
     input_views::deposits_views::AddNewDepositView mAddNewDepositView;
     input_views::deposits_views::ChangeBalanceView mChangeBalanceView;
     input_views::deposits_views::DeleteDepositView mDeleteDepositView;
+    input_views::deposits_views::SelectDepositView mSelectDepositView;
 };
 
 #endif // VIEWHOLDER_HPP
