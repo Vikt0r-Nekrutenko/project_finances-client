@@ -7,8 +7,9 @@ DepositsView::DepositsView(AppModel *model, ViewHolder *holder)
     : IView{model, holder}
 {
     mOptionsList.insert(mOptionsList.end(), {
-                                                new options::deposits_view::AddNewDeposit,
-                                                new options::main_view::Exit
+                                             new options::deposits_view::AddNewDeposit,
+                                             new options::BackToStartView,
+                                             new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
