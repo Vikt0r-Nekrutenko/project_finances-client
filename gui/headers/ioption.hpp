@@ -64,6 +64,15 @@ public:
 
     IView *execute(IView *sender) override;
 };
+
+class DeleteDeposit : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
 }
 }
 

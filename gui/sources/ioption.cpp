@@ -53,3 +53,13 @@ IView *options::deposits_view::ChangeBalance::execute(IView *sender)
 {
     return sender->holder()->getChangeBalanceView();
 }
+
+std::string options::deposits_view::DeleteDeposit::caption() const
+{
+    return "Delete deposit";
+}
+
+IView *options::deposits_view::DeleteDeposit::execute(IView *sender)
+{
+    return sender->holder()->getDeleteDepositView();
+}
