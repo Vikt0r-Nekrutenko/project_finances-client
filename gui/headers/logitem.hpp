@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+constexpr char lendl = '\n';
+
 class LogItem : public std::vector<std::vector<std::string>>
 {
 public:
@@ -16,6 +18,13 @@ public:
 
     LogItem &operator << (int value)
     {
+        return pushToStream(std::to_string(value));
+    }
+
+    LogItem &operator << (char value)
+    {
+        if(value == '\n')
+            push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString()});
         return pushToStream(std::to_string(value));
     }
 
