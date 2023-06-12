@@ -14,7 +14,8 @@ public:
         mDepositView{model, this},
         mCloseView{model, this},
         mAddNewDepositView{model, this},
-        mChangeBalanceView{model, this}
+        mChangeBalanceView{model, this},
+        mDeleteDepositView{model, this}
     {}
     
     IView *getStartView()
