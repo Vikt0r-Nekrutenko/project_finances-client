@@ -70,7 +70,7 @@ void IViewWithLogItem::drawLogItem(stf::Renderer &renderer, int menuWidth)
         int offset = 0;
         for(size_t t = 0; t < mLogItem.at(i).size(); ++t) {
             renderer.draw({menuWidth + 1 + offset, renderer.Size.y - j}, "%s", mLogItem.at(i).at(t).c_str());
-            offset += mLogItem.at(i).at(t).length() + 1;
+            offset += mLogItem.at(i).at(t).length();
         }
     }
 }

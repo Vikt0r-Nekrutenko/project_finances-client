@@ -24,7 +24,7 @@ public:
     LogItem &operator << (char value)
     {
         if(value == '\n') {
-            push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString()});
+            push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString(), " "});
             return *this;
         }
         return pushToStream(std::string().append(1, value));
@@ -37,7 +37,7 @@ protected:
         if(size() > 0) {
             back().push_back(str);
         } else {
-            push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString(), str});
+            push_back({QDateTime().currentDateTime().time().toString("hh:mm:ss").toStdString(), " ", str});
         }
         return *this;
     }
