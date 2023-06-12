@@ -11,6 +11,18 @@ public:
 
     LogItem &operator << (const std::string &str)
     {
+        return pushToStream(str);
+    }
+
+    LogItem &operator << (int value)
+    {
+        return pushToStream(std::to_string(value));
+    }
+
+protected:
+
+    LogItem &pushToStream(const std::string &str)
+    {
         if(size() > 0) {
             back().push_back(str);
         } else {
