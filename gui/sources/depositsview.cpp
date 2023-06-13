@@ -95,6 +95,7 @@ IView *ChangeBalanceView::onEnterPressHandler()
         mInputField.restoreText();
         return this;
     }
+    mModel->Deposits.updateBalance(id, balance);
     return mHolder->getDepositView();
 }
 
