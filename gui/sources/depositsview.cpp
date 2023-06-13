@@ -124,5 +124,7 @@ IView *SelectDepositView::onEnterPressHandler()
         mInputField.restoreText();
         return this;
     }
-    return this;//mHolder->getOperationsView();
+
+    mModel->selectDeposit(id);
+    return mHolder->getOperationsView();
 }

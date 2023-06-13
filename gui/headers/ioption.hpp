@@ -154,6 +154,11 @@ public:
 
 }
 
+namespace operations_view
+{
+
+}
+
 }
 
 #endif // IOPTION_HPP

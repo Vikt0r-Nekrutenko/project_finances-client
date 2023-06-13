@@ -28,6 +28,7 @@ SOURCES += \
     sources/ioption.cpp \
     sources/iview.cpp \
     sources/mainview.cpp \
+    sources/operationsview.cpp \
     sources/viewholder.cpp \
     sources\main.cpp
 
@@ -54,4 +55,5 @@ HEADERS += \
     headers/iview.hpp \
     headers/logitem.hpp \
     headers/mainview.hpp \
+    headers/operationsview.hpp \
     headers/viewholder.hpp

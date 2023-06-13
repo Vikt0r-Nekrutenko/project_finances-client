@@ -14,7 +14,8 @@ ViewHolder::ViewHolder(AppModel *model)
     mDeleteDebtView{model, this},
     mCategoriesView{model, this},
     mAddNewCategoryView{model, this},
-    mDeleteCategoryView{model, this}
+    mDeleteCategoryView{model, this},
+    mOperationsView{model,this}
 {}
 
 IView *ViewHolder::getStartView()
@@ -85,4 +86,9 @@ IView *ViewHolder::getAddNewCategoryView()
 IView *ViewHolder::getDeleteCategoryView()
 {
     return &mDeleteCategoryView;
+}
+
+IView *ViewHolder::getOperationsView()
+{
+    return &mOperationsView;
 }
