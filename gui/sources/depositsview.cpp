@@ -64,6 +64,8 @@ IView *AddNewDepositView::onEnterPressHandler()
         mInputField.restoreText();
         return this;
     }
+
+    mModel->Deposits.addNewDeposit(name, balance);
     return mHolder->getDepositView();
 }
 
@@ -149,5 +151,5 @@ IView *SelectDepositView::onEnterPressHandler()
         mInputField.restoreText();
         return this;
     }
-    return //mHolder->getOperationsView();
+    return this;//mHolder->getOperationsView();
 }
