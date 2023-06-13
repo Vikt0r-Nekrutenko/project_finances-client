@@ -17,6 +17,21 @@ public:
 namespace input_views {
 namespace deposits_views {
 
+class IDepositView : public DepositsView, public IViewWithInputField
+{
+public:
+
+    IDepositView(AppModel *model, ViewHolder *holder, const std::string &inputTitle);
+
+    void show(stf::Renderer &renderer) override;
+
+    IView *keyHandler(int key) override;
+
+protected:
+
+    const std::string mInputTitle;
+};
+
 class AddNewDepositView : public DepositsView, public IViewWithInputField
 {
 public:

@@ -40,6 +40,20 @@ IView *DepositsView::keyHandler(int key)
 
 using namespace input_views::deposits_views;
 
+IDepositView::IDepositView(AppModel *model, ViewHolder *holder, const std::string &inputTitle)
+    : DepositsView{model, holder}, mInputTitle{inputTitle} { }
+
+void IDepositView::show(stf::Renderer &renderer)
+{
+    DepositsView::show(renderer);
+    drawInputField(renderer, mMenuBar->Width, mInputTitle);
+}
+
+IView *IDepositView::keyHandler(int key)
+{
+    return onKeyPressHandler(key, this, mHolder->getDepositView());
+}
+
 AddNewDepositView::AddNewDepositView(AppModel *model, ViewHolder *holder)
     : DepositsView{model, holder} { }
 
