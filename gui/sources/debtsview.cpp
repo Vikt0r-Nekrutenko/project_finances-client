@@ -8,6 +8,10 @@ DebtsView::DebtsView(AppModel *model, ViewHolder *holder)
     : IView{model, holder}
 {
     mOptionsList.insert(mOptionsList.end(), {
+                                             new options::debts_view::AddNewDebt,
+                                             new options::debts_view::ChangeName,
+                                             new options::debts_view::ChangeAmount,
+                                             new options::debts_view::DeleteDebt,
                                              new options::BackToStartView,
                                              new options::main_view::Exit
                                             });

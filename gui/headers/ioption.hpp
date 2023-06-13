@@ -93,6 +93,46 @@ public:
 };
 
 }
+
+namespace debts_view {
+class AddNewDebt : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+class ChangeAmount : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+class DeleteDebt : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+class ChangeName : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+}
+
 }
 
 #endif // IOPTION_HPP

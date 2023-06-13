@@ -83,3 +83,43 @@ IView *options::deposits_view::SelectDeposit::execute(IView *sender)
 {
     return sender->holder()->getSelectDepositView();
 }
+
+std::string options::debts_view::AddNewDebt::caption() const
+{
+    return "Add new Debt";
+}
+
+IView *options::debts_view::AddNewDebt::execute(IView *sender)
+{
+    return sender->holder()->getAddNewDebtView();
+}
+
+std::string options::debts_view::ChangeAmount::caption() const
+{
+    return "Change amount";
+}
+
+IView *options::debts_view::ChangeAmount::execute(IView *sender)
+{
+    return sender->holder()->getChangeAmountView();
+}
+
+std::string options::debts_view::DeleteDebt::caption() const
+{
+    return "Delete Debt";
+}
+
+IView *options::debts_view::DeleteDebt::execute(IView *sender)
+{
+    return sender->holder()->getDeleteDebtView();
+}
+
+std::string options::debts_view::ChangeName::caption() const
+{
+    return "Change name";
+}
+
+IView *options::debts_view::ChangeName::execute(IView *sender)
+{
+    return sender->holder()->getChangeNameView();
+}
