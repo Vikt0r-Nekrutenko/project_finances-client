@@ -10,7 +10,7 @@ DepositsView::DepositsView(AppModel *model, ViewHolder *holder)
                                              new options::deposits_view::AddNewDeposit,
                                              new options::deposits_view::ChangeBalance,
                                              new options::deposits_view::SelectDeposit,
-                                             new options::deposits_view::DeleteDeposit,
+//                                             new options::deposits_view::DeleteDeposit,
                                              new options::BackToStartView,
                                              new options::main_view::Exit
                                             });
