@@ -112,7 +112,7 @@ IView *DeleteDebtView::onEnterPressHandler()
 }
 
 ChangeNameView::ChangeNameView(AppModel *model, ViewHolder *holder)
-    : IDebtView{model, holder, "Enter 'Id' or press ESC to back up"} { }
+    : IDebtView{model, holder, "Enter 'Id New name' or press ESC to back up"} { }
 
 IView *ChangeNameView::onEnterPressHandler()
 {
