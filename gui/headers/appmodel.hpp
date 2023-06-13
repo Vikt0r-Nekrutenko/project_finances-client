@@ -24,6 +24,16 @@ public:
         return mOperations;
     }
 
+    void addNewOperation(const std::string &date, int amount, const std::string &category)
+    {
+        mOperations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
+    }
+
+    void deleteOperation(int id)
+    {
+        mOperations.deleteOperation(id);
+    }
+
     void selectDeposit(size_t id)
     {
         mSelectedDeposit = &Deposits.deposits().at(id);
