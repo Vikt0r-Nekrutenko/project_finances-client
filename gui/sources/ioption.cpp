@@ -113,13 +113,3 @@ IView *options::debts_view::DeleteDebt::execute(IView *sender)
 {
     return sender->holder()->getDeleteDebtView();
 }
-
-std::string options::debts_view::ChangeName::caption() const
-{
-    return "Change name";
-}
-
-IView *options::debts_view::ChangeName::execute(IView *sender)
-{
-    return sender->holder()->getChangeNameView();
-}

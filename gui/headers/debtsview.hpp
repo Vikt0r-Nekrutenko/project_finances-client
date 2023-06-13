@@ -41,15 +41,6 @@ public:
     IView *onEnterPressHandler() override;
 };
 
-class ChangeNameView : public IDebtView
-{
-public:
-
-    ChangeNameView(AppModel *model, ViewHolder *holder);
-
-    IView *onEnterPressHandler() override;
-};
-
 class ChangeAmountView : public IDebtView
 {
 public:

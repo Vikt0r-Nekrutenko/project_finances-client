@@ -122,15 +122,6 @@ public:
     IView *execute(IView *sender) override;
 };
 
-class ChangeName : public IOption
-{
-public:
-
-    std::string caption() const override;
-
-    IView *execute(IView *sender) override;
-};
-
 }
 
 }

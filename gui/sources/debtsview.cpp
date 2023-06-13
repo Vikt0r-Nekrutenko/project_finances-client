@@ -9,7 +9,6 @@ DebtsView::DebtsView(AppModel *model, ViewHolder *holder)
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::debts_view::AddNewDebt,
-                                             new options::debts_view::ChangeName,
                                              new options::debts_view::ChangeAmount,
                                              new options::debts_view::DeleteDebt,
                                              new options::BackToStartView,
@@ -108,24 +107,5 @@ IView *DeleteDebtView::onEnterPressHandler()
     }
 
     mModel->Debts.deleteDebt(id);
-    return mHolder->getDebtsView();
-}
-
-ChangeNameView::ChangeNameView(AppModel *model, ViewHolder *holder)
-    : IDebtView{model, holder, "Enter 'Id New name' or press ESC to back up"} { }
-
-IView *ChangeNameView::onEnterPressHandler()
-{
-    int id = mInputField.getExpressionResult();
-    std::string name = mInputField.getStr();
-
-    --id;
-
-    if(id < 0 || id >= int(mModel->Debts.debts().size())) {
-        mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
-        mInputField.restoreText();
-        return this;
-    }
-    mModel->Debts.updateDebt(id, name, mModel->Debts.debts().at(id).amount());
     return mHolder->getDebtsView();
 }

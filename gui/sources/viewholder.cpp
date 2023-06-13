@@ -11,8 +11,7 @@ ViewHolder::ViewHolder(AppModel *model)
     mDebtsView{model, this},
     mAddNewDebtView{model, this},
     mChangeAmountView{model, this},
-    mDeleteDebtView{model, this},
-    mChangeNameView{model, this}
+    mDeleteDebtView{model, this}
 {}
 
 IView *ViewHolder::getStartView()
@@ -68,9 +67,4 @@ IView *ViewHolder::getChangeAmountView()
 IView *ViewHolder::getDeleteDebtView()
 {
     return &mDeleteDebtView;
-}
-
-IView *ViewHolder::getChangeNameView()
-{
-    return &mChangeNameView;
 }
