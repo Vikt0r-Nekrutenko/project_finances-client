@@ -14,6 +14,16 @@ IView *options::main_view::Deposits::execute(IView *sender)
     return sender->holder()->getDepositView();
 }
 
+std::string options::main_view::Debts::caption() const
+{
+    return "Debts";
+}
+
+IView *options::main_view::Debts::execute(IView *sender)
+{
+    return sender->holder()->getDebtsView();
+}
+
 std::string options::main_view::Exit::caption() const
 {
     return "Exit";

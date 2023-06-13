@@ -35,6 +35,15 @@ public:
     IView *execute(IView *sender) override;
 };
 
+class Debts : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
 class Exit : public IOption
 {
 public:
