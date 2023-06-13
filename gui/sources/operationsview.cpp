@@ -9,8 +9,8 @@ OperationsView::OperationsView(AppModel *model, ViewHolder *holder)
     : IView{model, holder}
 {
     mOptionsList.insert(mOptionsList.end(), {
-                                                new options::BackToStartView,
-                                                new options::main_view::Exit
+                                             new options::main_view::Deposits,
+                                             new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
@@ -22,13 +22,13 @@ void OperationsView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     OperationHandlerQuery operations(&mModel->Operations);
-    operations.select().filterByDeposit(mModel->selectedDeposit()->name());
+    operations.select().filterByDeposit(mModel->selectedDeposit()->name()).filterByCurrentMonth().filterByCurrentYear();
 
     int index = 1;
     for(const auto &operation : operations) {
         renderer.drawLine({mMenuBar->Width +  1, 1 + index}, {renderer.Size.x - 1, 1 + index}, '.');
         renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s..%m.00 UAH", operation->id(), operation->date().c_str(), operation->amount());
-        renderer.draw({mMenuBar->Width + 25, 1 + index}, "%s", operation->category().c_str());
+        renderer.draw({mMenuBar->Width + 33, 1 + index}, "%s", operation->category().c_str());
         ++index;
     }
 }
