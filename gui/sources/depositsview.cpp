@@ -124,6 +124,8 @@ IView *DeleteDepositView::onEnterPressHandler()
         mInputField.restoreText();
         return this;
     }
+
+    mModel->Deposits.deleteDeposit(id);
     return mHolder->getDepositView();
 }
 
