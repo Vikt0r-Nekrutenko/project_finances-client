@@ -55,18 +55,7 @@ IView *IDepositView::keyHandler(int key)
 }
 
 AddNewDepositView::AddNewDepositView(AppModel *model, ViewHolder *holder)
-    : DepositsView{model, holder} { }
-
-void AddNewDepositView::show(stf::Renderer &renderer)
-{
-    DepositsView::show(renderer);
-    drawInputField(renderer, mMenuBar->Width, "Enter 'Name Balance' or press ESC to back up");
-}
-
-IView *AddNewDepositView::keyHandler(int key)
-{
-    return onKeyPressHandler(key, this, mHolder->getDepositView());
-}
+    : IDepositView{model, holder, "Enter 'Name Balance' or press ESC to back up"} { }
 
 IView *AddNewDepositView::onEnterPressHandler()
 {
@@ -84,18 +73,7 @@ IView *AddNewDepositView::onEnterPressHandler()
 }
 
 ChangeBalanceView::ChangeBalanceView(AppModel *model, ViewHolder *holder)
-    : DepositsView{model, holder} { }
-
-void ChangeBalanceView::show(stf::Renderer &renderer)
-{
-    DepositsView::show(renderer);
-    drawInputField(renderer, mMenuBar->Width, "Enter 'Id New balance' or press ESC to back up");
-}
-
-IView *ChangeBalanceView::keyHandler(int key)
-{
-    return onKeyPressHandler(key, this, mHolder->getDepositView());
-}
+    : IDepositView{model, holder, "Enter 'Id New balance' or press ESC to back up"} { }
 
 IView *ChangeBalanceView::onEnterPressHandler()
 {
@@ -114,18 +92,7 @@ IView *ChangeBalanceView::onEnterPressHandler()
 }
 
 DeleteDepositView::DeleteDepositView(AppModel *model, ViewHolder *holder)
-    : DepositsView{model, holder} { }
-
-void DeleteDepositView::show(stf::Renderer &renderer)
-{
-    DepositsView::show(renderer);
-    drawInputField(renderer, mMenuBar->Width, "Enter 'Id' or press ESC to back up");
-}
-
-IView *DeleteDepositView::keyHandler(int key)
-{
-    return onKeyPressHandler(key, this, mHolder->getDepositView());
-}
+    : IDepositView{model, holder, "Enter 'Id' or press ESC to back up"} { }
 
 IView *DeleteDepositView::onEnterPressHandler()
 {
@@ -144,18 +111,7 @@ IView *DeleteDepositView::onEnterPressHandler()
 }
 
 SelectDepositView::SelectDepositView(AppModel *model, ViewHolder *holder)
-    : DepositsView{model, holder} { }
-
-void SelectDepositView::show(stf::Renderer &renderer)
-{
-    DepositsView::show(renderer);
-    drawInputField(renderer, mMenuBar->Width, "Enter 'Id' or press ESC to back up");
-}
-
-IView *SelectDepositView::keyHandler(int key)
-{
-    return onKeyPressHandler(key, this, mHolder->getDepositView());
-}
+    : IDepositView{model, holder, "Enter 'Id' or press ESC to back up"} { }
 
 IView *SelectDepositView::onEnterPressHandler()
 {

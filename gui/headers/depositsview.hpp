@@ -32,54 +32,38 @@ protected:
     const std::string mInputTitle;
 };
 
-class AddNewDepositView : public DepositsView, public IViewWithInputField
+class AddNewDepositView : public IDepositView
 {
 public:
 
     AddNewDepositView(AppModel *model, ViewHolder *holder);
 
-    void show(stf::Renderer &renderer) override;
-
-    IView *keyHandler(int key) override;
-
     IView *onEnterPressHandler() override;
 };
 
-class ChangeBalanceView : public DepositsView, public IViewWithInputField
+class ChangeBalanceView : public IDepositView
 {
 public:
 
     ChangeBalanceView(AppModel *model, ViewHolder *holder);
 
-    void show(stf::Renderer &renderer) override;
-
-    IView *keyHandler(int key) override;
-
     IView *onEnterPressHandler() override;
 };
 
-class DeleteDepositView : public DepositsView, public IViewWithInputField
+class DeleteDepositView : public IDepositView
 {
 public:
 
     DeleteDepositView(AppModel *model, ViewHolder *holder);
 
-    void show(stf::Renderer &renderer) override;
-
-    IView *keyHandler(int key) override;
-
     IView *onEnterPressHandler() override;
 };
 
-class SelectDepositView : public DepositsView, public IViewWithInputField
+class SelectDepositView : public IDepositView
 {
 public:
 
     SelectDepositView(AppModel *model, ViewHolder *holder);
-
-    void show(stf::Renderer &renderer) override;
-
-    IView *keyHandler(int key) override;
 
     IView *onEnterPressHandler() override;
 };
