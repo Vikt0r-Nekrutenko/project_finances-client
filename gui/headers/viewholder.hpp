@@ -4,6 +4,7 @@
 #include "mainview.hpp"
 #include "depositsview.hpp"
 #include "debtsview.hpp"
+#include "categoriesview.hpp"
 #include "appmodel.hpp"
 
 class ViewHolder
@@ -26,6 +27,10 @@ public:
     IView *getChangeAmountView();
     IView *getDeleteDebtView();
 
+    IView *getCategoriesView();
+    IView *getAddNewCategoryView();
+    IView *getDeleteCategoryView();
+
 private:
 
     MainView mMainView;
@@ -41,6 +46,10 @@ private:
     input_views::debts_views::AddNewDebtView mAddNewDebtView;
     input_views::debts_views::ChangeAmountView mChangeAmountView;
     input_views::debts_views::DeleteDebtView mDeleteDebtView;
+
+    CategoriesView mCategoriesView;
+    input_views::categories_views::AddNewCategoryView mAddNewCategoryView;
+    input_views::categories_views::DeleteCategoryView mDeleteCategoryView;
 };
 
 #endif // VIEWHOLDER_HPP

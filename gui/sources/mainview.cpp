@@ -9,6 +9,7 @@ MainView::MainView(AppModel *model, ViewHolder *holder)
     mOptionsList.insert(mOptionsList.end(), {
                                                 new options::main_view::Deposits,
                                                 new options::main_view::Debts,
+                                                new options::main_view::Categories,
                                                 new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();

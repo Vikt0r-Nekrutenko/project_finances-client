@@ -20,6 +20,7 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/categoriesview.cpp \
     sources/debtsview.cpp \
     sources/depositsview.cpp \
     sources/imenu.cpp \
@@ -44,6 +45,7 @@ else:win32:CONFIG(debug, debug|release): LIBS += \
 
 HEADERS += \
     headers/appmodel.hpp \
+    headers/categoriesview.hpp \
     headers/debtsview.hpp \
     headers/depositsview.hpp \
     headers/imenu.hpp \

@@ -44,6 +44,15 @@ public:
     IView *execute(IView *sender) override;
 };
 
+class Categories : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
 class Exit : public IOption
 {
 public:
@@ -114,6 +123,27 @@ public:
 };
 
 class DeleteDebt : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+}
+
+namespace categories_view {
+class AddNewCategory : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+class DeleteCategory : public IOption
 {
 public:
 

@@ -24,6 +24,16 @@ IView *options::main_view::Debts::execute(IView *sender)
     return sender->holder()->getDebtsView();
 }
 
+std::string options::main_view::Categories::caption() const
+{
+    return "Categories";
+}
+
+IView *options::main_view::Categories::execute(IView *sender)
+{
+    return sender->holder()->getCategoriesView();
+}
+
 std::string options::main_view::Exit::caption() const
 {
     return "Exit";
@@ -112,4 +122,24 @@ std::string options::debts_view::DeleteDebt::caption() const
 IView *options::debts_view::DeleteDebt::execute(IView *sender)
 {
     return sender->holder()->getDeleteDebtView();
+}
+
+std::string options::categories_view::AddNewCategory::caption() const
+{
+    return "Add new Category";
+}
+
+IView *options::categories_view::AddNewCategory::execute(IView *sender)
+{
+    return sender->holder()->getAddNewCategoryView();
+}
+
+std::string options::categories_view::DeleteCategory::caption() const
+{
+    return "Delete Category";
+}
+
+IView *options::categories_view::DeleteCategory::execute(IView *sender)
+{
+    return sender->holder()->getDeleteCategoryView();
 }
