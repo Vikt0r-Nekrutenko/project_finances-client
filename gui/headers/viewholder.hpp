@@ -22,6 +22,10 @@ public:
     IView *getSelectDepositView();
 
     IView *getDebtsView();
+    IView *getAddNewDebtView();
+    IView *getChangeAmountView();
+    IView *getChangeNameView();
+    IView *getDeleteDebtView();
 
 private:
 
@@ -35,6 +39,10 @@ private:
     input_views::deposits_views::SelectDepositView mSelectDepositView;
 
     DebtsView mDebtsView;
+    input_views::debts_views::AddNewDebtView mAddNewDebtView;
+    input_views::debts_views::ChangeAmountView mChangeAmountView;
+    input_views::debts_views::DeleteDebtView mDeleteDebtView;
+    input_views::debts_views::ChangeNameView mChangeNameView;
 };
 
 #endif // VIEWHOLDER_HPP
