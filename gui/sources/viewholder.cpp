@@ -7,7 +7,8 @@ ViewHolder::ViewHolder(AppModel *model)
     mAddNewDepositView{model, this},
     mChangeBalanceView{model, this},
     mDeleteDepositView{model, this},
-    mSelectDepositView{model, this}
+    mSelectDepositView{model, this},
+    mDebtsView{model, this}
 {}
 
 IView *ViewHolder::getStartView()
@@ -43,4 +44,9 @@ IView *ViewHolder::getDeleteDepositView()
 IView *ViewHolder::getSelectDepositView()
 {
     return &mSelectDepositView;
+}
+
+IView *ViewHolder::getDebtsView()
+{
+    return &mDebtsView;
 }

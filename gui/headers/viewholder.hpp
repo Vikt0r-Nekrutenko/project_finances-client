@@ -3,6 +3,7 @@
 
 #include "mainview.hpp"
 #include "depositsview.hpp"
+#include "debtsview.hpp"
 #include "appmodel.hpp"
 
 class ViewHolder
@@ -20,6 +21,8 @@ public:
     IView *getDeleteDepositView();
     IView *getSelectDepositView();
 
+    IView *getDebtsView();
+
 private:
 
     MainView mMainView;
@@ -30,6 +33,8 @@ private:
     input_views::deposits_views::ChangeBalanceView mChangeBalanceView;
     input_views::deposits_views::DeleteDepositView mDeleteDepositView;
     input_views::deposits_views::SelectDepositView mSelectDepositView;
+
+    DebtsView mDebtsView;
 };
 
 #endif // VIEWHOLDER_HPP
