@@ -41,7 +41,9 @@ std::string InputField::getStr()
         return result;
     } else {
         mCursor = 0;
-        return Text.erase(0, pos + 1);
+        std::string result = Text.erase(0, pos + 1);
+        Text.clear();
+        return result;
     }
 }
 
