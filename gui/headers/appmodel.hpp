@@ -13,25 +13,21 @@ public:
     DepositModelHandler Deposits;
     DebtModelHandler Debts;
     CategoryModelHandler Categories;
+    OperationModelHandler Operations;
 
     DepositModel *selectedDeposit()
     {
         return mSelectedDeposit;
     }
 
-    const OperationModelHandler &operations() const
-    {
-        return mOperations;
-    }
-
     void addNewOperation(const std::string &date, int amount, const std::string &category)
     {
-        mOperations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
+        Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
     }
 
     void deleteOperation(int id)
     {
-        mOperations.deleteOperation(id);
+        Operations.deleteOperation(id);
     }
 
     void selectDeposit(size_t id)
@@ -41,7 +37,6 @@ public:
 
 private:
 
-    OperationModelHandler mOperations;
     DepositModel *mSelectedDeposit = nullptr;
 };
 
