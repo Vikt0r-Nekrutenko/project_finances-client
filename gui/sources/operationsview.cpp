@@ -9,6 +9,8 @@ OperationsView::OperationsView(AppModel *model, ViewHolder *holder)
     : IView{model, holder}
 {
     mOptionsList.insert(mOptionsList.end(), {
+                                             new options::operations_view::AddNewOperation,
+                                             new options::operations_view::DeleteOperation,
                                              new options::main_view::Deposits,
                                              new options::main_view::Exit
                                             });
@@ -22,14 +24,16 @@ void OperationsView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     OperationHandlerQuery operations(&mModel->Operations);
-    operations.select().filterByDeposit(mModel->selectedDeposit()->name()).filterByCurrentMonth().filterByCurrentYear();
+    operations.select().filterByDeposit(mModel->selectedDeposit()->name()).filterByCurrentYear().filterByMonth(5);
 
-    int index = 1;
-    for(const auto &operation : operations) {
-        renderer.drawLine({mMenuBar->Width +  1, 1 + index}, {renderer.Size.x - 1, 1 + index}, '.');
-        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s..%m.00 UAH", operation->id(), operation->date().c_str(), operation->amount());
-        renderer.draw({mMenuBar->Width + 33, 1 + index}, "%s", operation->category().c_str());
-        ++index;
+    int y = 2;
+    for(auto operation = operations.rbegin(); operation != operations.rend(); ++operation) {
+        if(y == renderer.Size.y - LogHeight - 1)
+            break;
+        renderer.drawLine({mMenuBar->Width +  1, y}, {renderer.Size.x - 1, y}, '.');
+        renderer.draw({mMenuBar->Width +  1, y}, "%d.%s..%m.00 UAH", (*operation)->id() + 1, (*operation)->date().c_str(), (*operation)->amount());
+        renderer.draw({mMenuBar->Width + 33, y}, "%s", (*operation)->category().c_str());
+        ++y;
     }
 }
 
@@ -47,6 +51,7 @@ IOperationView::IOperationView(AppModel *model, ViewHolder *holder, const std::s
 void IOperationView::show(stf::Renderer &renderer)
 {
     OperationsView::show(renderer);
+    renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - LogHeight - 2}, {renderer.Size.x, renderer.Size.y - LogHeight - 2}, ' ');
     drawInputField(renderer, mMenuBar->Width, mInputTitle);
 }
 
@@ -56,7 +61,7 @@ IView *IOperationView::keyHandler(int key)
 }
 
 AddNewOperationView::AddNewOperationView(AppModel *model, ViewHolder *holder)
-    : IOperationView{model, holder, "Enter 'Name Type' or press ESC to back up"} { }
+    : IOperationView{model, holder, "Enter 'Date Name Type' or press ESC to back up"} { }
 
 IView *AddNewOperationView::onEnterPressHandler()
 {
@@ -69,14 +74,14 @@ IView *AddNewOperationView::onEnterPressHandler()
         mInputField.restoreText();
         return this;
     }
-    if(date.length() < 9 || (date[4] != '-' && date[7] != '-')) {
+    if(date.length() != 9 || date[4] != '-' || date[7] != '-') {
         mLogItem << "WARNING! Entered date [" << date << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
 
     mModel->addNewOperation(date, amount, category);
-    return mHolder->getCategoriesView();
+    return mHolder->getOperationsView();
 }
 
 DeleteOperationView::DeleteOperationView(AppModel *model, ViewHolder *holder)
@@ -88,12 +93,12 @@ IView *DeleteOperationView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Categories.categories().size())) {
-        mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
+    if(id < 0 || id >= int(mModel->Operations.operations().size())) {
+        mLogItem << "WARNING! Entered id [" << id + 1 << "/" << int(mModel->Operations.operations().size()) << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
 
     mModel->deleteOperation(id);
-    return mHolder->getCategoriesView();
+    return mHolder->getOperationsView();
 }

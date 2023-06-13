@@ -33,6 +33,8 @@ public:
     IView *getDeleteCategoryView();
 
     IView *getOperationsView();
+    IView *getAddNewOperationView();
+    IView *getDeleteOperationView();
 
 private:
 
@@ -55,6 +57,8 @@ private:
     input_views::categories_views::DeleteCategoryView mDeleteCategoryView;
 
     OperationsView mOperationsView;
+    input_views::operations_views::AddNewOperationView mAddNewOperationView;
+    input_views::operations_views::DeleteOperationView mDeleteOperationView;
 };
 
 #endif // VIEWHOLDER_HPP

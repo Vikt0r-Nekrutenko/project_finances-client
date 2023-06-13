@@ -154,9 +154,24 @@ public:
 
 }
 
-namespace operations_view
+namespace operations_view {
+class AddNewOperation : public IOption
 {
+public:
 
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+class DeleteOperation : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
 }
 
 }

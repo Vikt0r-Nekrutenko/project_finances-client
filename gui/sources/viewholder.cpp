@@ -15,7 +15,9 @@ ViewHolder::ViewHolder(AppModel *model)
     mCategoriesView{model, this},
     mAddNewCategoryView{model, this},
     mDeleteCategoryView{model, this},
-    mOperationsView{model,this}
+    mOperationsView{model,this},
+    mAddNewOperationView{model, this},
+    mDeleteOperationView{model, this}
 {}
 
 IView *ViewHolder::getStartView()
@@ -91,4 +93,14 @@ IView *ViewHolder::getDeleteCategoryView()
 IView *ViewHolder::getOperationsView()
 {
     return &mOperationsView;
+}
+
+IView *ViewHolder::getAddNewOperationView()
+{
+    return &mAddNewOperationView;
+}
+
+IView *ViewHolder::getDeleteOperationView()
+{
+    return &mDeleteOperationView;
 }

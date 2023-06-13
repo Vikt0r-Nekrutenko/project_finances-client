@@ -143,3 +143,23 @@ IView *options::categories_view::DeleteCategory::execute(IView *sender)
 {
     return sender->holder()->getDeleteCategoryView();
 }
+
+std::string options::operations_view::AddNewOperation::caption() const
+{
+    return "Add new Operation";
+}
+
+IView *options::operations_view::AddNewOperation::execute(IView *sender)
+{
+    return sender->holder()->getAddNewOperationView();
+}
+
+std::string options::operations_view::DeleteOperation::caption() const
+{
+    return "Delete Operation";
+}
+
+IView *options::operations_view::DeleteOperation::execute(IView *sender)
+{
+    return sender->holder()->getDeleteOperationView();
+}
