@@ -1,7 +1,8 @@
 #include "viewholder.hpp"
 
 ViewHolder::ViewHolder(AppModel *model)
-    : mMainView{model, this},
+    : mModel{model},
+    mMainView{model, this},
     mCloseView{model, this},
     mDepositView{model, this},
     mAddNewDepositView{model, this},
@@ -14,11 +15,15 @@ ViewHolder::ViewHolder(AppModel *model)
     mDeleteDebtView{model, this},
     mCategoriesView{model, this},
     mAddNewCategoryView{model, this},
-    mDeleteCategoryView{model, this},
-    mOperationsView{model,this},
-    mAddNewOperationView{model, this},
-    mDeleteOperationView{model, this}
+    mDeleteCategoryView{model, this}
 {}
+
+ViewHolder::~ViewHolder()
+{
+    delete mOperationsView;
+    delete mAddNewOperationView;
+    delete mDeleteOperationView;
+}
 
 IView *ViewHolder::getStartView()
 {
@@ -92,15 +97,21 @@ IView *ViewHolder::getDeleteCategoryView()
 
 IView *ViewHolder::getOperationsView()
 {
-    return &mOperationsView;
+    if(mOperationsView == nullptr)
+        return mOperationsView = new OperationsView(mModel, this);
+    return mOperationsView;
 }
 
 IView *ViewHolder::getAddNewOperationView()
 {
-    return &mAddNewOperationView;
+    if(mAddNewOperationView == nullptr)
+        return mAddNewOperationView = new input_views::operations_views::AddNewOperationView(mModel, this);
+    return mAddNewOperationView;
 }
 
 IView *ViewHolder::getDeleteOperationView()
 {
-    return &mDeleteOperationView;
+    if(mDeleteOperationView == nullptr)
+        return mDeleteOperationView = new input_views::operations_views::DeleteOperationView(mModel, this);
+    return mDeleteOperationView;
 }

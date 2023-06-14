@@ -1,12 +1,11 @@
 #include "operationsview.hpp"
 #include "appmodel.hpp"
-#include "headers/queryresult.hpp"
 #include "ioption.hpp"
 #include "viewholder.hpp"
 
 
 OperationsView::OperationsView(AppModel *model, ViewHolder *holder)
-    : IView{model, holder}
+    : IView{model, holder}, mOperationsList{&model->Operations}
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::operations_view::AddNewOperation,
@@ -15,6 +14,10 @@ OperationsView::OperationsView(AppModel *model, ViewHolder *holder)
                                              new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
+    mOperationsList.select().
+        filterByDeposit(mModel->selectedDeposit()->name()).
+        filterByCurrentYear().
+        filterByMonth(5);
 }
 
 void OperationsView::show(stf::Renderer &renderer)
@@ -23,11 +26,8 @@ void OperationsView::show(stf::Renderer &renderer)
     mMenuBar->show(renderer);
     drawLogItem(renderer, mMenuBar->Width);
 
-    OperationHandlerQuery operations(&mModel->Operations);
-    operations.select().filterByDeposit(mModel->selectedDeposit()->name()).filterByCurrentYear().filterByMonth(5);
-
     int y = 2;
-    for(auto operation = operations.rbegin(); operation != operations.rend(); ++operation) {
+    for(auto operation = mOperationsList.rbegin(); operation != mOperationsList.rend(); ++operation) {
         if(y == renderer.Size.y - LogHeight - 1)
             break;
         renderer.drawLine({mMenuBar->Width +  1, y}, {renderer.Size.x - 1, y}, '.');

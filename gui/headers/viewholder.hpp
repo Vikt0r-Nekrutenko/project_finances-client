@@ -13,6 +13,7 @@ class ViewHolder
 public:
 
     ViewHolder(AppModel *model);
+    ~ViewHolder();
     
     IView *getStartView();
     IView *getCloseView();
@@ -38,6 +39,8 @@ public:
 
 private:
 
+    AppModel *mModel;
+
     MainView mMainView;
     CloseView mCloseView;
 
@@ -56,9 +59,9 @@ private:
     input_views::categories_views::AddNewCategoryView mAddNewCategoryView;
     input_views::categories_views::DeleteCategoryView mDeleteCategoryView;
 
-    OperationsView mOperationsView;
-    input_views::operations_views::AddNewOperationView mAddNewOperationView;
-    input_views::operations_views::DeleteOperationView mDeleteOperationView;
+    OperationsView *mOperationsView = nullptr;
+    input_views::operations_views::AddNewOperationView *mAddNewOperationView = nullptr;
+    input_views::operations_views::DeleteOperationView *mDeleteOperationView = nullptr;
 };
 
 #endif // VIEWHOLDER_HPP
