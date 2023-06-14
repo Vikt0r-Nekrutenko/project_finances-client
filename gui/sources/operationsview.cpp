@@ -10,14 +10,11 @@ OperationsView::OperationsView(AppModel *model, ViewHolder *holder)
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::operations_view::AddNewOperation,
                                              new options::operations_view::DeleteOperation,
+                                             new options::operations_view::SelectOperations,
                                              new options::main_view::Deposits,
                                              new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
-    mOperationsList.select().
-        filterByDeposit(mModel->selectedDeposit()->name()).
-        filterByCurrentYear().
-        filterByMonth(5);
 }
 
 void OperationsView::show(stf::Renderer &renderer)
@@ -41,6 +38,18 @@ IView *OperationsView::keyHandler(int key)
 {
     switchMenuBar(key);
     return mMenuBar->keyHandler(this, key);
+}
+
+IView *OperationsView::recalculateList()
+{
+
+    mOperationsList.select().filterByDeposit(mModel->selectedDeposit()->name());
+    if(mModel->SelectedYear == 0 || mModel->SelectedMonth == 0) {
+        mOperationsList.filterByCurrentYear().filterByCurrentMonth();
+        return this;
+    }
+    mOperationsList.filterByYear(mModel->SelectedYear).filterByMonth(mModel->SelectedMonth);
+    return this;
 }
 
 using namespace input_views::operations_views;
@@ -100,5 +109,24 @@ IView *DeleteOperationView::onEnterPressHandler()
     }
 
     mModel->deleteOperation(id);
+    return mHolder->getOperationsView();
+}
+
+SelectOperationsView::SelectOperationsView(AppModel *model, ViewHolder *holder)
+    : IOperationView{model, holder, "Enter 'Year Month' or press ESC to back up"} { }
+
+IView *SelectOperationsView::onEnterPressHandler()
+{
+    int year = mInputField.getExpressionResult();
+    int month = mInputField.getExpressionResult();
+
+    if(year < 0 || month < 0) {
+        mLogItem << "WARNING! Entered date is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->SelectedYear = year;
+    mModel->SelectedMonth = month;
     return mHolder->getOperationsView();
 }

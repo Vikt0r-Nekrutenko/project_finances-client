@@ -36,6 +36,7 @@ public:
     IView *getOperationsView();
     IView *getAddNewOperationView();
     IView *getDeleteOperationView();
+    IView *getSelectOperationsView();
 
 private:
 
@@ -62,6 +63,7 @@ private:
     OperationsView *mOperationsView = nullptr;
     input_views::operations_views::AddNewOperationView *mAddNewOperationView = nullptr;
     input_views::operations_views::DeleteOperationView *mDeleteOperationView = nullptr;
+    input_views::operations_views::SelectOperationsView *mSelectOperationsView = nullptr;
 };
 
 #endif // VIEWHOLDER_HPP

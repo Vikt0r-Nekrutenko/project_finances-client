@@ -23,6 +23,7 @@ ViewHolder::~ViewHolder()
     delete mOperationsView;
     delete mAddNewOperationView;
     delete mDeleteOperationView;
+    delete mSelectOperationsView;
 }
 
 IView *ViewHolder::getStartView()
@@ -97,21 +98,29 @@ IView *ViewHolder::getDeleteCategoryView()
 
 IView *ViewHolder::getOperationsView()
 {
-    if(mOperationsView == nullptr)
-        return mOperationsView = new OperationsView(mModel, this);
-    return mOperationsView;
+    if(mOperationsView == nullptr) {
+        mOperationsView = new OperationsView(mModel, this);
+    }
+    return mOperationsView->recalculateList();
 }
 
 IView *ViewHolder::getAddNewOperationView()
 {
     if(mAddNewOperationView == nullptr)
-        return mAddNewOperationView = new input_views::operations_views::AddNewOperationView(mModel, this);
-    return mAddNewOperationView;
+        mAddNewOperationView = new input_views::operations_views::AddNewOperationView(mModel, this);
+    return mAddNewOperationView->recalculateList();
 }
 
 IView *ViewHolder::getDeleteOperationView()
 {
     if(mDeleteOperationView == nullptr)
-        return mDeleteOperationView = new input_views::operations_views::DeleteOperationView(mModel, this);
-    return mDeleteOperationView;
+        mDeleteOperationView = new input_views::operations_views::DeleteOperationView(mModel, this);
+    return mDeleteOperationView->recalculateList();
+}
+
+IView *ViewHolder::getSelectOperationsView()
+{
+    if(mSelectOperationsView == nullptr)
+        mSelectOperationsView = new input_views::operations_views::SelectOperationsView(mModel, this);
+    return mSelectOperationsView->recalculateList();
 }

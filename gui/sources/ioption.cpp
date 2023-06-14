@@ -163,3 +163,13 @@ IView *options::operations_view::DeleteOperation::execute(IView *sender)
 {
     return sender->holder()->getDeleteOperationView();
 }
+
+std::string options::operations_view::SelectOperations::caption() const
+{
+    return "Select Operations";
+}
+
+IView *options::operations_view::SelectOperations::execute(IView *sender)
+{
+    return sender->holder()->getSelectOperationsView();
+}

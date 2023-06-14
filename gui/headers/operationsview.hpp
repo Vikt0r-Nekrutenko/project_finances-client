@@ -14,6 +14,8 @@ public:
 
     IView *keyHandler(int key) override;
 
+    IView *recalculateList();
+
 protected:
 
     OperationHandlerQuery mOperationsList;
@@ -51,6 +53,15 @@ class DeleteOperationView : public IOperationView
 public:
 
     DeleteOperationView(AppModel *model, ViewHolder *holder);
+
+    IView *onEnterPressHandler() override;
+};
+
+class SelectOperationsView : public IOperationView
+{
+public:
+
+    SelectOperationsView(AppModel *model, ViewHolder *holder);
 
     IView *onEnterPressHandler() override;
 };

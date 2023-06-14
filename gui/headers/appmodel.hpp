@@ -38,6 +38,10 @@ public:
 private:
 
     DepositModel *mSelectedDeposit = nullptr;
+
+public:
+
+    int SelectedYear = 0, SelectedMonth = 0;
 };
 
 #endif // APPMODEL_HPP
