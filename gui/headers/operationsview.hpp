@@ -4,11 +4,11 @@
 #include "iview.hpp"
 #include "headers/queryresult.hpp"
 
-class OperationsView : public IView, public IViewWithMenuItem, public IViewWithLogItem
+class OperationsView : public IView, public ISubView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
 
-    OperationsView(AppModel *model, ViewHolder *holder);
+    OperationsView(AppModel *model, IView *parent);
 
     void show(stf::Renderer &renderer) override;
 
@@ -28,7 +28,7 @@ class IOperationView : public OperationsView, public IViewWithInputField
 {
 public:
 
-    IOperationView(AppModel *model, ViewHolder *holder, const std::string &inputTitle);
+    IOperationView(AppModel *model, IView *parent, const std::string &inputTitle);
 
     void show(stf::Renderer &renderer) override;
 
@@ -43,7 +43,7 @@ class AddNewOperationView : public IOperationView
 {
 public:
 
-    AddNewOperationView(AppModel *model, ViewHolder *holder);
+    AddNewOperationView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -52,7 +52,7 @@ class DeleteOperationView : public IOperationView
 {
 public:
 
-    DeleteOperationView(AppModel *model, ViewHolder *holder);
+    DeleteOperationView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -61,7 +61,7 @@ class SelectOperationsView : public IOperationView
 {
 public:
 
-    SelectOperationsView(AppModel *model, ViewHolder *holder);
+    SelectOperationsView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };

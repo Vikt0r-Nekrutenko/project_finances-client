@@ -1,11 +1,10 @@
 #include "operationsview.hpp"
 #include "appmodel.hpp"
 #include "ioption.hpp"
-#include "viewholder.hpp"
 
 
-OperationsView::OperationsView(AppModel *model, ViewHolder *holder)
-    : IView{model, holder}, mOperationsList{&model->Operations}
+OperationsView::OperationsView(AppModel *model, IView *parent)
+    : IView{model}, ISubView{parent}, mOperationsList{&model->Operations}
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::operations_view::AddNewOperation,
@@ -54,8 +53,8 @@ IView *OperationsView::recalculateList()
 
 using namespace input_views::operations_views;
 
-IOperationView::IOperationView(AppModel *model, ViewHolder *holder, const std::string &inputTitle)
-    : OperationsView{model, holder}, mInputTitle{inputTitle} { }
+IOperationView::IOperationView(AppModel *model, IView *parent, const std::string &inputTitle)
+    : OperationsView{model, parent}, mInputTitle{inputTitle} { }
 
 void IOperationView::show(stf::Renderer &renderer)
 {
@@ -66,11 +65,11 @@ void IOperationView::show(stf::Renderer &renderer)
 
 IView *IOperationView::keyHandler(int key)
 {
-    return onKeyPressHandler(key, this, mHolder->getOperationsView());
+    return onKeyPressHandler(key, this, mParent);
 }
 
-AddNewOperationView::AddNewOperationView(AppModel *model, ViewHolder *holder)
-    : IOperationView{model, holder, "Enter 'Date Name Type' or press ESC to back up"} { }
+AddNewOperationView::AddNewOperationView(AppModel *model, IView *parent)
+    : IOperationView{model, parent, "Enter 'Date Name Type' or press ESC to back up"} { }
 
 IView *AddNewOperationView::onEnterPressHandler()
 {
@@ -90,11 +89,11 @@ IView *AddNewOperationView::onEnterPressHandler()
     }
 
     mModel->addNewOperation(date, amount, category);
-    return mHolder->getOperationsView();
+    return mParent;
 }
 
-DeleteOperationView::DeleteOperationView(AppModel *model, ViewHolder *holder)
-    : IOperationView{model, holder, "Enter 'Id' or press ESC to back up"} { }
+DeleteOperationView::DeleteOperationView(AppModel *model, IView *parent)
+    : IOperationView{model, parent, "Enter 'Id' or press ESC to back up"} { }
 
 IView *DeleteOperationView::onEnterPressHandler()
 {
@@ -109,11 +108,11 @@ IView *DeleteOperationView::onEnterPressHandler()
     }
 
     mModel->deleteOperation(id);
-    return mHolder->getOperationsView();
+    return mParent;
 }
 
-SelectOperationsView::SelectOperationsView(AppModel *model, ViewHolder *holder)
-    : IOperationView{model, holder, "Enter 'Year Month' or press ESC to back up"} { }
+SelectOperationsView::SelectOperationsView(AppModel *model, IView *parent)
+    : IOperationView{model, parent, "Enter 'Year Month' or press ESC to back up"} { }
 
 IView *SelectOperationsView::onEnterPressHandler()
 {
@@ -128,5 +127,5 @@ IView *SelectOperationsView::onEnterPressHandler()
 
     mModel->SelectedYear = year;
     mModel->SelectedMonth = month;
-    return mHolder->getOperationsView();
+    return mParent;
 }
