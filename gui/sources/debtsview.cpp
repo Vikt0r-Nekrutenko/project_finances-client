@@ -1,11 +1,10 @@
 #include "debtsview.hpp"
 #include "appmodel.hpp"
 #include "ioption.hpp"
-#include "viewholder.hpp"
 
 
-DebtsView::DebtsView(AppModel *model, ViewHolder *holder)
-    : IView{model, holder}
+DebtsView::DebtsView(AppModel *model, IView *parent)
+    : IView{model}, ISubView{parent}
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::debts_view::AddNewDebt,
@@ -40,8 +39,8 @@ IView *DebtsView::keyHandler(int key)
 
 using namespace input_views::debts_views;
 
-IDebtView::IDebtView(AppModel *model, ViewHolder *holder, const std::string &inputTitle)
-    : DebtsView{model, holder}, mInputTitle{inputTitle} { }
+IDebtView::IDebtView(AppModel *model, IView *parent, const std::string &inputTitle)
+    : DebtsView{model, parent}, mInputTitle{inputTitle} { }
 
 void IDebtView::show(stf::Renderer &renderer)
 {
@@ -51,11 +50,11 @@ void IDebtView::show(stf::Renderer &renderer)
 
 IView *IDebtView::keyHandler(int key)
 {
-    return onKeyPressHandler(key, this, mHolder->getDebtsView());
+    return onKeyPressHandler(key, this, mParent);
 }
 
-AddNewDebtView::AddNewDebtView(AppModel *model, ViewHolder *holder)
-    : IDebtView{model, holder, "Enter 'Name Amount' or press ESC to back up"} { }
+AddNewDebtView::AddNewDebtView(AppModel *model, IView *parent)
+    : IDebtView{model, parent, "Enter 'Name Amount' or press ESC to back up"} { }
 
 IView *AddNewDebtView::onEnterPressHandler()
 {
@@ -69,11 +68,11 @@ IView *AddNewDebtView::onEnterPressHandler()
     }
 
     mModel->Debts.addNewDebt(name, amount);
-    return mHolder->getDebtsView();
+    return mParent;
 }
 
-ChangeAmountView::ChangeAmountView(AppModel *model, ViewHolder *holder)
-    : IDebtView{model, holder, "Enter 'Id New amount' or press ESC to back up"} { }
+ChangeAmountView::ChangeAmountView(AppModel *model, IView *parent)
+    : IDebtView{model, parent, "Enter 'Id New amount' or press ESC to back up"} { }
 
 IView *ChangeAmountView::onEnterPressHandler()
 {
@@ -88,11 +87,11 @@ IView *ChangeAmountView::onEnterPressHandler()
         return this;
     }
     mModel->Debts.updateDebt(id, mModel->Debts.debts().at(id).name(), amount);
-    return mHolder->getDebtsView();
+    return mParent;
 }
 
-DeleteDebtView::DeleteDebtView(AppModel *model, ViewHolder *holder)
-    : IDebtView{model, holder, "Enter 'Id' or press ESC to back up"} { }
+DeleteDebtView::DeleteDebtView(AppModel *model, IView *parent)
+    : IDebtView{model, parent, "Enter 'Id' or press ESC to back up"} { }
 
 IView *DeleteDebtView::onEnterPressHandler()
 {
@@ -107,5 +106,5 @@ IView *DeleteDebtView::onEnterPressHandler()
     }
 
     mModel->Debts.deleteDebt(id);
-    return mHolder->getDebtsView();
+    return mParent;
 }

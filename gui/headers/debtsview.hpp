@@ -3,11 +3,11 @@
 
 #include "iview.hpp"
 
-class DebtsView : public IView, public IViewWithMenuItem, public IViewWithLogItem
+class DebtsView : public IView, public ISubView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
 
-    DebtsView(AppModel *model, ViewHolder *holder);
+    DebtsView(AppModel *model, IView *parent);
 
     void show(stf::Renderer &renderer) override;
 
@@ -21,7 +21,7 @@ class IDebtView : public DebtsView, public IViewWithInputField
 {
 public:
 
-    IDebtView(AppModel *model, ViewHolder *holder, const std::string &inputTitle);
+    IDebtView(AppModel *model, IView *parent, const std::string &inputTitle);
 
     void show(stf::Renderer &renderer) override;
 
@@ -36,7 +36,7 @@ class AddNewDebtView : public IDebtView
 {
 public:
 
-    AddNewDebtView(AppModel *model, ViewHolder *holder);
+    AddNewDebtView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -45,7 +45,7 @@ class ChangeAmountView : public IDebtView
 {
 public:
 
-    ChangeAmountView(AppModel *model, ViewHolder *holder);
+    ChangeAmountView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -54,7 +54,7 @@ class DeleteDebtView : public IDebtView
 {
 public:
 
-    DeleteDebtView(AppModel *model, ViewHolder *holder);
+    DeleteDebtView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
