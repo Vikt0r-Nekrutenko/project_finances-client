@@ -3,11 +3,11 @@
 
 #include "iview.hpp"
 
-class DepositsView : public IView, public IViewWithMenuItem, public IViewWithLogItem
+class DepositsView : public IView, public ISubView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
 
-    DepositsView(AppModel *model, ViewHolder *holder);
+    DepositsView(AppModel *model, IView *parent);
 
     void show(stf::Renderer &renderer) override;
 
@@ -21,7 +21,7 @@ class IDepositView : public DepositsView, public IViewWithInputField
 {
 public:
 
-    IDepositView(AppModel *model, ViewHolder *holder, const std::string &inputTitle);
+    IDepositView(AppModel *model, IView *parent, const std::string &inputTitle);
 
     void show(stf::Renderer &renderer) override;
 
@@ -36,7 +36,7 @@ class AddNewDepositView : public IDepositView
 {
 public:
 
-    AddNewDepositView(AppModel *model, ViewHolder *holder);
+    AddNewDepositView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -45,7 +45,7 @@ class ChangeBalanceView : public IDepositView
 {
 public:
 
-    ChangeBalanceView(AppModel *model, ViewHolder *holder);
+    ChangeBalanceView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -54,7 +54,7 @@ class DeleteDepositView : public IDepositView
 {
 public:
 
-    DeleteDepositView(AppModel *model, ViewHolder *holder);
+    DeleteDepositView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -63,7 +63,7 @@ class SelectDepositView : public IDepositView
 {
 public:
 
-    SelectDepositView(AppModel *model, ViewHolder *holder);
+    SelectDepositView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };

@@ -1,10 +1,9 @@
 #include "depositsview.hpp"
 #include "ioption.hpp"
-#include "viewholder.hpp"
 #include "appmodel.hpp"
 
-DepositsView::DepositsView(AppModel *model, ViewHolder *holder)
-    : IView{model, holder}
+DepositsView::DepositsView(AppModel *model, IView *parent)
+    : IView{model}, ISubView{parent}
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::deposits_view::AddNewDeposit,
@@ -40,8 +39,8 @@ IView *DepositsView::keyHandler(int key)
 
 using namespace input_views::deposits_views;
 
-IDepositView::IDepositView(AppModel *model, ViewHolder *holder, const std::string &inputTitle)
-    : DepositsView{model, holder}, mInputTitle{inputTitle} { }
+IDepositView::IDepositView(AppModel *model, IView *parent, const std::string &inputTitle)
+    : DepositsView{model, parent}, mInputTitle{inputTitle} { }
 
 void IDepositView::show(stf::Renderer &renderer)
 {
@@ -51,11 +50,11 @@ void IDepositView::show(stf::Renderer &renderer)
 
 IView *IDepositView::keyHandler(int key)
 {
-    return onKeyPressHandler(key, this, mHolder->getDepositView());
+    return onKeyPressHandler(key, this, mParent);
 }
 
-AddNewDepositView::AddNewDepositView(AppModel *model, ViewHolder *holder)
-    : IDepositView{model, holder, "Enter 'Name Balance' or press ESC to back up"} { }
+AddNewDepositView::AddNewDepositView(AppModel *model, IView *parent)
+    : IDepositView{model, parent, "Enter 'Name Balance' or press ESC to back up"} { }
 
 IView *AddNewDepositView::onEnterPressHandler()
 {
@@ -69,11 +68,11 @@ IView *AddNewDepositView::onEnterPressHandler()
     }
 
     mModel->Deposits.addNewDeposit(name, balance);
-    return mHolder->getDepositView();
+    return mParent;
 }
 
-ChangeBalanceView::ChangeBalanceView(AppModel *model, ViewHolder *holder)
-    : IDepositView{model, holder, "Enter 'Id New balance' or press ESC to back up"} { }
+ChangeBalanceView::ChangeBalanceView(AppModel *model, IView *parent)
+    : IDepositView{model, parent, "Enter 'Id New balance' or press ESC to back up"} { }
 
 IView *ChangeBalanceView::onEnterPressHandler()
 {
@@ -88,11 +87,11 @@ IView *ChangeBalanceView::onEnterPressHandler()
         return this;
     }
     mModel->Deposits.updateBalance(id, balance);
-    return mHolder->getDepositView();
+    return mParent;
 }
 
-DeleteDepositView::DeleteDepositView(AppModel *model, ViewHolder *holder)
-    : IDepositView{model, holder, "Enter 'Id' or press ESC to back up"} { }
+DeleteDepositView::DeleteDepositView(AppModel *model, IView *parent)
+    : IDepositView{model, parent, "Enter 'Id' or press ESC to back up"} { }
 
 IView *DeleteDepositView::onEnterPressHandler()
 {
@@ -107,11 +106,11 @@ IView *DeleteDepositView::onEnterPressHandler()
     }
 
     mModel->Deposits.deleteDeposit(id);
-    return mHolder->getDepositView();
+    return mParent;
 }
 
-SelectDepositView::SelectDepositView(AppModel *model, ViewHolder *holder)
-    : IDepositView{model, holder, "Enter 'Id' or press ESC to back up"} { }
+SelectDepositView::SelectDepositView(AppModel *model, IView *parent)
+    : IDepositView{model, parent, "Enter 'Id' or press ESC to back up"} { }
 
 IView *SelectDepositView::onEnterPressHandler()
 {
@@ -126,5 +125,5 @@ IView *SelectDepositView::onEnterPressHandler()
     }
 
     mModel->selectDeposit(id);
-    return mHolder->getOperationsView();
+    return new OperationsView(mModel, mParent);
 }
