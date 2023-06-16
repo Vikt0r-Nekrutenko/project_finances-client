@@ -7,7 +7,7 @@ class MainView : public IView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
 
-    MainView(AppModel *model, ViewHolder *holder);
+    MainView(AppModel *model);
 
     void show(stf::Renderer &renderer) override;
 

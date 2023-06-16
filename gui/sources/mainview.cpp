@@ -3,8 +3,8 @@
 
 
 
-MainView::MainView(AppModel *model, ViewHolder *holder)
-    : IView{model, holder}
+MainView::MainView(AppModel *model)
+    : IView{model}
 {
     mOptionsList.insert(mOptionsList.end(), {
                                                 new options::main_view::Deposits,
