@@ -1,10 +1,6 @@
 #include <QCoreApplication>
 #include <iostream>
 
-#include "headers/categorymodelhandler.hpp"
-#include "headers/operationmodelhandler.hpp"
-#include "headers/debtmodelhandler.hpp"
-
 #include "window.hpp"
 #include "viewholder.hpp"
 #include "mainview.hpp"
@@ -26,7 +22,7 @@ public:
     bool onUpdate(const float) override
     {
         viewHolder.currentView()->show(renderer);
-        renderer.drawNumber({20, 20}, viewHolder.viewsCount());
+        renderer.draw({renderer.Size.x - 20, 0}, "Views [Count] : [%d]", viewHolder.viewsCount());
         return viewHolder.currentView()->isContinue();
     }
 
