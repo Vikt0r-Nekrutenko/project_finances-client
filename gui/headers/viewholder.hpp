@@ -1,7 +1,6 @@
 #ifndef VIEWHOLDER_HPP
 #define VIEWHOLDER_HPP
 
-#include "renderer.hpp"
 #include <list>
 
 class IView;
@@ -12,8 +11,7 @@ public:
 
     ~ViewHolder();
     void operator = (IView *view);
-    void show(stf::Renderer &renderer);
-    IView *keyHandler(int key);
+    IView *currentView();
 
 private:
 

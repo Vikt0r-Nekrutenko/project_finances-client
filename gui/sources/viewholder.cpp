@@ -24,3 +24,7 @@ void ViewHolder::operator =(IView *view)
     }
 }
 
+IView *ViewHolder::currentView()
+{
+    return mCurrentView;
+}
