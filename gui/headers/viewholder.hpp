@@ -10,8 +10,9 @@ class ViewHolder
 public:
 
     ~ViewHolder();
-    void operator = (IView *view);
+    IView *operator = (IView *view);
     IView *currentView();
+    int viewsCount() const;
 
 private:
 

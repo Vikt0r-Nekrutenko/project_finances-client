@@ -26,6 +26,7 @@ public:
     bool onUpdate(const float) override
     {
         viewHolder.currentView()->show(renderer);
+        renderer.drawNumber({20, 20}, viewHolder.viewsCount());
         return viewHolder.currentView()->isContinue();
     }
 
