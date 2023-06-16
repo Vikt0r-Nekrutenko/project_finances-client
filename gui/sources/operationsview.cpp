@@ -129,3 +129,23 @@ IView *SelectOperationsView::onEnterPressHandler()
     mModel->SelectedMonth = month;
     return mParent;
 }
+
+ChangeOperationView::ChangeOperationView(AppModel *model, IView *parent)
+    : IOperationView{model, parent, "Enter 'Id' or press ESC to back up"} { }
+
+IView *ChangeOperationView::onEnterPressHandler()
+{
+    int id = mInputField.getExpressionResult();
+
+    --id;
+
+    if(id < 0 || id >= int(mModel->Operations.operations().size())) {
+        mLogItem << "WARNING! Entered id [" << id + 1 << "/" << int(mModel->Operations.operations().size()) << "] is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->selectOperation(id);
+    return mParent;//new ChangeSelectedOperationView(model, mParent);
+}
+

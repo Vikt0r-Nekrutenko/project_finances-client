@@ -66,6 +66,15 @@ public:
     IView *onEnterPressHandler() override;
 };
 
+class ChangeOperationView : public IOperationView
+{
+public:
+
+    ChangeOperationView(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
 }}
 
 #endif // OPERATIONSVIEW_HPP
