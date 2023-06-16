@@ -1,6 +1,7 @@
 #include "depositsview.hpp"
 #include "ioption.hpp"
 #include "appmodel.hpp"
+#include "operationsview.hpp"
 
 DepositsView::DepositsView(AppModel *model, IView *parent)
     : IView{model}, ISubView{parent}

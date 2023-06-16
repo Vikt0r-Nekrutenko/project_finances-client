@@ -1,7 +1,9 @@
 #include "ioption.hpp"
-#include "iview.hpp"
-#include "viewholder.hpp"
-
+#include "depositsview.hpp"
+#include "debtsview.hpp"
+#include "mainview.hpp"
+#include "operationsview.hpp"
+#include "categoriesview.hpp"
 
 
 std::string options::main_view::Deposits::caption() const
@@ -11,7 +13,7 @@ std::string options::main_view::Deposits::caption() const
 
 IView *options::main_view::Deposits::execute(IView *sender)
 {
-    return sender->holder()->getDepositView();
+    return new DepositsView(sender->model(), sender);
 }
 
 std::string options::main_view::Debts::caption() const
@@ -21,7 +23,7 @@ std::string options::main_view::Debts::caption() const
 
 IView *options::main_view::Debts::execute(IView *sender)
 {
-    return sender->holder()->getDebtsView();
+    return new DebtsView(sender->model(), sender);
 }
 
 std::string options::main_view::Categories::caption() const
@@ -31,7 +33,7 @@ std::string options::main_view::Categories::caption() const
 
 IView *options::main_view::Categories::execute(IView *sender)
 {
-    return sender->holder()->getCategoriesView();
+    return new CategoriesView(sender->model(), sender);
 }
 
 std::string options::main_view::Exit::caption() const
@@ -41,7 +43,7 @@ std::string options::main_view::Exit::caption() const
 
 IView *options::main_view::Exit::execute(IView *sender)
 {
-    return sender->holder()->getCloseView();
+    return new CloseView(sender->model());
 }
 
 std::string options::deposits_view::AddNewDeposit::caption() const
@@ -51,7 +53,7 @@ std::string options::deposits_view::AddNewDeposit::caption() const
 
 IView *options::deposits_view::AddNewDeposit::execute(IView *sender)
 {
-    return sender->holder()->getAddNewDepositView();
+    return new input_views::deposits_views::AddNewDepositView(sender->model(), sender);
 }
 
 std::string options::BackToStartView::caption() const
@@ -61,7 +63,7 @@ std::string options::BackToStartView::caption() const
 
 IView *options::BackToStartView::execute(IView *sender)
 {
-    return sender->holder()->getStartView();
+    return new MainView(sender->model());
 }
 
 std::string options::deposits_view::ChangeBalance::caption() const
@@ -71,7 +73,7 @@ std::string options::deposits_view::ChangeBalance::caption() const
 
 IView *options::deposits_view::ChangeBalance::execute(IView *sender)
 {
-    return sender->holder()->getChangeBalanceView();
+    return new input_views::deposits_views::ChangeBalanceView(sender->model(), sender);
 }
 
 std::string options::deposits_view::DeleteDeposit::caption() const
@@ -81,7 +83,7 @@ std::string options::deposits_view::DeleteDeposit::caption() const
 
 IView *options::deposits_view::DeleteDeposit::execute(IView *sender)
 {
-    return sender->holder()->getDeleteDepositView();
+    return new input_views::deposits_views::DeleteDepositView(sender->model(), sender);
 }
 
 std::string options::deposits_view::SelectDeposit::caption() const
@@ -91,7 +93,7 @@ std::string options::deposits_view::SelectDeposit::caption() const
 
 IView *options::deposits_view::SelectDeposit::execute(IView *sender)
 {
-    return sender->holder()->getSelectDepositView();
+    return new input_views::deposits_views::SelectDepositView(sender->model(), sender);
 }
 
 std::string options::debts_view::AddNewDebt::caption() const
@@ -101,7 +103,7 @@ std::string options::debts_view::AddNewDebt::caption() const
 
 IView *options::debts_view::AddNewDebt::execute(IView *sender)
 {
-    return sender->holder()->getAddNewDebtView();
+    return new input_views::debts_views::AddNewDebtView(sender->model(), sender);
 }
 
 std::string options::debts_view::ChangeAmount::caption() const
@@ -111,7 +113,7 @@ std::string options::debts_view::ChangeAmount::caption() const
 
 IView *options::debts_view::ChangeAmount::execute(IView *sender)
 {
-    return sender->holder()->getChangeAmountView();
+    return new input_views::debts_views::ChangeAmountView(sender->model(), sender);
 }
 
 std::string options::debts_view::DeleteDebt::caption() const
@@ -121,7 +123,7 @@ std::string options::debts_view::DeleteDebt::caption() const
 
 IView *options::debts_view::DeleteDebt::execute(IView *sender)
 {
-    return sender->holder()->getDeleteDebtView();
+    return new input_views::debts_views::DeleteDebtView(sender->model(), sender);
 }
 
 std::string options::categories_view::AddNewCategory::caption() const
@@ -131,7 +133,7 @@ std::string options::categories_view::AddNewCategory::caption() const
 
 IView *options::categories_view::AddNewCategory::execute(IView *sender)
 {
-    return sender->holder()->getAddNewCategoryView();
+    return new input_views::categories_views::AddNewCategoryView(sender->model(), sender);
 }
 
 std::string options::categories_view::DeleteCategory::caption() const
@@ -141,7 +143,7 @@ std::string options::categories_view::DeleteCategory::caption() const
 
 IView *options::categories_view::DeleteCategory::execute(IView *sender)
 {
-    return sender->holder()->getDeleteCategoryView();
+    return new input_views::categories_views::DeleteCategoryView(sender->model(), sender);
 }
 
 std::string options::operations_view::AddNewOperation::caption() const
@@ -151,7 +153,7 @@ std::string options::operations_view::AddNewOperation::caption() const
 
 IView *options::operations_view::AddNewOperation::execute(IView *sender)
 {
-    return sender->holder()->getAddNewOperationView();
+    return new input_views::operations_views::AddNewOperationView(sender->model(), sender);
 }
 
 std::string options::operations_view::DeleteOperation::caption() const
@@ -161,7 +163,7 @@ std::string options::operations_view::DeleteOperation::caption() const
 
 IView *options::operations_view::DeleteOperation::execute(IView *sender)
 {
-    return sender->holder()->getDeleteOperationView();
+    return new input_views::operations_views::DeleteOperationView(sender->model(), sender);
 }
 
 std::string options::operations_view::SelectOperations::caption() const
@@ -171,5 +173,5 @@ std::string options::operations_view::SelectOperations::caption() const
 
 IView *options::operations_view::SelectOperations::execute(IView *sender)
 {
-    return sender->holder()->getSelectOperationsView();
+    return new input_views::operations_views::SelectOperationsView(sender->model(), sender);
 }
