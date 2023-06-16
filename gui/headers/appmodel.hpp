@@ -35,6 +35,11 @@ public:
         mSelectedOperationId = id;
     }
 
+    OperationModel &selectedOperation()
+    {
+        return Operations.operations().at(mSelectedOperationId);
+    }
+
     void selectedOperationChangeDate(const std::string &date)
     {
         OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);

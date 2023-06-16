@@ -75,6 +75,23 @@ public:
     IView *onEnterPressHandler() override;
 };
 
+namespace change_operation_views {
+
+class OperationView : public IView, public ISubView, public IViewWithMenuItem, public IViewWithLogItem
+{
+public:
+
+    OperationView(AppModel *model, IView *parent);
+
+    void show(stf::Renderer &renderer) override;
+
+    IView *keyHandler(int key) override;
+
+    IView *recalculateList();
+};
+
+}
+
 }}
 
 #endif // OPERATIONSVIEW_HPP

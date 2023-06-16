@@ -149,3 +149,35 @@ IView *ChangeOperationView::onEnterPressHandler()
     return mParent;//new ChangeSelectedOperationView(model, mParent);
 }
 
+using namespace change_operation_views;
+
+OperationView::OperationView(AppModel *model, IView *parent)
+    : IView{model}, ISubView{parent}
+{
+    mOptionsList.insert(mOptionsList.end(), {
+                                                new options::operations_view::ChangeDate,
+                                                new options::operations_view::ChangeDeposit,
+                                                new options::operations_view::ChangeAmount,
+                                                new options::operations_view::ChangeCategory,
+                                                new options::main_view::Exit
+                                            });
+    mActiveMenuBar->recalculateBarWidth();
+}
+
+void OperationView::show(stf::Renderer &renderer)
+{
+    IView::show(renderer);
+    mMenuBar->show(renderer);
+    drawLogItem(renderer, mMenuBar->Width);
+
+    auto operation = mModel->selectedOperation();
+    renderer.drawLine({mMenuBar->Width +  1, 2}, {renderer.Size.x - 1, 2}, '.');
+    renderer.draw({mMenuBar->Width +  1, 2}, "%d.%s..%m.00 UAH", operation.id() + 1, operation.date().c_str(), operation.amount());
+    renderer.draw({mMenuBar->Width + 33, 2}, "%s", operation.category().c_str());
+}
+
+IView *OperationView::keyHandler(int key)
+{
+    switchMenuBar(key);
+    return mMenuBar->keyHandler(this, key);
+}
