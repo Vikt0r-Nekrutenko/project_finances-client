@@ -4,8 +4,8 @@
 
 #include <QDateTime>
 
-IView::IView(AppModel *model, ViewHolder *holder)
-    : mModel{model}, mHolder{holder} { }
+IView::IView(AppModel *model)
+    : mModel{model} { }
 
 void IView::show(stf::Renderer &renderer)
 {
@@ -37,13 +37,8 @@ void IViewWithMenuItem::switchMenuBar(int key)
     }
 }
 
-ViewHolder *IView::holder() const
-{
-    return mHolder;
-}
-
-CloseView::CloseView(AppModel *model, ViewHolder *holder)
-    : IView(model, holder) { }
+CloseView::CloseView(AppModel *model)
+    : IView(model) { }
 
 bool CloseView::isContinue() const
 {

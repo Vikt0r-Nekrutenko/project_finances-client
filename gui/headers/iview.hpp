@@ -13,18 +13,15 @@ class IView
 {
 public:
 
-    IView(AppModel *model, ViewHolder *holder);
+    IView(AppModel *model);
     virtual ~IView() = default;
     virtual void show(stf::Renderer &);
     virtual IView *keyHandler(int key) = 0;
     virtual bool isContinue() const;
 
-    ViewHolder *holder() const;
-
 protected:
 
     AppModel *mModel;
-    ViewHolder *mHolder;
 };
 
 class IViewWithMenuItem
@@ -47,10 +44,22 @@ class CloseView : public IView
 {
 public:
 
-    CloseView(AppModel *model, ViewHolder *holder);
+    CloseView(AppModel *model);
     bool isContinue() const override;
     void show(stf::Renderer &) override {}
     IView *keyHandler(int) override {return this;}
+};
+
+class ISubView
+{
+public:
+
+    ISubView(IView *view)
+        : mParent{view} { }
+
+protected:
+
+    IView *mParent;
 };
 
 class IViewWithLogItem
