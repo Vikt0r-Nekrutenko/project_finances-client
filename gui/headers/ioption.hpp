@@ -181,6 +181,17 @@ public:
 
     IView *execute(IView *sender) override;
 };
+
+class ChangeOperation : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
+
 }
 
 }

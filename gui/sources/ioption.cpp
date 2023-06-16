@@ -175,3 +175,13 @@ IView *options::operations_view::SelectOperations::execute(IView *sender)
 {
     return new input_views::operations_views::SelectOperationsView(sender->model(), sender);
 }
+
+std::string options::operations_view::ChangeOperation::caption() const
+{
+    return "Change Operation";
+}
+
+IView *options::operations_view::ChangeOperation::execute(IView *sender)
+{
+    return new input_views::operations_views::ChangeOperationView(sender->model(), sender);
+}
