@@ -19,6 +19,8 @@ public:
     virtual IView *keyHandler(int key) = 0;
     virtual bool isContinue() const;
 
+    AppModel *model();
+
 protected:
 
     AppModel *mModel;

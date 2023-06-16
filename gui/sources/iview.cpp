@@ -27,6 +27,11 @@ bool IView::isContinue() const
     return true;
 }
 
+AppModel *IView::model()
+{
+    return mModel;
+}
+
 void IViewWithMenuItem::switchMenuBar(int key)
 {
     if(key == 'm') {
