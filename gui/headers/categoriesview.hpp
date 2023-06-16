@@ -3,11 +3,11 @@
 
 #include "iview.hpp"
 
-class CategoriesView : public IView, public IViewWithMenuItem, public IViewWithLogItem
+class CategoriesView : public IView, public ISubView, public IViewWithMenuItem, public IViewWithLogItem
 {
 public:
 
-    CategoriesView(AppModel *model, ViewHolder *holder);
+    CategoriesView(AppModel *model, IView *parent);
 
     void show(stf::Renderer &renderer) override;
 
@@ -21,7 +21,7 @@ class ICategoryView : public CategoriesView, public IViewWithInputField
 {
 public:
 
-    ICategoryView(AppModel *model, ViewHolder *holder, const std::string &inputTitle);
+    ICategoryView(AppModel *model, IView *parent, const std::string &inputTitle);
 
     void show(stf::Renderer &renderer) override;
 
@@ -36,7 +36,7 @@ class AddNewCategoryView : public ICategoryView
 {
 public:
 
-    AddNewCategoryView(AppModel *model, ViewHolder *holder);
+    AddNewCategoryView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
@@ -45,7 +45,7 @@ class DeleteCategoryView : public ICategoryView
 {
 public:
 
-    DeleteCategoryView(AppModel *model, ViewHolder *holder);
+    DeleteCategoryView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };

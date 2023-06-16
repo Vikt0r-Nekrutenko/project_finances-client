@@ -1,11 +1,10 @@
 #include "categoriesview.hpp"
 #include "appmodel.hpp"
 #include "ioption.hpp"
-#include "viewholder.hpp"
 
 
-CategoriesView::CategoriesView(AppModel *model, ViewHolder *holder)
-    : IView{model, holder}
+CategoriesView::CategoriesView(AppModel *model, IView *parent)
+    : IView{model}, ISubView{parent}
 {
     mOptionsList.insert(mOptionsList.end(), {
                                                 new options::categories_view::AddNewCategory,
@@ -39,8 +38,8 @@ IView *CategoriesView::keyHandler(int key)
 
 using namespace input_views::categories_views;
 
-ICategoryView::ICategoryView(AppModel *model, ViewHolder *holder, const std::string &inputTitle)
-    : CategoriesView{model, holder}, mInputTitle{inputTitle} { }
+ICategoryView::ICategoryView(AppModel *model, IView *parent, const std::string &inputTitle)
+    : CategoriesView{model, parent}, mInputTitle{inputTitle} { }
 
 void ICategoryView::show(stf::Renderer &renderer)
 {
@@ -50,11 +49,11 @@ void ICategoryView::show(stf::Renderer &renderer)
 
 IView *ICategoryView::keyHandler(int key)
 {
-    return onKeyPressHandler(key, this, mHolder->getCategoriesView());
+    return onKeyPressHandler(key, this, mParent);
 }
 
-AddNewCategoryView::AddNewCategoryView(AppModel *model, ViewHolder *holder)
-    : ICategoryView{model, holder, "Enter 'Name Type' or press ESC to back up"} { }
+AddNewCategoryView::AddNewCategoryView(AppModel *model, IView *parent)
+    : ICategoryView{model, parent, "Enter 'Name Type' or press ESC to back up"} { }
 
 IView *AddNewCategoryView::onEnterPressHandler()
 {
@@ -73,11 +72,11 @@ IView *AddNewCategoryView::onEnterPressHandler()
     }
 
     mModel->Categories.addNewCategory(name, type);
-    return mHolder->getCategoriesView();
+    return mParent;
 }
 
-DeleteCategoryView::DeleteCategoryView(AppModel *model, ViewHolder *holder)
-    : ICategoryView{model, holder, "Enter 'Id' or press ESC to back up"} { }
+DeleteCategoryView::DeleteCategoryView(AppModel *model, IView *parent)
+    : ICategoryView{model, parent, "Enter 'Id' or press ESC to back up"} { }
 
 IView *DeleteCategoryView::onEnterPressHandler()
 {
@@ -92,5 +91,5 @@ IView *DeleteCategoryView::onEnterPressHandler()
     }
 
     mModel->Categories.deleteCategory(id);
-    return mHolder->getCategoriesView();
+    return mParent;
 }
