@@ -7,6 +7,7 @@
 
 #include "window.hpp"
 #include "viewholder.hpp"
+#include "mainview.hpp"
 #include "appmodel.hpp"
 
 class App : public stf::Window
@@ -14,23 +15,23 @@ class App : public stf::Window
 public:
 
     AppModel model;
-    ViewHolder viewHolder = ViewHolder(&model);
-    IView *currentView;
+    MainView *mainView = new MainView{&model};
+    ViewHolder viewHolder;
 
     App()
     {
-        currentView = viewHolder.getStartView();
+        viewHolder = mainView;
     }
 
     bool onUpdate(const float) override
     {
-        currentView->show(renderer);
-        return currentView->isContinue();
+        viewHolder.currentView()->show(renderer);
+        return viewHolder.currentView()->isContinue();
     }
 
     void keyEvents(const int key) override
     {
-        currentView = currentView->keyHandler(key);
+        viewHolder = viewHolder.currentView()->keyHandler(key);
     }
 
     void mouseEvents(const stf::MouseRecord &) override
