@@ -97,6 +97,7 @@ IView *DeleteOperationView::onEnterPressHandler()
     }
 
     mModel->deleteOperation(id);
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
     return mParent;
 }
 
@@ -210,6 +211,7 @@ IView *ChangeAmount::onEnterPressHandler()
     int amount = mInputField.getExpressionResult();
 
     mModel->selectedOperationChangeAmount(amount);
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
     return mParent;
 }
 
@@ -227,6 +229,7 @@ IView *ChangeCategory::onEnterPressHandler()
     }
 
     mModel->selectedOperationChangeCategory(category);
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
     return mParent;
 }
 
