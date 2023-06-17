@@ -23,6 +23,12 @@ public:
     void addNewOperation(const std::string &date, int amount, const std::string &category)
     {
         Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
+        const std::string type = Categories.findByName(category)->type();
+        if(type == "positive" || type == "earn")
+            mSelectedDeposit->increaseBalance(amount);
+        else if(type == "negative")
+            mSelectedDeposit->decreaseBalance(amount);
+        mSelectedDeposit->update();
     }
 
     void deleteOperation(int id)

@@ -74,7 +74,7 @@ IView *IOperationView::keyHandler(int key)
 }
 
 AddNewOperationView::AddNewOperationView(AppModel *model, IView *parent)
-    : IOperationView{model, parent, "Enter 'Date Name Type' or press ESC to back up"} { }
+    : IOperationView{model, parent, "Enter 'Date Amount Category' or press ESC to back up"} { }
 
 IView *AddNewOperationView::onEnterPressHandler()
 {
@@ -84,11 +84,6 @@ IView *AddNewOperationView::onEnterPressHandler()
 
     if(mModel->Categories.findByName(category) == mModel->Categories.categories().end()) {
         mLogItem << "WARNING! Entered name [" << category << "] isn't exist!" << lendl;
-        mInputField.restoreText();
-        return this;
-    }
-    if(date.length() != 9 || date[4] != '-' || date[7] != '-') {
-        mLogItem << "WARNING! Entered date [" << date << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
@@ -212,12 +207,6 @@ ChangeDate::ChangeDate(AppModel *model, IView *parent)
 IView *ChangeDate::onEnterPressHandler()
 {
     std::string date = mInputField.getStr();
-
-    if(date.length() != 9 || date[4] != '-' || date[7] != '-') {
-        mLogItem << "WARNING! Entered date [" << date << "] is wrong!" << lendl;
-        mInputField.restoreText();
-        return this;
-    }
 
     mModel->selectedOperationChangeDate(date);
     return mParent;
