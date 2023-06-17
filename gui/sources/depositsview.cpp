@@ -126,5 +126,5 @@ IView *SelectDepositView::onEnterPressHandler()
     }
 
     mModel->selectDeposit(id);
-    return (new OperationsView(mModel, mParent))->recalculateList();
+    return new OperationsView(mModel, mParent);
 }

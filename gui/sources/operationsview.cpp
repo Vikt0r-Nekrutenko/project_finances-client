@@ -10,10 +10,12 @@ OperationsView::OperationsView(AppModel *model, IView *parent)
                                              new options::operations_view::AddNewOperation,
                                              new options::operations_view::DeleteOperation,
                                              new options::operations_view::SelectOperations,
+                                             new options::operations_view::ChangeOperation,
                                              new options::main_view::Deposits,
                                              new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
+    recalculateList();
 }
 
 void OperationsView::show(stf::Renderer &renderer)
@@ -146,7 +148,7 @@ IView *ChangeOperationView::onEnterPressHandler()
     }
 
     mModel->selectOperation(id);
-    return new ChangeOperationView(mModel, mParent);
+    return new OperationView(mModel, mParent);
 }
 
 OperationView::OperationView(AppModel *model, IView *parent)
@@ -154,7 +156,6 @@ OperationView::OperationView(AppModel *model, IView *parent)
 {
     mOptionsList.insert(mOptionsList.end(), {
                                                 new options::operations_view::ChangeDate,
-                                                new options::operations_view::ChangeDeposit,
                                                 new options::operations_view::ChangeAmount,
                                                 new options::operations_view::ChangeCategory,
                                                 new options::main_view::Exit
@@ -183,11 +184,11 @@ IView *OperationView::keyHandler(int key)
 using namespace input_views::change_operation_views;
 
 IChangeOperationView::IChangeOperationView(AppModel *model, IView *parent, const std::string &inputTitle)
-    : OperationsView{model, parent}, mInputTitle{inputTitle} { }
+    : OperationView{model, parent}, mInputTitle{inputTitle} { }
 
 void IChangeOperationView::show(stf::Renderer &renderer)
 {
-    OperationsView::show(renderer);
+    OperationView::show(renderer);
     renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - LogHeight - 2}, {renderer.Size.x, renderer.Size.y - LogHeight - 2}, ' ');
     drawInputField(renderer, mMenuBar->Width, mInputTitle);
 }

@@ -86,14 +86,12 @@ public:
     void show(stf::Renderer &renderer) override;
 
     IView *keyHandler(int key) override;
-
-    IView *recalculateList();
 };
 
 namespace input_views {
 namespace change_operation_views {
 
-class IChangeOperationView : public OperationsView, public IViewWithInputField
+class IChangeOperationView : public OperationView, public IViewWithInputField
 {
 public:
 
