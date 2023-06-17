@@ -193,17 +193,7 @@ std::string options::operations_view::ChangeDate::caption() const
 
 IView *options::operations_view::ChangeDate::execute(IView *sender)
 {
-    return new input_views::operations_views::ChangeDateView(sender->model(), sender);
-}
-
-std::string options::operations_view::ChangeDeposit::caption() const
-{
-    return "Change deposit";
-}
-
-IView *options::operations_view::ChangeDeposit::execute(IView *sender)
-{
-    return new input_views::operations_views::ChangeDepositView(sender->model(), sender);
+    return new input_views::change_operation_views::ChangeDate(sender->model(), sender);
 }
 
 std::string options::operations_view::ChangeAmount::caption() const
@@ -213,7 +203,7 @@ std::string options::operations_view::ChangeAmount::caption() const
 
 IView *options::operations_view::ChangeAmount::execute(IView *sender)
 {
-    return new input_views::operations_views::ChangeAmountView(sender->model(), sender);
+    return new input_views::change_operation_views::ChangeAmount(sender->model(), sender);
 }
 
 std::string options::operations_view::ChangeCategory::caption() const
@@ -223,5 +213,5 @@ std::string options::operations_view::ChangeCategory::caption() const
 
 IView *options::operations_view::ChangeCategory::execute(IView *sender)
 {
-    return new input_views::operations_views::ChangeCategoryView(sender->model(), sender);
+    return new input_views::change_operation_views::ChangeCategory(sender->model(), sender);
 }

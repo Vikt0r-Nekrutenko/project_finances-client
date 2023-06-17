@@ -214,23 +214,6 @@ IView *ChangeDate::onEnterPressHandler()
     return mParent;
 }
 
-ChangeDeposit::ChangeDeposit(AppModel *model, IView *parent)
-    : IChangeOperationView{model, parent, "Enter 'deposit' or press ESC to back up"} { }
-
-IView *ChangeDeposit::onEnterPressHandler()
-{
-    std::string deposit = mInputField.getStr();
-
-    if(mModel->Deposits.findByName(deposit) == mModel->Deposits.deposits().end()) {
-        mLogItem << "WARNING! Entered deposit [" << deposit << "] doesn't exist!" << lendl;
-        mInputField.restoreText();
-        return this;
-    }
-
-    mModel->selectedOperationChangeDeposit(deposit);
-    return mParent;
-}
-
 ChangeAmount::ChangeAmount(AppModel *model, IView *parent)
     : IChangeOperationView{model, parent, "Enter 'amount' or press ESC to back up"} { }
 

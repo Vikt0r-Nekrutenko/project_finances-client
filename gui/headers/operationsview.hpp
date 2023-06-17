@@ -117,15 +117,6 @@ public:
     IView *onEnterPressHandler() override;
 };
 
-class ChangeDeposit : public IChangeOperationView
-{
-public:
-
-    ChangeDeposit(AppModel *model, IView *parent);
-
-    IView *onEnterPressHandler() override;
-};
-
 class ChangeAmount : public IChangeOperationView
 {
 public:

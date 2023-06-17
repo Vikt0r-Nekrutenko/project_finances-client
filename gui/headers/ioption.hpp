@@ -200,15 +200,6 @@ public:
     IView *execute(IView *sender) override;
 };
 
-class ChangeDeposit : public IOption
-{
-public:
-
-    std::string caption() const override;
-
-    IView *execute(IView *sender) override;
-};
-
 class ChangeAmount : public IOption
 {
 public:
