@@ -9,6 +9,7 @@ OperationsView::OperationsView(AppModel *model, IView *parent)
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::operations_view::AddNewOperation,
                                              new options::operations_view::AddNewTodayOperation,
+                                             new options::operations_view::AddNewTodayLendOrRepay,
                                              new options::operations_view::DeleteOperation,
                                              new options::operations_view::SelectOperations,
                                              new options::operations_view::ChangeOperation,
@@ -79,6 +80,34 @@ IView *AddNewOperationView::onEnterPressHandler()
 
     mModel->addNewOperation(date, amount, category);
     mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    return mParent;
+}
+
+AddNewTodayLendOrRepayView::AddNewTodayLendOrRepayView(AppModel *model, IView *parent)
+    : IOperationView{model, parent, "Enter 'Amount Name Type[l/r]' or press ESC to back up"} { }
+
+IView *AddNewTodayLendOrRepayView::onEnterPressHandler()
+{
+    std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
+    int amount = mInputField.getExpressionResult();
+    std::string name = mInputField.getStr();
+    std::string type = mInputField.getStr();
+
+    if(type == "l") {
+        mModel->addNewOperation(date, amount, "Lend");
+        mModel->addOrChangeDebt(name, amount, "Lend");
+    } else if(type == "r") {
+        mModel->addNewOperation(date, amount, "Repay");
+        mModel->addOrChangeDebt(name, amount, "Repay");
+    } else {
+        mLogItem << "WARNING! Entered type [" << type << "] doesn't exist!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Debt [" << name << "] amount now: " << mModel->Debts.findByName(name)->amount() << ".00 UAH" << lendl;
     return mParent;
 }
 

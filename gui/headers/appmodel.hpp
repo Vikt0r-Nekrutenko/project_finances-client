@@ -125,6 +125,18 @@ public:
         mSelectedDeposit = &Deposits.deposits().at(id);
     }
 
+    void addOrChangeDebt(const std::string &name, int amount, const std::string &lendOrRepay)
+    {
+        std::vector<DebtModel>::const_iterator debt = Debts.findByName(name);
+        if(debt == Debts.debts().end()) {
+            Debts.addNewDebt(name, amount);
+        } else if(lendOrRepay == "Lend") {
+            Debts.updateDebt(int(std::distance(Debts.debts().begin(), debt)), debt->name(), debt->amount() + amount);
+        } else if(lendOrRepay == "Repay") {
+            Debts.updateDebt(int(std::distance(Debts.debts().begin(), debt)), debt->name(), debt->amount() - amount);
+        }
+    }
+
 private:
 
     DepositModel *mSelectedDeposit = nullptr;

@@ -173,6 +173,15 @@ public:
     IView *execute(IView *sender) override;
 };
 
+class AddNewTodayLendOrRepay : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
 class DeleteOperation : public IOption
 {
 public:
