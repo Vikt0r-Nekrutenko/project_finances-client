@@ -108,6 +108,42 @@ protected:
     const std::string mInputTitle;
 };
 
+class ChangeDate : public IChangeOperationView
+{
+public:
+
+    ChangeDate(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
+class ChangeDeposit : public IChangeOperationView
+{
+public:
+
+    ChangeDeposit(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
+class ChangeAmount : public IChangeOperationView
+{
+public:
+
+    ChangeAmount(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
+class ChangeCategory : public IChangeOperationView
+{
+public:
+
+    ChangeCategory(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
 }}
 
 #endif // OPERATIONSVIEW_HPP

@@ -146,7 +146,7 @@ IView *ChangeOperationView::onEnterPressHandler()
     }
 
     mModel->selectOperation(id);
-    return mParent;//new ChangeSelectedOperationView(model, mParent);
+    return new ChangeOperationView(mModel, mParent);
 }
 
 OperationView::OperationView(AppModel *model, IView *parent)
@@ -196,3 +196,66 @@ IView *IChangeOperationView::keyHandler(int key)
 {
     return onKeyPressHandler(key, this, mParent);
 }
+
+ChangeDate::ChangeDate(AppModel *model, IView *parent)
+    : IChangeOperationView{model, parent, "Enter 'date' or press ESC to back up"} { }
+
+IView *ChangeDate::onEnterPressHandler()
+{
+    std::string date = mInputField.getStr();
+
+    if(date.length() != 9 || date[4] != '-' || date[7] != '-') {
+        mLogItem << "WARNING! Entered date [" << date << "] is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->selectedOperationChangeDate(date);
+    return mParent;
+}
+
+ChangeDeposit::ChangeDeposit(AppModel *model, IView *parent)
+    : IChangeOperationView{model, parent, "Enter 'deposit' or press ESC to back up"} { }
+
+IView *ChangeDeposit::onEnterPressHandler()
+{
+    std::string deposit = mInputField.getStr();
+
+    if(mModel->Deposits.findByName(deposit) == mModel->Deposits.deposits().end()) {
+        mLogItem << "WARNING! Entered deposit [" << deposit << "] doesn't exist!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->selectedOperationChangeDeposit(deposit);
+    return mParent;
+}
+
+ChangeAmount::ChangeAmount(AppModel *model, IView *parent)
+    : IChangeOperationView{model, parent, "Enter 'amount' or press ESC to back up"} { }
+
+IView *ChangeAmount::onEnterPressHandler()
+{
+    int amount = mInputField.getExpressionResult();
+
+    mModel->selectedOperationChangeAmount(amount);
+    return mParent;
+}
+
+ChangeCategory::ChangeCategory(AppModel *model, IView *parent)
+    : IChangeOperationView{model, parent, "Enter 'category' or press ESC to back up"} { }
+
+IView *ChangeCategory::onEnterPressHandler()
+{
+    std::string category = mInputField.getStr();
+
+    if(mModel->Categories.findByName(category) == mModel->Categories.categories().end()) {
+        mLogItem << "WARNING! Entered category [" << category << "] doesn't exist!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->selectedOperationChangeCategory(category);
+    return mParent;
+}
+
