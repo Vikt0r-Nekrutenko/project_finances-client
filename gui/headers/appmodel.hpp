@@ -33,6 +33,7 @@ public:
 
     void deleteOperation(int id)
     {
+        id = std::distance(Operations.operations().begin(), Operations.at(id));
         const std::string type = Operations.operations().at(id).rawCategory(Categories).type();
         if(type == "positive" || type == "earn")
             mSelectedDeposit->decreaseBalance(Operations.operations().at(id).amount());
