@@ -33,6 +33,12 @@ public:
 
     void deleteOperation(int id)
     {
+        const std::string type = Operations.operations().at(id).rawCategory(Categories).type();
+        if(type == "positive" || type == "earn")
+            mSelectedDeposit->decreaseBalance(Operations.operations().at(id).amount());
+        else if(type == "negative")
+            mSelectedDeposit->increaseBalance(Operations.operations().at(id).amount());
+        mSelectedDeposit->update();
         Operations.deleteOperation(id);
     }
 
