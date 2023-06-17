@@ -182,6 +182,15 @@ public:
     IView *execute(IView *sender) override;
 };
 
+class AddNewLendOrRepay : public IOption
+{
+public:
+
+    std::string caption() const override;
+
+    IView *execute(IView *sender) override;
+};
+
 class DeleteOperation : public IOption
 {
 public:

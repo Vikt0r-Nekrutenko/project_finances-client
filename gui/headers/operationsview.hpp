@@ -59,6 +59,15 @@ public:
     IView *onEnterPressHandler() override;
 };
 
+class AddNewLendOrRepayView : public IOperationView
+{
+public:
+
+    AddNewLendOrRepayView(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
 class DeleteOperationView : public IOperationView
 {
 public:

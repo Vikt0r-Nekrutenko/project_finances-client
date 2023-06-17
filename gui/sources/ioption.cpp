@@ -176,6 +176,16 @@ IView *options::operations_view::AddNewTodayLendOrRepay::execute(IView *sender)
     return new input_views::operations_views::AddNewTodayLendOrRepayView(sender->model(), sender);
 }
 
+std::string options::operations_view::AddNewLendOrRepay::caption() const
+{
+    return "New Lend or Repay";
+}
+
+IView *options::operations_view::AddNewLendOrRepay::execute(IView *sender)
+{
+    return new input_views::operations_views::AddNewLendOrRepayView(sender->model(), sender);
+}
+
 std::string options::operations_view::DeleteOperation::caption() const
 {
     return "Delete Operation";
