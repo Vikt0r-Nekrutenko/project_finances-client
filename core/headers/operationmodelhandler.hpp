@@ -21,6 +21,8 @@ public:
     const std::vector<OperationModel> &operations() const;
     std::vector<OperationModel> &operations();
 
+    std::vector<OperationModel>::iterator at(int id);
+
 private:
 
     std::vector<OperationModel> mOperations;

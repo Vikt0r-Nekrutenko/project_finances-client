@@ -44,7 +44,7 @@ public:
 
     void selectOperation(int id)
     {
-        mSelectedOperationId = id;
+        mSelectedOperationId = std::distance(Operations.operations().begin(), Operations.at(id));
     }
 
     OperationModel &selectedOperation()

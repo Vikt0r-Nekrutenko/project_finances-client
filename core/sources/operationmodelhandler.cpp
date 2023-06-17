@@ -90,3 +90,10 @@ std::vector<OperationModel> &OperationModelHandler::operations()
 {
     return mOperations;
 }
+
+std::vector<OperationModel>::iterator OperationModelHandler::at(int id)
+{
+    return std::find_if(mOperations.begin(), mOperations.end(), [&](const OperationModel &model){
+        return model.id() == id;
+    });
+}
