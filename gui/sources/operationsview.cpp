@@ -11,8 +11,6 @@ OperationsView::OperationsView(AppModel *model, IView *parent)
                                              new options::operations_view::DeleteOperation,
                                              new options::operations_view::SelectOperations,
                                              new options::operations_view::ChangeOperation,
-                                             new options::main_view::Deposits,
-                                             new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
     recalculateList();
@@ -37,6 +35,11 @@ void OperationsView::show(stf::Renderer &renderer)
 
 IView *OperationsView::keyHandler(int key)
 {
+    if(key == VK_ESCAPE1)
+        return mParent;
+    if (key == 'q') {
+        return new CloseView(mModel);
+    }
     switchMenuBar(key);
     return mMenuBar->keyHandler(this, key);
 }
@@ -177,6 +180,11 @@ void OperationView::show(stf::Renderer &renderer)
 
 IView *OperationView::keyHandler(int key)
 {
+    if(key == VK_ESCAPE1)
+        return mParent;
+    if (key == 'q') {
+        return new CloseView(mModel);
+    }
     switchMenuBar(key);
     return mMenuBar->keyHandler(this, key);
 }
