@@ -89,7 +89,7 @@ IView *AddNewOperationView::onEnterPressHandler()
     }
 
     mModel->addNewOperation(date, amount, category);
-    return mParent;
+    return static_cast<OperationsView *>(mParent)->recalculateList();
 }
 
 DeleteOperationView::DeleteOperationView(AppModel *model, IView *parent)
@@ -108,7 +108,7 @@ IView *DeleteOperationView::onEnterPressHandler()
     }
 
     mModel->deleteOperation(id);
-    return mParent;
+    return static_cast<OperationsView *>(mParent)->recalculateList();
 }
 
 SelectOperationsView::SelectOperationsView(AppModel *model, IView *parent)
