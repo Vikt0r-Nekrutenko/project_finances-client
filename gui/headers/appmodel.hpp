@@ -67,6 +67,14 @@ public:
     void selectedOperationChangeAmount(int amount)
     {
         OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
+        const std::string type = selectedOperation.rawCategory(Categories).type();
+        if(type == "positive" || type == "earn") {
+            mSelectedDeposit->decreaseBalance(selectedOperation.amount());
+            mSelectedDeposit->increaseBalance(amount);
+        } else if(type == "negative") {
+            mSelectedDeposit->increaseBalance(selectedOperation.amount());
+            mSelectedDeposit->decreaseBalance(amount);
+        }
         Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), amount, selectedOperation.category());
     }
 
