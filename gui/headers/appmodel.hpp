@@ -76,12 +76,28 @@ public:
             mSelectedDeposit->decreaseBalance(amount);
         }
         Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), amount, selectedOperation.category());
+        mSelectedDeposit->update();
     }
 
     void selectedOperationChangeCategory(const std::string &category)
     {
         OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
+        const std::string type = selectedOperation.rawCategory(Categories).type();
+        if(type == "positive" || type == "earn") {
+            mSelectedDeposit->decreaseBalance(selectedOperation.amount());
+        } else if(type == "negative") {
+            mSelectedDeposit->increaseBalance(selectedOperation.amount());
+        }
+
         Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), selectedOperation.amount(), category);
+
+        const std::string newType = selectedOperation.rawCategory(Categories).type();
+        if(newType == "positive" || newType == "earn") {
+            mSelectedDeposit->increaseBalance(selectedOperation.amount());
+        } else if(newType == "negative") {
+            mSelectedDeposit->decreaseBalance(selectedOperation.amount());
+        }
+        mSelectedDeposit->update();
     }
 
     void selectDeposit(size_t id)
