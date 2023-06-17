@@ -10,8 +10,6 @@ DebtsView::DebtsView(AppModel *model, IView *parent)
                                              new options::debts_view::AddNewDebt,
                                              new options::debts_view::ChangeAmount,
                                              new options::debts_view::DeleteDebt,
-                                             new options::BackToStartView,
-                                             new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
