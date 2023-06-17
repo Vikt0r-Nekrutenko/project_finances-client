@@ -89,6 +89,8 @@ IView *AddNewOperationView::onEnterPressHandler()
     }
 
     mModel->addNewOperation(date, amount, category);
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
+    recalculateList();
     return static_cast<OperationsView *>(mParent)->recalculateList();
 }
 
