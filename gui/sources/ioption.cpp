@@ -156,6 +156,16 @@ IView *options::operations_view::AddNewOperation::execute(IView *sender)
     return new input_views::operations_views::AddNewOperationView(sender->model(), sender);
 }
 
+std::string options::operations_view::AddNewTodayOperation::caption() const
+{
+    return "New Today Operation";
+}
+
+IView *options::operations_view::AddNewTodayOperation::execute(IView *sender)
+{
+    return new input_views::operations_views::AddNewTodayOperationView(sender->model(), sender);
+}
+
 std::string options::operations_view::DeleteOperation::caption() const
 {
     return "Delete Operation";
