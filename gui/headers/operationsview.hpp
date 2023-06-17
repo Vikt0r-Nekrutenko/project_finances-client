@@ -41,6 +41,15 @@ public:
     IView *onEnterPressHandler() override;
 };
 
+class AddNewTodayOperationView : public IOperationView
+{
+public:
+
+    AddNewTodayOperationView(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
 class DeleteOperationView : public IOperationView
 {
 public:

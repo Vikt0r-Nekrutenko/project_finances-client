@@ -81,6 +81,26 @@ IView *AddNewOperationView::onEnterPressHandler()
     return mParent;
 }
 
+AddNewTodayOperationView::AddNewTodayOperationView(AppModel *model, IView *parent)
+    : IOperationView{model, parent, "Enter 'Amount Category' or press ESC to back up"} { }
+
+IView *AddNewTodayOperationView::onEnterPressHandler()
+{
+    std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
+    int amount = mInputField.getExpressionResult();
+    std::string category = mInputField.getStr();
+
+    if(mModel->Categories.findByName(category) == mModel->Categories.categories().end()) {
+        mLogItem << "WARNING! Entered name [" << category << "] isn't exist!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->addNewOperation(date, amount, category);
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    return mParent;
+}
+
 DeleteOperationView::DeleteOperationView(AppModel *model, IView *parent)
     : IOperationView{model, parent, "Enter 'Id' or press ESC to back up"} { }
 
