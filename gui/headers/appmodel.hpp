@@ -5,6 +5,7 @@
 #include "headers/debtmodelhandler.hpp"
 #include "headers/categorymodelhandler.hpp"
 #include "headers/operationmodelhandler.hpp"
+#include "headers/queryresult.hpp"
 
 class AppModel
 {
@@ -14,6 +15,8 @@ public:
     DebtModelHandler Debts;
     CategoryModelHandler Categories;
     OperationModelHandler Operations;
+
+    OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
 
     DepositModel *selectedDeposit()
     {
@@ -29,6 +32,7 @@ public:
         else if(type == "negative")
             mSelectedDeposit->decreaseBalance(amount);
         mSelectedDeposit->update();
+        selectOperationsList();
     }
 
     void deleteOperation(int id)
@@ -41,6 +45,21 @@ public:
             mSelectedDeposit->increaseBalance(Operations.operations().at(id).amount());
         mSelectedDeposit->update();
         Operations.deleteOperation(id);
+        selectOperationsList();
+    }
+
+    void selectOperationsList()
+    {
+        if(mSelectedDeposit == nullptr)
+            return;
+
+        mOperationsList.select().filterByDeposit(mSelectedDeposit->name());
+        if(SelectedYear == 0 || SelectedMonth == 0) {
+            mOperationsList.filterByCurrentYear().filterByCurrentMonth();
+            return;
+        }
+        mOperationsList.filterByYear(SelectedYear).filterByMonth(SelectedMonth);
+        return;
     }
 
     void selectOperation(int id)

@@ -4,7 +4,7 @@
 
 
 OperationsView::OperationsView(AppModel *model, IView *parent)
-    : IView{model}, ISubView{parent}, mOperationsList{&model->Operations}
+    : IView{model}, ISubView{parent}
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::operations_view::AddNewOperation,
@@ -13,7 +13,7 @@ OperationsView::OperationsView(AppModel *model, IView *parent)
                                              new options::operations_view::ChangeOperation,
                                             });
     mActiveMenuBar->recalculateBarWidth();
-    recalculateList();
+    mModel->selectOperationsList();
 }
 
 void OperationsView::show(stf::Renderer &renderer)
@@ -23,7 +23,7 @@ void OperationsView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     int y = 2;
-    for(auto operation = mOperationsList.rbegin(); operation != mOperationsList.rend(); ++operation) {
+    for(auto operation = mModel->mOperationsList.rbegin(); operation != mModel->mOperationsList.rend(); ++operation) {
         if(y == renderer.Size.y - LogHeight - 1)
             break;
         renderer.drawLine({mMenuBar->Width +  1, y}, {renderer.Size.x - 1, y}, '.');
@@ -42,18 +42,6 @@ IView *OperationsView::keyHandler(int key)
     }
     switchMenuBar(key);
     return mMenuBar->keyHandler(this, key);
-}
-
-IView *OperationsView::recalculateList()
-{
-
-    mOperationsList.select().filterByDeposit(mModel->selectedDeposit()->name());
-    if(mModel->SelectedYear == 0 || mModel->SelectedMonth == 0) {
-        mOperationsList.filterByCurrentYear().filterByCurrentMonth();
-        return this;
-    }
-    mOperationsList.filterByYear(mModel->SelectedYear).filterByMonth(mModel->SelectedMonth);
-    return this;
 }
 
 using namespace input_views::operations_views;
@@ -90,8 +78,7 @@ IView *AddNewOperationView::onEnterPressHandler()
 
     mModel->addNewOperation(date, amount, category);
     mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
-    recalculateList();
-    return static_cast<OperationsView *>(mParent)->recalculateList();
+    return mParent;
 }
 
 DeleteOperationView::DeleteOperationView(AppModel *model, IView *parent)
@@ -110,7 +97,7 @@ IView *DeleteOperationView::onEnterPressHandler()
     }
 
     mModel->deleteOperation(id);
-    return static_cast<OperationsView *>(mParent)->recalculateList();
+    return mParent;
 }
 
 SelectOperationsView::SelectOperationsView(AppModel *model, IView *parent)
@@ -129,6 +116,7 @@ IView *SelectOperationsView::onEnterPressHandler()
 
     mModel->SelectedYear = year;
     mModel->SelectedMonth = month;
+    mModel->selectOperationsList();
     return mParent;
 }
 

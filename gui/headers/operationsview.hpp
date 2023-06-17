@@ -2,7 +2,6 @@
 #define OPERATIONSVIEW_HPP
 
 #include "iview.hpp"
-#include "headers/queryresult.hpp"
 
 class OperationsView : public IView, public ISubView, public IViewWithMenuItem, public IViewWithLogItem
 {
@@ -13,12 +12,6 @@ public:
     void show(stf::Renderer &renderer) override;
 
     IView *keyHandler(int key) override;
-
-    IView *recalculateList();
-
-protected:
-
-    OperationHandlerQuery mOperationsList;
 };
 
 namespace input_views {
