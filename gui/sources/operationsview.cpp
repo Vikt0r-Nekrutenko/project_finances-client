@@ -149,8 +149,6 @@ IView *ChangeOperationView::onEnterPressHandler()
     return mParent;//new ChangeSelectedOperationView(model, mParent);
 }
 
-using namespace change_operation_views;
-
 OperationView::OperationView(AppModel *model, IView *parent)
     : IView{model}, ISubView{parent}
 {
@@ -180,4 +178,21 @@ IView *OperationView::keyHandler(int key)
 {
     switchMenuBar(key);
     return mMenuBar->keyHandler(this, key);
+}
+
+using namespace input_views::change_operation_views;
+
+IChangeOperationView::IChangeOperationView(AppModel *model, IView *parent, const std::string &inputTitle)
+    : OperationsView{model, parent}, mInputTitle{inputTitle} { }
+
+void IChangeOperationView::show(stf::Renderer &renderer)
+{
+    OperationsView::show(renderer);
+    renderer.drawLine({mMenuBar->Width + 1, renderer.Size.y - LogHeight - 2}, {renderer.Size.x, renderer.Size.y - LogHeight - 2}, ' ');
+    drawInputField(renderer, mMenuBar->Width, mInputTitle);
+}
+
+IView *IChangeOperationView::keyHandler(int key)
+{
+    return onKeyPressHandler(key, this, mParent);
 }

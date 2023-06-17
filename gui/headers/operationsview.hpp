@@ -75,7 +75,7 @@ public:
     IView *onEnterPressHandler() override;
 };
 
-namespace change_operation_views {
+}}
 
 class OperationView : public IView, public ISubView, public IViewWithMenuItem, public IViewWithLogItem
 {
@@ -90,7 +90,23 @@ public:
     IView *recalculateList();
 };
 
-}
+namespace input_views {
+namespace change_operation_views {
+
+class IChangeOperationView : public OperationsView, public IViewWithInputField
+{
+public:
+
+    IChangeOperationView(AppModel *model, IView *parent, const std::string &inputTitle);
+
+    void show(stf::Renderer &renderer) override;
+
+    IView *keyHandler(int key) override;
+
+protected:
+
+    const std::string mInputTitle;
+};
 
 }}
 
