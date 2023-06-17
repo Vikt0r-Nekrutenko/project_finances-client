@@ -8,6 +8,7 @@ OperationsView::OperationsView(AppModel *model, IView *parent)
 {
     mOptionsList.insert(mOptionsList.end(), {
                                              new options::operations_view::AddNewOperation,
+                                             new options::operations_view::AddNewTodayOperation,
                                              new options::operations_view::DeleteOperation,
                                              new options::operations_view::SelectOperations,
                                              new options::operations_view::ChangeOperation,
