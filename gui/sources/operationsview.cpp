@@ -77,7 +77,7 @@ IView *AddNewOperationView::onEnterPressHandler()
     }
 
     mModel->addNewOperation(date, amount, category);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -97,7 +97,7 @@ IView *DeleteOperationView::onEnterPressHandler()
     }
 
     mModel->deleteOperation(id);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -147,7 +147,6 @@ OperationView::OperationView(AppModel *model, IView *parent)
                                                 new options::operations_view::ChangeDate,
                                                 new options::operations_view::ChangeAmount,
                                                 new options::operations_view::ChangeCategory,
-                                                new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
@@ -211,7 +210,7 @@ IView *ChangeAmount::onEnterPressHandler()
     int amount = mInputField.getExpressionResult();
 
     mModel->selectedOperationChangeAmount(amount);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -229,7 +228,7 @@ IView *ChangeCategory::onEnterPressHandler()
     }
 
     mModel->selectedOperationChangeCategory(category);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << lendl;
+    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
