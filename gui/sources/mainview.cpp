@@ -25,22 +25,28 @@ MainView::MainView(AppModel *model)
 void MainView::show(stf::Renderer &renderer)
 {
     IView::show(renderer);
-    renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
     mMenuBar->show(renderer);
     drawLogItem(renderer, mMenuBar->Width);
 
     int y = 2;
+    renderer.draw({mMenuBar->Width + 1, y++}, "Earn:......%m.00 UAH", mModel->totalEarn());
+    renderer.draw({mMenuBar->Width + 1, y++}, "Deposits:..%m.00 UAH", mModel->totalDeposits());
+    renderer.draw({mMenuBar->Width + 1, y++}, "Debts:.....%m.00 UAH", mModel->totalDebts());
 
+    ++y;
+    renderer.drawText({mMenuBar->Width + 1, y++}, "P&Ls:");
+    renderer.draw({mMenuBar->Width + 1, y++}, (mModel->todayPnL()   > 0 ? "Today....%CG%m.00 UAH%CD" : "Today....%CR%m.00 UAH%CD"), mModel->todayPnL());
+    renderer.draw({mMenuBar->Width + 1, y++}, (mModel->monthlyPnL() > 0 ? "Monthly..%CG%m.00 UAH%CD" : "Monthly..%CR%m.00 UAH%CD"), mModel->monthlyPnL());
+    renderer.draw({mMenuBar->Width + 1, y++}, (mModel->yearPnL()    > 0 ? "Year.....%CG%m.00 UAH%CD" : "Year.....%CR%m.00 UAH%CD"), mModel->yearPnL());
+    renderer.draw({mMenuBar->Width + 1, y++}, (mModel->totalPnL()   > 0 ? "Total....%CG%m.00 UAH%CD" : "Total....%CR%m.00 UAH%CD"), mModel->totalPnL());
+
+    ++y;
+    renderer.drawText({mMenuBar->Width + 1, y++}, "Favorite categories(by current month):");
     for(const auto &category : mModel->favoriteCategories()) {
-        renderer.draw({mMenuBar->Width + 1, y++}, "%s: %m.00 UAH", category.first.c_str(), category.second);
+        renderer.drawLine({mMenuBar->Width + 1, y}, {mMenuBar->Width + 15, y}, '.');
+        renderer.draw({mMenuBar->Width + 1, y}, "%s:", category.first.c_str());
+        renderer.draw({mMenuBar->Width + 15, y++}, (category.second > 0 ? "%CG%m.00 UAH%CD" : "%CR%m.00 UAH%CD"), category.second);
     }
-    renderer.draw({mMenuBar->Width + 1, y++}, "Total: %m.00 UAH", mModel->totalEarn());
-    renderer.draw({mMenuBar->Width + 1, y++}, "Deposits: %m.00 UAH", mModel->totalDeposits());
-    renderer.draw({mMenuBar->Width + 1, y++}, "Debts: %m.00 UAH", mModel->totalDebts());
-    renderer.draw({mMenuBar->Width + 1, y++}, "Total PnL: %m.00 UAH", mModel->totalPnL());
-    renderer.draw({mMenuBar->Width + 1, y++}, "Today PnL: %m.00 UAH", mModel->todayPnL());
-    renderer.draw({mMenuBar->Width + 1, y++}, "Monthly PnL: %m.00 UAH", mModel->monthlyPnL());
-    renderer.draw({mMenuBar->Width + 1, y++}, "Year PnL: %m.00 UAH", mModel->yearPnL());
 }
 
 IView *MainView::keyHandler(int key)

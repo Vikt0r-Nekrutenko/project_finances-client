@@ -184,13 +184,17 @@ public:
 
     void selectFavoriteCategories(int id1, int id2, int id3)
     {
-        std::string name1 = Categories.categories().at(id1).name();
-        std::string name2 = Categories.categories().at(id2).name();
-        std::string name3 = Categories.categories().at(id3).name();
+        const CategoryModel &cat1 = Categories.categories().at(id1);
+        const CategoryModel &cat2 = Categories.categories().at(id2);
+        const CategoryModel &cat3 = Categories.categories().at(id3);
 
-        mFavoriteCategories[0] = {name1, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name1).sum()};
-        mFavoriteCategories[1] = {name2, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name2).sum()};
-        mFavoriteCategories[2] = {name3, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name3).sum()};
+        int sum1 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat1.name()).sum();
+        int sum2 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat2.name()).sum();
+        int sum3 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat3.name()).sum();
+
+        mFavoriteCategories[0] = {cat1.name(), cat1.type() == "negative" ? -sum1 : sum1};
+        mFavoriteCategories[1] = {cat2.name(), cat2.type() == "negative" ? -sum2 : sum2};
+        mFavoriteCategories[2] = {cat3.name(), cat3.type() == "negative" ? -sum3 : sum3};
     }
 
     int calcTotalEarn()
