@@ -18,6 +18,7 @@ MainView::MainView(AppModel *model)
     mModel->selectFavoriteCategories(0, 1, 2);
     mModel->calcTotalEarn();
     mModel->calcTotalDeposits();
+    mModel->calcTotalDebts();
     mModel->calcPnLs();
 }
 
@@ -35,6 +36,8 @@ void MainView::show(stf::Renderer &renderer)
     }
     renderer.draw({mMenuBar->Width + 1, y++}, "Total: %m.00 UAH", mModel->totalEarn());
     renderer.draw({mMenuBar->Width + 1, y++}, "Deposits: %m.00 UAH", mModel->totalDeposits());
+    renderer.draw({mMenuBar->Width + 1, y++}, "Debts: %m.00 UAH", mModel->totalDebts());
+    renderer.draw({mMenuBar->Width + 1, y++}, "Total PnL: %m.00 UAH", mModel->totalPnL());
     renderer.draw({mMenuBar->Width + 1, y++}, "Today PnL: %m.00 UAH", mModel->todayPnL());
     renderer.draw({mMenuBar->Width + 1, y++}, "Monthly PnL: %m.00 UAH", mModel->monthlyPnL());
     renderer.draw({mMenuBar->Width + 1, y++}, "Year PnL: %m.00 UAH", mModel->yearPnL());

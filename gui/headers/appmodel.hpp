@@ -43,6 +43,11 @@ public:
         return mTotalDeposits;
     }
 
+    int totalDebts() const
+    {
+        return mTotalDebts;
+    }
+
     int totalPnL() const
     {
         return mTotalDeposits - mTotalEarn;
@@ -200,6 +205,13 @@ public:
         return mTotalDeposits;
     }
 
+    int calcTotalDebts()
+    {
+        for(const auto &debt : Debts.debts())
+            mTotalDebts += debt.amount();
+        return mTotalDebts;
+    }
+
     void calcPnLs()
     {
         OperationHandlerQuery yearEarnOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "earn");
@@ -217,6 +229,7 @@ private:
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
     int mTotalDeposits = 0;
+    int mTotalDebts = 0;
     int mTodayPnL = 0,
         mMonthlyPnL = 0,
         mYearPnL = 0;
