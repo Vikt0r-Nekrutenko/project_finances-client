@@ -1,5 +1,6 @@
 #include "mainview.hpp"
 #include "ioption.hpp"
+#include "appmodel.hpp"
 
 
 
@@ -13,6 +14,7 @@ MainView::MainView(AppModel *model)
                                                 new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
+    mModel->selectFavoriteCategories(0, 1, 2);
 }
 
 void MainView::show(stf::Renderer &renderer)
@@ -21,6 +23,12 @@ void MainView::show(stf::Renderer &renderer)
     renderer.draw({mMenuBar->Width + 1, 1}, "Main View");
     mMenuBar->show(renderer);
     drawLogItem(renderer, mMenuBar->Width);
+
+    int y = 2;
+
+    for(const auto &category : mModel->favoriteCategories()) {
+        renderer.draw({mMenuBar->Width + 1, y++}, "%s: %m.00 UAH", category.first.c_str(), category.second);
+    }
 }
 
 IView *MainView::keyHandler(int key)

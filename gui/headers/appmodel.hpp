@@ -16,9 +16,16 @@ public:
     CategoryModelHandler Categories;
     OperationModelHandler Operations;
 
+    using FavoriteCategoryList = std::vector<std::pair<std::string, int>>;
+
     const OperationHandlerQuery &operationsList() const
     {
         return mOperationsList;
+    }
+
+    const FavoriteCategoryList &favoriteCategories() const
+    {
+        return mFavoriteCategories;
     }
 
     DepositModel *selectedDeposit()
@@ -140,9 +147,21 @@ public:
         }
     }
 
+    void selectFavoriteCategories(int id1, int id2, int id3)
+    {
+        std::string name1 = Categories.categories().at(id1).name();
+        std::string name2 = Categories.categories().at(id2).name();
+        std::string name3 = Categories.categories().at(id3).name();
+
+        mFavoriteCategories.push_back({name1, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name1).sum()});
+        mFavoriteCategories.push_back({name2, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name2).sum()});
+        mFavoriteCategories.push_back({name3, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name3).sum()});
+    }
+
 private:
 
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
+    FavoriteCategoryList mFavoriteCategories;
     DepositModel *mSelectedDeposit = nullptr;
     int mSelectedOperationId = 0;
 

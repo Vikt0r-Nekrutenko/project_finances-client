@@ -9,6 +9,7 @@ CategoriesView::CategoriesView(AppModel *model, IView *parent)
     mOptionsList.insert(mOptionsList.end(), {
                                                 new options::categories_view::AddNewCategory,
                                                 new options::categories_view::DeleteCategory,
+                                                new options::categories_view::SelectFavoriteCategories,
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
