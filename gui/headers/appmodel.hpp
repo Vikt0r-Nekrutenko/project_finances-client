@@ -17,6 +17,7 @@ public:
     OperationModelHandler Operations;
 
     using FavoriteCategoryList = std::vector<std::pair<std::string, int>>;
+    using MinMaxLoss = std::pair<std::pair<std::string, int>, std::pair<std::string, int>>;
 
     const OperationHandlerQuery &operationsList() const
     {
@@ -26,6 +27,11 @@ public:
     const FavoriteCategoryList &favoriteCategories() const
     {
         return mFavoriteCategories;
+    }
+
+    const MinMaxLoss &minMaxLoss() const
+    {
+        return mMinMaxLoss;
     }
 
     DepositModel *selectedDeposit()
@@ -226,10 +232,35 @@ public:
         mTodayPnL = yearEarnOperations.filterByCurrentDay().sum() - yearNegativeOperations.filterByCurrentDay().sum();
     }
 
+    void calcMinMaxLoss()
+    {
+        OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth();
+        std::unordered_map<std::string, int> sumByCategories;
+        for(const auto &operation : monthlyOperations) {
+            sumByCategories[operation->category()] += operation->amount();
+        }
+
+        mMinMaxLoss.first.second = INT_MAX;
+        mMinMaxLoss.second.second = 0;
+
+        for(const auto &pair : sumByCategories) {
+            if(pair.second < mMinMaxLoss.first.second)
+                mMinMaxLoss.first = pair;
+            if(pair.second > mMinMaxLoss.second.second)
+                mMinMaxLoss.second = pair;
+        }
+
+        if(Categories.findByName(mMinMaxLoss.first.first)->type() == "negative")
+            mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
+        if(Categories.findByName(mMinMaxLoss.second.first)->type() == "negative")
+            mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
+    }
+
 private:
 
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
     FavoriteCategoryList mFavoriteCategories = FavoriteCategoryList(3);
+    MinMaxLoss mMinMaxLoss;
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
     int mTotalDeposits = 0;

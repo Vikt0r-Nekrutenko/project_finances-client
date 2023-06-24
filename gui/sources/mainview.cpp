@@ -20,6 +20,7 @@ MainView::MainView(AppModel *model)
     mModel->calcTotalDeposits();
     mModel->calcTotalDebts();
     mModel->calcPnLs();
+    mModel->calcMinMaxLoss();
 }
 
 void MainView::show(stf::Renderer &renderer)
@@ -47,6 +48,11 @@ void MainView::show(stf::Renderer &renderer)
         renderer.draw({mMenuBar->Width + 1, y}, "%s:", category.first.c_str());
         renderer.draw({mMenuBar->Width + 15, y++}, (category.second > 0 ? "%CG%m.00 UAH%CD" : "%CR%m.00 UAH%CD"), category.second);
     }
+
+    ++y;
+    renderer.drawText({mMenuBar->Width + 1, y++}, "Min & Max loss(by current month):");
+    renderer.draw({mMenuBar->Width + 1, y++}, (mModel->minMaxLoss().first.second > 0 ? "%s: %CG%m.00 UAH%CD" : "%s: %CR%m.00 UAH%CD"), mModel->minMaxLoss().first.first.c_str(), mModel->minMaxLoss().first.second);
+    renderer.draw({mMenuBar->Width + 1, y++}, (mModel->minMaxLoss().second.second > 0 ? "%s: %CG%m.00 UAH%CD" : "%s: %CR%m.00 UAH%CD"), mModel->minMaxLoss().second.first.c_str(), mModel->minMaxLoss().second.second);
 }
 
 IView *MainView::keyHandler(int key)
