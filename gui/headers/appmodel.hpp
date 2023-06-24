@@ -48,6 +48,21 @@ public:
         return mTotalDeposits - mTotalEarn;
     }
 
+    int todayPnL() const
+    {
+        return mTodayPnL;
+    }
+
+    int monthlyPnL() const
+    {
+        return mMonthlyPnL;
+    }
+
+    int yearPnL() const
+    {
+        return mYearPnL;
+    }
+
     void addNewOperation(const std::string &date, int amount, const std::string &category)
     {
         Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
@@ -185,6 +200,16 @@ public:
         return mTotalDeposits;
     }
 
+    void calcPnLs()
+    {
+        OperationHandlerQuery yearEarnOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "earn");
+        OperationHandlerQuery yearNegativeOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "negative");
+
+        mYearPnL = yearEarnOperations.sum() - yearNegativeOperations.sum();
+        mMonthlyPnL = yearEarnOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentMonth().sum();
+        mTodayPnL = yearEarnOperations.filterByCurrentDay().sum() - yearNegativeOperations.filterByCurrentDay().sum();
+    }
+
 private:
 
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
@@ -192,6 +217,9 @@ private:
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
     int mTotalDeposits = 0;
+    int mTodayPnL = 0,
+        mMonthlyPnL = 0,
+        mYearPnL = 0;
     int mSelectedOperationId = 0;
 
 public:
