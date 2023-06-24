@@ -50,6 +50,15 @@ public:
     IView *onEnterPressHandler() override;
 };
 
+class SelectFavoriteCategoriesView : public ICategoryView
+{
+public:
+
+    SelectFavoriteCategoriesView(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
 }}
 
 #endif // CATEGORIESVIEW_HPP

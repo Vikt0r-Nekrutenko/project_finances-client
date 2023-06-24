@@ -96,3 +96,27 @@ IView *DeleteCategoryView::onEnterPressHandler()
     mModel->Categories.deleteCategory(id);
     return mParent;
 }
+
+SelectFavoriteCategoriesView::SelectFavoriteCategoriesView(AppModel *model, IView *parent)
+    : ICategoryView{model, parent, "Enter 'Id1 Id2 Id3' or press ESC to back up"} { }
+
+IView *SelectFavoriteCategoriesView::onEnterPressHandler()
+{
+    int id1 = mInputField.getExpressionResult();
+    int id2 = mInputField.getExpressionResult();
+    int id3 = mInputField.getExpressionResult();
+
+    --id1; --id2; --id3;
+
+    if(id1 < 0 || id1 >= int(mModel->Categories.categories().size()) ||
+        id2 < 0 || id2 >= int(mModel->Categories.categories().size()) ||
+        id3 < 0 || id3 >= int(mModel->Categories.categories().size()))
+    {
+        mLogItem << "WARNING! Entered ids is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    // mModel->selectFavoriteCategories(id1, id2 id3);
+    return mParent;
+}
