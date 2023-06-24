@@ -26,7 +26,7 @@ void OperationsView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     int y = 2;
-    for(auto operation = mModel->mOperationsList.rbegin(); operation != mModel->mOperationsList.rend(); ++operation) {
+    for(auto operation = mModel->operationsList().rbegin(); operation != mModel->operationsList().rend(); ++operation) {
         if(y == renderer.Size.y - LogHeight - 1)
             break;
         renderer.drawLine({mMenuBar->Width +  1, y}, {renderer.Size.x - 1, y}, '.');

@@ -16,7 +16,10 @@ public:
     CategoryModelHandler Categories;
     OperationModelHandler Operations;
 
-    OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
+    const OperationHandlerQuery &operationsList() const
+    {
+        return mOperationsList;
+    }
 
     DepositModel *selectedDeposit()
     {
@@ -139,6 +142,7 @@ public:
 
 private:
 
+    OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
     DepositModel *mSelectedDeposit = nullptr;
     int mSelectedOperationId = 0;
 
