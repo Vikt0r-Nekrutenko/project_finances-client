@@ -14,13 +14,7 @@ MainView::MainView(AppModel *model)
                                                 new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
-
-    mModel->selectFavoriteCategories(0, 1, 2);
-    mModel->calcTotalEarn();
-    mModel->calcTotalDeposits();
-    mModel->calcTotalDebts();
-    mModel->calcPnLs();
-    mModel->calcMinMaxLoss();
+    mModel->updateStats();
 }
 
 void MainView::show(stf::Renderer &renderer)

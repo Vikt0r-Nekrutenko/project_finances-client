@@ -19,6 +19,13 @@ public:
     using FavoriteCategoryList = std::vector<std::pair<std::string, int>>;
     using MinMaxLoss = std::pair<std::pair<std::string, int>, std::pair<std::string, int>>;
 
+    AppModel()
+    {
+        try {
+            selectFavoriteCategories(0, 1, 10);
+        } catch(...) { }
+    }
+
     const OperationHandlerQuery &operationsList() const
     {
         return mOperationsList;
@@ -198,9 +205,9 @@ public:
         int sum2 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat2.name()).sum();
         int sum3 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat3.name()).sum();
 
-        mFavoriteCategories[0] = {cat1.name(), cat1.type() == "negative" ? -sum1 : sum1};
-        mFavoriteCategories[1] = {cat2.name(), cat2.type() == "negative" ? -sum2 : sum2};
-        mFavoriteCategories[2] = {cat3.name(), cat3.type() == "negative" ? -sum3 : sum3};
+        mFavoriteCategories.at(0) = {cat1.name(), cat1.type() == "negative" ? -sum1 : sum1};
+        mFavoriteCategories.at(1) = {cat2.name(), cat2.type() == "negative" ? -sum2 : sum2};
+        mFavoriteCategories.at(2) = {cat3.name(), cat3.type() == "negative" ? -sum3 : sum3};
     }
 
     int calcTotalEarn()
@@ -254,6 +261,15 @@ public:
             mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
         if(Categories.findByName(mMinMaxLoss.second.first)->type() == "negative")
             mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
+    }
+
+    void updateStats()
+    {
+        calcTotalEarn();
+        calcTotalDeposits();
+        calcTotalDebts();
+        calcPnLs();
+        calcMinMaxLoss();
     }
 
 private:

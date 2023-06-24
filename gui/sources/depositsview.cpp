@@ -10,7 +10,7 @@ DepositsView::DepositsView(AppModel *model, IView *parent)
                                              new options::deposits_view::AddNewDeposit,
                                              new options::deposits_view::ChangeBalance,
                                              new options::deposits_view::SelectDeposit,
-//                                             new options::deposits_view::DeleteDeposit,
+                                             new options::deposits_view::DeleteDeposit,
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
@@ -32,9 +32,10 @@ void DepositsView::show(stf::Renderer &renderer)
 
 IView *DepositsView::keyHandler(int key)
 {
-    if(key == VK_ESCAPE1)
+    if(key == VK_ESCAPE1){
+        mModel->updateStats();
         return mParent;
-    if (key == 'q') {
+    } else if (key == 'q') {
         return new CloseView(mModel);
     }
     switchMenuBar(key);

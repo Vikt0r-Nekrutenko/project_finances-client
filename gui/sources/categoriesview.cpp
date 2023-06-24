@@ -31,9 +31,10 @@ void CategoriesView::show(stf::Renderer &renderer)
 
 IView *CategoriesView::keyHandler(int key)
 {
-    if(key == VK_ESCAPE1)
+    if(key == VK_ESCAPE1) {
+        mModel->updateStats();
         return mParent;
-    if (key == 'q') {
+    } else if (key == 'q') {
         return new CloseView(mModel);
     }
     switchMenuBar(key);
