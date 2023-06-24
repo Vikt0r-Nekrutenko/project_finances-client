@@ -43,6 +43,11 @@ public:
         return mTotalDeposits;
     }
 
+    int totalPnL() const
+    {
+        return mTotalDeposits - mTotalEarn;
+    }
+
     void addNewOperation(const std::string &date, int amount, const std::string &category)
     {
         Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
