@@ -146,6 +146,16 @@ IView *options::categories_view::DeleteCategory::execute(IView *sender)
     return new input_views::categories_views::DeleteCategoryView(sender->model(), sender);
 }
 
+std::string options::categories_view::SelectFavoriteCategories::caption() const
+{
+    return "Select categories";
+}
+
+IView *options::categories_view::SelectFavoriteCategories::execute(IView *sender)
+{
+    return new input_views::categories_views::SelectFavoriteCategoriesView(sender->model(), sender);
+}
+
 std::string options::operations_view::AddNewOperation::caption() const
 {
     return "Add new Operation";
