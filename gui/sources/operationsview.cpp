@@ -34,6 +34,7 @@ void OperationsView::show(stf::Renderer &renderer)
         renderer.draw({mMenuBar->Width + 33, y}, "%s", (*operation)->category().c_str());
         ++y;
     }
+    renderer.draw({mMenuBar->Width + 1, 1}, "%s[%m.00UAH]", mModel->selectedDeposit()->name().c_str(), mModel->selectedDeposit()->balance());
 }
 
 IView *OperationsView::keyHandler(int key)
