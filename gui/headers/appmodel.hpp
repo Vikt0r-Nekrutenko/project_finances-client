@@ -38,6 +38,11 @@ public:
         return mTotalEarn;
     }
 
+    int totalDeposits() const
+    {
+        return mTotalDeposits;
+    }
+
     void addNewOperation(const std::string &date, int amount, const std::string &category)
     {
         Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
@@ -168,12 +173,20 @@ public:
         return mTotalEarn = OperationHandlerQuery(&Operations).select().filterByCategoryType(Categories, "earn").sum();
     }
 
+    int calcTotalDeposits()
+    {
+        for(const auto &deposit : Deposits.deposits())
+            mTotalDeposits += deposit.balance();
+        return mTotalDeposits;
+    }
+
 private:
 
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
     FavoriteCategoryList mFavoriteCategories;
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
+    int mTotalDeposits = 0;
     int mSelectedOperationId = 0;
 
 public:

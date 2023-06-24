@@ -17,6 +17,7 @@ MainView::MainView(AppModel *model)
 
     mModel->selectFavoriteCategories(0, 1, 2);
     mModel->calcTotalEarn();
+    mModel->calcTotalDeposits();
 }
 
 void MainView::show(stf::Renderer &renderer)
@@ -32,6 +33,7 @@ void MainView::show(stf::Renderer &renderer)
         renderer.draw({mMenuBar->Width + 1, y++}, "%s: %m.00 UAH", category.first.c_str(), category.second);
     }
     renderer.draw({mMenuBar->Width + 1, y++}, "Total: %m.00 UAH", mModel->totalEarn());
+    renderer.draw({mMenuBar->Width + 1, y++}, "Deposits: %m.00 UAH", mModel->totalDeposits());
 }
 
 IView *MainView::keyHandler(int key)
