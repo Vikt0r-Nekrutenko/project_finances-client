@@ -21,6 +21,13 @@ OperationHandlerQuery &OperationHandlerQuery::filterByDeposit(const std::string 
     return *this;
 }
 
+OperationHandlerQuery &OperationHandlerQuery::filterByCategoryName(const std::string &name)
+{
+    for(OperationHandlerQuery::iterator it = begin(); it != end(); )
+        it = ((*it)->category() != name) ? erase(it) : ++it;
+    return *this;
+}
+
 OperationHandlerQuery &OperationHandlerQuery::filterByCategoryType(CategoryModelHandler &handler, const std::string &type)
 {
     for(OperationHandlerQuery::iterator it = begin(); it != end(); )
