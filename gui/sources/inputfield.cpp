@@ -21,6 +21,8 @@ IView *InputField::keyHandler(IView *sender, int key)
         Text.insert(mCursor++, 1, char(key));
     } else if(key == VK_ENTER1 || key == VK_ENTER2) {
         mBackupText = Text;
+    } else if(key == VK_TAB1 && !mBackupText.empty()) {
+        restoreText();
     }
     return sender;
 }
