@@ -188,9 +188,9 @@ public:
         std::string name2 = Categories.categories().at(id2).name();
         std::string name3 = Categories.categories().at(id3).name();
 
-        mFavoriteCategories.push_back({name1, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name1).sum()});
-        mFavoriteCategories.push_back({name2, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name2).sum()});
-        mFavoriteCategories.push_back({name3, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name3).sum()});
+        mFavoriteCategories[0] = {name1, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name1).sum()};
+        mFavoriteCategories[1] = {name2, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name2).sum()};
+        mFavoriteCategories[2] = {name3, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name3).sum()};
     }
 
     int calcTotalEarn()
@@ -225,7 +225,7 @@ public:
 private:
 
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
-    FavoriteCategoryList mFavoriteCategories;
+    FavoriteCategoryList mFavoriteCategories = FavoriteCategoryList(3);
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
     int mTotalDeposits = 0;
