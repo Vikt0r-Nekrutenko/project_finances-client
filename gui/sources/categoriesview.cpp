@@ -118,6 +118,6 @@ IView *SelectFavoriteCategoriesView::onEnterPressHandler()
         return this;
     }
 
-    // mModel->selectFavoriteCategories(id1, id2 id3);
+    mModel->selectFavoriteCategories(id1, id2, id3);
     return mParent;
 }
