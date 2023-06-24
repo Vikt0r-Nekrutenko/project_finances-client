@@ -14,7 +14,9 @@ MainView::MainView(AppModel *model)
                                                 new options::main_view::Exit
                                             });
     mActiveMenuBar->recalculateBarWidth();
+
     mModel->selectFavoriteCategories(0, 1, 2);
+    mModel->calcTotalEarn();
 }
 
 void MainView::show(stf::Renderer &renderer)
@@ -29,6 +31,7 @@ void MainView::show(stf::Renderer &renderer)
     for(const auto &category : mModel->favoriteCategories()) {
         renderer.draw({mMenuBar->Width + 1, y++}, "%s: %m.00 UAH", category.first.c_str(), category.second);
     }
+    renderer.draw({mMenuBar->Width + 1, y++}, "Total: %m.00 UAH", mModel->totalEarn());
 }
 
 IView *MainView::keyHandler(int key)

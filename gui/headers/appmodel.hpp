@@ -33,6 +33,11 @@ public:
         return mSelectedDeposit;
     }
 
+    int totalEarn() const
+    {
+        return mTotalEarn;
+    }
+
     void addNewOperation(const std::string &date, int amount, const std::string &category)
     {
         Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
@@ -158,11 +163,17 @@ public:
         mFavoriteCategories.push_back({name3, OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(name3).sum()});
     }
 
+    int calcTotalEarn()
+    {
+        return mTotalEarn = OperationHandlerQuery(&Operations).select().filterByCategoryType(Categories, "earn").sum();
+    }
+
 private:
 
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
     FavoriteCategoryList mFavoriteCategories;
     DepositModel *mSelectedDeposit = nullptr;
+    int mTotalEarn = 0;
     int mSelectedOperationId = 0;
 
 public:
