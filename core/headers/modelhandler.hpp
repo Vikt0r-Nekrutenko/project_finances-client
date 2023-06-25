@@ -11,4 +11,23 @@ public:
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };
 
+class CORE_EXPORT MonoBankDataHandler
+{
+public:
+
+    struct Currency
+    {
+        int code;
+        float buy;
+        float sell;
+    };
+
+    RemoteStatus get();
+    std::vector<Currency>::const_iterator usd() const;
+
+private:
+
+    std::vector<Currency> mQuotes;
+};
+
 #endif // MODELHANDLER_HPP
