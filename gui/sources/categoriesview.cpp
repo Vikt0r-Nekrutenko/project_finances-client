@@ -81,7 +81,7 @@ IView *AddNewCategoryView::onEnterPressHandler()
 }
 
 DeleteCategoryView::DeleteCategoryView(AppModel *model, IView *parent)
-    : ICategoryView{model, parent, "Enter 'Id' or press ESC to back up"} { }
+    : ICategoryView{model, parent, "WARNING! You gonna delete category! Enter 'Id' or press ESC to back up"} { }
 
 IView *DeleteCategoryView::onEnterPressHandler()
 {
