@@ -1,6 +1,8 @@
 #include "inputfield.hpp"
 #include "imenu.hpp"
 
+std::vector<std::string> InputField::mHistory;
+
 void InputField::show(stf::Renderer &renderer, int x, int y)
 {
     renderer.draw({x, y}, ">> %s", Text.c_str());
@@ -20,17 +22,22 @@ IView *InputField::keyHandler(IView *sender, int key)
     } else if((key >= '0' && key <= 'z') || key == ' ' || key == '-' || key == '+') {
         Text.insert(mCursor++, 1, char(key));
     } else if(key == VK_ENTER1 || key == VK_ENTER2) {
-        mBackupText = Text;
-    } else if(key == VK_TAB1 && !mBackupText.empty()) {
-        restoreText();
+        mHistory.push_back(Text);
+        mHistoryCursor = mHistory.size() - 1;
+    } else if(key == VK_TAB1 && !mHistory.empty()) {
+        Text = mHistory.at(mHistoryCursor--);
+        mHistoryCursor = mHistoryCursor == -1 ? mHistory.size() - 1 : mHistoryCursor;
+        mCursor = Text.length();
     }
     return sender;
 }
 
 void InputField::restoreText()
 {
-    Text = mBackupText;
-    mCursor = Text.length();
+    if(!mHistory.empty()) {
+        Text = mHistory.back();
+        mCursor = Text.length();
+    }
 }
 
 std::string InputField::getStr()

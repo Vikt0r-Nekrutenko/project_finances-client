@@ -32,7 +32,8 @@ public:
 
 protected:
 
-    std::string mBackupText;
+    static std::vector<std::string> mHistory;
+    int mHistoryCursor = 0;
     int mCursor = 0;
 };
 
