@@ -27,6 +27,8 @@ public:
 
     const MinMaxLoss &minMaxLoss() const;
 
+    const std::pair<std::string, float> &currentCurrency() const;
+
     DepositModel *selectedDeposit();
 
     int totalEarn() const;
@@ -79,11 +81,14 @@ public:
 
     void updateStats();
 
+    void switchCurrency();
+
 private:
 
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
     FavoriteCategoryList mFavoriteCategories = FavoriteCategoryList(3);
     MinMaxLoss mMinMaxLoss;
+    std::pair<std::string, float> mQuotes[2] {{"UAH", 1.f}, {"USD", 0.f}};
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
     int mTotalDeposits = 0;
@@ -92,6 +97,7 @@ private:
         mMonthlyPnL = 0,
         mYearPnL = 0;
     int mSelectedOperationId = 0;
+    uint8_t mCurrentCurrencyId = 0;
 
 public:
 

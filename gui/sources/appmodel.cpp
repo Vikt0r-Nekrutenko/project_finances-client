@@ -2,6 +2,7 @@
 
 AppModel::AppModel()
 {
+    mQuotes[1].second = MonoBankDataHandler().usd()->sell;
     try {
         selectFavoriteCategories(0, 1, 10);
     } catch(...) { }
@@ -20,6 +21,11 @@ const AppModel::FavoriteCategoryList &AppModel::favoriteCategories() const
 const AppModel::MinMaxLoss &AppModel::minMaxLoss() const
 {
     return mMinMaxLoss;
+}
+
+const std::pair<std::string, float> &AppModel::currentCurrency() const
+{
+    return mQuotes[mCurrentCurrencyId];
 }
 
 DepositModel *AppModel::selectedDeposit()
@@ -253,4 +259,9 @@ void AppModel::updateStats()
     calcTotalDebts();
     calcPnLs();
     calcMinMaxLoss();
+}
+
+void AppModel::switchCurrency()
+{
+    mCurrentCurrencyId ^= 1;
 }
