@@ -31,7 +31,7 @@ SOURCES += \
     sources/mainview.cpp \
     sources/operationsview.cpp \
     sources/viewholder.cpp \
-    sources\main.cpp
+    sources/main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
