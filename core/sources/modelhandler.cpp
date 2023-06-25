@@ -20,7 +20,7 @@ RemoteStatus DataModelHandler::get(const std::string &additionalPath)
     return RemoteStatus::Success;
 }
 
-RemoteStatus MonoBankDataHandler::get()
+MonoBankDataHandler::MonoBankDataHandler()
 {
     static QNetworkAccessManager *mManager = new QNetworkAccessManager;
     QNetworkRequest mRequest {QUrl("https://api.monobank.ua/bank/currency")};
@@ -38,7 +38,6 @@ RemoteStatus MonoBankDataHandler::get()
         CoreLog.push_back("Quotes has got successfully!");
     } else {
         CoreLog.push_back(reply->errorString().toStdString());
-        return RemoteStatus::Failure;
     }
     reply->deleteLater();
 
@@ -53,8 +52,6 @@ RemoteStatus MonoBankDataHandler::get()
             float(var.toObject()["rateSell"].toDouble())
         });
     }
-
-    return RemoteStatus::Success;
 }
 
 std::vector<MonoBankDataHandler::Currency>::const_iterator MonoBankDataHandler::usd() const

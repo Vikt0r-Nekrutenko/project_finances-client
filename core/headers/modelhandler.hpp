@@ -22,7 +22,7 @@ public:
         float sell;
     };
 
-    RemoteStatus get();
+    MonoBankDataHandler();
     std::vector<Currency>::const_iterator usd() const;
 
 private:
