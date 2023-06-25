@@ -2,7 +2,9 @@
 
 AppModel::AppModel()
 {
-    mQuotes[1].second = MonoBankDataHandler().usd()->sell;
+    MonoBankDataHandler mdh;
+    auto usd = mdh.usd()->sell;
+    mQuotes[1].second = usd;
     try {
         selectFavoriteCategories(0, 1, 10);
     } catch(...) { }
