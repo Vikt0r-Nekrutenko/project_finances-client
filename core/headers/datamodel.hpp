@@ -24,6 +24,7 @@ public:
 
 private:
 
+    QNetworkAccessManager *mManager = new QNetworkAccessManager();
     static std::string AuthName, AuthValue;
 };
 

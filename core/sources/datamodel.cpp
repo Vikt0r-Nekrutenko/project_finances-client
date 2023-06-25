@@ -13,7 +13,6 @@ std::string DataModel::AuthName, DataModel::AuthValue;
 
 QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request)
 {
-    static QNetworkAccessManager mManager;
     QNetworkRequest mRequest {QUrl((MainPath + additionalPath).c_str())};
 
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -33,8 +32,8 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
 
     QEventLoop loop;
 
-    QObject::connect(&mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    QNetworkReply *reply = mManager.sendCustomRequest(mRequest, request.c_str(), QJsonDocument(data).toJson());
+    QObject::connect(mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+    QNetworkReply *reply = mManager->sendCustomRequest(mRequest, request.c_str(), QJsonDocument(data).toJson());
 
     loop.exec();
 
