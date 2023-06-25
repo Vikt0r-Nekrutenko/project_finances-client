@@ -20,6 +20,7 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/appmodel.cpp \
     sources/categoriesview.cpp \
     sources/debtsview.cpp \
     sources/depositsview.cpp \
