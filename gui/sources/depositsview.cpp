@@ -96,7 +96,7 @@ IView *ChangeBalanceView::onEnterPressHandler()
 }
 
 DeleteDepositView::DeleteDepositView(AppModel *model, IView *parent)
-    : IDepositView{model, parent, "Enter 'Id' or press ESC to back up"} { }
+    : IDepositView{model, parent, "WARNING! You gonna delete deposit! Enter 'Id' or press ESC to back up"} { }
 
 IView *DeleteDepositView::onEnterPressHandler()
 {

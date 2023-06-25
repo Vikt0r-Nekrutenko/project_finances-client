@@ -217,6 +217,7 @@ public:
 
     int calcTotalDeposits()
     {
+        mTotalDeposits = 0;
         for(const auto &deposit : Deposits.deposits())
             mTotalDeposits += deposit.balance();
         return mTotalDeposits;
@@ -224,6 +225,7 @@ public:
 
     int calcTotalDebts()
     {
+        mTotalDebts = 0;
         for(const auto &debt : Debts.debts())
             mTotalDebts += debt.amount();
         return mTotalDebts;
