@@ -11,13 +11,9 @@ const std::vector<std::string> &log()
 
 std::string DataModel::AuthName, DataModel::AuthValue;
 
-DataModel::~DataModel()
-{
-    delete mManager;
-}
-
 QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request)
 {
+    static QNetworkAccessManager *mManager = new QNetworkAccessManager();
     QNetworkRequest mRequest {QUrl((MainPath + additionalPath).c_str())};
 
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");

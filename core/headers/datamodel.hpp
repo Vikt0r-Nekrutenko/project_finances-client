@@ -19,13 +19,11 @@ enum class RemoteStatus
 class CORE_EXPORT DataModel
 {
 public:
-    virtual ~DataModel();
     virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request);
     RemoteStatus replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
 
 private:
 
-    QNetworkAccessManager *mManager = new QNetworkAccessManager();
     static std::string AuthName, AuthValue;
 };
 
