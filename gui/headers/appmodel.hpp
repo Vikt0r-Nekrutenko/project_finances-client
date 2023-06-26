@@ -29,6 +29,8 @@ public:
 
     const std::pair<std::string, float> &currentCurrency() const;
 
+    const std::vector<std::pair<CategoryModel *, int>> &monthlyPnlsByCategories() const;
+
     DepositModel *selectedDeposit();
 
     int totalEarn() const;
@@ -79,6 +81,8 @@ public:
 
     void calcMinMaxLoss();
 
+    void calcMonthlyGroupPnL();
+
     void updateStats();
 
     void switchCurrency();
@@ -88,6 +92,7 @@ private:
     OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
     FavoriteCategoryList mFavoriteCategories = FavoriteCategoryList(3);
     MinMaxLoss mMinMaxLoss;
+    std::vector<std::pair<CategoryModel *, int>> mMonthlyGroupPnls;
     std::pair<std::string, float> mQuotes[2] {{"UAH", 1.f}, {"USD", 0.f}};
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;

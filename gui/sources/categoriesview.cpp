@@ -12,6 +12,7 @@ CategoriesView::CategoriesView(AppModel *model, IView *parent)
                                                 new options::categories_view::SelectFavoriteCategories,
                                             });
     mActiveMenuBar->recalculateBarWidth();
+    mModel->calcMonthlyGroupPnL();
 }
 
 void CategoriesView::show(stf::Renderer &renderer)
@@ -21,10 +22,15 @@ void CategoriesView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     int index = 1;
-    for(const auto &Category : mModel->Categories.categories()) {
+    auto drawColoredInfo = [&](const std::string &a, int v, int ox = 0) {
+        renderer.draw({mMenuBar->Width + 1 + ox, 1 + index}, (a + (v > 0 ? "%CG%m.00%CD %s" : "%CR%m.00%CD %s")).c_str(), int(float(v) / mModel->currentCurrency().second), mModel->currentCurrency().first.c_str());
+    };
+
+    for(const auto &Category : mModel->monthlyPnlsByCategories()) {
         renderer.drawLine({mMenuBar->Width +  1, 1 + index}, {renderer.Size.x - 1, 1 + index}, '.');
-        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, Category.name().c_str());
-        renderer.draw({mMenuBar->Width + 15, 1 + index}, "%s", Category.type().c_str());
+        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, Category.first->name().c_str());
+        drawColoredInfo("", Category.second, 15);
+        renderer.draw({mMenuBar->Width + 33, 1 + index}, "%s", Category.first->type().c_str());
         ++index;
     }
 }

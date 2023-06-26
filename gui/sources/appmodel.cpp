@@ -30,6 +30,11 @@ const std::pair<std::string, float> &AppModel::currentCurrency() const
     return mQuotes[mCurrentCurrencyId];
 }
 
+const std::vector<std::pair<CategoryModel *, int> > &AppModel::monthlyPnlsByCategories() const
+{
+    return mMonthlyGroupPnls;
+}
+
 DepositModel *AppModel::selectedDeposit()
 {
     return mSelectedDeposit;
@@ -252,6 +257,16 @@ void AppModel::calcMinMaxLoss()
         mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
     if(Categories.findByName(mMinMaxLoss.second.first)->type() == "negative")
         mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
+}
+
+void AppModel::calcMonthlyGroupPnL()
+{
+    OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth();
+    for(auto &category : Categories.categories()) {
+        OperationHandlerQuery tmp = monthlyOperations;
+        int value = tmp.filterByCategoryName(category.name()).sum();
+        mMonthlyGroupPnls.push_back({&category, category.type() == "negative" ? -value : value});
+    }
 }
 
 void AppModel::updateStats()
