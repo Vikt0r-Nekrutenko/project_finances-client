@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <iostream>
+#include <thread>
 
 #include "window.hpp"
 #include "viewholder.hpp"
@@ -10,31 +11,40 @@ class App : public stf::Window
 {
 public:
 
-    AppModel model;
-    MainView *mainView = new MainView{&model};
-    ViewHolder viewHolder;
-
     App()
     {
-        viewHolder = mainView;
+        mViewHolder = new StartView(nullptr);;
+        std::thread([this](){
+            mModel = new AppModel;
+            mMainView = new MainView{mModel};
+            mViewHolder = mMainView;
+        }).detach();
+    }
+
+    ~App()
+    {
+        delete mModel;
     }
 
     bool onUpdate(const float) override
     {
-        viewHolder.currentView()->show(renderer);
-        renderer.draw({renderer.Size.x - 20, 0}, "Views [Count] : [%d]", viewHolder.viewsCount());
-        return viewHolder.currentView()->isContinue();
+        mViewHolder.currentView()->show(renderer);
+        renderer.draw({renderer.Size.x - 20, 0}, "Views [Count] : [%d]", mViewHolder.viewsCount());
+        return mViewHolder.currentView()->isContinue();
     }
 
     void keyEvents(const int key) override
     {
-        viewHolder = viewHolder.currentView()->keyHandler(key);
+        mViewHolder = mViewHolder.currentView()->keyHandler(key);
     }
 
-    void mouseEvents(const stf::MouseRecord &) override
-    {
+    void mouseEvents(const stf::MouseRecord &) override { }
 
-    }
+private:
+
+    AppModel *mModel;
+    MainView *mMainView;
+    ViewHolder mViewHolder;
 };
 
 int main(int argc, char *argv[])
