@@ -1,5 +1,6 @@
 #include "appmodel.hpp"
 #include <thread>
+#include <unordered_map>
 
 AppModel::AppModel()
 {
