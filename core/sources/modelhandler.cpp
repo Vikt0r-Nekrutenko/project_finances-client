@@ -22,7 +22,7 @@ RemoteStatus DataModelHandler::get(const std::string &additionalPath)
 
 MonoBankDataHandler::MonoBankDataHandler()
 {
-    static QNetworkAccessManager *mManager = new QNetworkAccessManager;
+    QNetworkAccessManager *mManager = new QNetworkAccessManager;
     QNetworkRequest mRequest {QUrl("https://api.monobank.ua/bank/currency")};
 
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
