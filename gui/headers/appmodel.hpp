@@ -93,7 +93,7 @@ private:
     FavoriteCategoryList mFavoriteCategories = FavoriteCategoryList(3);
     MinMaxLoss mMinMaxLoss;
     std::vector<std::pair<CategoryModel *, int>> mMonthlyGroupPnls;
-    std::pair<std::string, float> mQuotes[2] {{"UAH", 1.f}, {"USD", 0.f}};
+    std::pair<std::string, float> mQuotes[2] {{"UAH", 1.f}, {"USD", 1.f}};
     DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
     int mTotalDeposits = 0;

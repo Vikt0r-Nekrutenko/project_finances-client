@@ -4,11 +4,14 @@
 AppModel::AppModel()
 {
     MonoBankDataHandler mdh;
-    auto usd = mdh.usd()->sell;
-    mQuotes[1].second = usd;
+    if(mdh.usd() != mdh.quotes().end()) {
+        float usd = mdh.usd()->sell;
+        mQuotes[1].second = usd;
+    }
     try {
         selectFavoriteCategories(0, 1, 10);
     } catch(...) { }
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 const OperationHandlerQuery &AppModel::operationsList() const
