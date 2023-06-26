@@ -92,3 +92,16 @@ IView *IViewWithInputField::onKeyPressHandler(int key, IView *sender, IView *onE
     }
     return sender;
 }
+
+StartView::StartView(AppModel *model)
+    : IView(model) { }
+
+void StartView::show(stf::Renderer &renderer)
+{
+    renderer.drawText({0, 1}, "Please wait, we are loading and calculating...");
+}
+
+IView *StartView::keyHandler(int)
+{
+    return this;
+}

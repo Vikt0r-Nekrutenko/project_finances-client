@@ -42,6 +42,15 @@ protected:
     IMenu *mMenuBar = mInactiveMenuBar;
 };
 
+class StartView : public IView
+{
+public:
+
+    StartView(AppModel *model);
+    void show(stf::Renderer &renderer) override;
+    IView *keyHandler(int) override;
+};
+
 class CloseView : public IView
 {
 public:
