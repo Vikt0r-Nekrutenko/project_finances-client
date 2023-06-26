@@ -1,5 +1,6 @@
 #include <QCoreApplication>
 #include <iostream>
+#include <thread>
 
 #include "window.hpp"
 #include "viewholder.hpp"
@@ -28,14 +29,23 @@ class App : public stf::Window
 {
 public:
 
-    AppModel model;
-    MainView *mainView = new MainView{&model};
-    StartView *startView = new StartView(&model);
+    AppModel *model;
+    MainView *mainView;
     ViewHolder viewHolder;
 
     App()
     {
-        viewHolder = startView;
+        viewHolder = new StartView(nullptr);;
+        std::thread([this](){
+            model = new AppModel;
+            mainView = new MainView{model};
+            viewHolder = mainView;
+        }).detach();
+    }
+
+    ~App()
+    {
+        delete model;
     }
 
     bool onUpdate(const float) override
