@@ -23,6 +23,7 @@ public:
     };
 
     MonoBankDataHandler();
+    const std::vector<Currency> &quotes() const;
     std::vector<Currency>::const_iterator usd() const;
 
 private:

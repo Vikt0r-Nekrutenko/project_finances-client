@@ -54,6 +54,11 @@ MonoBankDataHandler::MonoBankDataHandler()
     }
 }
 
+const std::vector<MonoBankDataHandler::Currency> &MonoBankDataHandler::quotes() const
+{
+    return mQuotes;
+}
+
 std::vector<MonoBankDataHandler::Currency>::const_iterator MonoBankDataHandler::usd() const
 {
     return std::find_if(mQuotes.begin(), mQuotes.end(), [&](const Currency &model){
