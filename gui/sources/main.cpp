@@ -7,63 +7,44 @@
 #include "mainview.hpp"
 #include "appmodel.hpp"
 
-class StartView : public IView
-{
-public:
-
-    StartView(AppModel *model)
-        : IView(model) { }
-
-    void show(stf::Renderer &renderer) override
-    {
-        renderer.drawText({renderer.Size.x / 2, renderer.Size.y / 2}, "Start view");
-    }
-
-    IView *keyHandler(int) override
-    {
-        return this;
-    }
-};
-
 class App : public stf::Window
 {
 public:
 
-    AppModel *model;
-    MainView *mainView;
-    ViewHolder viewHolder;
-
     App()
     {
-        viewHolder = new StartView(nullptr);;
+        mViewHolder = new StartView(nullptr);;
         std::thread([this](){
-            model = new AppModel;
-            mainView = new MainView{model};
-            viewHolder = mainView;
+            mModel = new AppModel;
+            mMainView = new MainView{mModel};
+            mViewHolder = mMainView;
         }).detach();
     }
 
     ~App()
     {
-        delete model;
+        delete mModel;
     }
 
     bool onUpdate(const float) override
     {
-        viewHolder.currentView()->show(renderer);
-        renderer.draw({renderer.Size.x - 20, 0}, "Views [Count] : [%d]", viewHolder.viewsCount());
-        return viewHolder.currentView()->isContinue();
+        mViewHolder.currentView()->show(renderer);
+        renderer.draw({renderer.Size.x - 20, 0}, "Views [Count] : [%d]", mViewHolder.viewsCount());
+        return mViewHolder.currentView()->isContinue();
     }
 
     void keyEvents(const int key) override
     {
-        viewHolder = viewHolder.currentView()->keyHandler(key);
+        mViewHolder = mViewHolder.currentView()->keyHandler(key);
     }
 
-    void mouseEvents(const stf::MouseRecord &) override
-    {
+    void mouseEvents(const stf::MouseRecord &) override { }
 
-    }
+private:
+
+    AppModel *mModel;
+    MainView *mMainView;
+    ViewHolder mViewHolder;
 };
 
 int main(int argc, char *argv[])
