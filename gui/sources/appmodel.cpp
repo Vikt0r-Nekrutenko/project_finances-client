@@ -257,9 +257,17 @@ void AppModel::calcMinMaxLoss()
             mMinMaxLoss.second = pair;
     }
 
-    if(Categories.findByName(mMinMaxLoss.first.first)->type() == "negative")
+    auto min = Categories.findByName(mMinMaxLoss.first.first);
+    auto max = Categories.findByName(mMinMaxLoss.second.first);
+
+    if(min == Categories.categories().end())
+        mMinMaxLoss.first = {"None", 0};
+    else if(min->type() == "negative")
         mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
-    if(Categories.findByName(mMinMaxLoss.second.first)->type() == "negative")
+
+    if(max == Categories.categories().end())
+        mMinMaxLoss.second = {"None", 0};
+    else if(max->type() == "negative")
         mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
 }
 
