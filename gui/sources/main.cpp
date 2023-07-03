@@ -29,7 +29,6 @@ public:
     bool onUpdate(const float) override
     {
         mViewHolder.currentView()->show(renderer);
-        renderer.draw({renderer.Size.x - 20, 0}, "Views [Count] : [%d]", mViewHolder.viewsCount());
         return mViewHolder.currentView()->isContinue();
     }
 

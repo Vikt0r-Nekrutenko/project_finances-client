@@ -1,5 +1,4 @@
 #include "appmodel.hpp"
-#include <thread>
 #include <unordered_map>
 
 AppModel::AppModel()
@@ -12,7 +11,6 @@ AppModel::AppModel()
     try {
         selectFavoriteCategories(0, 1, 10);
     } catch(...) { }
-    std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 const OperationHandlerQuery &AppModel::operationsList() const
