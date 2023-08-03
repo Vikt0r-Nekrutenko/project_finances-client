@@ -65,7 +65,17 @@ int AppModel::totalPnL() const
 
 int AppModel::todayPnL() const
 {
-    return mTodayPnL;
+    return float(mTodayPnL) / mQuotes[mCurrentCurrencyId].second;
+}
+
+int AppModel::todayProfit() const
+{
+    return float(mTodayProfit) / mQuotes[mCurrentCurrencyId].second;
+}
+
+int AppModel::todayLoss() const
+{
+    return float(mTodayLoss) / mQuotes[mCurrentCurrencyId].second;
 }
 
 int AppModel::monthlyPnL() const
@@ -261,9 +271,13 @@ void AppModel::calcPnLs()
 
     mMonthlyProfit = yearEarnOperations.filterByCurrentMonth().sum() + yearPositiveOperations.filterByCurrentMonth().sum();
     mMonthlyLoss = yearNegativeOperations.filterByCurrentMonth().sum();
+
     mMonthlyPnL = mMonthlyProfit - mMonthlyLoss;
 
-    mTodayPnL = yearEarnOperations.filterByCurrentDay().sum() + yearPositiveOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentDay().sum();
+    mTodayProfit = yearEarnOperations.filterByCurrentDay().sum() + yearPositiveOperations.filterByCurrentDay().sum();
+    mTodayLoss = yearNegativeOperations.filterByCurrentDay().sum();
+
+    mTodayPnL = mTodayProfit - mTodayLoss;
 }
 
 void AppModel::calcMinMaxLoss()
