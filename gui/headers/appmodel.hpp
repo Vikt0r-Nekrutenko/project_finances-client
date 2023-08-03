@@ -47,6 +47,10 @@ public:
 
     int yearPnL() const;
 
+    int yearProfit() const;
+
+    int yearLoss() const;
+
     void addNewOperation(const std::string &date, int amount, const std::string &category);
 
     void deleteOperation(int id);
@@ -98,6 +102,8 @@ private:
     int mTotalEarn = 0;
     int mTotalDeposits = 0;
     int mTotalDebts = 0;
+    int mYearProfit = 0,
+        mYearLoss = 0;
     int mTodayPnL = 0,
         mMonthlyPnL = 0,
         mYearPnL = 0;

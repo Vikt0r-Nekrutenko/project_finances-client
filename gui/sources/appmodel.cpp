@@ -78,6 +78,16 @@ int AppModel::yearPnL() const
     return mYearPnL;
 }
 
+int AppModel::yearProfit() const
+{
+    return mYearProfit;
+}
+
+int AppModel::yearLoss() const
+{
+    return mYearLoss;
+}
+
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)
 {
     Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
@@ -234,7 +244,10 @@ void AppModel::calcPnLs()
     OperationHandlerQuery yearPositiveOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "positive");
     OperationHandlerQuery yearNegativeOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "negative");
 
-    mYearPnL = yearEarnOperations.sum() + yearPositiveOperations.sum() - yearNegativeOperations.sum();
+    mYearProfit = yearEarnOperations.sum() + yearPositiveOperations.sum();
+    mYearLoss = yearNegativeOperations.sum();
+
+    mYearPnL = mYearProfit - mYearLoss;
     mMonthlyPnL = yearEarnOperations.filterByCurrentMonth().sum() + yearPositiveOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentMonth().sum();
     mTodayPnL = yearEarnOperations.filterByCurrentDay().sum() + yearPositiveOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentDay().sum();
 }
