@@ -75,7 +75,7 @@ int AppModel::monthlyPnL() const
 
 int AppModel::yearPnL() const
 {
-    return mYearPnL;
+    return float(mYearPnL) / mQuotes[mCurrentCurrencyId].second;
 }
 
 int AppModel::yearProfit() const
