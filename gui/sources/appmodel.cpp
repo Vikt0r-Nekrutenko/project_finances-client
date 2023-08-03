@@ -231,11 +231,12 @@ int AppModel::calcTotalDebts()
 void AppModel::calcPnLs()
 {
     OperationHandlerQuery yearEarnOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "earn");
+    OperationHandlerQuery yearPositiveOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "positive");
     OperationHandlerQuery yearNegativeOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "negative");
 
-    mYearPnL = yearEarnOperations.sum() - yearNegativeOperations.sum();
-    mMonthlyPnL = yearEarnOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentMonth().sum();
-    mTodayPnL = yearEarnOperations.filterByCurrentDay().sum() - yearNegativeOperations.filterByCurrentDay().sum();
+    mYearPnL = yearEarnOperations.sum() + yearPositiveOperations.sum() - yearNegativeOperations.sum();
+    mMonthlyPnL = yearEarnOperations.filterByCurrentMonth().sum() + yearPositiveOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentMonth().sum();
+    mTodayPnL = yearEarnOperations.filterByCurrentDay().sum() + yearPositiveOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentDay().sum();
 }
 
 void AppModel::calcMinMaxLoss()
