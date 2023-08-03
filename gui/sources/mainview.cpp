@@ -31,7 +31,7 @@ void MainView::show(stf::Renderer &renderer)
     };
 
     auto drawColoredInfo = [&](const std::string &a, int v, int ox = 0) {
-        renderer.draw({mMenuBar->Width + 1 + ox, y++}, (a + (v > 0 ? "%CG%m.00%CD %s" : "%CR%m.00%CD %s")).c_str(), int(float(v) / mModel->currentCurrency().second), mModel->currentCurrency().first.c_str());
+        return renderer.draw({mMenuBar->Width + 1 + ox, y++}, (a + (v > 0 ? "%CG%m.00%CD %s" : "%CR%m.00%CD %s")).c_str(), int(float(v) / mModel->currentCurrency().second), mModel->currentCurrency().first.c_str());
     };
 
     drawInfo("Earn:......", mModel->totalEarn());
@@ -42,7 +42,9 @@ void MainView::show(stf::Renderer &renderer)
     renderer.drawText({mMenuBar->Width + 1, y++}, "P&Ls:");
     drawColoredInfo("Today....", mModel->todayPnL());
     drawColoredInfo("Monthly..", mModel->monthlyPnL());
-    drawColoredInfo("Year.....", mModel->yearPnL());
+    int ox = drawColoredInfo("Year.....", mModel->yearPnL());
+    renderer.draw({ox, y - 1}, "(%CR-%m.00%CD/%CG+%m.00)", mModel->yearLoss(), mModel->yearProfit());
+
     drawColoredInfo("Total....", mModel->totalPnL());
 
     ++y;
