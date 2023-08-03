@@ -80,12 +80,12 @@ int AppModel::yearPnL() const
 
 int AppModel::yearProfit() const
 {
-    return mYearProfit;
+    return float(mYearProfit) / mQuotes[mCurrentCurrencyId].second;
 }
 
 int AppModel::yearLoss() const
 {
-    return mYearLoss;
+    return float(mYearLoss) / mQuotes[mCurrentCurrencyId].second;
 }
 
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)
