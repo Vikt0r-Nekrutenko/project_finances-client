@@ -70,7 +70,17 @@ int AppModel::todayPnL() const
 
 int AppModel::monthlyPnL() const
 {
-    return mMonthlyPnL;
+    return float(mMonthlyPnL) / mQuotes[mCurrentCurrencyId].second;
+}
+
+int AppModel::monthlyProfit() const
+{
+    return float(mMonthlyProfit) / mQuotes[mCurrentCurrencyId].second;
+}
+
+int AppModel::monthlyLoss() const
+{
+    return float(mMonthlyLoss) / mQuotes[mCurrentCurrencyId].second;
 }
 
 int AppModel::yearPnL() const
@@ -248,7 +258,11 @@ void AppModel::calcPnLs()
     mYearLoss = yearNegativeOperations.sum();
 
     mYearPnL = mYearProfit - mYearLoss;
-    mMonthlyPnL = yearEarnOperations.filterByCurrentMonth().sum() + yearPositiveOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentMonth().sum();
+
+    mMonthlyProfit = yearEarnOperations.filterByCurrentMonth().sum() + yearPositiveOperations.filterByCurrentMonth().sum();
+    mMonthlyLoss = yearNegativeOperations.filterByCurrentMonth().sum();
+    mMonthlyPnL = mMonthlyProfit - mMonthlyLoss;
+
     mTodayPnL = yearEarnOperations.filterByCurrentDay().sum() + yearPositiveOperations.filterByCurrentMonth().sum() - yearNegativeOperations.filterByCurrentDay().sum();
 }
 

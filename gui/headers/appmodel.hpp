@@ -45,6 +45,10 @@ public:
 
     int monthlyPnL() const;
 
+    int monthlyProfit() const;
+
+    int monthlyLoss() const;
+
     int yearPnL() const;
 
     int yearProfit() const;
@@ -102,6 +106,8 @@ private:
     int mTotalEarn = 0;
     int mTotalDeposits = 0;
     int mTotalDebts = 0;
+    int mMonthlyProfit = 0,
+        mMonthlyLoss = 0;
     int mYearProfit = 0,
         mYearLoss = 0;
     int mTodayPnL = 0,

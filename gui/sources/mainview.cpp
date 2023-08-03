@@ -41,7 +41,7 @@ void MainView::show(stf::Renderer &renderer)
     ++y;
     renderer.drawText({mMenuBar->Width + 1, y++}, "P&Ls:");
     drawColoredInfo("Today....", mModel->todayPnL());
-    drawColoredInfo("Monthly..", mModel->monthlyPnL());
+    renderer.draw({mMenuBar->Width + 1, y++}, (std::string("Monthly..") + (mModel->monthlyPnL() > 0 ? "%CG%m.00%CD (%CR-%m.00%CD/%CG+%m.00%CD) %s" : "%CR%m.00%CD (%CR-%m.00%CD/%CG+%m.00%CD) %s")).c_str(), mModel->monthlyPnL(), mModel->monthlyLoss(), mModel->monthlyProfit(), mModel->currentCurrency().first.c_str());
     renderer.draw({mMenuBar->Width + 1, y++}, (std::string("Year.....") + (mModel->yearPnL() > 0 ? "%CG%m.00%CD (%CR-%m.00%CD/%CG+%m.00%CD) %s" : "%CR%m.00%CD (%CR-%m.00%CD/%CG+%m.00%CD) %s")).c_str(), mModel->yearPnL(), mModel->yearLoss(), mModel->yearProfit(), mModel->currentCurrency().first.c_str());
 
     drawColoredInfo("Total....", mModel->totalPnL());
