@@ -11,6 +11,7 @@ class CORE_EXPORT DepositModel : public CRUDModel, public LocalModel
 public:
 
     DepositModel(const std::string &name, int balance);
+    DepositModel(const std::string &name, int balance, int version, int isDeleted);
 
     void create() override;
     void read() override;

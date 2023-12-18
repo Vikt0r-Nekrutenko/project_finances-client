@@ -12,12 +12,15 @@ public:
     void addNewDeposit(const std::string &name, int balance);
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
-    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
     const std::vector<DepositModel> &deposits() const;
     std::vector<DepositModel> &deposits();
 
     std::vector<DepositModel>::iterator findByName(const std::string &name);
+
+protected:
+
+    void parseJsonArray(const QJsonArray &replyJsonArray) final;
 
 private:
 

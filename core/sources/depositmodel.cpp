@@ -6,6 +6,13 @@
 DepositModel::DepositModel(const std::string &name, int balance)
     : mName{name}, mBalance{balance} {}
 
+DepositModel::DepositModel(const std::string &name, int balance, int version, int isDeleted)
+    : mName{name}, mBalance{balance}
+{
+    mVersion = version;
+    mIsDeleted = isDeleted;
+}
+
 void DepositModel::create()
 {
     QJsonObject newDepo {
