@@ -6,7 +6,6 @@
 
 #include "core_global.h"
 
-static std::string MainPath = "https://grhin0.pythonanywhere.com/project_finance/api/";
 static std::vector<std::string> CoreLog;
 
 const std::vector<std::string> CORE_EXPORT &log();
@@ -24,7 +23,9 @@ public:
 
 private:
 
-    static std::string AuthName, AuthValue;
+    static std::string
+        AuthValue,
+        MainPath;
 };
 
 #endif // DATAMODEL_HPP
