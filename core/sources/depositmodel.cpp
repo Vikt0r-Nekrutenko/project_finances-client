@@ -20,7 +20,7 @@ void DepositModel::create()
 
 void DepositModel::read()
 {
-    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "GET", {{"version", mVer}});
+    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "GET");
     replyHandler(reply, "Get request successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
