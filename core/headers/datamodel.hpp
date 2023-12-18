@@ -29,6 +29,9 @@ private:
     static std::string
         AuthValue,
         MainPath;
+
+protected:
+
     int mVersion {0};
 };
 
