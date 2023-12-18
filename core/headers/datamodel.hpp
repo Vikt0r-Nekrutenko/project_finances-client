@@ -24,7 +24,6 @@ public:
 private:
 
     static std::string
-        AuthName,
         AuthValue,
         MainPath;
 };

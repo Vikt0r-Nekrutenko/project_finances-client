@@ -10,20 +10,18 @@ const std::vector<std::string> &log()
 }
 
 std::string
-    DataModel::AuthName,
     DataModel::AuthValue,
     DataModel::MainPath;
 
 QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request)
 {
-    if(!MainPath.length() || !AuthName.length() || !AuthValue.length()) {
+    if(!MainPath.length() || !AuthValue.length()) {
         QFile settingsFile("settings.json");
         settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
         if(!settingsFile.isOpen())
             throw std::invalid_argument("file: " + settingsFile.fileName().toStdString() + " doesn't opened!");
 
         QJsonObject obj = QJsonDocument::fromJson(QString(settingsFile.readAll()).toUtf8()).object();
-        AuthName = obj["name"].toString().toStdString();
         AuthValue = obj["value"].toString().toStdString();
         MainPath = obj["url"].toString().toStdString();
     }
@@ -33,7 +31,7 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
 
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     mRequest.setRawHeader("accept", "application/json");
-    mRequest.setRawHeader(AuthName.c_str(), AuthValue.c_str());
+    mRequest.setRawHeader("authorization", AuthValue.c_str());
 
     QEventLoop loop;
 
