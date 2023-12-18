@@ -13,7 +13,7 @@ std::string
     DataModel::AuthValue,
     DataModel::MainPath;
 
-QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request)
+QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request, const QUrlQuery &params)
 {
     if(!MainPath.length() || !AuthValue.length()) {
         QFile settingsFile("settings.json");
@@ -27,7 +27,10 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
     }
 
     QNetworkAccessManager *mManager = new QNetworkAccessManager();
-    QNetworkRequest mRequest {QUrl((MainPath + additionalPath).c_str())};
+    QUrl url{(MainPath + additionalPath).c_str()};
+    if(!params.isEmpty())
+        url.setQuery(params);
+    QNetworkRequest mRequest {url};
 
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     mRequest.setRawHeader("accept", "application/json");

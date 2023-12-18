@@ -2,6 +2,7 @@
 #define DATAMODEL_HPP
 
 #include <QNetworkReply>
+#include <QUrlQuery>
 #include <vector>
 
 #include "core_global.h"
@@ -17,8 +18,9 @@ enum class RemoteStatus
 
 class CORE_EXPORT DataModel
 {
-public:
-    virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request);
+protected:
+
+    virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request, const QUrlQuery &params = {});
     RemoteStatus replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
 
 private:
