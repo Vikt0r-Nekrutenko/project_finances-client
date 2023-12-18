@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include <iostream>
+#include <QTimer>
 #include <thread>
 
 #include "window.hpp"
@@ -49,5 +49,11 @@ private:
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    return App().run();//a.exec();
+    DepositModelHandler dmh;
+    for(const auto &item : dmh.deposits())
+        qDebug() << item.name() << item.balance();
+
+    QTimer::singleShot(0, &a, SLOT(quit()));
+    return a.exec();
+    // return App().run();//a.exec();
 }

@@ -7,14 +7,15 @@
 class CORE_EXPORT DepositModel : public CRUDModel, public LocalModel
 {
     friend class DepositModelHandler;
+
 public:
+
     DepositModel(const std::string &name, int balance);
 
     void create() override;
     void read() override;
     void update() override;
     void remove() override;
-    void parseJsonObject(const QJsonObject &object) override;
 
     void load(std::ifstream &file) override;
     void save(std::ofstream &file) override;
@@ -26,6 +27,8 @@ public:
     void decreaseBalance(int amount);
 
 private:
+
+    void parseJsonObject(const QJsonObject &object) override;
 
     std::string mName;
     int mBalance;
