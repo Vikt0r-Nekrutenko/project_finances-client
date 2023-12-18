@@ -48,13 +48,13 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
 
 RemoteStatus DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const
 {
+    auto status = RemoteStatus::Failure;
     if(reply->error() == QNetworkReply::NoError) {
         CoreLog.push_back(noErrorMsg);
-        reply->deleteLater();
-        return RemoteStatus::Success;
+        status = RemoteStatus::Success;
     } else {
         CoreLog.push_back(reply->errorString().toStdString());
-        reply->deleteLater();
-        return RemoteStatus::Failure;
     }
+    reply->deleteLater();
+    return status;
 }
