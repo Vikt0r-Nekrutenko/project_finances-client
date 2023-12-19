@@ -18,7 +18,7 @@ public:
 
     bool isForUpdate() const;
 
-    bool isDeleted() const;
+    bool isForDelete() const;
 
 protected:
 

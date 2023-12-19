@@ -23,7 +23,7 @@ DepositModelHandler::DepositModelHandler()
             if(tmp.isForUpdate()) {
                 mDeposits.back().update();
             }
-            if(tmp.isDeleted()) {
+            if(tmp.isForDelete()) {
                 mDeposits.back().remove();
             }
             // } else if(status == RemoteStatus::Failure) {

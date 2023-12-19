@@ -24,7 +24,7 @@ bool LocalModel::isForUpdate() const
     return mIsForUpdate;
 }
 
-bool LocalModel::isDeleted() const
+bool LocalModel::isForDelete() const
 {
     return mIsForDelete;
 }
