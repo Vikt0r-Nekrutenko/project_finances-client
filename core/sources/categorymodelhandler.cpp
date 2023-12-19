@@ -18,9 +18,9 @@ CategoryModelHandler::CategoryModelHandler()
             } else if(status == RemoteStatus::Failure) {
                 mCategories.push_back(tmp);
             } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsCreated)
+                if(tmp.mIsForCreate)
                     addNewCategory(tmp.mName, tmp.mType);
-                if(tmp.mIsDeleted)
+                if(tmp.mIsForDelete)
                     deleteCategory(index);
             }
             ++index;
@@ -47,7 +47,7 @@ void CategoryModelHandler::addNewCategory(const std::string &name, const std::st
 void CategoryModelHandler::deleteCategory(int index)
 {
     mCategories[index].remove();
-    if(mCategories[index].mIsDeleted == false)
+    if(mCategories[index].mIsForDelete == false)
         mCategories.erase(mCategories.begin() + index);
 }
 

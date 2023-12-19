@@ -1,6 +1,12 @@
 #include <QJsonObject>
 #include "basemodel.hpp"
 
+BaseModel::BaseModel(int version, bool isDeleted)
+    : mIsDeleted{isDeleted}
+{
+    mVersion = version;
+}
+
 QJsonObject &BaseModel::completeJsonObject(QJsonObject &object)
 {
     object["version"] = mVersion;
@@ -10,12 +16,13 @@ QJsonObject &BaseModel::completeJsonObject(QJsonObject &object)
 
 void BaseModel::load(std::ifstream &file)
 {
-    file >> mVersion;
+    file >> mVersion >> mIsDeleted;
     LocalModel::load(file);
 }
 
 void BaseModel::save(std::ofstream &file)
 {
-    file << " " << mVersion;
+    file << " " << mVersion
+         << " " << mIsDeleted;
     LocalModel::save(file);
 }

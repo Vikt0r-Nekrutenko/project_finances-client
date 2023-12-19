@@ -20,8 +20,8 @@ public:
     void load(std::ifstream &file) override;
     void save(std::ofstream &file) override;
 
-    const std::string &name() const;
-    int balance() const;
+    inline const std::string &name() const { return mName; }
+    inline int balance() const { return mBalance; }
 
     void increaseBalance(int amount);
     void decreaseBalance(int amount);

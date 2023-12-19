@@ -20,7 +20,7 @@ void OperationModel::create()
 
     QNetworkReply *reply = sendCRUDRequest("operations/", newOperation, "POST");
     RemoteStatus status = replyHandler(reply, "Operation added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::read()
@@ -45,14 +45,14 @@ void OperationModel::update()
 
     QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', selectedOperation, "PUT");
     RemoteStatus status = replyHandler(reply, "Operation updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', {}, "DELETE");
     RemoteStatus status = replyHandler(reply, "Operation delete successfully!");
-    mIsDeleted = status == RemoteStatus::Failure ? true : false;
+    mIsForDelete = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::parseJsonObject(const QJsonObject &object)

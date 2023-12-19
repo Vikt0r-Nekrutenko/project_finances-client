@@ -15,7 +15,7 @@ void CategoryModel::create()
 
     QNetworkReply *reply = sendCRUDRequest("categories/", newCategory, "POST");
     RemoteStatus status = replyHandler(reply, "Category added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
 }
 
 void CategoryModel::read()
@@ -37,14 +37,14 @@ void CategoryModel::update()
 
     QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', selectedCategory, "PUT");
     RemoteStatus status = replyHandler(reply, "Category updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
 }
 
 void CategoryModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', {}, "DELETE");
     RemoteStatus status = replyHandler(reply, "Category deleted successfully!");
-    mIsDeleted = status == RemoteStatus::Failure ? true : false;
+    mIsForDelete = status == RemoteStatus::Failure ? true : false;
 }
 
 void CategoryModel::parseJsonObject(const QJsonObject &object)
