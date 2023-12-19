@@ -13,9 +13,11 @@ DepositModelHandler::DepositModelHandler()
             if(tmp.version() > mVersion)
                 mVersion = tmp.version();
 
-            if(file.eof()) //{
+            if(file.eof())
                 break;
+
             mDeposits.push_back(tmp);
+
             if(tmp.mIsForCreate) {
                 mDeposits.back().create();
             }
@@ -63,7 +65,6 @@ void DepositModelHandler::deleteDeposit(int depositIndex)
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     int count = 0;
-    // mDeposits.clear();
     for (const auto &var : replyJsonArray) {
         mDeposits.push_back({
             var.toObject()["name"].toString().toStdString(),
@@ -75,17 +76,7 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
             mVersion = mDeposits.back().version();
         ++count;
     }
-    log().push_back({"Items received: " + std::to_string(count)});
-}
-
-const std::vector<DepositModel> &DepositModelHandler::deposits() const
-{
-    return mDeposits;
-}
-
-std::vector<DepositModel> &DepositModelHandler::deposits()
-{
-    return mDeposits;
+    log().push_back({"Deposits received: " + std::to_string(count)});
 }
 
 std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)

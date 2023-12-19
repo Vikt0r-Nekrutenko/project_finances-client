@@ -13,8 +13,8 @@ public:
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
 
-    const std::vector<DepositModel> &deposits() const;
-    std::vector<DepositModel> &deposits();
+    inline const std::vector<DepositModel> &deposits() const { return mDeposits; }
+    inline std::vector<DepositModel> &deposits() { return mDeposits; }
 
     std::vector<DepositModel>::iterator findByName(const std::string &name);
 
