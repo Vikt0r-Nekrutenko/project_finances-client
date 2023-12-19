@@ -5,7 +5,6 @@
 DepositModelHandler::DepositModelHandler()
 {
     std::ifstream file(LocalPath + "deposits.txt");
-    unsigned index = 0;
 
     if(file.is_open()) {
         while(true) {
@@ -26,20 +25,10 @@ DepositModelHandler::DepositModelHandler()
             if(tmp.isForDelete()) {
                 mDeposits.back().remove();
             }
-            // } else if(status == RemoteStatus::Failure) {
-            // } else if(status == RemoteStatus::Success) {
-            // if(tmp.mIsCreated)
-            //        addNewDeposit(tmp.name(), tmp.balance());
-            //     if(tmp.mIsChanched)
-            //         updateBalance(index, tmp.balance());
-            //     if(tmp.mIsDeleted)
-            //         deleteDeposit(index);
-            // }
-            ++index;
         }
         file.close();
     }
-    RemoteStatus status = get("deposits/");
+    get("deposits/");
 }
 
 DepositModelHandler::~DepositModelHandler()
@@ -67,9 +56,8 @@ void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
 void DepositModelHandler::deleteDeposit(int depositIndex)
 {
     mDeposits[depositIndex].mVersion = ++mVersion;
+    mDeposits[depositIndex].mIsDeleted = true;
     mDeposits[depositIndex].remove();
-    // if(mDeposits[depositIndex].mIsDeleted == false)
-    //     mDeposits.erase(mDeposits.begin() + depositIndex);
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)

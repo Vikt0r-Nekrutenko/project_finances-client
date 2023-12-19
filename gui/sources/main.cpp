@@ -49,7 +49,7 @@ private:
 void printDMH(const DepositModelHandler &dmh)
 {
     for(const auto &item : dmh.deposits())
-        qDebug() << item.name() << item.balance() << item.version() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+        qDebug() << item.name() << item.balance() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
     qDebug() << "---DMH ver:" << dmh.version();
 }
 
@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     // printDMH(dmh);
     // dmh.updateBalance(6, 10);
     // printDMH(dmh);
-    dmh.deleteDeposit(6);
-    printDMH(dmh);
+    // dmh.deleteDeposit(6);
+    // printDMH(dmh);
 
     for(const auto &item : log())
         qDebug() << item;
