@@ -10,7 +10,7 @@ class CORE_EXPORT DebtModel : public BaseModel
 public:
 
     DebtModel(int id, const std::string &name, int amount);
-    DebtModel(const std::string &name, int amount, int version, bool isDeleted = false);
+    DebtModel(int id, const std::string &name, int amount, int version, bool isDeleted = false);
 
     void create() override;
     void read() override;

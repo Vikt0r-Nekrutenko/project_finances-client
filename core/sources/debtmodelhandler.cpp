@@ -45,10 +45,7 @@ DebtModelHandler::~DebtModelHandler()
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 {
-    mDebts.push_back(DebtModel{
-                              mDebts.empty() ? 0 : mDebts.back().mId + 1,
-                              name,
-        amount});
+    mDebts.push_back(DebtModel{0, name, amount, ++mVersion});
     mDebts.back().create();
 }
 
@@ -56,26 +53,33 @@ void DebtModelHandler::updateDebt(int index, const std::string &name, int amount
 {
     mDebts[index].mName = name;
     mDebts[index].mAmount = amount;
+    mDebts[index].mVersion = ++mVersion;
     mDebts[index].update();
 }
 
 void DebtModelHandler::deleteDebt(int index)
 {
+    mDebts[index].mVersion = ++mVersion;
+    mDebts[index].mIsDeleted = true;
     mDebts[index].remove();
-    if(mDebts[index].mIsForDelete == false)
-        mDebts.erase(mDebts.begin() + index);
 }
 
 void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    mDebts.clear();
+    int count = 0;
     for(const auto &var : replyJsonArray) {
         mDebts.push_back(DebtModel{
             var.toObject()["id"].toInt(),
             var.toObject()["name"].toString().toStdString(),
-            var.toObject()["amount"].toInt()
+            var.toObject()["amount"].toInt(),
+            var.toObject()["version"].toInt(),
+            bool(var.toObject()["is_deleted"].toInt())
         });
+        if(mDebts.back().version() > mVersion)
+            mVersion = mDebts.back().version();
+        ++count;
     }
+    log().push_back({"Debts received: " + std::to_string(count)});
 }
 
 std::vector<DebtModel>::iterator DebtModelHandler::findByName(const std::string &name)
