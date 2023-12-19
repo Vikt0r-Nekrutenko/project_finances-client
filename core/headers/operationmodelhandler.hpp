@@ -16,12 +16,15 @@ public:
     void addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category);
     void updateOperation(int index, const std::string &date, const std::string &deposit, int amount, const std::string &category);
     void deleteOperation(int index);
-    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
-    const std::vector<OperationModel> &operations() const;
-    std::vector<OperationModel> &operations();
+    inline const std::vector<OperationModel> &operations() const { return mOperations; }
+    inline std::vector<OperationModel> &operations() { return mOperations; }
 
     std::vector<OperationModel>::iterator at(int id);
+
+protected:
+
+    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
 private:
 
