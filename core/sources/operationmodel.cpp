@@ -8,6 +8,9 @@
 OperationModel::OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category)
     : mDate{date}, mDeposit{deposit}, mCategory{category}, mId{id}, mAmount{amount} {}
 
+OperationModel::OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category, int version, bool isDeleted)
+    : BaseModel{version, isDeleted}, mDate{date}, mDeposit{deposit}, mCategory{category}, mId{id}, mAmount{amount} {}
+
 void OperationModel::create()
 {
     QJsonObject newOperation {

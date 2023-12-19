@@ -1,25 +1,26 @@
 #ifndef OPERATIONMODEL_HPP
 #define OPERATIONMODEL_HPP
 
-#include "crudmodel.hpp"
-#include "localmodel.hpp"
+#include "basemodel.hpp"
 
 class DepositModel;
 class CategoryModel;
 class DepositModelHandler;
 class CategoryModelHandler;
 
-class CORE_EXPORT OperationModel : public CRUDModel, public LocalModel
+class CORE_EXPORT OperationModel : public BaseModel
 {
     friend class OperationModelHandler;
+
 public:
+
     OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category);
+    OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category, int version, bool isDeleted = false);
 
     void create() override;
     void read() override;
     void update() override;
     void remove() override;
-    void parseJsonObject(const QJsonObject &) override;
 
     void save(std::ofstream &file) override;
     void load(std::ifstream &file) override;
@@ -35,6 +36,8 @@ public:
     CategoryModel &rawCategory(CategoryModelHandler &handler);
 
 private:
+
+    void parseJsonObject(const QJsonObject &) override;
 
     std::string mDate;
     std::string mDeposit;
