@@ -14,16 +14,22 @@ OperationModel::OperationModel(int id, const std::string &date, const std::strin
 void OperationModel::create()
 {
     QJsonObject newOperation {
-        {"id", mId },
         {"date", mDate.c_str() },
         {"deposit", mDeposit.c_str() },
         {"amount", mAmount },
         {"category", mCategory.c_str() },
     };
 
-    QNetworkReply *reply = sendCRUDRequest("operations/", newOperation, "POST");
+    QNetworkReply *reply = sendCRUDRequest("operations/", completeJsonObject(newOperation), "POST");
     RemoteStatus status = replyHandler(reply, "Operation added successfully!");
     mIsForCreate = status == RemoteStatus::Failure ? true : false;
+
+    if(status == RemoteStatus::Success) {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+        QJsonObject object = jsonResponse.object();
+        mId = object["id"].toInt();
+    }
+    delete reply;
 }
 
 void OperationModel::read()

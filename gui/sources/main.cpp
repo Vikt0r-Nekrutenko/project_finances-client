@@ -71,13 +71,9 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    DebtModelHandler dmh;
-    printBMH(dmh);
-
-    // if(dmh.debts()[13].name() == "TesT") {
-    //     dmh.deleteDebt(13);
-    // }
-    printBMH(dmh);
+    OperationModel omh{0, "1980-01-01", "Test", 0, "Test", 2};
+    omh.create();
+    qDebug() << omh.id();
 
     for(const auto &item : log())
         qDebug() << item;
