@@ -77,16 +77,6 @@ void DepositModel::save(std::ofstream &file)
     BaseModel::save(file);
 }
 
-const std::string &DepositModel::name() const
-{
-    return mName;
-}
-
-int DepositModel::balance() const
-{
-    return mBalance;
-}
-
 void DepositModel::increaseBalance(int amount)
 {
     mBalance += amount;
