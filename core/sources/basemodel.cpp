@@ -1,6 +1,12 @@
 #include <QJsonObject>
 #include "basemodel.hpp"
 
+BaseModel::BaseModel(int version, bool isDeleted)
+    : mIsDeleted{isDeleted}
+{
+    mVersion = version;
+}
+
 QJsonObject &BaseModel::completeJsonObject(QJsonObject &object)
 {
     object["version"] = mVersion;

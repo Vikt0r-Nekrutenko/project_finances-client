@@ -8,6 +8,7 @@ class CORE_EXPORT BaseModel : public CRUDModel, public LocalModel
 {
 public:
 
+    BaseModel(int version = 0, bool isDeleted = false);
     inline bool isDeleted() const { return mIsDeleted; }
 
 protected:
