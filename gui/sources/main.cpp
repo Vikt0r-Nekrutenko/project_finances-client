@@ -71,8 +71,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    OperationModel omh{0, "1980-01-01", "Test", 0, "Test", 2};
-    omh.create();
+    OperationModel omh{665, "1980-01-01", "Test", 0, "Test", 2};
+    omh.update();
     qDebug() << omh.id();
 
     for(const auto &item : log())

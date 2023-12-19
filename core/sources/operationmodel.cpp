@@ -38,6 +38,7 @@ void OperationModel::read()
     replyHandler(reply, "Operation read successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
 }
@@ -52,9 +53,10 @@ void OperationModel::update()
         {"category", mCategory.c_str() },
     };
 
-    QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', selectedOperation, "PUT");
+    QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', completeJsonObject(selectedOperation), "PUT");
     RemoteStatus status = replyHandler(reply, "Operation updated successfully!");
     mIsForUpdate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void OperationModel::remove()
