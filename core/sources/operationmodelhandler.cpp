@@ -5,31 +5,33 @@
 
 OperationModelHandler::OperationModelHandler()
 {
-    RemoteStatus status = get("operations/");
     std::ifstream file(LocalPath + "operations.txt");
-    unsigned index = 0;
 
     if(file.is_open()) {
         while(true) {
             OperationModel tmp(0, "", "", 0, "");
             tmp.load(file);
+            if(tmp.version() > mVersion)
+                mVersion = tmp.version();
 
-            if(file.eof()){
+            if(file.eof())
                 break;
-            } else if(status == RemoteStatus::Failure) {
-                mOperations.push_back(tmp);
-            } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsForCreate)
-                    addNewOperation(tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
-                if(tmp.mIsForUpdate)
-                    updateOperation(index, tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
-                if(tmp.mIsForDelete)
-                    deleteOperation(index);
+
+            mOperations.push_back(tmp);
+
+            if(tmp.mIsForCreate) {
+                mOperations.back().create();
             }
-            ++index;
+            if(tmp.mIsForUpdate) {
+                mOperations.back().update();
+            }
+            if(tmp.mIsForDelete) {
+                mOperations.back().remove();
+            }
         }
         file.close();
     }
+    get("operations/");
 }
 
 OperationModelHandler::~OperationModelHandler()
@@ -43,12 +45,14 @@ OperationModelHandler::~OperationModelHandler()
 
 void OperationModelHandler::addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
-    mOperations.push_back(OperationModel(
-                              mOperations.empty() ? 0 : mOperations.back().mId + 1,
-                              date,
-                              deposit,
-                              amount,
-                              category));
+    mOperations.push_back(OperationModel{
+        0,
+        date,
+        deposit,
+        amount,
+        category,
+        ++mVersion
+    });
     mOperations.back().create();
 }
 
@@ -58,37 +62,36 @@ void OperationModelHandler::updateOperation(int index, const std::string &date, 
     mOperations[index].mDeposit = deposit;
     mOperations[index].mAmount = amount;
     mOperations[index].mCategory = category;
+    mOperations[index].mVersion = ++mVersion;
     mOperations[index].update();
 }
 
 void OperationModelHandler::deleteOperation(int index)
 {
+    mOperations[index].mVersion = ++mVersion;
+    mOperations[index].mIsDeleted = true;
     mOperations[index].remove();
-    mOperations.erase(mOperations.begin() + index);
+    mOperations[index].remove();
 }
 
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    mOperations.clear();
+    int count = 0;
     for (const auto &var : replyJsonArray) {
         mOperations.push_back(OperationModel{
             var.toObject()["id"].toInt(),
             var.toObject()["date"].toString().toStdString(),
             var.toObject()["deposit"].toString().toStdString(),
             var.toObject()["amount"].toInt(),
-            var.toObject()["category"].toString().toStdString()
+            var.toObject()["category"].toString().toStdString(),
+            var.toObject()["version"].toInt(),
+            bool(var.toObject()["is_deleted"].toInt())
         });
+        if(mOperations.back().version() > mVersion)
+            mVersion = mOperations.back().version();
+        ++count;
     }
-}
-
-const std::vector<OperationModel> &OperationModelHandler::operations() const
-{
-    return mOperations;
-}
-
-std::vector<OperationModel> &OperationModelHandler::operations()
-{
-    return mOperations;
+    log().push_back({"Operations received: " + std::to_string(count)});
 }
 
 std::vector<OperationModel>::iterator OperationModelHandler::at(int id)

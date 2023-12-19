@@ -67,17 +67,24 @@ void printBMH(const DebtModelHandler &cmh)
     qDebug() << "---BMH ver:" << cmh.version();
 }
 
+void printOMH(const OperationModelHandler &omh)
+{
+    auto item = omh.operations().back();
+    // for(const auto &item : omh.operations())
+        qDebug() << item.id() << item.date() << item.deposit() << item.amount() << item.category() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---OMH ver:" << omh.version();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    DebtModelHandler dmh;
-    printBMH(dmh);
+    OperationModelHandler omh;
+    printOMH(omh);
 
-    // if(dmh.debts()[13].name() == "TesT") {
-    //     dmh.deleteDebt(13);
-    // }
-    printBMH(dmh);
+    if(omh.operations().back().id() == 665)
+        omh.deleteOperation(std::distance(omh.operations().begin(), omh.at(665)));
+    printOMH(omh);
 
     for(const auto &item : log())
         qDebug() << item;
