@@ -19,11 +19,11 @@ OperationModelHandler::OperationModelHandler()
             } else if(status == RemoteStatus::Failure) {
                 mOperations.push_back(tmp);
             } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsCreated)
+                if(tmp.mIsForCreate)
                     addNewOperation(tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
-                if(tmp.mIsChanched)
+                if(tmp.mIsForUpdate)
                     updateOperation(index, tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
-                if(tmp.mIsDeleted)
+                if(tmp.mIsForDelete)
                     deleteOperation(index);
             }
             ++index;

@@ -14,17 +14,17 @@ public:
 
     virtual void load(std::ifstream &file);
 
-    bool isCreated() const;
+    inline bool isForCreate() const { return mIsForCreate; }
 
-    bool isChanched() const;
+    inline bool isForUpdate() const { return mIsForUpdate; }
 
-    bool isDeleted() const;
+    inline bool isForDelete() const { return mIsForDelete; }
 
 protected:
 
-    bool mIsCreated = false;
-    bool mIsChanched = false;
-    bool mIsDeleted = false;
+    bool mIsForCreate = false;
+    bool mIsForUpdate = false;
+    bool mIsForDelete = false;
 };
 
 #endif // LOCALMODEL_HPP

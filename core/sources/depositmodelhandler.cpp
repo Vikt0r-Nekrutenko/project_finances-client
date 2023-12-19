@@ -17,13 +17,13 @@ DepositModelHandler::DepositModelHandler()
             if(file.eof()) //{
                 break;
             mDeposits.push_back(tmp);
-            if(tmp.mIsCreated) {
+            if(tmp.mIsForCreate) {
                 mDeposits.back().create();
             }
-            if(tmp.isChanched()) {
+            if(tmp.isForUpdate()) {
                 mDeposits.back().update();
             }
-            if(tmp.isDeleted()) {
+            if(tmp.isForDelete()) {
                 mDeposits.back().remove();
             }
             // } else if(status == RemoteStatus::Failure) {

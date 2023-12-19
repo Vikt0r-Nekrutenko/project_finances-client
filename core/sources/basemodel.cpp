@@ -4,7 +4,7 @@
 QJsonObject &BaseModel::completeJsonObject(QJsonObject &object)
 {
     object["version"] = mVersion;
-    object["is_deleted"] = int(mIsDeleted);
+    object["is_deleted"] = int(mIsForDelete);
     return object;
 }
 
