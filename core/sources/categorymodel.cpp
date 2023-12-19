@@ -37,7 +37,7 @@ void CategoryModel::update()
 
     QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', selectedCategory, "PUT");
     RemoteStatus status = replyHandler(reply, "Category updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
 }
 
 void CategoryModel::remove()

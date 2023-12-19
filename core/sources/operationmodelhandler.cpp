@@ -21,7 +21,7 @@ OperationModelHandler::OperationModelHandler()
             } else if(status == RemoteStatus::Success) {
                 if(tmp.mIsForCreate)
                     addNewOperation(tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
-                if(tmp.mIsChanched)
+                if(tmp.mIsForUpdate)
                     updateOperation(index, tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
                 if(tmp.mIsDeleted)
                     deleteOperation(index);

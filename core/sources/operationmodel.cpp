@@ -45,7 +45,7 @@ void OperationModel::update()
 
     QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', selectedOperation, "PUT");
     RemoteStatus status = replyHandler(reply, "Operation updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::remove()

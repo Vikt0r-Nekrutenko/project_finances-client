@@ -21,7 +21,7 @@ DebtModelHandler::DebtModelHandler()
             } else if(status == RemoteStatus::Success) {
                 if(tmp.mIsForCreate)
                     addNewDebt(tmp.mName, tmp.mAmount);
-                if(tmp.mIsChanched)
+                if(tmp.mIsForUpdate)
                     updateDebt(index, tmp.mName, tmp.mAmount);
                 if(tmp.mIsDeleted)
                     deleteDebt(index);

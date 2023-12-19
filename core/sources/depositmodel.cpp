@@ -44,7 +44,7 @@ void DepositModel::update()
 
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', completeJsonObject(selectedDeposit), "PUT");
     RemoteStatus status = replyHandler(reply, "Balance updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::remove()

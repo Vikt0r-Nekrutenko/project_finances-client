@@ -23,7 +23,7 @@ public:
 protected:
 
     bool mIsForCreate = false;
-    bool mIsChanched = false;
+    bool mIsForUpdate = false;
     bool mIsDeleted = false;
 };
 
