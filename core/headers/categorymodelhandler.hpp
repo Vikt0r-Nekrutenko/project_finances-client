@@ -15,12 +15,15 @@ public:
 
     void addNewCategory(const std::string &name, const std::string &type);
     void deleteCategory(int index);
-    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
-    const std::vector<CategoryModel> &categories() const;
-    std::vector<CategoryModel> &categories();
+    inline const std::vector<CategoryModel> &categories() const { return mCategories; }
+    inline std::vector<CategoryModel> &categories() { return mCategories; }
 
     std::vector<CategoryModel>::iterator findByName(const std::string &name);
+
+protected:
+
+    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
 private:
 
