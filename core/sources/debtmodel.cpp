@@ -5,6 +5,9 @@
 DebtModel::DebtModel(int id, const std::string &name, int amount)
     : mName{name}, mId{id}, mAmount{amount} {}
 
+DebtModel::DebtModel(const std::string &name, int amount, int version, bool isDeleted)
+    : BaseModel{version, isDeleted}, mName{name}, mAmount{amount} { }
+
 void DebtModel::create()
 {
     QJsonObject newDebt {
