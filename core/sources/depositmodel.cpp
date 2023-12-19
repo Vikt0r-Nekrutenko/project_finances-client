@@ -22,7 +22,7 @@ void DepositModel::create()
 
     QNetworkReply *reply = sendCRUDRequest("deposits/", completeJsonObject(newDepo), "POST");
     RemoteStatus status = replyHandler(reply, "Deposit added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::read()

@@ -20,7 +20,7 @@ void OperationModel::create()
 
     QNetworkReply *reply = sendCRUDRequest("operations/", newOperation, "POST");
     RemoteStatus status = replyHandler(reply, "Operation added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
 }
 
 void OperationModel::read()

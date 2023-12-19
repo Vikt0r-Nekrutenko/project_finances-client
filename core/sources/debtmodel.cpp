@@ -15,7 +15,7 @@ void DebtModel::create()
 
     QNetworkReply *reply = sendCRUDRequest("debts/", newDebt, "POST");
     RemoteStatus status = replyHandler(reply, "Debt added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
 }
 
 void DebtModel::read()

@@ -4,19 +4,19 @@
 void LocalModel::save(std::ofstream &file)
 {
     file << " "
-         << mIsCreated << " "
+         << mIsForCreate << " "
          << mIsChanched << " "
          << mIsDeleted << std::endl;
 }
 
 void LocalModel::load(std::ifstream &file)
 {
-    file >> mIsCreated >> mIsChanched >> mIsDeleted;
+    file >> mIsForCreate >> mIsChanched >> mIsDeleted;
 }
 
 bool LocalModel::isCreated() const
 {
-    return mIsCreated;
+    return mIsForCreate;
 }
 
 bool LocalModel::isChanched() const

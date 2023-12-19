@@ -19,7 +19,7 @@ DebtModelHandler::DebtModelHandler()
             } else if(status == RemoteStatus::Failure) {
                 mDebts.push_back(tmp);
             } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsCreated)
+                if(tmp.mIsForCreate)
                     addNewDebt(tmp.mName, tmp.mAmount);
                 if(tmp.mIsChanched)
                     updateDebt(index, tmp.mName, tmp.mAmount);

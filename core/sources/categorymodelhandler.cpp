@@ -18,7 +18,7 @@ CategoryModelHandler::CategoryModelHandler()
             } else if(status == RemoteStatus::Failure) {
                 mCategories.push_back(tmp);
             } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsCreated)
+                if(tmp.mIsForCreate)
                     addNewCategory(tmp.mName, tmp.mType);
                 if(tmp.mIsDeleted)
                     deleteCategory(index);
