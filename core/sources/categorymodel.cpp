@@ -16,7 +16,7 @@ void CategoryModel::create()
         {"type", mType.c_str() }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("categories/", newCategory, "POST");
+    QNetworkReply *reply = sendCRUDRequest("categories/", completeJsonObject(newCategory), "POST");
     RemoteStatus status = replyHandler(reply, "Category added successfully!");
     mIsForCreate = status == RemoteStatus::Failure ? true : false;
 }
@@ -38,7 +38,7 @@ void CategoryModel::update()
         {"type", mType.c_str() }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', selectedCategory, "PUT");
+    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', completeJsonObject(selectedCategory), "PUT");
     RemoteStatus status = replyHandler(reply, "Category updated successfully!");
     mIsForUpdate = status == RemoteStatus::Failure ? true : false;
 }
