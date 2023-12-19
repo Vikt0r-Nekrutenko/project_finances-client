@@ -10,7 +10,7 @@ class CORE_EXPORT DepositModel : public BaseModel
 public:
 
     DepositModel(const std::string &name, int balance);
-    DepositModel(const std::string &name, int balance, int version, bool isDeleted);
+    DepositModel(const std::string &name, int balance, int version, bool isDeleted = 0);
 
     void create() override;
     void read() override;
