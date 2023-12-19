@@ -19,6 +19,7 @@ void DepositModel::create()
     QNetworkReply *reply = sendCRUDRequest("deposits/", completeJsonObject(newDepo), "POST");
     RemoteStatus status = replyHandler(reply, "Deposit added successfully!");
     mIsForCreate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DepositModel::read()
@@ -27,6 +28,7 @@ void DepositModel::read()
     replyHandler(reply, "Get request successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
 }
@@ -41,6 +43,7 @@ void DepositModel::update()
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', completeJsonObject(selectedDeposit), "PUT");
     RemoteStatus status = replyHandler(reply, "Balance updated successfully!");
     mIsForUpdate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DepositModel::remove()
@@ -53,6 +56,7 @@ void DepositModel::remove()
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', completeJsonObject(selectedDeposit), "PUT");
     RemoteStatus status = replyHandler(reply, "Deposit deleted successfully!");
     mIsForDelete = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DepositModel::parseJsonObject(const QJsonObject &object)
