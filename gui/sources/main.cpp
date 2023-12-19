@@ -53,19 +53,30 @@ void printDMH(const DepositModelHandler &dmh)
     qDebug() << "---DMH ver:" << dmh.version();
 }
 
+void printCMH(const CategoryModelHandler &cmh)
+{
+    for(const auto &item : cmh.categories())
+        qDebug() << item.name() << item.type() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---CMH ver:" << cmh.version();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    DepositModelHandler dmh;
-    printDMH(dmh);
+    CategoryModelHandler cmh;
+    printCMH(cmh);
 
-    // dmh.addNewDeposit("Test", 0);
-    // printDMH(dmh);
-    // dmh.updateBalance(6, 10);
-    // printDMH(dmh);
-    // dmh.deleteDeposit(6);
-    // printDMH(dmh);
+    // cmh.addNewCategory("Test", "positive");
+    // printCMH(cmh);
+    // if(cmh.categories()[17].name() == "Test"){
+    //     cmh.updateCategory(17, "TesT", cmh.categories()[17].type());
+    //     printCMH(cmh);
+    // }
+    // if(cmh.categories()[17].name() == "Test"){
+    //     cmh.deleteCategory(17);
+    //     printCMH(cmh);
+    // }
 
     for(const auto &item : log())
         qDebug() << item;

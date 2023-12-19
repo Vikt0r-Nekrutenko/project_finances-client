@@ -4,29 +4,33 @@
 
 CategoryModelHandler::CategoryModelHandler()
 {
-    RemoteStatus status = get("categories/");
     std::ifstream file(LocalPath + "categories.txt");
-    unsigned index = 0;
 
     if(file.is_open()) {
         while(true) {
             CategoryModel tmp("", "");
             tmp.load(file);
+            if(tmp.version() > mVersion)
+                mVersion = tmp.version();
 
-            if(file.eof()){
+            if(file.eof())
                 break;
-            } else if(status == RemoteStatus::Failure) {
-                mCategories.push_back(tmp);
-            } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsForCreate)
-                    addNewCategory(tmp.mName, tmp.mType);
-                if(tmp.mIsForDelete)
-                    deleteCategory(index);
+
+            mCategories.push_back(tmp);
+
+            if(tmp.mIsForCreate) {
+                mCategories.back().create();
             }
-            ++index;
+            if(tmp.mIsForUpdate) {
+                mCategories.back().update();
+            }
+            if(tmp.mIsForDelete) {
+                mCategories.back().remove();
+            }
         }
         file.close();
     }
+    get("categories/");
 }
 
 CategoryModelHandler::~CategoryModelHandler()
@@ -40,36 +44,39 @@ CategoryModelHandler::~CategoryModelHandler()
 
 void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)
 {
-    mCategories.push_back(CategoryModel{name, type});
+    mCategories.push_back(CategoryModel{name, type, ++mVersion});
     mCategories.back().create();
+}
+
+void CategoryModelHandler::updateCategoryType(int index, const std::string &type)
+{
+    mCategories[index].mVersion = ++mVersion;
+    mCategories[index].mType = type;
+    mCategories[index].update();
 }
 
 void CategoryModelHandler::deleteCategory(int index)
 {
+    mCategories[index].mVersion = ++mVersion;
+    mCategories[index].mIsDeleted = true;
     mCategories[index].remove();
-    if(mCategories[index].mIsForDelete == false)
-        mCategories.erase(mCategories.begin() + index);
 }
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    mCategories.clear();
+    int count = 0;
     for (const auto &var : replyJsonArray) {
-        mCategories.push_back(CategoryModel{
+        mCategories.push_back({
             var.toObject()["name"].toString().toStdString(),
-            var.toObject()["type"].toString().toStdString()
+            var.toObject()["type"].toString().toStdString(),
+            var.toObject()["version"].toInt(),
+            bool(var.toObject()["is_deleted"].toInt())
         });
+        if(mCategories.back().version() > mVersion)
+            mVersion = mCategories.back().version();
+        ++count;
     }
-}
-
-const std::vector<CategoryModel> &CategoryModelHandler::categories() const
-{
-    return mCategories;
-}
-
-std::vector<CategoryModel> &CategoryModelHandler::categories()
-{
-    return mCategories;
+    log().push_back({"Categories received: " + std::to_string(count)});
 }
 
 std::vector<CategoryModel>::iterator CategoryModelHandler::findByName(const std::string &name)
