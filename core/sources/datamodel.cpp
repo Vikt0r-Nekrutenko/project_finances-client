@@ -4,7 +4,7 @@
 #include <QJsonObject>
 #include "datamodel.hpp"
 
-const std::vector<std::string> &log()
+std::vector<std::string> &log()
 {
     return CoreLog;
 }
