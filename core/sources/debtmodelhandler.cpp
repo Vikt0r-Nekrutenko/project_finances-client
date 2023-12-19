@@ -23,7 +23,7 @@ DebtModelHandler::DebtModelHandler()
                     addNewDebt(tmp.mName, tmp.mAmount);
                 if(tmp.mIsForUpdate)
                     updateDebt(index, tmp.mName, tmp.mAmount);
-                if(tmp.mIsDeleted)
+                if(tmp.mIsForDelete)
                     deleteDebt(index);
             }
             ++index;
@@ -60,7 +60,7 @@ void DebtModelHandler::updateDebt(int index, const std::string &name, int amount
 void DebtModelHandler::deleteDebt(int index)
 {
     mDebts[index].remove();
-    if(mDebts[index].mIsDeleted == false)
+    if(mDebts[index].mIsForDelete == false)
         mDebts.erase(mDebts.begin() + index);
 }
 

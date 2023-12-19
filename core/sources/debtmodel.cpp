@@ -45,7 +45,7 @@ void DebtModel::remove()
 {
     QNetworkReply *reply = sendCRUDRequest("debts/" + std::to_string(mId) + '/', {}, "DELETE");
     RemoteStatus status = replyHandler(reply, "Debt delete successfully!");
-    mIsDeleted = status == RemoteStatus::Failure ? true : false;
+    mIsForDelete = status == RemoteStatus::Failure ? true : false;
 }
 
 void DebtModel::parseJsonObject(const QJsonObject &object)

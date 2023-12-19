@@ -23,7 +23,7 @@ OperationModelHandler::OperationModelHandler()
                     addNewOperation(tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
                 if(tmp.mIsForUpdate)
                     updateOperation(index, tmp.mDate, tmp.mDeposit, tmp.mAmount, tmp.mCategory);
-                if(tmp.mIsDeleted)
+                if(tmp.mIsForDelete)
                     deleteOperation(index);
             }
             ++index;

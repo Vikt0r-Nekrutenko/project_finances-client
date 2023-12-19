@@ -10,7 +10,7 @@ DepositModel::DepositModel(const std::string &name, int balance, int version, bo
     : mName{name}, mBalance{balance}
 {
     mVersion = version;
-    mIsDeleted = isDeleted;
+    mIsForDelete = isDeleted;
 }
 
 void DepositModel::create()
@@ -57,7 +57,7 @@ void DepositModel::remove()
     QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', completeJsonObject(selectedDeposit), "PUT");
     // QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "DELETE");
     RemoteStatus status = replyHandler(reply, "Deposit deleted successfully!");
-    mIsDeleted = status == RemoteStatus::Failure ? true : false;
+    mIsForDelete = status == RemoteStatus::Failure ? true : false;
 }
 
 void DepositModel::parseJsonObject(const QJsonObject &object)

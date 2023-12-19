@@ -24,7 +24,7 @@ protected:
 
     bool mIsForCreate = false;
     bool mIsForUpdate = false;
-    bool mIsDeleted = false;
+    bool mIsForDelete = false;
 };
 
 #endif // LOCALMODEL_HPP
