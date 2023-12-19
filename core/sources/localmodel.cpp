@@ -14,7 +14,7 @@ void LocalModel::load(std::ifstream &file)
     file >> mIsForCreate >> mIsChanched >> mIsDeleted;
 }
 
-bool LocalModel::isCreated() const
+bool LocalModel::isForCreate() const
 {
     return mIsForCreate;
 }

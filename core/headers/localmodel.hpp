@@ -14,7 +14,7 @@ public:
 
     virtual void load(std::ifstream &file);
 
-    bool isCreated() const;
+    bool isForCreate() const;
 
     bool isChanched() const;
 
