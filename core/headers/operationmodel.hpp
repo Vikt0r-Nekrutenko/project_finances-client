@@ -25,11 +25,11 @@ public:
     void save(std::ofstream &file) override;
     void load(std::ifstream &file) override;
 
-    const std::string &date() const;
-    const std::string &deposit() const;
-    const std::string &category() const;
-    int id() const;
-    int amount() const;
+    inline const std::string &date() const { return mDate; }
+    inline const std::string &deposit() const { return mDeposit; }
+    inline const std::string &category() const { return mCategory; }
+    inline int id() const { return mId; }
+    inline int amount() const { return mAmount; }
 
     QDateTime rawDate() const;
     DepositModel &rawDeposit(DepositModelHandler &handler);

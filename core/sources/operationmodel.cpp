@@ -61,9 +61,18 @@ void OperationModel::update()
 
 void OperationModel::remove()
 {
-    QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', {}, "DELETE");
+    QJsonObject selectedOperation {
+                                  {"id", mId },
+                                  {"date", mDate.c_str() },
+                                  {"deposit", mDeposit.c_str() },
+                                  {"amount", mAmount },
+                                  {"category", mCategory.c_str() },
+                                  };
+
+    QNetworkReply *reply = sendCRUDRequest("operations/" + std::to_string(mId) + '/', completeJsonObject(selectedOperation), "PUT");
     RemoteStatus status = replyHandler(reply, "Operation delete successfully!");
     mIsForDelete = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void OperationModel::parseJsonObject(const QJsonObject &object)
@@ -78,33 +87,13 @@ void OperationModel::parseJsonObject(const QJsonObject &object)
 void OperationModel::save(std::ofstream &file)
 {
     file << mId << " " << mDate << " " << mDeposit << " " << mAmount << " " << mCategory;
-    LocalModel::save(file);
+    BaseModel::save(file);
 }
 
 void OperationModel::load(std::ifstream &file)
 {
     file >> mId >> mDate >> mDeposit >> mAmount >> mCategory;
-    LocalModel::load(file);
-}
-
-int OperationModel::id() const
-{
-    return mId;
-}
-
-const std::string &OperationModel::date() const
-{
-    return mDate;
-}
-
-const std::string &OperationModel::deposit() const
-{
-    return mDeposit;
-}
-
-int OperationModel::amount() const
-{
-    return mAmount;
+    BaseModel::load(file);
 }
 
 QDateTime OperationModel::rawDate() const
@@ -120,9 +109,4 @@ DepositModel &OperationModel::rawDeposit(DepositModelHandler &handler)
 CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler)
 {
     return *handler.findByName(mCategory);
-}
-
-const std::string &OperationModel::category() const
-{
-    return mCategory;
 }
