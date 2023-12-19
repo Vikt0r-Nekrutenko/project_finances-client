@@ -25,8 +25,8 @@ CategoryModelHandler::CategoryModelHandler()
                 mCategories.back().remove();
             }
         }
+        file.close();
     }
-    file.close();
     get("categories/");
 }
 
@@ -41,26 +41,30 @@ CategoryModelHandler::~CategoryModelHandler()
 
 void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)
 {
-    mCategories.push_back(CategoryModel{name, type});
+    mCategories.push_back(CategoryModel{name, type, ++mVersion});
     mCategories.back().create();
 }
 
 void CategoryModelHandler::deleteCategory(int index)
 {
+    mCategories[index].mVersion = ++mVersion;
+    mCategories[index].mIsDeleted = true;
     mCategories[index].remove();
-    if(mCategories[index].mIsForDelete == false)
-        mCategories.erase(mCategories.begin() + index);
 }
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    mCategories.clear();
+    int count = 0;
     for (const auto &var : replyJsonArray) {
         mCategories.push_back(CategoryModel{
             var.toObject()["name"].toString().toStdString(),
             var.toObject()["type"].toString().toStdString()
         });
+        if(mCategories.back().version() > mVersion)
+            mVersion = mCategories.back().version();
+        ++count;
     }
+    log().push_back({"Categories received: " + std::to_string(count)});
 }
 
 std::vector<CategoryModel>::iterator CategoryModelHandler::findByName(const std::string &name)
