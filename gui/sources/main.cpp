@@ -49,9 +49,16 @@ private:
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    DepositModel dm{"TEST", 0, 99, 1};
+    dm.create();
+    qDebug() << dm.version() << dm.isDeleted();
+
     DepositModelHandler dmh;
     for(const auto &item : dmh.deposits())
         qDebug() << item.name() << item.balance();
+
+    for(const auto &item : log())
+        qDebug() << item;
 
     QTimer::singleShot(0, &a, SLOT(quit()));
     return a.exec();

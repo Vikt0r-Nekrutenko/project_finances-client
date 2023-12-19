@@ -1,17 +1,16 @@
 #ifndef DEPOSITMODEL_HPP
 #define DEPOSITMODEL_HPP
 
-#include "crudmodel.hpp"
-#include "localmodel.hpp"
+#include "basemodel.hpp"
 
-class CORE_EXPORT DepositModel : public CRUDModel, public LocalModel
+class CORE_EXPORT DepositModel : public BaseModel
 {
     friend class DepositModelHandler;
 
 public:
 
     DepositModel(const std::string &name, int balance);
-    DepositModel(const std::string &name, int balance, int version, int isDeleted);
+    DepositModel(const std::string &name, int balance, int version, bool isDeleted);
 
     void create() override;
     void read() override;

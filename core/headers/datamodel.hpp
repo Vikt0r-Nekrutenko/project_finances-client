@@ -18,11 +18,14 @@ enum class RemoteStatus
 
 class CORE_EXPORT DataModel
 {
+public:
+
+    inline int version() { return mVersion; }
+
 protected:
 
     virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request, const QUrlQuery &params = {});
     RemoteStatus replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
-    inline int version() { return mVersion; }
 
 private:
 

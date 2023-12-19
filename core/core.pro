@@ -18,6 +18,7 @@ DEPENDPATH += \
     sources \
 
 SOURCES += \
+    sources/basemodel.cpp \
     sources/localmodel.cpp \
     sources/datamodel.cpp \
     sources/debtmodel.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
     sources/queryresult.cpp
 
 HEADERS += \
+    headers/basemodel.hpp \
     headers/core_global.h \
     headers/datamodel.hpp \
     headers/debtmodel.hpp \

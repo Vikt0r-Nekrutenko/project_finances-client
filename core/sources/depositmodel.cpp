@@ -6,7 +6,7 @@
 DepositModel::DepositModel(const std::string &name, int balance)
     : mName{name}, mBalance{balance} {}
 
-DepositModel::DepositModel(const std::string &name, int balance, int version, int isDeleted)
+DepositModel::DepositModel(const std::string &name, int balance, int version, bool isDeleted)
     : mName{name}, mBalance{balance}
 {
     mVersion = version;
@@ -20,7 +20,7 @@ void DepositModel::create()
         {"balance", mBalance }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("deposits/", newDepo, "POST");
+    QNetworkReply *reply = sendCRUDRequest("deposits/", completeJsonObject(newDepo), "POST");
     RemoteStatus status = replyHandler(reply, "Deposit added successfully!");
     mIsCreated = status == RemoteStatus::Failure ? true : false;
 }
