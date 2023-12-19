@@ -64,13 +64,3 @@ void CategoryModel::save(std::ofstream &file)
     file << mName << " " << mType;
     LocalModel::save(file);
 }
-
-const std::string &CategoryModel::name() const
-{
-    return mName;
-}
-
-const std::string &CategoryModel::type() const
-{
-    return mType;
-}
