@@ -67,12 +67,14 @@ int main(int argc, char *argv[])
     CategoryModelHandler cmh;
     printCMH(cmh);
 
-    // dmh.addNewDeposit("Test", 0);
-    // printDMH(dmh);
+    // cmh.addNewCategory("Test", "positive");
+    // printCMH(cmh);
     // dmh.updateBalance(6, 10);
     // printDMH(dmh);
-    // dmh.deleteDeposit(6);
-    // printDMH(dmh);
+    // if(cmh.categories()[17].name() == "Test"){
+    //     cmh.deleteCategory(17);
+    //     printCMH(cmh);
+    // }
 
     for(const auto &item : log())
         qDebug() << item;
