@@ -79,17 +79,11 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    OperationModelHandler omh;
-    printOMH(omh);
+    // for(const auto &item : log())
+    //     qDebug() << item;
 
-    if(omh.operations().back().id() == 665)
-        omh.deleteOperation(std::distance(omh.operations().begin(), omh.at(665)));
-    printOMH(omh);
+    // QTimer::singleShot(0, &a, SLOT(quit()));
+    // return a.exec();
 
-    for(const auto &item : log())
-        qDebug() << item;
-
-    QTimer::singleShot(0, &a, SLOT(quit()));
-    return a.exec();
-    // return App().run();//a.exec();
+    return App().run();//a.exec();
 }
