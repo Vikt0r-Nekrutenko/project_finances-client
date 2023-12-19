@@ -69,8 +69,10 @@ int main(int argc, char *argv[])
 
     // cmh.addNewCategory("Test", "positive");
     // printCMH(cmh);
-    // dmh.updateBalance(6, 10);
-    // printDMH(dmh);
+    // if(cmh.categories()[17].name() == "Test"){
+    //     cmh.updateCategory(17, "TesT", cmh.categories()[17].type());
+    //     printCMH(cmh);
+    // }
     // if(cmh.categories()[17].name() == "Test"){
     //     cmh.deleteCategory(17);
     //     printCMH(cmh);

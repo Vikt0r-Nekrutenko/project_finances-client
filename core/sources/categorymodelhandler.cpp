@@ -21,6 +21,9 @@ CategoryModelHandler::CategoryModelHandler()
             if(tmp.mIsForCreate) {
                 mCategories.back().create();
             }
+            if(tmp.mIsForUpdate) {
+                mCategories.back().update();
+            }
             if(tmp.mIsForDelete) {
                 mCategories.back().remove();
             }
@@ -43,6 +46,13 @@ void CategoryModelHandler::addNewCategory(const std::string &name, const std::st
 {
     mCategories.push_back(CategoryModel{name, type, ++mVersion});
     mCategories.back().create();
+}
+
+void CategoryModelHandler::updateCategoryType(int index, const std::string &type)
+{
+    mCategories[index].mVersion = ++mVersion;
+    mCategories[index].mType = type;
+    mCategories[index].update();
 }
 
 void CategoryModelHandler::deleteCategory(int index)

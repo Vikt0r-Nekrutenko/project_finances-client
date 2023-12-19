@@ -14,6 +14,7 @@ public:
     ~CategoryModelHandler() override;
 
     void addNewCategory(const std::string &name, const std::string &type);
+    void updateCategoryType(int index, const std::string &type);
     void deleteCategory(int index);
 
     inline const std::vector<CategoryModel> &categories() const { return mCategories; }
