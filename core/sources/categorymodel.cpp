@@ -6,6 +6,9 @@
 CategoryModel::CategoryModel(const std::string &name, const std::string &type)
     : mName{name}, mType{type} {}
 
+CategoryModel::CategoryModel(const std::string &name, const std::string &type, int version, bool isDeleted)
+    : BaseModel{version, isDeleted}, mName{name}, mType{type} { }
+
 void CategoryModel::create()
 {
     QJsonObject newCategory {
