@@ -4,29 +4,30 @@
 
 CategoryModelHandler::CategoryModelHandler()
 {
-    RemoteStatus status = get("categories/");
     std::ifstream file(LocalPath + "categories.txt");
-    unsigned index = 0;
 
     if(file.is_open()) {
         while(true) {
             CategoryModel tmp("", "");
             tmp.load(file);
+            if(tmp.version() > mVersion)
+                mVersion = tmp.version();
 
-            if(file.eof()){
+            if(file.eof())
                 break;
-            } else if(status == RemoteStatus::Failure) {
-                mCategories.push_back(tmp);
-            } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsForCreate)
-                    addNewCategory(tmp.mName, tmp.mType);
-                if(tmp.mIsForDelete)
-                    deleteCategory(index);
+
+            mCategories.push_back(tmp);
+
+            if(tmp.mIsForCreate) {
+                mCategories.back().create();
             }
-            ++index;
+            if(tmp.mIsForDelete) {
+                mCategories.back().remove();
+            }
         }
-        file.close();
     }
+    file.close();
+    get("categories/");
 }
 
 CategoryModelHandler::~CategoryModelHandler()

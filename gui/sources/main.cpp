@@ -53,6 +53,13 @@ void printDMH(const DepositModelHandler &dmh)
     qDebug() << "---DMH ver:" << dmh.version();
 }
 
+void printCMH(const CategoryModelHandler &cmh)
+{
+    for(const auto &item : cmh.categories())
+        qDebug() << item.name() << item.type() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---CMH ver:" << cmh.version();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
