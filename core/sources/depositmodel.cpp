@@ -63,13 +63,13 @@ void DepositModel::parseJsonObject(const QJsonObject &object)
 void DepositModel::load(std::ifstream &file)
 {
     file >> mName >> mBalance;
-    LocalModel::load(file);
+    BaseModel::load(file);
 }
 
 void DepositModel::save(std::ofstream &file)
 {
     file << mName << " " << mBalance;
-    LocalModel::save(file);
+    BaseModel::save(file);
 }
 
 const std::string &DepositModel::name() const

@@ -49,13 +49,11 @@ private:
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    DepositModel dm{"TEST", 0, 99, 1};
-    dm.create();
-    qDebug() << dm.version() << dm.isDeleted();
 
     DepositModelHandler dmh;
     for(const auto &item : dmh.deposits())
-        qDebug() << item.name() << item.balance();
+        qDebug() << item.name() << item.balance() << item.version() << item.isCreated() << item.isChanched() << item.isDeleted();
+    qDebug() << "DMH ver:" << dmh.version();
 
     for(const auto &item : log())
         qDebug() << item;

@@ -63,10 +63,14 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     mDeposits.clear();
     for (const auto &var : replyJsonArray) {
-        mDeposits.push_back(DepositModel{
+        mDeposits.push_back({
             var.toObject()["name"].toString().toStdString(),
-            var.toObject()["balance"].toInt()
+            var.toObject()["balance"].toInt(),
+            var.toObject()["version"].toInt(),
+            bool(var.toObject()["is_deleted"].toInt())
         });
+        if(mDeposits.back().version() > mVersion)
+            mVersion = mDeposits.back().version();
     }
 }
 

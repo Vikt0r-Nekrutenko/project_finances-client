@@ -20,7 +20,7 @@ class CORE_EXPORT DataModel
 {
 public:
 
-    inline int version() { return mVersion; }
+    inline int version() const { return mVersion; }
 
 protected:
 
