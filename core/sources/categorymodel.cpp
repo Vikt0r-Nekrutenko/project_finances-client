@@ -68,11 +68,11 @@ void CategoryModel::parseJsonObject(const QJsonObject &object)
 void CategoryModel::load(std::ifstream &file)
 {
     file >> mName >> mType;
-    LocalModel::load(file);
+    BaseModel::load(file);
 }
 
 void CategoryModel::save(std::ofstream &file)
 {
     file << mName << " " << mType;
-    LocalModel::save(file);
+    BaseModel::save(file);
 }
