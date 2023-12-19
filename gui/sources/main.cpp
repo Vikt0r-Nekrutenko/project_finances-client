@@ -46,14 +46,26 @@ private:
     ViewHolder mViewHolder;
 };
 
+void printDMH(const DepositModelHandler &dmh)
+{
+    for(const auto &item : dmh.deposits())
+        qDebug() << item.name() << item.balance() << item.version() << item.isCreated() << item.isChanched() << item.isDeleted();
+    qDebug() << "---DMH ver:" << dmh.version();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
     DepositModelHandler dmh;
-    for(const auto &item : dmh.deposits())
-        qDebug() << item.name() << item.balance() << item.version() << item.isCreated() << item.isChanched() << item.isDeleted();
-    qDebug() << "DMH ver:" << dmh.version();
+    printDMH(dmh);
+
+    // dmh.addNewDeposit("Test", 0);
+    // printDMH(dmh);
+    // dmh.updateBalance(6, 10);
+    // printDMH(dmh);
+    dmh.deleteDeposit(6);
+    printDMH(dmh);
 
     for(const auto &item : log())
         qDebug() << item;
