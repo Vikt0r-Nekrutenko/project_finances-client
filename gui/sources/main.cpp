@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    DepositModelHandler dmh;
-    printDMH(dmh);
+    CategoryModelHandler cmh;
+    printCMH(cmh);
 
     // dmh.addNewDeposit("Test", 0);
     // printDMH(dmh);

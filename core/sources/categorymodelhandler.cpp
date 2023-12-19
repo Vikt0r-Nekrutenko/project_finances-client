@@ -58,7 +58,9 @@ void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     for (const auto &var : replyJsonArray) {
         mCategories.push_back(CategoryModel{
             var.toObject()["name"].toString().toStdString(),
-            var.toObject()["type"].toString().toStdString()
+            var.toObject()["type"].toString().toStdString(),
+            var.toObject()["version"].toInt(),
+            bool(var.toObject()["is_deleted"].toInt())
         });
         if(mCategories.back().version() > mVersion)
             mVersion = mCategories.back().version();
