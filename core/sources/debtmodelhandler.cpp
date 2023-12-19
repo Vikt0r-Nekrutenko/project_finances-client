@@ -5,31 +5,33 @@
 
 DebtModelHandler::DebtModelHandler()
 {
-    RemoteStatus status = get("debts/");
     std::ifstream file(LocalPath + "debts.txt");
-    unsigned index = 0;
 
     if(file.is_open()) {
         while(true) {
             DebtModel tmp(0, "", 0);
             tmp.load(file);
+            if(tmp.version() > mVersion)
+                mVersion = tmp.version();
 
-            if(file.eof()){
+            if(file.eof())
                 break;
-            } else if(status == RemoteStatus::Failure) {
-                mDebts.push_back(tmp);
-            } else if(status == RemoteStatus::Success) {
-                if(tmp.mIsForCreate)
-                    addNewDebt(tmp.mName, tmp.mAmount);
-                if(tmp.mIsForUpdate)
-                    updateDebt(index, tmp.mName, tmp.mAmount);
-                if(tmp.mIsForDelete)
-                    deleteDebt(index);
+
+            mDebts.push_back(tmp);
+
+            if(tmp.mIsForCreate) {
+                mDebts.back().create();
             }
-            ++index;
+            if(tmp.mIsForUpdate) {
+                mDebts.back().update();
+            }
+            if(tmp.mIsForDelete) {
+                mDebts.back().remove();
+            }
         }
         file.close();
     }
+    get("debts/");
 }
 
 DebtModelHandler::~DebtModelHandler()
@@ -74,11 +76,6 @@ void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
             var.toObject()["amount"].toInt()
         });
     }
-}
-
-const std::vector<DebtModel> &DebtModelHandler::debts() const
-{
-    return mDebts;
 }
 
 std::vector<DebtModel>::iterator DebtModelHandler::findByName(const std::string &name)
