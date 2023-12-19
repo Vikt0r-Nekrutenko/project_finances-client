@@ -14,11 +14,11 @@ public:
 
     virtual void load(std::ifstream &file);
 
-    bool isForCreate() const;
+    inline bool isForCreate() const { return mIsForCreate; }
 
-    bool isForUpdate() const;
+    inline bool isForUpdate() const { return mIsForUpdate; }
 
-    bool isForDelete() const;
+    inline bool isForDelete() const { return mIsForDelete; }
 
 protected:
 
