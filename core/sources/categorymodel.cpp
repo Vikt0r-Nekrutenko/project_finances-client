@@ -19,6 +19,7 @@ void CategoryModel::create()
     QNetworkReply *reply = sendCRUDRequest("categories/", completeJsonObject(newCategory), "POST");
     RemoteStatus status = replyHandler(reply, "Category added successfully!");
     mIsForCreate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void CategoryModel::read()
@@ -27,6 +28,7 @@ void CategoryModel::read()
     replyHandler(reply, "Get request successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
 }
@@ -41,6 +43,7 @@ void CategoryModel::update()
     QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', completeJsonObject(selectedCategory), "PUT");
     RemoteStatus status = replyHandler(reply, "Category updated successfully!");
     mIsForUpdate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void CategoryModel::remove()
