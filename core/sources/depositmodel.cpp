@@ -7,11 +7,7 @@ DepositModel::DepositModel(const std::string &name, int balance)
     : mName{name}, mBalance{balance} {}
 
 DepositModel::DepositModel(const std::string &name, int balance, int version, bool isDeleted)
-    : mName{name}, mBalance{balance}
-{
-    mVersion = version;
-    mIsForDelete = isDeleted;
-}
+    : BaseModel{version, isDeleted}, mName{name}, mBalance{balance} { }
 
 void DepositModel::create()
 {
