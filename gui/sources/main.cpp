@@ -60,23 +60,24 @@ void printCMH(const CategoryModelHandler &cmh)
     qDebug() << "---CMH ver:" << cmh.version();
 }
 
+void printBMH(const DebtModelHandler &cmh)
+{
+    for(const auto &item : cmh.debts())
+        qDebug() << item.id() << item.name() << item.amount() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---BMH ver:" << cmh.version();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    CategoryModelHandler cmh;
-    printCMH(cmh);
+    DebtModelHandler dmh;
+    printBMH(dmh);
 
-    // cmh.addNewCategory("Test", "positive");
-    // printCMH(cmh);
-    // if(cmh.categories()[17].name() == "Test"){
-    //     cmh.updateCategory(17, "TesT", cmh.categories()[17].type());
-    //     printCMH(cmh);
+    // if(dmh.debts()[13].name() == "TesT") {
+    //     dmh.deleteDebt(13);
     // }
-    // if(cmh.categories()[17].name() == "Test"){
-    //     cmh.deleteCategory(17);
-    //     printCMH(cmh);
-    // }
+    printBMH(dmh);
 
     for(const auto &item : log())
         qDebug() << item;
