@@ -67,21 +67,6 @@ void DebtModel::save(std::ofstream &file)
     LocalModel::save(file);
 }
 
-const std::string &DebtModel::name() const
-{
-    return mName;
-}
-
-int DebtModel::id() const
-{
-    return mId;
-}
-
-int DebtModel::amount() const
-{
-    return mAmount;
-}
-
 void DebtModel::increase(int amount)
 {
     mAmount += amount;

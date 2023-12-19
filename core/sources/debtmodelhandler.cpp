@@ -45,10 +45,10 @@ DebtModelHandler::~DebtModelHandler()
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 {
-    mDebts.push_back(DebtModel(
+    mDebts.push_back(DebtModel{
                               mDebts.empty() ? 0 : mDebts.back().mId + 1,
                               name,
-                              amount));
+        amount});
     mDebts.back().create();
 }
 
