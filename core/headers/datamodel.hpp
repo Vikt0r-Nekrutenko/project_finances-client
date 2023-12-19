@@ -2,14 +2,14 @@
 #define DATAMODEL_HPP
 
 #include <QNetworkReply>
+#include <QUrlQuery>
 #include <vector>
 
 #include "core_global.h"
 
-static std::string MainPath = "https://grhin0.pythonanywhere.com/api/";
 static std::vector<std::string> CoreLog;
 
-const std::vector<std::string> CORE_EXPORT &log();
+std::vector<std::string> CORE_EXPORT &log();
 
 enum class RemoteStatus
 {
@@ -19,12 +19,23 @@ enum class RemoteStatus
 class CORE_EXPORT DataModel
 {
 public:
-    virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request);
+
+    inline int version() const { return mVersion; }
+
+protected:
+
+    virtual QNetworkReply *sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request, const QUrlQuery &params = {});
     RemoteStatus replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const;
 
 private:
 
-    static std::string AuthName, AuthValue;
+    static std::string
+        AuthValue,
+        MainPath;
+
+protected:
+
+    int mVersion {0};
 };
 
 #endif // DATAMODEL_HPP

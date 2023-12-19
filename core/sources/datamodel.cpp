@@ -4,32 +4,37 @@
 #include <QJsonObject>
 #include "datamodel.hpp"
 
-const std::vector<std::string> &log()
+std::vector<std::string> &log()
 {
     return CoreLog;
 }
 
-std::string DataModel::AuthName, DataModel::AuthValue;
+std::string
+    DataModel::AuthValue,
+    DataModel::MainPath;
 
-QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request)
+QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request, const QUrlQuery &params)
 {
+    if(!MainPath.length() || !AuthValue.length()) {
+        QFile settingsFile("settings.json");
+        settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
+        if(!settingsFile.isOpen())
+            throw std::invalid_argument("file: " + settingsFile.fileName().toStdString() + " doesn't opened!");
+
+        QJsonObject obj = QJsonDocument::fromJson(QString(settingsFile.readAll()).toUtf8()).object();
+        AuthValue = obj["value"].toString().toStdString();
+        MainPath = obj["url"].toString().toStdString();
+    }
+
     QNetworkAccessManager *mManager = new QNetworkAccessManager();
-    QNetworkRequest mRequest {QUrl((MainPath + additionalPath).c_str())};
+    QUrl url{(MainPath + additionalPath).c_str()};
+    if(!params.isEmpty())
+        url.setQuery(params);
+    QNetworkRequest mRequest {url};
 
     mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     mRequest.setRawHeader("accept", "application/json");
-
-    if(!AuthName.length() || !AuthValue.length()) {
-        QFile authFile("auth_tokens.json");
-        authFile.open(QIODevice::ReadOnly | QIODevice::Text);
-        if(!authFile.isOpen())
-            throw std::invalid_argument("file: " + authFile.fileName().toStdString() + " doesn't opened!");
-
-        QJsonObject obj = QJsonDocument::fromJson(QString(authFile.readAll()).toUtf8()).object();
-        AuthName = obj["name"].toString().toStdString();
-        AuthValue = obj["value"].toString().toStdString();
-    }
-    mRequest.setRawHeader(AuthName.c_str(), AuthValue.c_str());
+    mRequest.setRawHeader("authorization", AuthValue.c_str());
 
     QEventLoop loop;
 
@@ -43,13 +48,13 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
 
 RemoteStatus DataModel::replyHandler(QNetworkReply *reply, const std::string &noErrorMsg) const
 {
+    auto status = RemoteStatus::Failure;
     if(reply->error() == QNetworkReply::NoError) {
         CoreLog.push_back(noErrorMsg);
-        reply->deleteLater();
-        return RemoteStatus::Success;
+        status = RemoteStatus::Success;
     } else {
         CoreLog.push_back(reply->errorString().toStdString());
-        reply->deleteLater();
-        return RemoteStatus::Failure;
     }
+    reply->deleteLater();
+    return status;
 }

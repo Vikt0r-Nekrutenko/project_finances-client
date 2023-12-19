@@ -1,5 +1,5 @@
 #include <QCoreApplication>
-#include <iostream>
+#include <QTimer>
 #include <thread>
 
 #include "window.hpp"
@@ -46,8 +46,44 @@ private:
     ViewHolder mViewHolder;
 };
 
+void printDMH(const DepositModelHandler &dmh)
+{
+    for(const auto &item : dmh.deposits())
+        qDebug() << item.name() << item.balance() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---DMH ver:" << dmh.version();
+}
+
+void printCMH(const CategoryModelHandler &cmh)
+{
+    for(const auto &item : cmh.categories())
+        qDebug() << item.name() << item.type() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---CMH ver:" << cmh.version();
+}
+
+void printBMH(const DebtModelHandler &cmh)
+{
+    for(const auto &item : cmh.debts())
+        qDebug() << item.id() << item.name() << item.amount() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---BMH ver:" << cmh.version();
+}
+
+void printOMH(const OperationModelHandler &omh)
+{
+    auto item = omh.operations().back();
+    // for(const auto &item : omh.operations())
+        qDebug() << item.id() << item.date() << item.deposit() << item.amount() << item.category() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    qDebug() << "---OMH ver:" << omh.version();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+
+    // for(const auto &item : log())
+    //     qDebug() << item;
+
+    // QTimer::singleShot(0, &a, SLOT(quit()));
+    // return a.exec();
+
     return App().run();//a.exec();
 }

@@ -13,11 +13,14 @@ public:
     void addNewDebt(const std::string &name, int amount);
     void updateDebt(int index, const std::string &name, int amount);
     void deleteDebt(int index);
-    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
-    const std::vector<DebtModel> &debts() const;
+    inline const std::vector<DebtModel> &debts() const { return mDebts; }
 
     std::vector<DebtModel>::iterator findByName(const std::string &name);
+
+protected:
+
+    void parseJsonArray(const QJsonArray &replyJsonArray) override;
 
 private:
 

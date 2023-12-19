@@ -6,8 +6,12 @@
 class DataModelHandler : public DataModel
 {
 public:
+
     virtual ~DataModelHandler() = default;
     RemoteStatus get(const std::string &additionalPath);
+
+protected:
+
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };
 

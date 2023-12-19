@@ -6,6 +6,9 @@
 CategoryModel::CategoryModel(const std::string &name, const std::string &type)
     : mName{name}, mType{type} {}
 
+CategoryModel::CategoryModel(const std::string &name, const std::string &type, int version, bool isDeleted)
+    : BaseModel{version, isDeleted}, mName{name}, mType{type} { }
+
 void CategoryModel::create()
 {
     QJsonObject newCategory {
@@ -13,9 +16,10 @@ void CategoryModel::create()
         {"type", mType.c_str() }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("categories/", newCategory, "POST");
+    QNetworkReply *reply = sendCRUDRequest("categories/", completeJsonObject(newCategory), "POST");
     RemoteStatus status = replyHandler(reply, "Category added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void CategoryModel::read()
@@ -24,6 +28,7 @@ void CategoryModel::read()
     replyHandler(reply, "Get request successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
 }
@@ -35,16 +40,23 @@ void CategoryModel::update()
         {"type", mType.c_str() }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', selectedCategory, "PUT");
+    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', completeJsonObject(selectedCategory), "PUT");
     RemoteStatus status = replyHandler(reply, "Category updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void CategoryModel::remove()
 {
-    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', {}, "DELETE");
+    QJsonObject selectedCategory {
+        {"name", mName.c_str() },
+        {"type", mType.c_str() }
+    };
+
+    QNetworkReply *reply = sendCRUDRequest("categories/" + mName + '/', completeJsonObject(selectedCategory), "PUT");
     RemoteStatus status = replyHandler(reply, "Category deleted successfully!");
-    mIsDeleted = status == RemoteStatus::Failure ? true : false;
+    mIsForDelete = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void CategoryModel::parseJsonObject(const QJsonObject &object)
@@ -56,21 +68,11 @@ void CategoryModel::parseJsonObject(const QJsonObject &object)
 void CategoryModel::load(std::ifstream &file)
 {
     file >> mName >> mType;
-    LocalModel::load(file);
+    BaseModel::load(file);
 }
 
 void CategoryModel::save(std::ofstream &file)
 {
     file << mName << " " << mType;
-    LocalModel::save(file);
-}
-
-const std::string &CategoryModel::name() const
-{
-    return mName;
-}
-
-const std::string &CategoryModel::type() const
-{
-    return mType;
+    BaseModel::save(file);
 }

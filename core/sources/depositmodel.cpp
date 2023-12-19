@@ -6,6 +6,9 @@
 DepositModel::DepositModel(const std::string &name, int balance)
     : mName{name}, mBalance{balance} {}
 
+DepositModel::DepositModel(const std::string &name, int balance, int version, bool isDeleted)
+    : BaseModel{version, isDeleted}, mName{name}, mBalance{balance} { }
+
 void DepositModel::create()
 {
     QJsonObject newDepo {
@@ -13,9 +16,10 @@ void DepositModel::create()
         {"balance", mBalance }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("deposits/", newDepo, "POST");
+    QNetworkReply *reply = sendCRUDRequest("deposits/", completeJsonObject(newDepo), "POST");
     RemoteStatus status = replyHandler(reply, "Deposit added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DepositModel::read()
@@ -24,6 +28,7 @@ void DepositModel::read()
     replyHandler(reply, "Get request successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
 }
@@ -35,16 +40,23 @@ void DepositModel::update()
         {"balance", mBalance }
     };
 
-    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', selectedDeposit, "PUT");
+    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', completeJsonObject(selectedDeposit), "PUT");
     RemoteStatus status = replyHandler(reply, "Balance updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DepositModel::remove()
 {
-    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', {}, "DELETE");
+    QJsonObject selectedDeposit {
+        {"name", mName.c_str() },
+        {"balance", mBalance }
+    };
+
+    QNetworkReply *reply = sendCRUDRequest("deposits/" + mName + '/', completeJsonObject(selectedDeposit), "PUT");
     RemoteStatus status = replyHandler(reply, "Deposit deleted successfully!");
-    mIsDeleted = status == RemoteStatus::Failure ? true : false;
+    mIsForDelete = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DepositModel::parseJsonObject(const QJsonObject &object)
@@ -56,23 +68,13 @@ void DepositModel::parseJsonObject(const QJsonObject &object)
 void DepositModel::load(std::ifstream &file)
 {
     file >> mName >> mBalance;
-    LocalModel::load(file);
+    BaseModel::load(file);
 }
 
 void DepositModel::save(std::ofstream &file)
 {
     file << mName << " " << mBalance;
-    LocalModel::save(file);
-}
-
-const std::string &DepositModel::name() const
-{
-    return mName;
-}
-
-int DepositModel::balance() const
-{
-    return mBalance;
+    BaseModel::save(file);
 }
 
 void DepositModel::increaseBalance(int amount)

@@ -5,17 +5,26 @@
 DebtModel::DebtModel(int id, const std::string &name, int amount)
     : mName{name}, mId{id}, mAmount{amount} {}
 
+DebtModel::DebtModel(int id, const std::string &name, int amount, int version, bool isDeleted)
+    : BaseModel{version, isDeleted}, mName{name}, mId{id}, mAmount{amount} { }
+
 void DebtModel::create()
 {
     QJsonObject newDebt {
-        {"id", mId },
         {"name", mName.c_str() },
         {"amount", mAmount },
     };
 
-    QNetworkReply *reply = sendCRUDRequest("debts/", newDebt, "POST");
+    QNetworkReply *reply = sendCRUDRequest("debts/", completeJsonObject(newDebt), "POST");
     RemoteStatus status = replyHandler(reply, "Debt added successfully!");
-    mIsCreated = status == RemoteStatus::Failure ? true : false;
+    mIsForCreate = status == RemoteStatus::Failure ? true : false;
+
+    if(status == RemoteStatus::Success) {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+        QJsonObject object = jsonResponse.object();
+        mId = object["id"].toInt();
+    }
+    delete reply;
 }
 
 void DebtModel::read()
@@ -24,6 +33,7 @@ void DebtModel::read()
     replyHandler(reply, "Debt read successfully!");
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
     QJsonObject object = jsonResponse.object();
     parseJsonObject(object);
 }
@@ -31,21 +41,29 @@ void DebtModel::read()
 void DebtModel::update()
 {
     QJsonObject selectedDebt {
-        {"id", mId },
-        {"name", mName.c_str() },
-        {"amount", mAmount },
-    };
+                             {"id", mId },
+                             {"name", mName.c_str() },
+                             {"amount", mAmount },
+                             };
 
-    QNetworkReply *reply = sendCRUDRequest("debts/" + std::to_string(mId) + '/', selectedDebt, "PUT");
+    QNetworkReply *reply = sendCRUDRequest("debts/" + std::to_string(mId) + '/', completeJsonObject(selectedDebt), "PUT");
     RemoteStatus status = replyHandler(reply, "Debt updated successfully!");
-    mIsChanched = status == RemoteStatus::Failure ? true : false;
+    mIsForUpdate = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DebtModel::remove()
 {
-    QNetworkReply *reply = sendCRUDRequest("debts/" + std::to_string(mId) + '/', {}, "DELETE");
+    QJsonObject selectedDebt {
+                             {"id", mId },
+                             {"name", mName.c_str() },
+                             {"amount", mAmount },
+                             };
+
+    QNetworkReply *reply = sendCRUDRequest("debts/" + std::to_string(mId) + '/', completeJsonObject(selectedDebt), "PUT");
     RemoteStatus status = replyHandler(reply, "Debt delete successfully!");
-    mIsDeleted = status == RemoteStatus::Failure ? true : false;
+    mIsForDelete = status == RemoteStatus::Failure ? true : false;
+    delete reply;
 }
 
 void DebtModel::parseJsonObject(const QJsonObject &object)
@@ -58,28 +76,13 @@ void DebtModel::parseJsonObject(const QJsonObject &object)
 void DebtModel::load(std::ifstream &file)
 {
     file >> mId >> mName >> mAmount;
-    LocalModel::load(file);
+    BaseModel::load(file);
 }
 
 void DebtModel::save(std::ofstream &file)
 {
     file << mId << " " << mName << " " << mAmount;
-    LocalModel::save(file);
-}
-
-const std::string &DebtModel::name() const
-{
-    return mName;
-}
-
-int DebtModel::id() const
-{
-    return mId;
-}
-
-int DebtModel::amount() const
-{
-    return mAmount;
+    BaseModel::save(file);
 }
 
 void DebtModel::increase(int amount)

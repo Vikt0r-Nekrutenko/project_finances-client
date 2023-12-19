@@ -7,12 +7,13 @@
 
 RemoteStatus DataModelHandler::get(const std::string &additionalPath)
 {
-    QNetworkReply *reply = sendCRUDRequest(additionalPath, {}, "GET");
+    QNetworkReply *reply = sendCRUDRequest(additionalPath, {}, "GET", {{"version", std::to_string(mVersion).c_str()}});
     RemoteStatus status = replyHandler(reply, "Get request successfully!");
     if(status == RemoteStatus::Failure)
         return RemoteStatus::Failure;
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
 
     QJsonArray array = jsonResponse.array();
     parseJsonArray(array);
@@ -42,6 +43,7 @@ MonoBankDataHandler::MonoBankDataHandler()
     reply->deleteLater();
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
     QJsonArray array = jsonResponse.array();
 
     mQuotes.clear();
