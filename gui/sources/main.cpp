@@ -64,20 +64,6 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    CategoryModelHandler cmh;
-    printCMH(cmh);
-
-    // cmh.addNewCategory("Test", "positive");
-    // printCMH(cmh);
-    // if(cmh.categories()[17].name() == "Test"){
-    //     cmh.updateCategory(17, "TesT", cmh.categories()[17].type());
-    //     printCMH(cmh);
-    // }
-    // if(cmh.categories()[17].name() == "Test"){
-    //     cmh.deleteCategory(17);
-    //     printCMH(cmh);
-    // }
-
     for(const auto &item : log())
         qDebug() << item;
 

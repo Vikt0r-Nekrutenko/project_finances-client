@@ -11,14 +11,20 @@ DebtModel::DebtModel(const std::string &name, int amount, int version, bool isDe
 void DebtModel::create()
 {
     QJsonObject newDebt {
-        {"id", mId },
         {"name", mName.c_str() },
         {"amount", mAmount },
     };
 
-    QNetworkReply *reply = sendCRUDRequest("debts/", newDebt, "POST");
+    QNetworkReply *reply = sendCRUDRequest("debts/", completeJsonObject(newDebt), "POST");
     RemoteStatus status = replyHandler(reply, "Debt added successfully!");
     mIsForCreate = status == RemoteStatus::Failure ? true : false;
+
+    if(status == RemoteStatus::Success) {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+        QJsonObject object = jsonResponse.object();
+        mId = object["id"].toInt();
+    }
+    delete reply;
 }
 
 void DebtModel::read()
