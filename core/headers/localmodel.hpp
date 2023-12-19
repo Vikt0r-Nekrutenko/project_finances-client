@@ -16,7 +16,7 @@ public:
 
     bool isForCreate() const;
 
-    bool isChanched() const;
+    bool isForUpdate() const;
 
     bool isDeleted() const;
 

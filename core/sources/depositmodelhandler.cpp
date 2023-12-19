@@ -20,7 +20,7 @@ DepositModelHandler::DepositModelHandler()
             if(tmp.mIsForCreate) {
                 mDeposits.back().create();
             }
-            if(tmp.isChanched()) {
+            if(tmp.isForUpdate()) {
                 mDeposits.back().update();
             }
             if(tmp.isDeleted()) {

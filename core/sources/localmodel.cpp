@@ -19,7 +19,7 @@ bool LocalModel::isForCreate() const
     return mIsForCreate;
 }
 
-bool LocalModel::isChanched() const
+bool LocalModel::isForUpdate() const
 {
     return mIsForUpdate;
 }
