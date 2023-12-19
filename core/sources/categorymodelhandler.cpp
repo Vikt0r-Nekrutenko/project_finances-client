@@ -56,7 +56,7 @@ void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     int count = 0;
     for (const auto &var : replyJsonArray) {
-        mCategories.push_back(CategoryModel{
+        mCategories.push_back({
             var.toObject()["name"].toString().toStdString(),
             var.toObject()["type"].toString().toStdString(),
             var.toObject()["version"].toInt(),
