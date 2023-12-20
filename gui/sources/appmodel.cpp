@@ -187,7 +187,11 @@ void AppModel::calcPnLs()
 
 void AppModel::calcMinMaxLoss()
 {
-    OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth();
+    OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations)
+                                                  .select()
+                                                  .filterByCurrentYear()
+                                                  .filterByCurrentMonth()
+                                                  .filterByCategoryType(Categories, "negative");
     std::unordered_map<std::string, int> sumByCategories;
     for(const auto &operation : monthlyOperations) {
         sumByCategories[operation->category()] += operation->amount();
@@ -208,12 +212,12 @@ void AppModel::calcMinMaxLoss()
 
     if(min == Categories.categories().end())
         mMinMaxLoss.first = {"None", 0};
-    else if(min->type() == "negative")
+    else
         mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
 
     if(max == Categories.categories().end())
         mMinMaxLoss.second = {"None", 0};
-    else if(max->type() == "negative")
+    else
         mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
 }
 
