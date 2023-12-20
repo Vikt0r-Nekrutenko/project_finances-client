@@ -21,43 +21,43 @@ public:
 
     AppModel();
 
-    const OperationHandlerQuery &operationsList() const;
+    inline const OperationHandlerQuery &operationsList() const { return mOperationsList; }
 
-    const FavoriteCategoryList &favoriteCategories() const;
+    inline const FavoriteCategoryList &favoriteCategories() const { return mFavoriteCategories; }
 
-    const MinMaxLoss &minMaxLoss() const;
+    inline const MinMaxLoss &minMaxLoss() const { return mMinMaxLoss; }
 
-    const std::pair<std::string, float> &currentCurrency() const;
+    inline const std::pair<std::string, float> &currentCurrency() const { return mQuotes[mCurrentCurrencyId]; }
 
-    const std::vector<std::pair<CategoryModel *, int>> &monthlyPnlsByCategories() const;
+    inline const std::vector<std::pair<CategoryModel *, int>> &monthlyPnlsByCategories() const { return mMonthlyGroupPnls; }
 
-    DepositModel *selectedDeposit();
+    inline DepositModel *selectedDeposit() { return mSelectedDeposit; }
 
-    int totalEarn() const;
+    inline int totalEarn() const { return mTotalEarn; }
 
-    int totalDeposits() const;
+    inline int totalDeposits() const { return mTotalDeposits; }
 
-    int totalDebts() const;
+    inline int totalDebts() const { return mTotalDebts; }
 
-    int totalPnL() const;
+    inline int totalPnL() const { return mTotalDeposits - mTotalEarn; }
 
-    int todayPnL() const;
+    inline int todayPnL() const { return float(mTodayPnL) / mQuotes[mCurrentCurrencyId].second; }
 
-    int todayProfit() const;
+    inline int todayProfit() const { return float(mTodayProfit) / mQuotes[mCurrentCurrencyId].second; }
 
-    int todayLoss() const;
+    inline int todayLoss() const { return float(mTodayLoss) / mQuotes[mCurrentCurrencyId].second; }
 
-    int monthlyPnL() const;
+    inline int monthlyPnL() const { return float(mMonthlyPnL) / mQuotes[mCurrentCurrencyId].second; }
 
-    int monthlyProfit() const;
+    inline int monthlyProfit() const { return float(mMonthlyProfit) / mQuotes[mCurrentCurrencyId].second; }
 
-    int monthlyLoss() const;
+    inline int monthlyLoss() const { return float(mMonthlyLoss) / mQuotes[mCurrentCurrencyId].second; }
 
-    int yearPnL() const;
+    inline int yearPnL() const { return float(mYearPnL) / mQuotes[mCurrentCurrencyId].second; }
 
-    int yearProfit() const;
+    inline int yearProfit() const { return float(mYearProfit) / mQuotes[mCurrentCurrencyId].second; }
 
-    int yearLoss() const;
+    inline int yearLoss() const { return float(mYearLoss) / mQuotes[mCurrentCurrencyId].second; }
 
     void addNewOperation(const std::string &date, int amount, const std::string &category);
 
