@@ -44,22 +44,23 @@ DepositModelHandler::~DepositModelHandler()
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
-    mDeposits.push_back(DepositModel{name, balance, ++mVersion});
-    mDeposits.back().create();
+    mDeposits.push_back({name, balance});
+    mDeposits.back().mIsForCreate = true;
+    addNewChange(&mDeposits.back());
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
 {
-    mDeposits[depositIndex].mBalance = newBalance;
-    mDeposits[depositIndex].mVersion = ++mVersion;
-    mDeposits[depositIndex].update();
+    mDeposits.at(depositIndex).mBalance = newBalance;
+    mDeposits.at(depositIndex).mIsForUpdate = true;
+    addNewChange(&mDeposits.at(depositIndex));
 }
 
 void DepositModelHandler::deleteDeposit(int depositIndex)
 {
-    mDeposits[depositIndex].mVersion = ++mVersion;
-    mDeposits[depositIndex].mIsDeleted = true;
-    mDeposits[depositIndex].remove();
+    mDeposits.at(depositIndex).mIsDeleted = true;
+    mDeposits.at(depositIndex).mIsForDelete = true;
+    addNewChange(&mDeposits.at(depositIndex));
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -77,6 +78,14 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
         ++count;
     }
     log().push_back({"Deposits received: " + std::to_string(count)});
+}
+
+void DepositModelHandler::addNewChange(DepositModel *change)
+{
+    ++mVersion;
+    std::vector<DepositModel>::iterator curDepIt = findByName(change->name());
+    if(curDepIt != mDeposits.end())
+        mListOfChanges.push_back(change);
 }
 
 std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)

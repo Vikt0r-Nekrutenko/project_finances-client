@@ -90,6 +90,11 @@ int main(int argc, char *argv[])
     DepositModelHandler dmh;
     printDMH(dmh);
 
+    dmh.addNewDeposit("test2", 0);
+    for(auto item : dmh.listOfChanges())
+        qDebug() << item->name() << item->balance() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
+    printDMH(dmh);
+
     for(const auto &item : log())
         qDebug() << item;
     // auto t1 = std::chrono::high_resolution_clock::now();
