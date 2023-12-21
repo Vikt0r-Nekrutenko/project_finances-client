@@ -91,8 +91,15 @@ int main(int argc, char *argv[])
     printDMH(dmh);
 
     dmh.addNewDeposit("test2", 0);
+    dmh.updateBalance(0, 10);
+    dmh.addNewDeposit("test3", 1000);
+    dmh.updateBalance(0, 2000);
+    dmh.updateBalance(1, 0);
+
+    int i = 0;
     for(auto item : dmh.listOfChanges())
-        qDebug() << item->name() << item->balance() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
+        // qDebug() << i++ << item->name() << item->balance() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
+        qDebug() << i++ << item;
     printDMH(dmh);
 
     for(const auto &item : log())

@@ -35,32 +35,37 @@ DepositModelHandler::DepositModelHandler()
 
 DepositModelHandler::~DepositModelHandler()
 {
-    std::ofstream file(LocalPath + "deposits.txt");
-    for(auto &model : mDeposits) {
-        model.save(file);
-    }
-    file.close();
+    // std::ofstream file(LocalPath + "deposits.txt");
+    // for(auto &model : mDeposits) {
+    //     model.save(file);
+    // }
+    // file.close();
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
     mDeposits.push_back({name, balance});
     mDeposits.back().mIsForCreate = true;
-    addNewChange(&mDeposits.back());
+    addNewChange(mDeposits.size() - 1);
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
 {
     mDeposits.at(depositIndex).mBalance = newBalance;
     mDeposits.at(depositIndex).mIsForUpdate = true;
-    addNewChange(&mDeposits.at(depositIndex));
+    addNewChange(depositIndex);
 }
 
 void DepositModelHandler::deleteDeposit(int depositIndex)
 {
     mDeposits.at(depositIndex).mIsDeleted = true;
     mDeposits.at(depositIndex).mIsForDelete = true;
-    addNewChange(&mDeposits.at(depositIndex));
+    addNewChange(depositIndex);
+}
+
+void DepositModelHandler::applyChanges()
+{
+
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -80,12 +85,14 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     log().push_back({"Deposits received: " + std::to_string(count)});
 }
 
-void DepositModelHandler::addNewChange(DepositModel *change)
+void DepositModelHandler::addNewChange(const size_t index)
 {
     ++mVersion;
-    std::vector<DepositModel>::iterator curDepIt = findByName(change->name());
-    if(curDepIt != mDeposits.end())
-        mListOfChanges.push_back(change);
+    std::vector<size_t>::iterator curDepIt = std::find_if(mListOfChanges.begin(), mListOfChanges.end(), [&](const size_t &indx) {
+        return indx == index;
+    });
+    if(curDepIt == mListOfChanges.end())
+        mListOfChanges.push_back(index);
 }
 
 std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)

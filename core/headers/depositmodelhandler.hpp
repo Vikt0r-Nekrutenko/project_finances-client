@@ -12,10 +12,11 @@ public:
     void addNewDeposit(const std::string &name, int balance);
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
+    void applyChanges();
 
     inline const std::vector<DepositModel> &deposits() const { return mDeposits; }
     inline std::vector<DepositModel> &deposits() { return mDeposits; }
-    inline std::vector<DepositModel *> listOfChanges() { return mListOfChanges; }
+    inline std::vector<size_t> &listOfChanges() { return mListOfChanges; }
 
     std::vector<DepositModel>::iterator findByName(const std::string &name);
 
@@ -25,9 +26,9 @@ protected:
 
 private:
 
-    void addNewChange(DepositModel *change);
+    void addNewChange(const size_t index);
 
-    std::vector<DepositModel *> mListOfChanges;
+    std::vector<size_t> mListOfChanges;
     std::vector<DepositModel> mDeposits;
 };
 
