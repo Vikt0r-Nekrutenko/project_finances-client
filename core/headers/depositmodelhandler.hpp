@@ -14,7 +14,7 @@ public:
     void deleteDeposit(int depositIndex);
 
     inline const std::vector<DepositModel> &deposits() const { return mDeposits; }
-    inline std::vector<DepositModel> &deposits() { return mDeposits; }
+    // inline std::vector<DepositModel> &deposits() { return mDeposits; }
 
     std::vector<DepositModel>::iterator findByName(const std::string &name);
 

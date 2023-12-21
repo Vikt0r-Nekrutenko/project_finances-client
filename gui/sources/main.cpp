@@ -75,18 +75,29 @@ void printOMH(const OperationModelHandler &omh)
     qDebug() << "---OMH ver:" << omh.version();
 }
 
+/*
+ * TO FIX:
+ * 1) After operations get in MH in lists creates twins with different versions
+ * 2) All changes that has been sent to server has different version after one session (they must have the same version)
+ * 3) The changes must will be send after close the session(work in session only with local data)
+ * 4) All changes in MH must be doing though DMH(without native access to MH)
+*/
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    // for(const auto &item : log())
-    //     qDebug() << item;
+    DepositModelHandler dmh;
+    printDMH(dmh);
+
+    for(const auto &item : log())
+        qDebug() << item;
     // auto t1 = std::chrono::high_resolution_clock::now();
 
     // qDebug() << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - t1).count();
 
-    // QTimer::singleShot(0, &a, SLOT(quit()));
-    // return a.exec();
+    QTimer::singleShot(0, &a, SLOT(quit()));
+    return a.exec();
 
-    return App().run();//a.exec();
+    // return App().run();//a.exec();
 }
