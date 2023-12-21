@@ -95,6 +95,9 @@ int main(int argc, char *argv[])
     dmh.addNewDeposit("test3", 1000);
     dmh.updateBalance(0, 2000);
     dmh.updateBalance(1, 0);
+    dmh.deleteDeposit(0);
+    dmh.updateBalance(0, 10000);
+    dmh.applyChanges();
 
     int i = 0;
     for(auto item : dmh.listOfChanges())

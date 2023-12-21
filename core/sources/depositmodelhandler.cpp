@@ -35,11 +35,13 @@ DepositModelHandler::DepositModelHandler()
 
 DepositModelHandler::~DepositModelHandler()
 {
-    // std::ofstream file(LocalPath + "deposits.txt");
-    // for(auto &model : mDeposits) {
-    //     model.save(file);
-    // }
-    // file.close();
+    std::ofstream file(LocalPath + "deposits.txt");
+    for(auto &model : mDeposits) {
+        if(model.isForCreate() && model.isForDelete())
+            continue;
+        model.save(file);
+    }
+    file.close();
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
@@ -65,7 +67,24 @@ void DepositModelHandler::deleteDeposit(int depositIndex)
 
 void DepositModelHandler::applyChanges()
 {
+    for(auto index : mListOfChanges) {
+        DepositModel &chDep = mDeposits.at(index);
+        chDep.mVersion = mVersion;
 
+        if(chDep.isForCreate() && chDep.isForDelete())
+            return;
+
+        if(chDep.isForCreate()) {
+            chDep.create();
+            chDep.mIsForUpdate = false;
+        }
+        else if(chDep.isForDelete()) {
+            chDep.remove();
+            chDep.mIsForUpdate = false;
+        }
+        else if(chDep.isForUpdate())
+            chDep.update();
+    }
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
