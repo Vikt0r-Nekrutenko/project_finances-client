@@ -4,6 +4,7 @@
 #include <QEventLoop>
 
 #include "modelhandler.hpp"
+#include "basemodel.hpp"
 
 RemoteStatus DataModelHandler::get(const std::string &additionalPath)
 {
@@ -19,6 +20,35 @@ RemoteStatus DataModelHandler::get(const std::string &additionalPath)
     parseJsonArray(array);
 
     return RemoteStatus::Success;
+}
+
+void DataModelHandler::applyChanges(BaseModel *changeModel)
+{
+    changeModel->setVersion(mVersion);
+
+    if(changeModel->isForCreate() && changeModel->isForDelete())
+        return;
+
+    if(changeModel->isForCreate()) {
+        changeModel->create();
+        changeModel->setIsForUpdate(false);
+    }
+    else if(changeModel->isForDelete()) {
+        changeModel->remove();
+        changeModel->setIsForUpdate(false);
+    }
+    else if(changeModel->isForUpdate())
+        changeModel->update();
+}
+
+void DataModelHandler::addNewChange(const size_t index)
+{
+    ++mVersion;
+    std::vector<size_t>::iterator curDepIt = std::find_if(mListOfChanges.begin(), mListOfChanges.end(), [&](const size_t &indx) {
+        return indx == index;
+    });
+    if(curDepIt == mListOfChanges.end())
+        mListOfChanges.push_back(index);
 }
 
 MonoBankDataHandler::MonoBankDataHandler()
