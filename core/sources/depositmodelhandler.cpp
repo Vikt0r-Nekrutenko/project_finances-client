@@ -21,7 +21,7 @@ DepositModelHandler::DepositModelHandler()
         file.close();
     }
     get("deposits/");
-
+    query.select();
 }
 
 DepositModelHandler::~DepositModelHandler()
@@ -52,6 +52,7 @@ void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
     ++mVersion;
     mDeposits.push_back({name, balance});
     mDeposits.back().mIsForCreate = true;
+    query.select();
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
@@ -66,6 +67,7 @@ void DepositModelHandler::deleteDeposit(int depositIndex)
     ++mVersion;
     mDeposits.at(depositIndex).mIsDeleted = true;
     mDeposits.at(depositIndex).mIsForDelete = true;
+    query.select();
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -97,4 +99,16 @@ std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::s
     return std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
         return model.name() == name;
     });
+}
+
+DepositModelHandler::Query::Query(DepositModelHandler *handler)
+    : mHandler{handler} { }
+
+DepositModelHandler::Query &DepositModelHandler::Query::select()
+{
+    clear();
+    for(size_t i = 0; i < mHandler->mDeposits.size(); ++i)
+        if(mHandler->mDeposits.at(i).mIsDeleted == false)
+            push_back(&mHandler->mDeposits.at(i));
+    return *this;
 }

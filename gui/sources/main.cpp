@@ -90,8 +90,8 @@ int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
 
-    DepositModelHandler dmh;
-    printDMH(dmh);
+    // DepositModelHandler dmh;
+    // printDMH(dmh);
 
     // dmh.addNewDeposit("test2", 0);
     // dmh.updateBalance(7, 1000);
@@ -99,14 +99,14 @@ int main(int argc, char *argv[])
     // dmh.deleteDeposit(7);
     // dmh.updateBalance(7, 10000);
 
-    for(const auto &item : log())
-        qDebug() << item;
+    // for(const auto &item : log())
+        // qDebug() << item;
     // auto t1 = std::chrono::high_resolution_clock::now();
 
     // qDebug() << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - t1).count();
 
-    QTimer::singleShot(0, &a, SLOT(quit()));
-    return a.exec();
+    // QTimer::singleShot(0, &a, SLOT(quit()));
+    // return a.exec();
 
-    // return App().run();//a.exec();
+    return App().run();//a.exec();
 }
