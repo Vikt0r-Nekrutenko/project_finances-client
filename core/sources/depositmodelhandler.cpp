@@ -30,7 +30,10 @@ DepositModelHandler::~DepositModelHandler()
     for(auto &model : mDeposits) {
         if(model.isForCreate() && model.isForDelete())
             continue;
-        else if(model.mIsForCreate) {
+        if(model.mIsDeleted && model.mIsForDelete)
+            continue;
+
+        if(model.mIsForCreate) {
             model.mVersion = mVersion;
             model.create();
             model.mIsForUpdate = false;

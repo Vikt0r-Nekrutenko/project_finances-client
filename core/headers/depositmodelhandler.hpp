@@ -8,7 +8,7 @@ class CORE_EXPORT DepositModelHandler : public DataModelHandler
 {
 public:
 
-    class CORE_EXPORT Query : public std::list<DepositModel *>
+    class CORE_EXPORT Query : public std::vector<DepositModel *>
     {
     public:
 
