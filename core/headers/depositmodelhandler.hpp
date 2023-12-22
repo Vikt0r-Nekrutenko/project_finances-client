@@ -7,6 +7,26 @@
 class CORE_EXPORT DepositModelHandler : public DataModelHandler
 {
 public:
+
+    class CORE_EXPORT Query : public std::list<DepositModel *> {
+    public:
+
+        Query(DepositModelHandler *handler)
+            : mHandler{handler} { }
+
+        Query &select()
+        {
+            for(size_t i = 0; i < mHandler->mDeposits.size(); ++i)
+                if(mHandler->mDeposits.at(i).mIsDeleted == false)
+                    push_back(&mHandler->mDeposits.at(i));
+            return *this;
+        }
+
+    private:
+
+        DepositModelHandler *mHandler { nullptr };
+    } query {this};
+
     DepositModelHandler();
     ~DepositModelHandler() override;
     void addNewDeposit(const std::string &name, int balance);
