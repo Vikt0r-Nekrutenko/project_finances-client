@@ -68,11 +68,6 @@ void DepositModelHandler::deleteDeposit(int depositIndex)
     mDeposits.at(depositIndex).mIsForDelete = true;
 }
 
-std::vector<DepositModel *> DepositModelHandler::currentDeposits()
-{
-
-}
-
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     int count = 0;
