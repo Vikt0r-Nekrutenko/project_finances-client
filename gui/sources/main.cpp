@@ -83,6 +83,7 @@ void printOMH(const OperationModelHandler &omh)
  * 3) + The changes must will be send after close the session(work in session only with local data)
  * 4) All changes in MH must be doing though DMH(without native access to MH)
  * 5) If on d1 i have ver.11 unsync data and d2 ver.17 unsync data, then d1 will be sync, d2 never read data with ver.11
+ * (TO RESOLVE no.5 need save last sync version and send she in all get request. she change after successful sync)
 */
 
 int main(int argc, char *argv[])
@@ -93,11 +94,8 @@ int main(int argc, char *argv[])
     printDMH(dmh);
 
     // dmh.addNewDeposit("test2", 0);
-    // dmh.updateBalance(7, 10);
-    // dmh.addNewDeposit("test3", 1000);
+    // dmh.updateBalance(7, 1000);
     // dmh.updateBalance(8, 2000);
-    // dmh.updateBalance(7, 0);
-    // dmh.updateBalance(6, 0);
     // dmh.deleteDeposit(7);
     // dmh.updateBalance(7, 10000);
 
