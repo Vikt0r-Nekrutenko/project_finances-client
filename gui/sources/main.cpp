@@ -48,8 +48,9 @@ private:
 
 void printDMH(const DepositModelHandler &dmh)
 {
+    int i = 0;
     for(const auto &item : dmh.deposits())
-        qDebug() << item.name() << item.balance() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+        qDebug() << i++ << item.name() << item.balance() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
     qDebug() << "---DMH ver:" << dmh.version();
 }
 
@@ -77,10 +78,11 @@ void printOMH(const OperationModelHandler &omh)
 
 /*
  * TO FIX:
- * 1) After operations get in MH in lists creates twins with different versions
- * 2) All changes that has been sent to server has different version after one session (they must have the same version)
- * 3) The changes must will be send after close the session(work in session only with local data)
+ * 1) + After operations get in MH in lists creates twins with different versions
+ * 2) + All changes that has been sent to server has different version after one session (they must have the same version)
+ * 3) + The changes must will be send after close the session(work in session only with local data)
  * 4) All changes in MH must be doing though DMH(without native access to MH)
+ * 5) If on d1 i have ver.11 unsync data and d2 ver.17 unsync data, then d1 will be sync, d2 never read data with ver.11
 */
 
 int main(int argc, char *argv[])
@@ -90,20 +92,14 @@ int main(int argc, char *argv[])
     DepositModelHandler dmh;
     printDMH(dmh);
 
-    dmh.addNewDeposit("test2", 0);
-    dmh.updateBalance(0, 10);
-    dmh.addNewDeposit("test3", 1000);
-    dmh.updateBalance(0, 2000);
-    dmh.updateBalance(1, 0);
-    dmh.deleteDeposit(0);
-    dmh.updateBalance(0, 10000);
-    dmh.applyChanges();
-
-    int i = 0;
-    for(auto item : dmh.listOfChanges())
-        // qDebug() << i++ << item->name() << item->balance() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
-        qDebug() << i++ << item;
-    printDMH(dmh);
+    // dmh.addNewDeposit("test2", 0);
+    // dmh.updateBalance(7, 10);
+    // dmh.addNewDeposit("test3", 1000);
+    // dmh.updateBalance(8, 2000);
+    // dmh.updateBalance(7, 0);
+    // dmh.updateBalance(6, 0);
+    // dmh.deleteDeposit(7);
+    // dmh.updateBalance(7, 10000);
 
     for(const auto &item : log())
         qDebug() << item;

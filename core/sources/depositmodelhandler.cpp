@@ -17,20 +17,11 @@ DepositModelHandler::DepositModelHandler()
                 break;
 
             mDeposits.push_back(tmp);
-
-            if(tmp.mIsForCreate) {
-                mDeposits.back().create();
-            }
-            if(tmp.isForUpdate()) {
-                mDeposits.back().update();
-            }
-            if(tmp.isForDelete()) {
-                mDeposits.back().remove();
-            }
         }
         file.close();
     }
     get("deposits/");
+
 }
 
 DepositModelHandler::~DepositModelHandler()
@@ -39,6 +30,18 @@ DepositModelHandler::~DepositModelHandler()
     for(auto &model : mDeposits) {
         if(model.isForCreate() && model.isForDelete())
             continue;
+        else if(model.mIsForCreate) {
+            model.mVersion = mVersion;
+            model.create();
+            model.mIsForUpdate = false;
+        } else if (model.mIsForDelete) {
+            model.mVersion = mVersion;
+            model.remove();
+            model.mIsForUpdate = false;
+        } else if (model.mIsForUpdate) {
+            model.mVersion = mVersion;
+            model.update();
+        }
         model.save(file);
     }
     file.close();
@@ -46,72 +49,52 @@ DepositModelHandler::~DepositModelHandler()
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
+    ++mVersion;
     mDeposits.push_back({name, balance});
     mDeposits.back().mIsForCreate = true;
-    addNewChange(mDeposits.size() - 1);
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
 {
+    ++mVersion;
     mDeposits.at(depositIndex).mBalance = newBalance;
     mDeposits.at(depositIndex).mIsForUpdate = true;
-    addNewChange(depositIndex);
 }
 
 void DepositModelHandler::deleteDeposit(int depositIndex)
 {
+    ++mVersion;
     mDeposits.at(depositIndex).mIsDeleted = true;
     mDeposits.at(depositIndex).mIsForDelete = true;
-    addNewChange(depositIndex);
 }
 
-void DepositModelHandler::applyChanges()
+std::vector<DepositModel *> DepositModelHandler::currentDeposits()
 {
-    for(auto index : mListOfChanges) {
-        DepositModel &chDep = mDeposits.at(index);
-        chDep.mVersion = mVersion;
 
-        if(chDep.isForCreate() && chDep.isForDelete())
-            return;
-
-        if(chDep.isForCreate()) {
-            chDep.create();
-            chDep.mIsForUpdate = false;
-        }
-        else if(chDep.isForDelete()) {
-            chDep.remove();
-            chDep.mIsForUpdate = false;
-        }
-        else if(chDep.isForUpdate())
-            chDep.update();
-    }
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     int count = 0;
     for (const auto &var : replyJsonArray) {
-        mDeposits.push_back({
+        DepositModel remoteTmp {
             var.toObject()["name"].toString().toStdString(),
             var.toObject()["balance"].toInt(),
             var.toObject()["version"].toInt(),
             bool(var.toObject()["is_deleted"].toInt())
-        });
+        };
+
+        std::vector<DepositModel>::iterator localTmp = findByName(remoteTmp.name());
+        if(localTmp == mDeposits.end())
+            mDeposits.push_back(remoteTmp);
+        else
+            *localTmp = remoteTmp;
+
         if(mDeposits.back().version() > mVersion)
             mVersion = mDeposits.back().version();
         ++count;
     }
     log().push_back({"Deposits received: " + std::to_string(count)});
-}
-
-void DepositModelHandler::addNewChange(const size_t index)
-{
-    ++mVersion;
-    std::vector<size_t>::iterator curDepIt = std::find_if(mListOfChanges.begin(), mListOfChanges.end(), [&](const size_t &indx) {
-        return indx == index;
-    });
-    if(curDepIt == mListOfChanges.end())
-        mListOfChanges.push_back(index);
 }
 
 std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)
