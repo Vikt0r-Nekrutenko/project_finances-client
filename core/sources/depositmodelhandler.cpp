@@ -28,7 +28,7 @@ DepositModelHandler::~DepositModelHandler()
 {
     std::ofstream file(LocalPath + "deposits.txt");
     for(auto &model : mDeposits) {
-        if(model.isForCreate() && model.isForDelete())
+        if(model.mIsForCreate && model.mIsForDelete)
             continue;
         if(model.mIsDeleted && model.mIsForDelete)
             continue;
