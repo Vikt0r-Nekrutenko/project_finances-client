@@ -9,19 +9,18 @@ AppModel::AppModel()
         mQuotes[1].second = usd;
     }
     try {
-        selectFavoriteCategories(0, 1, 10);
+        // selectFavoriteCategories(0, 1, 10);
     } catch(...) { }
 }
 
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)
 {
-    Operations.addNewOperation(date, mSelectedDeposit->name(), amount, category);
+    Operations.addNewOperation(date, Deposits.selectedDeposit()->name(), amount, category);
     const std::string type = Categories.findByName(category)->type();
     if(type == "positive" || type == "earn")
-        mSelectedDeposit->increaseBalance(amount);
+        Deposits.increaseBalance(amount);
     else if(type == "negative")
-        mSelectedDeposit->decreaseBalance(amount);
-    mSelectedDeposit->update();
+        Deposits.decreaseBalance(amount);
     selectOperationsList();
 }
 
@@ -30,20 +29,16 @@ void AppModel::deleteOperation(int id)
     id = std::distance(Operations.operations().begin(), Operations.at(id));
     const std::string type = Operations.operations().at(id).rawCategory(Categories).type();
     if(type == "positive" || type == "earn")
-        mSelectedDeposit->decreaseBalance(Operations.operations().at(id).amount());
+        Deposits.decreaseBalance(Operations.operations().at(id).amount());
     else if(type == "negative")
-        mSelectedDeposit->increaseBalance(Operations.operations().at(id).amount());
-    mSelectedDeposit->update();
+        Deposits.increaseBalance(Operations.operations().at(id).amount());
     Operations.deleteOperation(id);
     selectOperationsList();
 }
 
 void AppModel::selectOperationsList()
 {
-    if(mSelectedDeposit == nullptr)
-        return;
-
-    mOperationsList.select().filterByDeposit(mSelectedDeposit->name());
+    mOperationsList.select().filterByDeposit(Deposits.selectedDeposit()->name());
     if(SelectedYear == 0 || SelectedMonth == 0) {
         mOperationsList.filterByCurrentYear().filterByCurrentMonth();
         return;
@@ -79,14 +74,13 @@ void AppModel::selectedOperationChangeAmount(int amount)
     OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
     const std::string type = selectedOperation.rawCategory(Categories).type();
     if(type == "positive" || type == "earn") {
-        mSelectedDeposit->decreaseBalance(selectedOperation.amount());
-        mSelectedDeposit->increaseBalance(amount);
+        Deposits.decreaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(amount);
     } else if(type == "negative") {
-        mSelectedDeposit->increaseBalance(selectedOperation.amount());
-        mSelectedDeposit->decreaseBalance(amount);
+        Deposits.increaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(amount);
     }
     Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), amount, selectedOperation.category());
-    mSelectedDeposit->update();
 }
 
 void AppModel::selectedOperationChangeCategory(const std::string &category)
@@ -94,25 +88,19 @@ void AppModel::selectedOperationChangeCategory(const std::string &category)
     OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
     const std::string type = selectedOperation.rawCategory(Categories).type();
     if(type == "positive" || type == "earn") {
-        mSelectedDeposit->decreaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(selectedOperation.amount());
     } else if(type == "negative") {
-        mSelectedDeposit->increaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(selectedOperation.amount());
     }
 
     Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), selectedOperation.amount(), category);
 
     const std::string newType = selectedOperation.rawCategory(Categories).type();
     if(newType == "positive" || newType == "earn") {
-        mSelectedDeposit->increaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(selectedOperation.amount());
     } else if(newType == "negative") {
-        mSelectedDeposit->decreaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(selectedOperation.amount());
     }
-    mSelectedDeposit->update();
-}
-
-void AppModel::selectDeposit(size_t id)
-{
-    mSelectedDeposit = &Deposits.deposits().at(id);
 }
 
 void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::string &lendOrRepay)
@@ -149,10 +137,7 @@ int AppModel::calcTotalEarn()
 
 int AppModel::calcTotalDeposits()
 {
-    mTotalDeposits = 0;
-    for(const auto &deposit : Deposits.deposits())
-        mTotalDeposits += deposit.balance();
-    return mTotalDeposits;
+    return mTotalDeposits = Deposits.query.sum();
 }
 
 int AppModel::calcTotalDebts()
@@ -233,11 +218,11 @@ void AppModel::calcMonthlyGroupPnL()
 
 void AppModel::updateStats()
 {
-    calcTotalEarn();
-    calcTotalDeposits();
-    calcTotalDebts();
-    calcPnLs();
-    calcMinMaxLoss();
+    // calcTotalEarn();
+    // calcTotalDeposits();
+    // calcTotalDebts();
+    // calcPnLs();
+    // calcMinMaxLoss();
 }
 
 void AppModel::switchCurrency()

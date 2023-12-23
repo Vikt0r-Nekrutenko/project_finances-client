@@ -21,6 +21,7 @@ class CORE_EXPORT DataModel
 public:
 
     inline int version() const { return mVersion; }
+    inline void setVersion(int value) { mVersion = value; }
 
 protected:
 

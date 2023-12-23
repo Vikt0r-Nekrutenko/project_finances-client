@@ -101,11 +101,6 @@ QDateTime OperationModel::rawDate() const
     return QDateTime().fromString(mDate.c_str(), "yyyy-MM-dd");
 }
 
-DepositModel &OperationModel::rawDeposit(DepositModelHandler &handler)
-{
-    return *handler.findByName(mDeposit);
-}
-
 CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler)
 {
     return *handler.findByName(mCategory);

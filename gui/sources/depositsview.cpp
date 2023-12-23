@@ -22,10 +22,10 @@ void DepositsView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     int index = 1;
-    for(const auto &deposit : mModel->Deposits.deposits()) {
+    for(const auto &deposit : mModel->Deposits.query) {
         renderer.drawLine({mMenuBar->Width +  1, 1 + index}, {renderer.Size.x - 1, 1 + index}, '.');
-        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, deposit.name().c_str());
-        renderer.draw({mMenuBar->Width + 15, 1 + index}, "%m.00 UAH", deposit.balance());
+        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, deposit->name().c_str());
+        renderer.draw({mMenuBar->Width + 15, 1 + index}, "%m.00 UAH", deposit->balance());
         ++index;
     }
 }
@@ -66,7 +66,7 @@ IView *AddNewDepositView::onEnterPressHandler()
     std::string name = mInputField.getStr();
     int balance = mInputField.getExpressionResult();
 
-    if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end()) {
+    if(mModel->Deposits.query.findByName(name) != mModel->Deposits.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
         mInputField.restoreText();
         return this;
@@ -86,7 +86,7 @@ IView *ChangeBalanceView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+    if(id < 0 || id >= int(mModel->Deposits.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
@@ -104,7 +104,7 @@ IView *DeleteDepositView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+    if(id < 0 || id >= int(mModel->Deposits.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
@@ -123,12 +123,12 @@ IView *SelectDepositView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+    if(id < 0 || id >= int(mModel->Deposits.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
 
-    mModel->selectDeposit(id);
+    mModel->Deposits.selectDeposit(id);
     return new OperationsView(mModel, mParent);
 }

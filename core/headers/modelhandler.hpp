@@ -3,6 +3,8 @@
 
 #include "datamodel.hpp"
 
+class BaseModel;
+
 class DataModelHandler : public DataModel
 {
 public:

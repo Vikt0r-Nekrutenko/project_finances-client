@@ -23,9 +23,6 @@ public:
     inline const std::string &name() const { return mName; }
     inline int balance() const { return mBalance; }
 
-    void increaseBalance(int amount);
-    void decreaseBalance(int amount);
-
 private:
 
     void parseJsonObject(const QJsonObject &object) override;
