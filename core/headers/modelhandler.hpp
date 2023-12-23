@@ -35,6 +35,7 @@ protected:
         }
         get(collectionName + "/");
     }
+
     template<class ModelT, class CollectionIteratorT> void merge(const ModelT &remoteTmp, std::vector<ModelT> &collection, const std::function<bool(const ModelT &)> &comp)
     {
         CollectionIteratorT localTmp = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model) {
@@ -49,6 +50,7 @@ protected:
         if(remoteTmp.version() > mVersion)
             mVersion = remoteTmp.version();
     }
+
     RemoteStatus get(const std::string &additionalPath);
 
     virtual void parseJsonArray(const QJsonArray &array) = 0;

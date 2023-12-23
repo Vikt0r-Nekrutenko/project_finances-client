@@ -81,17 +81,6 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
             bool(var.toObject()["is_deleted"].toInt())
         };
 
-        // std::vector<DepositModel>::iterator localTmp = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
-        //     return model.name() == remoteTmp.name();
-        // });
-
-        // if(localTmp == mDeposits.end())
-        //     mDeposits.push_back(remoteTmp);
-        // else
-        //     *localTmp = remoteTmp;
-
-        // if(mDeposits.back().version() > mVersion)
-        //     mVersion = mDeposits.back().version();
         merge<DepositModel, std::vector<DepositModel>::iterator>(remoteTmp, mDeposits, [&](const DepositModel &model){
             return remoteTmp.name() == model.name();
         });
