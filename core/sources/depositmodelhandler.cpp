@@ -10,28 +10,32 @@ DepositModelHandler::DepositModelHandler()
 
 DepositModelHandler::~DepositModelHandler()
 {
-    // std::ofstream file(LocalPath + "deposits.txt");
-    // for(auto &model : mDeposits) {
-    //     model.syncAndSave(file, mVersion);
-    // }
-    // file.close();
     syncAndSave("deposits.txt", mDeposits);
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
-    ++mVersion;
-    std::vector<DepositModel>::iterator searchedDeposit = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
-        return model.name() == name;
-    });
-    if(searchedDeposit == mDeposits.end()) {
-        mDeposits.push_back({name, balance});
-        mDeposits.back().mIsForCreate = true;
-    } else {
-        searchedDeposit->mBalance = balance;
-        searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = false;
-        searchedDeposit->mIsForUpdate = true;
-    }
+    // ++mVersion;
+    // std::vector<DepositModel>::iterator searchedDeposit = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
+    //     return model.name() == name;
+    // });
+    // if(searchedDeposit == mDeposits.end()) {
+    //     mDeposits.push_back({name, balance});
+    //     mDeposits.back().mIsForCreate = true;
+    // } else {
+    //     searchedDeposit->mBalance = balance;
+    //     searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = false;
+    //     searchedDeposit->mIsForUpdate = true;
+    // }
+    addNewItem<std::vector<DepositModel>::iterator>(
+        {name, balance},
+        mDeposits,
+        [&](const DepositModel &model) {
+            return model.mName == name;
+        },
+        [&](DepositModel &model) {
+            model.mBalance = balance;
+        });
     query.select();
 }
 

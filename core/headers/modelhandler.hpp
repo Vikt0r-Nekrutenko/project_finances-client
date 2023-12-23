@@ -72,6 +72,21 @@ protected:
         }
         file.close();
     }
+    template<class IteratorT> void addNewItem(const ModelT &item, std::vector<ModelT> &collection, const std::function<bool(const ModelT &model)> &compf, const std::function<void(ModelT &model)> &updf)
+    {
+        ++mVersion;
+        IteratorT searchedDeposit = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model){
+            return compf(model);
+        });
+        if(searchedDeposit == collection.end()) {
+            collection.push_back(item);
+            collection.back().mIsForCreate = true;
+        } else {
+            updf(*searchedDeposit);
+            searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = false;
+            searchedDeposit->mIsForUpdate = true;
+        }
+    }
 };
 
 class CORE_EXPORT MonoBankDataHandler
