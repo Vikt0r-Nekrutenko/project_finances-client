@@ -54,21 +54,7 @@ protected:
         file.close();
     }
 
-    RemoteStatus get(const std::string &collectionName);
-
-    virtual void parseJsonArray(const QJsonArray &array) = 0;
-};
-
-template <class ModelT>
-class CORE_EXPORT BaseModelHandler : private DataModelHandler
-{
-protected:
-    using DataModelHandler::mVersion;
-    using DataModelHandler::syncAndLoad;
-
-
-
-    template<class IteratorT> void addNewItem(const ModelT &item, std::vector<ModelT> &collection, const std::function<bool(const ModelT &model)> &compf, const std::function<void(ModelT &model)> &updf)
+    template<class ModelT, class IteratorT> void addNewItem(const ModelT &item, std::vector<ModelT> &collection, const std::function<bool(const ModelT &model)> &compf, const std::function<void(ModelT &model)> &updf)
     {
         ++mVersion;
         IteratorT searchedDeposit = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model){
@@ -83,6 +69,22 @@ protected:
             searchedDeposit->mIsForUpdate = true;
         }
     }
+
+    RemoteStatus get(const std::string &collectionName);
+
+    virtual void parseJsonArray(const QJsonArray &array) = 0;
+};
+
+template <class ModelT>
+class CORE_EXPORT BaseModelHandler : private DataModelHandler
+{
+protected:
+    using DataModelHandler::mVersion;
+    using DataModelHandler::syncAndLoad;
+
+
+
+
     ///
     /// \brief Thist function parse json array that was received in request reply. If item in array exist in item collections
     /// item will be update else item will be add to collection
