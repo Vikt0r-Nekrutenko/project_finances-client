@@ -41,9 +41,6 @@ void DepositModelHandler::updateBalance(int index, int newBalance)
 
 void DepositModelHandler::deleteDeposit(int index)
 {
-    // ++mVersion;
-    // query.at(index)->mIsDeleted = true;
-    // query.at(index)->mIsForDelete = true;
     deleteItem(query.at(index));
     query.select();
 }
@@ -64,21 +61,21 @@ void DepositModelHandler::decreaseBalance(int amount)
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    int count = 0;
-    for (const auto &var : replyJsonArray) {
-        DepositModel remoteTmp {
-            var.toObject()["name"].toString().toStdString(),
-            var.toObject()["balance"].toInt(),
-            var.toObject()["version"].toInt(),
-            bool(var.toObject()["is_deleted"].toInt())
-        };
-
-        merge<DepositModel, std::vector<DepositModel>::iterator>("deposits", remoteTmp, mDeposits, [&](const DepositModel &model){
-            return remoteTmp.name() == model.name();
+    loadAndMerge<std::vector<DepositModel>::iterator>(
+        "deposits",
+        replyJsonArray,
+        mDeposits,
+        [&](const DepositModel &remoteModel, const DepositModel &localModel) {
+            return remoteModel.mName == localModel.mName;
+        },
+        [&](QJsonValueConstRef var) {
+            return DepositModel {
+                var.toObject()["name"].toString().toStdString(),
+                var.toObject()["balance"].toInt(),
+                var.toObject()["version"].toInt(),
+                bool(var.toObject()["is_deleted"].toInt())
+            };
         });
-        ++count;
-    }
-    log().push_back({"Deposits received: " + std::to_string(count)});
 }
 
 std::vector<DepositModel *>::const_iterator DepositModelHandler::Query::findByName(const std::string &name) const

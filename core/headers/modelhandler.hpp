@@ -4,6 +4,7 @@
 #include "datamodel.hpp"
 #include "localmodel.hpp"
 #include <QJsonObject>
+#include <QJsonArray>
 
 class BaseModel;
 
@@ -92,6 +93,33 @@ protected:
         ++mVersion;
         model->mIsDeleted = true;
         model->mIsForDelete = true;
+    }
+    ///
+    /// \brief Thist function parse json array that was received in request reply. If item in array exist in item collections
+    /// item will be update else item will be add to collection
+    /// \param collectionName - name of items collection
+    /// \param replyJsonArray - array
+    /// \param collection - collection
+    /// \param compf - compare function for comparing received item with local item
+    /// \param buildf - return the new ModelT object from QJsonObject
+    ///
+    template<class IteratorT> void loadAndMerge(
+        const std::string &collectionName,
+        const QJsonArray &replyJsonArray,
+        std::vector<ModelT> &collection,
+        const std::function<bool(const ModelT &, const ModelT &)> &compf,
+        std::function<ModelT(QJsonValueConstRef)> buildf)
+    {
+        int count = 0;
+        for (const auto &var : replyJsonArray) {
+            ModelT remoteTmp = buildf(var);
+
+            merge<ModelT, IteratorT>(collectionName, remoteTmp, collection, [&](const ModelT &model){
+                return compf(remoteTmp, model);
+            });
+            ++count;
+        }
+        log().push_back({collectionName + " received: " + std::to_string(count)});
     }
 };
 
