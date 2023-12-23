@@ -4,7 +4,7 @@
 #include "depositmodel.hpp"
 #include "modelhandler.hpp"
 
-class CORE_EXPORT DepositModelHandler : public BaseModelHandler<DepositModel>
+class CORE_EXPORT DepositModelHandler : public DataModelHandler
 {
 public:
 

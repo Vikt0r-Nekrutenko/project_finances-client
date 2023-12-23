@@ -105,19 +105,6 @@ protected:
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };
 
-template <class ModelT>
-class CORE_EXPORT BaseModelHandler : private DataModelHandler
-{
-protected:
-    using DataModelHandler::mVersion;
-    using DataModelHandler::syncAndLoad;
-
-
-
-
-
-};
-
 class CORE_EXPORT MonoBankDataHandler
 {
 public:

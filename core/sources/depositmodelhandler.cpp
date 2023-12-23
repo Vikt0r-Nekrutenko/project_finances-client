@@ -15,7 +15,7 @@ DepositModelHandler::~DepositModelHandler()
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
-    addNewItem<std::vector<DepositModel>::iterator>(
+    addNewItem<DepositModel, std::vector<DepositModel>::iterator>(
         {name, balance},
         mDeposits,
         [&](const DepositModel &model) {
@@ -61,7 +61,7 @@ void DepositModelHandler::decreaseBalance(int amount)
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    parseAndMerge<std::vector<DepositModel>::iterator>(
+    parseAndMerge<DepositModel, std::vector<DepositModel>::iterator>(
         "deposits",
         replyJsonArray,
         mDeposits,
