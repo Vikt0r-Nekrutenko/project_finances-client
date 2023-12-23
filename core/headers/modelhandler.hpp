@@ -3,6 +3,7 @@
 
 #include "datamodel.hpp"
 #include "localmodel.hpp"
+#include <QJsonObject>
 
 class BaseModel;
 
@@ -33,10 +34,10 @@ protected:
             }
             file.close();
         }
-        get(collectionName + "/");
+        get(collectionName);
     }
 
-    template<class ModelT, class CollectionIteratorT> void merge(const ModelT &remoteTmp, std::vector<ModelT> &collection, const std::function<bool(const ModelT &)> &comp)
+    template<class ModelT, class CollectionIteratorT> void merge(const std::string &collectionName, const ModelT &remoteTmp, std::vector<ModelT> &collection, const std::function<bool(const ModelT &)> &comp)
     {
         CollectionIteratorT localTmp = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model) {
             return comp(model);
@@ -49,9 +50,11 @@ protected:
 
         if(remoteTmp.version() > mVersion)
             mVersion = remoteTmp.version();
+        if(remoteTmp.version() > settings()[(collectionName + "_last_synced_version").c_str()].toInt())
+            settings()[(collectionName + "_last_synced_version").c_str()] = remoteTmp.version();
     }
 
-    RemoteStatus get(const std::string &additionalPath);
+    RemoteStatus get(const std::string &collectionName);
 
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };

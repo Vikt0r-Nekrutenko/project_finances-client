@@ -31,7 +31,7 @@ DebtModelHandler::DebtModelHandler()
         }
         file.close();
     }
-    get("debts/");
+    // get("debts/");
 }
 
 DebtModelHandler::~DebtModelHandler()
