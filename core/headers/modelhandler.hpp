@@ -59,6 +59,17 @@ protected:
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };
 
+class BaseModelHandler : public DataModelHandler
+{
+public:
+
+    BaseModelHandler() = default;
+    BaseModelHandler(const std::string &collectionName)
+    {
+
+    }
+};
+
 class CORE_EXPORT MonoBankDataHandler
 {
 public:
