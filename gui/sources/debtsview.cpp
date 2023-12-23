@@ -65,7 +65,7 @@ IView *AddNewDebtView::onEnterPressHandler()
     std::string name = mInputField.getStr();
     int amount = mInputField.getExpressionResult();
 
-    if(mModel->Debts.findByName(name) != mModel->Debts.debts().end()) {
+    if(mModel->Debts.query.findByName(name) != mModel->Debts.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
         mInputField.restoreText();
         return this;
