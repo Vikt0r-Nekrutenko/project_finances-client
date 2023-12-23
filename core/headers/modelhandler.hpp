@@ -103,7 +103,7 @@ protected:
     /// \param compf - compare function for comparing received item with local item
     /// \param buildf - return the new ModelT object from QJsonObject
     ///
-    template<class IteratorT> void loadAndMerge(
+    template<class IteratorT> void parseAndMerge(
         const std::string &collectionName,
         const QJsonArray &replyJsonArray,
         std::vector<ModelT> &collection,

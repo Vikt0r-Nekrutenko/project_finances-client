@@ -61,7 +61,7 @@ void DepositModelHandler::decreaseBalance(int amount)
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    loadAndMerge<std::vector<DepositModel>::iterator>(
+    parseAndMerge<std::vector<DepositModel>::iterator>(
         "deposits",
         replyJsonArray,
         mDeposits,
