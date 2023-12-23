@@ -45,8 +45,19 @@ DebtModelHandler::~DebtModelHandler()
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 {
-    mDebts.push_back(DebtModel{0, name, amount, ++mVersion});
-    mDebts.back().create();
+    ++mVersion;
+    std::vector<DebtModel>::iterator searchedDebt = std::find_if(mDebts.begin(), mDebts.end(), [&](const DebtModel &model){
+        return model.name() == name;
+    });
+    if(searchedDebt == mDebts.end()) {
+        mDebts.push_back({0, name, amount});
+        mDebts.back().mIsForCreate = true;
+    } else {
+        searchedDebt->mAmount = amount;
+        searchedDebt->mIsDeleted = searchedDebt->mIsForDelete = searchedDebt->mIsForCreate = false;
+        searchedDebt->mIsForUpdate = true;
+    }
+    query.select();
 }
 
 void DebtModelHandler::updateDebt(int index, const std::string &name, int amount)
