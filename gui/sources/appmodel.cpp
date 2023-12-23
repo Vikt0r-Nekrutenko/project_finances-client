@@ -105,13 +105,15 @@ void AppModel::selectedOperationChangeCategory(const std::string &category)
 
 void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::string &lendOrRepay)
 {
-    std::vector<DebtModel>::const_iterator debt = Debts.findByName(name);
-    if(debt == Debts.debts().end()) {
+    std::vector<DebtModel *>::const_iterator debt = Debts.query.findByName(name);
+    std::vector<DebtModel *>::const_iterator constBegin = Debts.query.begin();
+
+    if(debt == Debts.query.end()) {
         Debts.addNewDebt(name, amount);
     } else if(lendOrRepay == "Lend") {
-        Debts.updateDebt(int(std::distance(Debts.debts().begin(), debt)), debt->name(), debt->amount() + amount);
+        Debts.increaseAmount(int(std::distance(constBegin, debt)), amount);
     } else if(lendOrRepay == "Repay") {
-        Debts.updateDebt(int(std::distance(Debts.debts().begin(), debt)), debt->name(), debt->amount() - amount);
+        Debts.decreaseAmount(int(std::distance(constBegin, debt)), amount);
     }
 }
 
