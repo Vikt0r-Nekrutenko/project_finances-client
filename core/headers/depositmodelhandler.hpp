@@ -26,6 +26,7 @@ public:
     DepositModelHandler();
     ~DepositModelHandler() override;
     void addNewDeposit(const std::string &name, int balance);
+    void selectDeposit(int index);
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
 
@@ -36,6 +37,7 @@ protected:
 private:
 
     std::vector<DepositModel> mDeposits;
+    DepositModel *mSelectedDeposit { nullptr };
 };
 
 #endif // DEPOSITMODELHANDLER_HPP

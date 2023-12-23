@@ -53,20 +53,30 @@ DepositModelHandler::~DepositModelHandler()
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
     ++mVersion;
-    std::vector<DepositModel>::iterator localTmp = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
+    std::vector<DepositModel>::iterator searchedDeposit = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
         return model.name() == name;
     });
-    if(localTmp == mDeposits.end()) {
+    if(searchedDeposit == mDeposits.end()) {
         mDeposits.push_back({name, balance});
         mDeposits.back().mIsForCreate = true;
     } else {
-        localTmp->mBalance = balance;
-        localTmp->mIsDeleted = false;
-        localTmp->mIsForDelete = false;
-        localTmp->mIsForCreate = false;
-        localTmp->mIsForUpdate = true;
+        searchedDeposit->mBalance = balance;
+        searchedDeposit->mIsDeleted = false;
+        searchedDeposit->mIsForDelete = false;
+        searchedDeposit->mIsForCreate = false;
+        searchedDeposit->mIsForUpdate = true;
     }
     query.select();
+}
+
+void DepositModelHandler::selectDeposit(int index)
+{
+    std::vector<DepositModel>::iterator searchedDeposit = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
+        return model.name() == query.at(index)->name();
+    });
+
+    if(searchedDeposit != mDeposits.end())
+        mSelectedDeposit = &*searchedDeposit;
 }
 
 void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
