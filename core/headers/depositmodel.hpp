@@ -9,6 +9,7 @@ class CORE_EXPORT DepositModel : public BaseModel
 
 public:
 
+    DepositModel() = default;
     DepositModel(const std::string &name, int balance);
     DepositModel(const std::string &name, int balance, int version, bool isDeleted = 0);
 
