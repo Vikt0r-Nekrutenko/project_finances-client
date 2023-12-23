@@ -19,8 +19,8 @@ protected:
     template<class ModelT> void deleteItem(ModelT *model)
     {
         ++mVersion;
-        model->mIsDeleted = true;
-        model->mIsForDelete = true;
+        model->setIsDeleted(true);
+        model->setIsForDelete(true);
     }
 
     template<class ModelT> void syncAndLoad(const std::string &collectionName, std::vector<ModelT> &collection)
