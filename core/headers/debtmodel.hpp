@@ -9,6 +9,7 @@ class CORE_EXPORT DebtModel : public BaseModel
 
 public:
 
+    DebtModel() = default;
     DebtModel(int id, const std::string &name, int amount);
     DebtModel(int id, const std::string &name, int amount, int version, bool isDeleted = false);
 
@@ -23,9 +24,6 @@ public:
     inline const std::string &name() const { return mName; }
     inline int amount() const { return mAmount; }
     inline int id() const { return mId; }
-
-    void increase(int amount);
-    void decrease(int amount);
 
 private:
 
