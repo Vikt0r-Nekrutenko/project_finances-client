@@ -85,13 +85,3 @@ void DebtModel::save(std::ofstream &file)
     file << mId << " " << mName << " " << mAmount;
     BaseModel::save(file);
 }
-
-void DebtModel::increase(int amount)
-{
-    mAmount += amount;
-}
-
-void DebtModel::decrease(int amount)
-{
-    mAmount -= amount;
-}

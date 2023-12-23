@@ -25,9 +25,6 @@ public:
     inline int amount() const { return mAmount; }
     inline int id() const { return mId; }
 
-    void increase(int amount);
-    void decrease(int amount);
-
 private:
 
     void parseJsonObject(const QJsonObject &) override;
