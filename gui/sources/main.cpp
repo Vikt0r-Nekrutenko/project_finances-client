@@ -64,8 +64,8 @@ void printCMH(const CategoryModelHandler &cmh)
 
 void printBMH(const DebtModelHandler &cmh)
 {
-    for(const auto &item : cmh.debts())
-        qDebug() << item.id() << item.name() << item.amount() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    for(const auto &item : cmh.query)
+        qDebug() << item->id() << item->name() << item->amount() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
     qDebug() << "---BMH ver:" << cmh.version();
 }
 
