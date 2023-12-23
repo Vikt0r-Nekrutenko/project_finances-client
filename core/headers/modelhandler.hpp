@@ -16,6 +16,13 @@ public:
 
 protected:
 
+    template<class ModelT> void deleteItem(ModelT *model)
+    {
+        ++mVersion;
+        model->mIsDeleted = true;
+        model->mIsForDelete = true;
+    }
+
     template<class ModelT> void syncAndLoad(const std::string &collectionName, std::vector<ModelT> &collection)
     {
         std::ifstream file(LocalPath + collectionName + ".txt");
@@ -50,12 +57,7 @@ protected:
     using DataModelHandler::mVersion;
     using DataModelHandler::syncAndLoad;
 
-    void deleteItem(ModelT *model)
-    {
-        ++mVersion;
-        model->mIsDeleted = true;
-        model->mIsForDelete = true;
-    }
+
     void syncAndSave(const std::string &fileName, std::vector<ModelT> &collection)
     {
         std::ofstream file(LocalPath + fileName);
