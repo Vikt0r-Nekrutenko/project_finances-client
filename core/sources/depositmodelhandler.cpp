@@ -94,6 +94,20 @@ void DepositModelHandler::deleteDeposit(int depositIndex)
     query.select();
 }
 
+void DepositModelHandler::increaseBalance(int amount)
+{
+    ++mVersion;
+    mSelectedDeposit->mBalance += amount;
+    mSelectedDeposit->mIsForUpdate = true;
+}
+
+void DepositModelHandler::decreaseBalance(int amount)
+{
+    ++mVersion;
+    mSelectedDeposit->mBalance -= amount;
+    mSelectedDeposit->mIsForUpdate = true;
+}
+
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     int count = 0;

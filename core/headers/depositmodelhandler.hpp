@@ -29,6 +29,10 @@ public:
     void selectDeposit(int index);
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
+    void increaseBalance(int amount);
+    void decreaseBalance(int amount);
+
+    inline const DepositModel *selectedDeposit() const { return mSelectedDeposit; }
 
 protected:
 
