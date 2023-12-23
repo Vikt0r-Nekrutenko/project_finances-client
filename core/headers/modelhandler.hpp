@@ -59,14 +59,15 @@ protected:
     virtual void parseJsonArray(const QJsonArray &array) = 0;
 };
 
+template <class ModelT>
 class BaseModelHandler : public DataModelHandler
 {
 public:
 
     BaseModelHandler() = default;
-    BaseModelHandler(const std::string &collectionName)
+    BaseModelHandler(const std::string &collectionName, std::vector<ModelT> &collection)
     {
-
+        syncAndLoad<ModelT>(collectionName, collection);
     }
 };
 
