@@ -4,8 +4,12 @@
 #include "crudmodel.hpp"
 #include "localmodel.hpp"
 
+template<class ModelT> class BaseModelHandler;
+
 class CORE_EXPORT BaseModel : public CRUDModel, public LocalModel
 {
+    template<class ModelT> friend class BaseModelHandler;
+
 public:
 
     BaseModel(int version = 0, bool isDeleted = false);
