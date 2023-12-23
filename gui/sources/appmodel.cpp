@@ -150,10 +150,7 @@ int AppModel::calcTotalEarn()
 
 int AppModel::calcTotalDeposits()
 {
-    mTotalDeposits = 0;
-    for(const auto &deposit : Deposits.deposits())
-        mTotalDeposits += deposit.balance();
-    return mTotalDeposits;
+    return mTotalDeposits = Deposits.query.sum();
 }
 
 int AppModel::calcTotalDebts()
