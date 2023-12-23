@@ -67,7 +67,9 @@ void DebtModelHandler::deleteDebt(int index)
 
 void DebtModelHandler::increaseAmount(int index, int amount)
 {
-
+    ++mVersion;
+    query.at(index)->mAmount += amount;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void DebtModelHandler::decreaseAmount(int index, int amount)
