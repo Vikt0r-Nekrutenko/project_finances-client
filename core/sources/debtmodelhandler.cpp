@@ -27,9 +27,9 @@ void DebtModelHandler::addNewDebt(const std::string &name, int amount)
     if(searchedDebt == mDebts.end()) {
         mDebts.push_back({0, name, amount});
         mDebts.back().mIsForCreate = true;
-    } else {
+    } else if(searchedDebt->mIsDeleted) {
         searchedDebt->mAmount = amount;
-        searchedDebt->mIsDeleted = searchedDebt->mIsForDelete = searchedDebt->mIsForCreate = false;
+        searchedDebt->mIsDeleted = searchedDebt->mIsForDelete = false;
         searchedDebt->mIsForUpdate = true;
     }
     query.select();
