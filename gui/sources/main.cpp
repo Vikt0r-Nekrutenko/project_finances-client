@@ -76,17 +76,6 @@ void printOMH(const OperationModelHandler &omh)
     qDebug() << "---OMH ver:" << omh.version();
 }
 
-/*
- * TO FIX:
- * 1) + After operations get in MH in lists creates twins with different versions
- * 2) + All changes that has been sent to server has different version after one session (they must have the same version)
- * 3) + The changes must will be send after close the session(work in session only with local data)
- * 4) All changes in MH must be doing though DMH(without native access to MH)
- * 5) If on d1 i have ver.11 unsync data and d2 ver.17 unsync data, then d1 will be sync, d2 never read data with ver.11
- * (TO RESOLVE no.5 need save last sync version and send she in all get request. she change after successful sync)
- * 6) If new deposit name has same name as deposit marked is_deleted, need to change exist deposit instead add new
-*/
-
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);

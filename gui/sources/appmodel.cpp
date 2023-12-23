@@ -9,7 +9,7 @@ AppModel::AppModel()
         mQuotes[1].second = usd;
     }
     try {
-        selectFavoriteCategories(0, 1, 10);
+        // selectFavoriteCategories(0, 1, 10);
     } catch(...) { }
 }
 
@@ -112,7 +112,8 @@ void AppModel::selectedOperationChangeCategory(const std::string &category)
 
 void AppModel::selectDeposit(size_t id)
 {
-    mSelectedDeposit = &Deposits.deposits().at(id);
+    // mSelectedDeposit = &Deposits.deposits().at(id);
+    mSelectedDeposit = Deposits.query.at(id);
 }
 
 void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::string &lendOrRepay)
@@ -233,11 +234,11 @@ void AppModel::calcMonthlyGroupPnL()
 
 void AppModel::updateStats()
 {
-    calcTotalEarn();
-    calcTotalDeposits();
-    calcTotalDebts();
-    calcPnLs();
-    calcMinMaxLoss();
+    // calcTotalEarn();
+    // calcTotalDeposits();
+    // calcTotalDebts();
+    // calcPnLs();
+    // calcMinMaxLoss();
 }
 
 void AppModel::switchCurrency()

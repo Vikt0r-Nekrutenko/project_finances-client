@@ -102,8 +102,8 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 
 std::vector<DepositModel *>::const_iterator DepositModelHandler::Query::findByName(const std::string &name) const
 {
-    return std::find_if(begin(), end(), [&](const DepositModel &model){
-        return model.name() == name;
+    return std::find_if(begin(), end(), [&](const DepositModel *model) {
+        return model->name() == name;
     });
 }
 
