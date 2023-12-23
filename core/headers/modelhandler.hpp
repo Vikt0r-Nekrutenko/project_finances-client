@@ -19,15 +19,35 @@ protected:
         std::ifstream file(LocalPath + collectionName + ".txt");
 
         if(file.is_open()) {
-            while(file.eof() == false) {
-                collection.push_back({});
-                collection.back().load(file);
+            while(true) {
+                T model;
+                model.load(file);
+
+                if(file.eof())
+                    break;
+
+                collection.push_back(model);
+
                 if(collection.back().version() > mVersion)
                     mVersion = collection.back().version();
             }
             file.close();
         }
         get(collectionName + "/");
+    }
+    template<class ModelT, class CollectionIteratorT> void merge(const ModelT &remoteTmp, std::vector<ModelT> &collection, const std::function<bool(const ModelT &)> &comp)
+    {
+        CollectionIteratorT localTmp = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model) {
+            return comp(model);
+        });
+
+        if(localTmp == collection.end())
+            collection.push_back(remoteTmp);
+        else
+            *localTmp = remoteTmp;
+
+        if(remoteTmp.version() > mVersion)
+            mVersion = remoteTmp.version();
     }
     RemoteStatus get(const std::string &additionalPath);
 
