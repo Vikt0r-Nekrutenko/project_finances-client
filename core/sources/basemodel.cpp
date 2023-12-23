@@ -14,6 +14,12 @@ QJsonObject &BaseModel::completeJsonObject(QJsonObject &object)
     return object;
 }
 
+void BaseModel::parseJsonObject(const QJsonObject &object)
+{
+    mVersion = object["balance"].toInt();
+    mIsDeleted = object["is_deleted"].toInt();
+}
+
 void BaseModel::load(std::ifstream &file)
 {
     file >> mVersion >> mIsDeleted;

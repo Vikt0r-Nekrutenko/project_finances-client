@@ -63,6 +63,7 @@ void DepositModel::parseJsonObject(const QJsonObject &object)
 {
     mName = object["name"].toString().toStdString();
     mBalance = object["balance"].toInt();
+    BaseModel::parseJsonObject(object);
 }
 
 void DepositModel::load(std::ifstream &file)
