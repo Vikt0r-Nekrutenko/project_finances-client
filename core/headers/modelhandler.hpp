@@ -60,14 +60,17 @@ protected:
 };
 
 template <class ModelT>
-class BaseModelHandler : public DataModelHandler
+class CORE_EXPORT BaseModelHandler : public DataModelHandler
 {
-public:
+protected:
 
-    BaseModelHandler() = default;
-    BaseModelHandler(const std::string &collectionName, std::vector<ModelT> &collection)
+    void syncAndSave(const std::string &fileName, std::vector<ModelT> &collection)
     {
-        syncAndLoad<ModelT>(collectionName, collection);
+        std::ofstream file(LocalPath + fileName);
+        for(ModelT &model : collection) {
+            model.syncAndSave(file, mVersion);
+        }
+        file.close();
     }
 };
 

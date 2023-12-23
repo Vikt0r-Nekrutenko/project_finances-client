@@ -10,11 +10,12 @@ DepositModelHandler::DepositModelHandler()
 
 DepositModelHandler::~DepositModelHandler()
 {
-    std::ofstream file(LocalPath + "deposits.txt");
-    for(auto &model : mDeposits) {
-        model.syncAndSave(file, mVersion);
-    }
-    file.close();
+    // std::ofstream file(LocalPath + "deposits.txt");
+    // for(auto &model : mDeposits) {
+    //     model.syncAndSave(file, mVersion);
+    // }
+    // file.close();
+    syncAndSave("deposits.txt", mDeposits);
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
