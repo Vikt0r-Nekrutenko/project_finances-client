@@ -11,6 +11,7 @@ class DataModelHandler : public DataModel
 public:
 
     virtual ~DataModelHandler() = default;
+    inline int lastSyncedVersion() const { return mLastSyncedVersion; }
 
 protected:
 
@@ -48,7 +49,7 @@ protected:
             *localTmp = remoteTmp;
 
         if(remoteTmp.version() > mVersion)
-            mVersion = remoteTmp.version();
+            mLastSyncedVersion = mVersion = remoteTmp.version();
     }
 
     RemoteStatus get(const std::string &collectionName);
