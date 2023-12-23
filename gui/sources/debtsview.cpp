@@ -21,10 +21,10 @@ void DebtsView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     int index = 1;
-    for(const auto &debt : mModel->Debts.debts()) {
+    for(const auto &debt : mModel->Debts.query) {
         renderer.drawLine({mMenuBar->Width +  1, 1 + index}, {renderer.Size.x - 1, 1 + index}, '.');
-        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, debt.name().c_str());
-        renderer.draw({mMenuBar->Width + 15, 1 + index}, "%m.00 UAH", debt.amount());
+        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, debt->name().c_str());
+        renderer.draw({mMenuBar->Width + 15, 1 + index}, "%m.00 UAH", debt->amount());
         ++index;
     }
 }
