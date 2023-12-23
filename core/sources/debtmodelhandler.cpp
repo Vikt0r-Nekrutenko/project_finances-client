@@ -74,7 +74,9 @@ void DebtModelHandler::increaseAmount(int index, int amount)
 
 void DebtModelHandler::decreaseAmount(int index, int amount)
 {
-
+    ++mVersion;
+    query.at(index)->mAmount -= amount;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
