@@ -1,6 +1,7 @@
 #ifndef DATAMODEL_HPP
 #define DATAMODEL_HPP
 
+#include <QJsonObject>
 #include <QNetworkReply>
 #include <QUrlQuery>
 #include <vector>
@@ -8,8 +9,13 @@
 #include "core_global.h"
 
 static std::vector<std::string> CoreLog;
+static QJsonObject Settings;
+
+void CORE_EXPORT loadSettings();
+void CORE_EXPORT saveSettings();
 
 std::vector<std::string> CORE_EXPORT &log();
+QJsonObject CORE_EXPORT &settings();
 
 enum class RemoteStatus
 {
