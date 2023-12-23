@@ -110,7 +110,11 @@ const DebtModelHandler::Query &DebtModelHandler::Query::select()
 
 int DebtModelHandler::Query::sum() const
 {
-
+    int result = 0;
+    for(auto item : *this) {
+        result += item->mAmount;
+    }
+    return result;
 }
 
 std::vector<DebtModel *>::const_iterator DebtModelHandler::Query::findByName(const std::string &name) const
