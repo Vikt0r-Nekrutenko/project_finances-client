@@ -10,6 +10,7 @@ public:
 
     BaseModel(int version = 0, bool isDeleted = false);
     inline bool isDeleted() const { return mIsDeleted; }
+    void setIsDeleted(bool value) { mIsDeleted = value; }
 
 protected:
 
