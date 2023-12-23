@@ -83,15 +83,16 @@ void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     int count = 0;
     for(const auto &var : replyJsonArray) {
-        mDebts.push_back(DebtModel{
+        DebtModel remoteTmp{
             var.toObject()["id"].toInt(),
             var.toObject()["name"].toString().toStdString(),
             var.toObject()["amount"].toInt(),
             var.toObject()["version"].toInt(),
             bool(var.toObject()["is_deleted"].toInt())
+        };
+        merge<DebtModel, std::vector<DebtModel>::iterator>("debts", remoteTmp, mDebts, [&](const DebtModel &model){
+            return remoteTmp.id() == model.id();
         });
-        if(mDebts.back().version() > mVersion)
-            mVersion = mDebts.back().version();
         ++count;
     }
     log().push_back({"Debts received: " + std::to_string(count)});
