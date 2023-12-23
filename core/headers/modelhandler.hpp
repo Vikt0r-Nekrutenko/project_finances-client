@@ -65,6 +65,12 @@ class CORE_EXPORT BaseModelHandler : public DataModelHandler
 {
 protected:
 
+    void deleteItem(ModelT *model)
+    {
+        ++mVersion;
+        model->mIsDeleted = true;
+        model->mIsForDelete = true;
+    }
     void syncAndSave(const std::string &fileName, std::vector<ModelT> &collection)
     {
         std::ofstream file(LocalPath + fileName);
@@ -87,12 +93,6 @@ protected:
             searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = false;
             searchedDeposit->mIsForUpdate = true;
         }
-    }
-    void deleteItem(ModelT *model)
-    {
-        ++mVersion;
-        model->mIsDeleted = true;
-        model->mIsForDelete = true;
     }
     ///
     /// \brief Thist function parse json array that was received in request reply. If item in array exist in item collections
