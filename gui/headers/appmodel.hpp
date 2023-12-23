@@ -31,7 +31,7 @@ public:
 
     inline const std::vector<std::pair<CategoryModel *, int>> &monthlyPnlsByCategories() const { return mMonthlyGroupPnls; }
 
-    inline DepositModel *selectedDeposit() { return mSelectedDeposit; }
+    // inline DepositModel *selectedDeposit() { return mSelectedDeposit; }
 
     inline int totalEarn() const { return mTotalEarn; }
 
@@ -106,7 +106,7 @@ private:
     MinMaxLoss mMinMaxLoss;
     std::vector<std::pair<CategoryModel *, int>> mMonthlyGroupPnls;
     std::pair<std::string, float> mQuotes[2] {{"UAH", 1.f}, {"USD", 1.f}};
-    DepositModel *mSelectedDeposit = nullptr;
+    // DepositModel *mSelectedDeposit = nullptr;
     int mTotalEarn = 0;
     int mTotalDeposits = 0;
     int mTotalDebts = 0;
