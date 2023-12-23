@@ -105,7 +105,11 @@ DebtModelHandler::Query::Query(DebtModelHandler *handler)
 
 const DebtModelHandler::Query &DebtModelHandler::Query::select()
 {
-
+    clear();
+    for(size_t i = 0; i < mHandler->mDebts.size(); ++i)
+        if(mHandler->mDebts.at(i).mIsDeleted == false)
+            push_back(&mHandler->mDebts.at(i));
+    return *this;
 }
 
 int DebtModelHandler::Query::sum() const
