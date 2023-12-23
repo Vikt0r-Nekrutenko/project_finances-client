@@ -5,33 +5,8 @@
 
 DebtModelHandler::DebtModelHandler()
 {
-    std::ifstream file(LocalPath + "debts.txt");
-
-    if(file.is_open()) {
-        while(true) {
-            DebtModel tmp(0, "", 0);
-            tmp.load(file);
-            if(tmp.version() > mVersion)
-                mVersion = tmp.version();
-
-            if(file.eof())
-                break;
-
-            mDebts.push_back(tmp);
-
-            if(tmp.mIsForCreate) {
-                mDebts.back().create();
-            }
-            if(tmp.mIsForUpdate) {
-                mDebts.back().update();
-            }
-            if(tmp.mIsForDelete) {
-                mDebts.back().remove();
-            }
-        }
-        file.close();
-    }
-    // get("debts/");
+    syncAndLoad<DebtModel>("debts", mDebts);
+    query.select();
 }
 
 DebtModelHandler::~DebtModelHandler()
