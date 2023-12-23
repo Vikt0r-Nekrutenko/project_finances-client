@@ -109,12 +109,6 @@ void AppModel::selectedOperationChangeCategory(const std::string &category)
     mSelectedDeposit->update();
 }
 
-void AppModel::selectDeposit(size_t id)
-{
-    // mSelectedDeposit = &Deposits.deposits().at(id);
-    mSelectedDeposit = Deposits.query.at(id);
-}
-
 void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::string &lendOrRepay)
 {
     std::vector<DebtModel>::const_iterator debt = Debts.findByName(name);
