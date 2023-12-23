@@ -30,7 +30,7 @@ DepositModelHandler::~DepositModelHandler()
     for(auto &model : mDeposits) {
         if(model.mIsForCreate && model.mIsForDelete)
             continue;
-        if(model.mIsDeleted && model.mIsForDelete)
+        if(model.mIsDeleted && model.mIsForDelete == false)
             continue;
 
         if(model.mIsForCreate) {
@@ -53,8 +53,19 @@ DepositModelHandler::~DepositModelHandler()
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
     ++mVersion;
-    mDeposits.push_back({name, balance});
-    mDeposits.back().mIsForCreate = true;
+    std::vector<DepositModel>::iterator localTmp = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
+        return model.name() == name;
+    });
+    if(localTmp == mDeposits.end()) {
+        mDeposits.push_back({name, balance});
+        mDeposits.back().mIsForCreate = true;
+    } else {
+        localTmp->mBalance = balance;
+        localTmp->mIsDeleted = false;
+        localTmp->mIsForDelete = false;
+        localTmp->mIsForCreate = false;
+        localTmp->mIsForUpdate = true;
+    }
     query.select();
 }
 
