@@ -79,11 +79,11 @@ void DepositModelHandler::selectDeposit(int index)
         mSelectedDeposit = &*searchedDeposit;
 }
 
-void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
+void DepositModelHandler::updateBalance(int index, int newBalance)
 {
     ++mVersion;
-    mDeposits.at(depositIndex).mBalance = newBalance;
-    mDeposits.at(depositIndex).mIsForUpdate = true;
+    query.at(index)->mBalance = newBalance;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void DepositModelHandler::deleteDeposit(int index)

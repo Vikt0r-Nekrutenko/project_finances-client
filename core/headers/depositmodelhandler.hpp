@@ -27,7 +27,7 @@ public:
     ~DepositModelHandler() override;
     void addNewDeposit(const std::string &name, int balance);
     void selectDeposit(int index);
-    void updateBalance(int depositIndex, int newBalance);
+    void updateBalance(int index, int newBalance);
     void deleteDeposit(int index);
     void increaseBalance(int amount);
     void decreaseBalance(int amount);
