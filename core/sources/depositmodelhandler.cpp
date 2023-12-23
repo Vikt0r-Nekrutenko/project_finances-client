@@ -71,12 +71,7 @@ void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 
 void DepositModelHandler::selectDeposit(int index)
 {
-    std::vector<DepositModel>::iterator searchedDeposit = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
-        return model.name() == query.at(index)->name();
-    });
-
-    if(searchedDeposit != mDeposits.end())
-        mSelectedDeposit = &*searchedDeposit;
+    mSelectedDeposit = query.at(index);
 }
 
 void DepositModelHandler::updateBalance(int index, int newBalance)
