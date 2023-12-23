@@ -86,11 +86,11 @@ void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
     mDeposits.at(depositIndex).mIsForUpdate = true;
 }
 
-void DepositModelHandler::deleteDeposit(int depositIndex)
+void DepositModelHandler::deleteDeposit()
 {
     ++mVersion;
-    mDeposits.at(depositIndex).mIsDeleted = true;
-    mDeposits.at(depositIndex).mIsForDelete = true;
+    mSelectedDeposit->mIsDeleted = true;
+    mSelectedDeposit->mIsForDelete = true;
     query.select();
 }
 
