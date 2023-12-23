@@ -34,7 +34,7 @@ void OperationsView::show(stf::Renderer &renderer)
         renderer.draw({mMenuBar->Width + 33, y}, "%s", (*operation)->category().c_str());
         ++y;
     }
-    renderer.draw({mMenuBar->Width + 1, 1}, "%s[%m.00UAH]", mModel->selectedDeposit()->name().c_str(), mModel->selectedDeposit()->balance());
+    renderer.draw({mMenuBar->Width + 1, 1}, "%s[%m.00UAH]", mModel->Deposits.selectedDeposit()->name().c_str(), mModel->Deposits.selectedDeposit()->balance());
 }
 
 IView *OperationsView::keyHandler(int key)
@@ -81,7 +81,7 @@ IView *AddNewOperationView::onEnterPressHandler()
     }
 
     mModel->addNewOperation(date, amount, category);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -108,7 +108,7 @@ IView *AddNewTodayLendOrRepayView::onEnterPressHandler()
     }
 
 
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
     mLogItem << "Debt [" << name << "] amount now: " << mModel->Debts.findByName(name)->amount() << ".00 UAH" << lendl;
     return mParent;
 }
@@ -136,7 +136,7 @@ IView *AddNewLendOrRepayView::onEnterPressHandler()
     }
 
 
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
     mLogItem << "Debt [" << name << "] amount now: " << mModel->Debts.findByName(name)->amount() << ".00 UAH" << lendl;
     return mParent;
 }
@@ -157,7 +157,7 @@ IView *AddNewTodayOperationView::onEnterPressHandler()
     }
 
     mModel->addNewOperation(date, amount, category);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -177,7 +177,7 @@ IView *DeleteOperationView::onEnterPressHandler()
     }
 
     mModel->deleteOperation(id);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -290,7 +290,7 @@ IView *ChangeAmount::onEnterPressHandler()
     int amount = mInputField.getExpressionResult();
 
     mModel->selectedOperationChangeAmount(amount);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -308,7 +308,7 @@ IView *ChangeCategory::onEnterPressHandler()
     }
 
     mModel->selectedOperationChangeCategory(category);
-    mLogItem << "Deposit [" << mModel->selectedDeposit()->name() << "] balance now: " << mModel->selectedDeposit()->balance() << ".00 UAH" << lendl;
+    mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
     return mParent;
 }
 
