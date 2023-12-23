@@ -27,7 +27,7 @@ void BaseModel::save(std::ofstream &file)
     LocalModel::save(file);
 }
 
-void BaseModel::syncAndSave(std::ofstream &file, int version)
+void BaseModel::syncAndSave(std::ofstream &file, int version, const char *endlSym)
 {
     if(mIsForCreate && mIsForDelete)
         return;
@@ -47,4 +47,5 @@ void BaseModel::syncAndSave(std::ofstream &file, int version)
         update();
     }
     save(file);
+    file << endlSym;
 }
