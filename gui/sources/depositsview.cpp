@@ -92,7 +92,7 @@ IView *ChangeBalanceView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+    if(id < 0 || id >= int(mModel->Deposits.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
@@ -110,7 +110,7 @@ IView *DeleteDepositView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+    if(id < 0 || id >= int(mModel->Deposits.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
@@ -129,7 +129,7 @@ IView *SelectDepositView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Deposits.deposits().size())) {
+    if(id < 0 || id >= int(mModel->Deposits.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
