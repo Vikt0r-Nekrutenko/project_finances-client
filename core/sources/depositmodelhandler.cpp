@@ -28,24 +28,7 @@ DepositModelHandler::~DepositModelHandler()
 {
     std::ofstream file(LocalPath + "deposits.txt");
     for(auto &model : mDeposits) {
-        if(model.mIsForCreate && model.mIsForDelete)
-            continue;
-        if(model.mIsDeleted && model.mIsForDelete == false)
-            continue;
-
-        if(model.mIsForCreate) {
-            model.mVersion = mVersion;
-            model.create();
-            model.mIsForUpdate = false;
-        } else if (model.mIsForDelete) {
-            model.mVersion = mVersion;
-            model.remove();
-            model.mIsForUpdate = false;
-        } else if (model.mIsForUpdate) {
-            model.mVersion = mVersion;
-            model.update();
-        }
-        model.save(file);
+        model.syncAndSave(file, mVersion);
     }
     file.close();
 }
