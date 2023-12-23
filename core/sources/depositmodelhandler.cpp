@@ -4,18 +4,7 @@
 
 DepositModelHandler::DepositModelHandler()
 {
-    std::ifstream file(LocalPath + "deposits.txt");
-
-    if(file.is_open()) {
-        while(file.eof() == false) {
-            mDeposits.push_back({"", 0});
-            mDeposits.back().load(file);
-            if(mDeposits.back().version() > mVersion)
-                mVersion = mDeposits.back().version();
-        }
-        file.close();
-    }
-    get("deposits/");
+    syncAndLoad<DepositModel>("deposits", mDeposits);
     query.select();
 }
 
