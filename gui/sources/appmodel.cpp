@@ -144,10 +144,7 @@ int AppModel::calcTotalDeposits()
 
 int AppModel::calcTotalDebts()
 {
-    mTotalDebts = 0;
-    for(const auto &debt : Debts.debts())
-        mTotalDebts += debt.amount();
-    return mTotalDebts;
+    return mTotalDebts = Debts.query.sum();
 }
 
 void AppModel::calcPnLs()
