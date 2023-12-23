@@ -16,6 +16,7 @@ protected:
     QJsonObject &completeJsonObject(QJsonObject &object);
     void load(std::ifstream &file) override;
     void save(std::ofstream &file) override;
+    void syncAndSave(std::ofstream &file, int version);
 
     bool mIsDeleted { false };
 };
