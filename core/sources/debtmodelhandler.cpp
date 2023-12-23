@@ -5,17 +5,13 @@
 
 DebtModelHandler::DebtModelHandler()
 {
-    // syncAndLoad<DebtModel>("debts", mDebts);
-    // query.select();
+    syncAndLoad<DebtModel>("debts", mDebts);
+    query.select();
 }
 
 DebtModelHandler::~DebtModelHandler()
 {
-    // std::ofstream file(LocalPath + "debts.txt");
-    // for(auto &model : mDebts) {
-    //     model.syncAndSave(file, mVersion);
-    // }
-    // file.close();
+    syncAndSave("debts.txt", mDebts);
 }
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
