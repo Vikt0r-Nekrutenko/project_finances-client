@@ -103,7 +103,7 @@ IView *DeleteDebtView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Debts.debts().size())) {
+    if(id < 0 || id >= int(mModel->Debts.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
