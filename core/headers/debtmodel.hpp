@@ -9,6 +9,7 @@ class CORE_EXPORT DebtModel : public BaseModel
 
 public:
 
+    DebtModel() = default;
     DebtModel(int id, const std::string &name, int amount);
     DebtModel(int id, const std::string &name, int amount, int version, bool isDeleted = false);
 
