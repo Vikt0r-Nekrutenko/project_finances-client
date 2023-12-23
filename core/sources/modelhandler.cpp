@@ -2,12 +2,16 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QEventLoop>
+#include <QFile>
 
 #include "modelhandler.hpp"
 
-RemoteStatus DataModelHandler::get(const std::string &additionalPath)
+RemoteStatus DataModelHandler::get(const std::string &collectionName)
 {
-    QNetworkReply *reply = sendCRUDRequest(additionalPath, {}, "GET", {{"version", std::to_string(mVersion).c_str()}});
+    if(mLastSyncedVersion == -1) {
+        mLastSyncedVersion = mSettings[(collectionName + "_last_synced_version").c_str()].toInt();
+    }
+    QNetworkReply *reply = sendCRUDRequest(collectionName, {}, "GET", {{"version", std::to_string(mLastSyncedVersion).c_str()}});
     RemoteStatus status = replyHandler(reply, "Get request successfully!");
     if(status == RemoteStatus::Failure)
         return RemoteStatus::Failure;

@@ -21,9 +21,9 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
         if(!settingsFile.isOpen())
             throw std::invalid_argument("file: " + settingsFile.fileName().toStdString() + " doesn't opened!");
 
-        QJsonObject obj = QJsonDocument::fromJson(QString(settingsFile.readAll()).toUtf8()).object();
-        AuthValue = obj["value"].toString().toStdString();
-        MainPath = obj["url"].toString().toStdString();
+        mSettings = QJsonDocument::fromJson(QString(settingsFile.readAll()).toUtf8()).object();
+        AuthValue = mSettings["value"].toString().toStdString();
+        MainPath = mSettings["url"].toString().toStdString();
     }
 
     QNetworkAccessManager *mManager = new QNetworkAccessManager();

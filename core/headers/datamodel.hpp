@@ -36,6 +36,7 @@ private:
 
 protected:
 
+    static QJsonObject mSettings;
     int mVersion {0};
 };
 

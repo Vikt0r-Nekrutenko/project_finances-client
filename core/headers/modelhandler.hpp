@@ -51,9 +51,11 @@ protected:
             mVersion = remoteTmp.version();
     }
 
-    RemoteStatus get(const std::string &additionalPath);
+    RemoteStatus get(const std::string &collectionName);
 
     virtual void parseJsonArray(const QJsonArray &array) = 0;
+
+    int mLastSyncedVersion { -1 };
 };
 
 class CORE_EXPORT MonoBankDataHandler
