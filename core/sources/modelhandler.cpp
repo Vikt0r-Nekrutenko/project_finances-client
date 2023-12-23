@@ -24,53 +24,6 @@ RemoteStatus DataModelHandler::get(const std::string &collectionName)
     return RemoteStatus::Success;
 }
 
-MonoBankDataHandler::MonoBankDataHandler()
-{
-    QNetworkAccessManager *mManager = new QNetworkAccessManager;
-    QNetworkRequest mRequest {QUrl("https://api.monobank.ua/bank/currency")};
-
-    mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-    QEventLoop loop;
-
-    QObject::connect(mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
-    QNetworkReply *reply = mManager->get(mRequest);
-
-    loop.exec();
-
-    if(reply->error() == QNetworkReply::NoError) {
-        CoreLog.push_back("Quotes has got successfully!");
-    } else {
-        CoreLog.push_back(reply->errorString().toStdString());
-    }
-    reply->deleteLater();
-
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
-    delete reply;
-    QJsonArray array = jsonResponse.array();
-
-    mQuotes.clear();
-    for (const auto &var : array) {
-        mQuotes.push_back(Currency{
-            var.toObject()["currencyCodeA"].toInt(),
-            float(var.toObject()["rateBuy"].toDouble()),
-            float(var.toObject()["rateSell"].toDouble())
-        });
-    }
-}
-
-const std::vector<MonoBankDataHandler::Currency> &MonoBankDataHandler::quotes() const
-{
-    return mQuotes;
-}
-
-std::vector<MonoBankDataHandler::Currency>::const_iterator MonoBankDataHandler::usd() const
-{
-    return std::find_if(mQuotes.begin(), mQuotes.end(), [&](const Currency &model){
-        return model.code == 840;
-    });
-}
-
 template<class ModelT>
 void DataModelHandler::deleteItem(ModelT *model)
 {
@@ -154,4 +107,51 @@ void DataModelHandler::parseAndMerge(const std::string &collectionName, const QJ
         ++count;
     }
     log().push_back({collectionName + " received: " + std::to_string(count)});
+}
+
+MonoBankDataHandler::MonoBankDataHandler()
+{
+    QNetworkAccessManager *mManager = new QNetworkAccessManager;
+    QNetworkRequest mRequest {QUrl("https://api.monobank.ua/bank/currency")};
+
+    mRequest.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    QEventLoop loop;
+
+    QObject::connect(mManager, SIGNAL(finished(QNetworkReply*)), &loop, SLOT(quit()));
+    QNetworkReply *reply = mManager->get(mRequest);
+
+    loop.exec();
+
+    if(reply->error() == QNetworkReply::NoError) {
+        CoreLog.push_back("Quotes has got successfully!");
+    } else {
+        CoreLog.push_back(reply->errorString().toStdString());
+    }
+    reply->deleteLater();
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(QString(reply->readAll()).toUtf8());
+    delete reply;
+    QJsonArray array = jsonResponse.array();
+
+    mQuotes.clear();
+    for (const auto &var : array) {
+        mQuotes.push_back(Currency{
+            var.toObject()["currencyCodeA"].toInt(),
+            float(var.toObject()["rateBuy"].toDouble()),
+            float(var.toObject()["rateSell"].toDouble())
+        });
+    }
+}
+
+const std::vector<MonoBankDataHandler::Currency> &MonoBankDataHandler::quotes() const
+{
+    return mQuotes;
+}
+
+std::vector<MonoBankDataHandler::Currency>::const_iterator MonoBankDataHandler::usd() const
+{
+    return std::find_if(mQuotes.begin(), mQuotes.end(), [&](const Currency &model){
+        return model.code == 840;
+    });
 }
