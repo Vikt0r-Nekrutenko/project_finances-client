@@ -87,6 +87,12 @@ protected:
             searchedDeposit->mIsForUpdate = true;
         }
     }
+    void deleteItem(ModelT *model)
+    {
+        ++mVersion;
+        model->mIsDeleted = true;
+        model->mIsForDelete = true;
+    }
 };
 
 class CORE_EXPORT MonoBankDataHandler

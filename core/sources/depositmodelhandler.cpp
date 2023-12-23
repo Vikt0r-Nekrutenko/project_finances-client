@@ -15,18 +15,6 @@ DepositModelHandler::~DepositModelHandler()
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
-    // ++mVersion;
-    // std::vector<DepositModel>::iterator searchedDeposit = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
-    //     return model.name() == name;
-    // });
-    // if(searchedDeposit == mDeposits.end()) {
-    //     mDeposits.push_back({name, balance});
-    //     mDeposits.back().mIsForCreate = true;
-    // } else {
-    //     searchedDeposit->mBalance = balance;
-    //     searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = false;
-    //     searchedDeposit->mIsForUpdate = true;
-    // }
     addNewItem<std::vector<DepositModel>::iterator>(
         {name, balance},
         mDeposits,
@@ -53,9 +41,10 @@ void DepositModelHandler::updateBalance(int index, int newBalance)
 
 void DepositModelHandler::deleteDeposit(int index)
 {
-    ++mVersion;
-    query.at(index)->mIsDeleted = true;
-    query.at(index)->mIsForDelete = true;
+    // ++mVersion;
+    // query.at(index)->mIsDeleted = true;
+    // query.at(index)->mIsForDelete = true;
+    deleteItem(query.at(index));
     query.select();
 }
 
