@@ -99,9 +99,7 @@ void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 }
 
 DebtModelHandler::Query::Query(DebtModelHandler *handler)
-{
-
-}
+    : mHandler{handler} { }
 
 const DebtModelHandler::Query &DebtModelHandler::Query::select()
 {
