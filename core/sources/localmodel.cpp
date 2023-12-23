@@ -6,7 +6,7 @@ void LocalModel::save(std::ofstream &file)
     file << " "
          << mIsForCreate << " "
          << mIsForUpdate << " "
-         << mIsForDelete;
+         << mIsForDelete << std::endl;
 }
 
 void LocalModel::load(std::ifstream &file)
