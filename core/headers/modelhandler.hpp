@@ -9,10 +9,6 @@ class BaseModel;
 
 class DataModelHandler : public DataModel
 {
-public:
-
-    virtual ~DataModelHandler() = default;
-
 protected:
 
     template<class ModelT> void deleteItem(ModelT *model);
