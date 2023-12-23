@@ -36,11 +36,11 @@ DebtModelHandler::DebtModelHandler()
 
 DebtModelHandler::~DebtModelHandler()
 {
-    std::ofstream file(LocalPath + "debts.txt");
-    for(auto &model : mDebts) {
-        model.save(file);
-    }
-    file.close();
+    // std::ofstream file(LocalPath + "debts.txt");
+    // for(auto &model : mDebts) {
+    //     model.save(file);
+    // }
+    // file.close();
 }
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)

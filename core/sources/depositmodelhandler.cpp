@@ -7,16 +7,11 @@ DepositModelHandler::DepositModelHandler()
     std::ifstream file(LocalPath + "deposits.txt");
 
     if(file.is_open()) {
-        while(true) {
-            DepositModel tmp("", 0);
-            tmp.load(file);
-            if(tmp.version() > mVersion)
-                mVersion = tmp.version();
-
-            if(file.eof())
-                break;
-
-            mDeposits.push_back(tmp);
+        while(file.eof() == false) {
+            mDeposits.push_back({"", 0});
+            mDeposits.back().load(file);
+            if(mDeposits.back().version() > mVersion)
+                mVersion = mDeposits.back().version();
         }
         file.close();
     }
@@ -27,8 +22,12 @@ DepositModelHandler::DepositModelHandler()
 DepositModelHandler::~DepositModelHandler()
 {
     std::ofstream file(LocalPath + "deposits.txt");
+    size_t i = 0;
     for(auto &model : mDeposits) {
-        model.syncAndSave(file, mVersion);
+        if(++i != mDeposits.size())
+            model.syncAndSave(file, mVersion, "\n");
+        else
+            model.syncAndSave(file, mVersion, "");
     }
     file.close();
 }
