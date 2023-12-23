@@ -4,30 +4,15 @@
 
 DepositModelHandler::DepositModelHandler()
 {
-    std::ifstream file(LocalPath + "deposits.txt");
-
-    if(file.is_open()) {
-        while(file.eof() == false) {
-            mDeposits.push_back({"", 0});
-            mDeposits.back().load(file);
-            if(mDeposits.back().version() > mVersion)
-                mVersion = mDeposits.back().version();
-        }
-        file.close();
-    }
-    get("deposits/");
+    syncAndLoad<DepositModel>("deposits", mDeposits);
     query.select();
 }
 
 DepositModelHandler::~DepositModelHandler()
 {
     std::ofstream file(LocalPath + "deposits.txt");
-    size_t i = 0;
     for(auto &model : mDeposits) {
-        if(++i != mDeposits.size())
-            model.syncAndSave(file, mVersion, "\n");
-        else
-            model.syncAndSave(file, mVersion, "");
+        model.syncAndSave(file, mVersion);
     }
     file.close();
 }
@@ -96,17 +81,9 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
             bool(var.toObject()["is_deleted"].toInt())
         };
 
-        std::vector<DepositModel>::iterator localTmp = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
-            return model.name() == remoteTmp.name();
+        merge<DepositModel, std::vector<DepositModel>::iterator>(remoteTmp, mDeposits, [&](const DepositModel &model){
+            return remoteTmp.name() == model.name();
         });
-
-        if(localTmp == mDeposits.end())
-            mDeposits.push_back(remoteTmp);
-        else
-            *localTmp = remoteTmp;
-
-        if(mDeposits.back().version() > mVersion)
-            mVersion = mDeposits.back().version();
         ++count;
     }
     log().push_back({"Deposits received: " + std::to_string(count)});
