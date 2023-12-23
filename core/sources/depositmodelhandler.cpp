@@ -118,3 +118,12 @@ const DepositModelHandler::Query &DepositModelHandler::Query::select()
             push_back(&mHandler->mDeposits.at(i));
     return *this;
 }
+
+int DepositModelHandler::Query::sum() const
+{
+    int result = 0;
+    for(auto item : *this) {
+        result += item->mBalance;
+    }
+    return result;
+}

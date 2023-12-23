@@ -14,6 +14,7 @@ public:
 
         Query(DepositModelHandler *handler);
         const Query &select();
+        int sum() const;
         std::vector<DepositModel *>::const_iterator findByName(const std::string &name) const;
 
     private:
