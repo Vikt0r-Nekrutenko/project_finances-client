@@ -109,7 +109,7 @@ IView *AddNewTodayLendOrRepayView::onEnterPressHandler()
 
 
     mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
-    mLogItem << "Debt [" << name << "] amount now: " << mModel->Debts.findByName(name)->amount() << ".00 UAH" << lendl;
+    mLogItem << "Debt [" << name << "] amount now: " << (*mModel->Debts.query.findByName(name))->amount() << ".00 UAH" << lendl;
     return mParent;
 }
 
@@ -137,7 +137,7 @@ IView *AddNewLendOrRepayView::onEnterPressHandler()
 
 
     mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
-    mLogItem << "Debt [" << name << "] amount now: " << mModel->Debts.findByName(name)->amount() << ".00 UAH" << lendl;
+    mLogItem << "Debt [" << name << "] amount now: " << (*mModel->Debts.query.findByName(name))->amount() << ".00 UAH" << lendl;
     return mParent;
 }
 

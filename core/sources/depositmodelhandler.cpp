@@ -28,7 +28,7 @@ void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
         mDeposits.back().mIsForCreate = true;
     } else {
         searchedDeposit->mBalance = balance;
-        searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = searchedDeposit->mIsForCreate = false;
+        searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = false;
         searchedDeposit->mIsForUpdate = true;
     }
     query.select();

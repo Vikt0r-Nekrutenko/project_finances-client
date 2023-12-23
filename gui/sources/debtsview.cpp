@@ -21,10 +21,10 @@ void DebtsView::show(stf::Renderer &renderer)
     drawLogItem(renderer, mMenuBar->Width);
 
     int index = 1;
-    for(const auto &debt : mModel->Debts.debts()) {
+    for(const auto &debt : mModel->Debts.query) {
         renderer.drawLine({mMenuBar->Width +  1, 1 + index}, {renderer.Size.x - 1, 1 + index}, '.');
-        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, debt.name().c_str());
-        renderer.draw({mMenuBar->Width + 15, 1 + index}, "%m.00 UAH", debt.amount());
+        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, debt->name().c_str());
+        renderer.draw({mMenuBar->Width + 15, 1 + index}, "%m.00 UAH", debt->amount());
         ++index;
     }
 }
@@ -65,7 +65,7 @@ IView *AddNewDebtView::onEnterPressHandler()
     std::string name = mInputField.getStr();
     int amount = mInputField.getExpressionResult();
 
-    if(mModel->Debts.findByName(name) != mModel->Debts.debts().end()) {
+    if(mModel->Debts.query.findByName(name) != mModel->Debts.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
         mInputField.restoreText();
         return this;
@@ -85,12 +85,12 @@ IView *ChangeAmountView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Debts.debts().size())) {
+    if(id < 0 || id >= int(mModel->Debts.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
-    mModel->Debts.updateDebt(id, mModel->Debts.debts().at(id).name(), amount);
+    mModel->Debts.updateDebt(id, mModel->Debts.query.at(id)->name(), amount);
     return mParent;
 }
 
@@ -103,7 +103,7 @@ IView *DeleteDebtView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Debts.debts().size())) {
+    if(id < 0 || id >= int(mModel->Debts.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;

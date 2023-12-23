@@ -5,86 +5,109 @@
 
 DebtModelHandler::DebtModelHandler()
 {
-    std::ifstream file(LocalPath + "debts.txt");
-
-    if(file.is_open()) {
-        while(true) {
-            DebtModel tmp(0, "", 0);
-            tmp.load(file);
-            if(tmp.version() > mVersion)
-                mVersion = tmp.version();
-
-            if(file.eof())
-                break;
-
-            mDebts.push_back(tmp);
-
-            if(tmp.mIsForCreate) {
-                mDebts.back().create();
-            }
-            if(tmp.mIsForUpdate) {
-                mDebts.back().update();
-            }
-            if(tmp.mIsForDelete) {
-                mDebts.back().remove();
-            }
-        }
-        file.close();
-    }
-    // get("debts/");
+    syncAndLoad<DebtModel>("debts", mDebts);
+    query.select();
 }
 
 DebtModelHandler::~DebtModelHandler()
 {
-    // std::ofstream file(LocalPath + "debts.txt");
-    // for(auto &model : mDebts) {
-    //     model.save(file);
-    // }
-    // file.close();
+    std::ofstream file(LocalPath + "debts.txt");
+    for(auto &model : mDebts) {
+        model.syncAndSave(file, mVersion);
+    }
+    file.close();
 }
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 {
-    mDebts.push_back(DebtModel{0, name, amount, ++mVersion});
-    mDebts.back().create();
+    ++mVersion;
+    std::vector<DebtModel>::iterator searchedDebt = std::find_if(mDebts.begin(), mDebts.end(), [&](const DebtModel &model){
+        return model.name() == name;
+    });
+    if(searchedDebt == mDebts.end()) {
+        mDebts.push_back({0, name, amount});
+        mDebts.back().mIsForCreate = true;
+    } else {
+        searchedDebt->mAmount = amount;
+        searchedDebt->mIsDeleted = searchedDebt->mIsForDelete = false;
+        searchedDebt->mIsForUpdate = true;
+    }
+    query.select();
 }
 
 void DebtModelHandler::updateDebt(int index, const std::string &name, int amount)
 {
-    mDebts[index].mName = name;
-    mDebts[index].mAmount = amount;
-    mDebts[index].mVersion = ++mVersion;
-    mDebts[index].update();
+    ++mVersion;
+    query.at(index)->mName = name;
+    query.at(index)->mAmount = amount;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void DebtModelHandler::deleteDebt(int index)
 {
-    mDebts[index].mVersion = ++mVersion;
-    mDebts[index].mIsDeleted = true;
-    mDebts[index].remove();
+    ++mVersion;
+    query.at(index)->mIsDeleted = true;
+    query.at(index)->mIsForDelete = true;
+    query.select();
+}
+
+void DebtModelHandler::increaseAmount(int index, int amount)
+{
+    ++mVersion;
+    query.at(index)->mAmount += amount;
+    query.at(index)->mIsForUpdate = true;
+}
+
+void DebtModelHandler::decreaseAmount(int index, int amount)
+{
+    ++mVersion;
+    query.at(index)->mAmount -= amount;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     int count = 0;
     for(const auto &var : replyJsonArray) {
-        mDebts.push_back(DebtModel{
+        DebtModel remoteTmp{
             var.toObject()["id"].toInt(),
             var.toObject()["name"].toString().toStdString(),
             var.toObject()["amount"].toInt(),
             var.toObject()["version"].toInt(),
             bool(var.toObject()["is_deleted"].toInt())
+        };
+        merge<DebtModel, std::vector<DebtModel>::iterator>("debts", remoteTmp, mDebts, [&](const DebtModel &model){
+            return remoteTmp.id() == model.id();
         });
-        if(mDebts.back().version() > mVersion)
-            mVersion = mDebts.back().version();
         ++count;
     }
     log().push_back({"Debts received: " + std::to_string(count)});
 }
 
-std::vector<DebtModel>::iterator DebtModelHandler::findByName(const std::string &name)
+DebtModelHandler::Query::Query(DebtModelHandler *handler)
+    : mHandler{handler} { }
+
+const DebtModelHandler::Query &DebtModelHandler::Query::select()
 {
-    return std::find_if(mDebts.begin(), mDebts.end(), [&](const DebtModel &model){
-        return model.name() == name;
+    clear();
+    for(size_t i = 0; i < mHandler->mDebts.size(); ++i)
+        if(mHandler->mDebts.at(i).mIsDeleted == false)
+            push_back(&mHandler->mDebts.at(i));
+    return *this;
+}
+
+int DebtModelHandler::Query::sum() const
+{
+    int result = 0;
+    for(auto item : *this) {
+        result += item->mAmount;
+    }
+    return result;
+}
+
+std::vector<DebtModel *>::const_iterator DebtModelHandler::Query::findByName(const std::string &name) const
+{
+    return std::find_if(begin(), end(), [&](const DebtModel *model){
+        return model->name() == name;
     });
 }
