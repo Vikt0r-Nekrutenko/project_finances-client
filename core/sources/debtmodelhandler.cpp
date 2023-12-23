@@ -51,10 +51,10 @@ void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 
 void DebtModelHandler::updateDebt(int index, const std::string &name, int amount)
 {
-    mDebts[index].mName = name;
-    mDebts[index].mAmount = amount;
-    mDebts[index].mVersion = ++mVersion;
-    mDebts[index].update();
+    ++mVersion;
+    query.at(index)->mName = name;
+    query.at(index)->mAmount = amount;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void DebtModelHandler::deleteDebt(int index)
