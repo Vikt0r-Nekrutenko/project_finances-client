@@ -45,6 +45,15 @@ protected:
         get(collectionName);
     }
 
+    template<class ModelT> void syncAndSave(const std::string &fileName, std::vector<ModelT> &collection)
+    {
+        std::ofstream file(LocalPath + fileName);
+        for(ModelT &model : collection) {
+            model.syncAndSave(file, mVersion);
+        }
+        file.close();
+    }
+
     RemoteStatus get(const std::string &collectionName);
 
     virtual void parseJsonArray(const QJsonArray &array) = 0;
@@ -58,14 +67,7 @@ protected:
     using DataModelHandler::syncAndLoad;
 
 
-    void syncAndSave(const std::string &fileName, std::vector<ModelT> &collection)
-    {
-        std::ofstream file(LocalPath + fileName);
-        for(ModelT &model : collection) {
-            model.syncAndSave(file, mVersion);
-        }
-        file.close();
-    }
+
     template<class IteratorT> void addNewItem(const ModelT &item, std::vector<ModelT> &collection, const std::function<bool(const ModelT &model)> &compf, const std::function<void(ModelT &model)> &updf)
     {
         ++mVersion;
