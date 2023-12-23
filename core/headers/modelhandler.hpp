@@ -62,11 +62,12 @@ protected:
         });
         if(searchedDeposit == collection.end()) {
             collection.push_back(item);
-            collection.back().mIsForCreate = true;
+            collection.back().setIsForCreate(true);
         } else {
             updf(*searchedDeposit);
-            searchedDeposit->mIsDeleted = searchedDeposit->mIsForDelete = false;
-            searchedDeposit->mIsForUpdate = true;
+            searchedDeposit->setIsDeleted(false);
+            searchedDeposit->setIsForDelete(false);
+            searchedDeposit->setIsForUpdate(true);
         }
     }
 
