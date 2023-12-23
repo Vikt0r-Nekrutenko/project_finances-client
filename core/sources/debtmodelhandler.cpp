@@ -98,13 +98,6 @@ void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     log().push_back({"Debts received: " + std::to_string(count)});
 }
 
-std::vector<DebtModel>::iterator DebtModelHandler::findByName(const std::string &name)
-{
-    return std::find_if(mDebts.begin(), mDebts.end(), [&](const DebtModel &model){
-        return model.name() == name;
-    });
-}
-
 DebtModelHandler::Query::Query(DebtModelHandler *handler)
 {
 
@@ -122,5 +115,7 @@ int DebtModelHandler::Query::sum() const
 
 std::vector<DebtModel *>::const_iterator DebtModelHandler::Query::findByName(const std::string &name) const
 {
-
+    return std::find_if(begin(), end(), [&](const DebtModel *model){
+        return model->name() == name;
+    });
 }
