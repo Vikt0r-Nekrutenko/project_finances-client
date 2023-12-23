@@ -16,13 +16,13 @@ public:
 
 protected:
 
-    template<class T> void syncAndLoad(const std::string &collectionName, std::vector<T> &collection)
+    template<class ModelT> void syncAndLoad(const std::string &collectionName, std::vector<ModelT> &collection)
     {
         std::ifstream file(LocalPath + collectionName + ".txt");
 
         if(file.is_open()) {
             while(true) {
-                T model;
+                ModelT model;
                 model.load(file);
 
                 if(file.eof())
@@ -44,9 +44,11 @@ protected:
 };
 
 template <class ModelT>
-class CORE_EXPORT BaseModelHandler : public DataModelHandler
+class CORE_EXPORT BaseModelHandler : private DataModelHandler
 {
 protected:
+    using DataModelHandler::mVersion;
+    using DataModelHandler::syncAndLoad;
 
     void deleteItem(ModelT *model)
     {
