@@ -13,7 +13,8 @@ public:
     public:
 
         Query(DepositModelHandler *handler);
-        Query &select();
+        const Query &select();
+        std::vector<DepositModel *>::const_iterator findByName(const std::string &name) const;
 
     private:
 
@@ -28,9 +29,6 @@ public:
     void deleteDeposit(int depositIndex);
 
     inline const std::vector<DepositModel> &deposits() const { return mDeposits; }
-    inline std::vector<DepositModel> &deposits() { return mDeposits; }
-
-    std::vector<DepositModel>::iterator findByName(const std::string &name);
 
 protected:
 

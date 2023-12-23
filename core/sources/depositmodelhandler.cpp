@@ -84,7 +84,10 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
             bool(var.toObject()["is_deleted"].toInt())
         };
 
-        std::vector<DepositModel>::iterator localTmp = findByName(remoteTmp.name());
+        std::vector<DepositModel>::iterator localTmp = std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
+            return model.name() == remoteTmp.name();
+        });
+
         if(localTmp == mDeposits.end())
             mDeposits.push_back(remoteTmp);
         else
@@ -97,9 +100,9 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     log().push_back({"Deposits received: " + std::to_string(count)});
 }
 
-std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)
+std::vector<DepositModel *>::const_iterator DepositModelHandler::Query::findByName(const std::string &name) const
 {
-    return std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
+    return std::find_if(begin(), end(), [&](const DepositModel &model){
         return model.name() == name;
     });
 }
@@ -107,7 +110,7 @@ std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::s
 DepositModelHandler::Query::Query(DepositModelHandler *handler)
     : mHandler{handler} { }
 
-DepositModelHandler::Query &DepositModelHandler::Query::select()
+const DepositModelHandler::Query &DepositModelHandler::Query::select()
 {
     clear();
     for(size_t i = 0; i < mHandler->mDeposits.size(); ++i)

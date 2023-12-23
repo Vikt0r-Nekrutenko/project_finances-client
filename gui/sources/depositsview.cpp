@@ -72,7 +72,7 @@ IView *AddNewDepositView::onEnterPressHandler()
     std::string name = mInputField.getStr();
     int balance = mInputField.getExpressionResult();
 
-    if(mModel->Deposits.findByName(name) != mModel->Deposits.deposits().end()) {
+    if(mModel->Deposits.query.findByName(name) != mModel->Deposits.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
         mInputField.restoreText();
         return this;
