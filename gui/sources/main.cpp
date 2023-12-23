@@ -49,8 +49,8 @@ private:
 void printDMH(const DepositModelHandler &dmh)
 {
     int i = 0;
-    for(const auto &item : dmh.deposits())
-        qDebug() << i++ << item.name() << item.balance() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    for(const auto &item : dmh.query)
+        qDebug() << i++ << item->name() << item->balance() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
     qDebug() << "---DMH ver:" << dmh.version();
 }
 

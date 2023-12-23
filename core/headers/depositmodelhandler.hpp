@@ -29,8 +29,6 @@ public:
     void updateBalance(int depositIndex, int newBalance);
     void deleteDeposit(int depositIndex);
 
-    inline const std::vector<DepositModel> &deposits() const { return mDeposits; }
-
 protected:
 
     void parseJsonArray(const QJsonArray &replyJsonArray) final;
