@@ -79,7 +79,7 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
             bool(var.toObject()["is_deleted"].toInt())
         };
 
-        merge<DepositModel, std::vector<DepositModel>::iterator>(remoteTmp, mDeposits, [&](const DepositModel &model){
+        merge<DepositModel, std::vector<DepositModel>::iterator>("deposits", remoteTmp, mDeposits, [&](const DepositModel &model){
             return remoteTmp.name() == model.name();
         });
         ++count;

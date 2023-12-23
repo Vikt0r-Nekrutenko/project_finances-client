@@ -8,10 +8,8 @@
 
 RemoteStatus DataModelHandler::get(const std::string &collectionName)
 {
-    if(mLastSyncedVersion == -1) {
-        mLastSyncedVersion = mSettings[(collectionName + "_last_synced_version").c_str()].toInt();
-    }
-    QNetworkReply *reply = sendCRUDRequest(collectionName, {}, "GET", {{"version", std::to_string(mLastSyncedVersion).c_str()}});
+    std::string lastSyncedVersion = std::to_string(settings()[(collectionName + "_last_synced_version").c_str()].toInt());
+    QNetworkReply *reply = sendCRUDRequest(collectionName + "/", {}, "GET", {{"version", lastSyncedVersion.c_str()}});
     RemoteStatus status = replyHandler(reply, "Get request successfully!");
     if(status == RemoteStatus::Failure)
         return RemoteStatus::Failure;

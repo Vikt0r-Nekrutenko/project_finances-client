@@ -30,7 +30,7 @@ CategoryModelHandler::CategoryModelHandler()
         }
         file.close();
     }
-    get("categories/");
+    // get("categories/");
 }
 
 CategoryModelHandler::~CategoryModelHandler()

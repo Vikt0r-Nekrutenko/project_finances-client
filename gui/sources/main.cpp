@@ -24,6 +24,7 @@ public:
     ~App()
     {
         delete mModel;
+        saveSettings();
     }
 
     bool onUpdate(const float) override
@@ -79,6 +80,7 @@ void printOMH(const OperationModelHandler &omh)
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    loadSettings();
 
     // DepositModelHandler dmh;
     // printDMH(dmh);

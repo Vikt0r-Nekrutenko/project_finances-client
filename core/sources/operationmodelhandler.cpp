@@ -31,7 +31,7 @@ OperationModelHandler::OperationModelHandler()
         }
         file.close();
     }
-    get("operations/");
+    // get("operations/");
 }
 
 OperationModelHandler::~OperationModelHandler()
