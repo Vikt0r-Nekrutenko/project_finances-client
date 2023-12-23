@@ -70,31 +70,7 @@ protected:
         }
     }
 
-    RemoteStatus get(const std::string &collectionName);
-
-    virtual void parseJsonArray(const QJsonArray &array) = 0;
-};
-
-template <class ModelT>
-class CORE_EXPORT BaseModelHandler : private DataModelHandler
-{
-protected:
-    using DataModelHandler::mVersion;
-    using DataModelHandler::syncAndLoad;
-
-
-
-
-    ///
-    /// \brief Thist function parse json array that was received in request reply. If item in array exist in item collections
-    /// item will be update else item will be add to collection
-    /// \param collectionName - name of items collection
-    /// \param replyJsonArray - array
-    /// \param collection - collection
-    /// \param compf - compare function for comparing received item with local item
-    /// \param buildf - return the new ModelT object from QJsonObject
-    ///
-    template<class IteratorT> void parseAndMerge(
+    template<class ModelT, class IteratorT> void parseAndMerge(
         const std::string &collectionName,
         const QJsonArray &replyJsonArray,
         std::vector<ModelT> &collection,
@@ -123,6 +99,23 @@ protected:
         }
         log().push_back({collectionName + " received: " + std::to_string(count)});
     }
+
+    RemoteStatus get(const std::string &collectionName);
+
+    virtual void parseJsonArray(const QJsonArray &array) = 0;
+};
+
+template <class ModelT>
+class CORE_EXPORT BaseModelHandler : private DataModelHandler
+{
+protected:
+    using DataModelHandler::mVersion;
+    using DataModelHandler::syncAndLoad;
+
+
+
+
+
 };
 
 class CORE_EXPORT MonoBankDataHandler
