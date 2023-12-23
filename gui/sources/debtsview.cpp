@@ -85,12 +85,12 @@ IView *ChangeAmountView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Debts.debts().size())) {
+    if(id < 0 || id >= int(mModel->Debts.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
-    mModel->Debts.updateDebt(id, mModel->Debts.debts().at(id).name(), amount);
+    mModel->Debts.updateDebt(id, mModel->Debts.query.at(id)->name(), amount);
     return mParent;
 }
 
