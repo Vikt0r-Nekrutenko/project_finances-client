@@ -2,7 +2,6 @@
 #define MODELHANDLER_HPP
 
 #include "datamodel.hpp"
-#include "localmodel.hpp"
 #include <QJsonObject>
 #include <QJsonArray>
 
@@ -16,90 +15,24 @@ public:
 
 protected:
 
-    template<class ModelT> void deleteItem(ModelT *model)
-    {
-        ++mVersion;
-        model->setIsDeleted(true);
-        model->setIsForDelete(true);
-    }
+    template<class ModelT> void deleteItem(ModelT *model);
 
-    template<class ModelT> void syncAndLoad(const std::string &collectionName, std::vector<ModelT> &collection)
-    {
-        std::ifstream file(LocalPath + collectionName + ".txt");
+    template<class ModelT> void syncAndLoad(const std::string &collectionName, std::vector<ModelT> &collection);
 
-        if(file.is_open()) {
-            while(true) {
-                ModelT model;
-                model.load(file);
+    template<class ModelT> void syncAndSave(const std::string &fileName, std::vector<ModelT> &collection);
 
-                if(file.eof())
-                    break;
-
-                collection.push_back(model);
-
-                if(collection.back().version() > mVersion)
-                    mVersion = collection.back().version();
-            }
-            file.close();
-        }
-        get(collectionName);
-    }
-
-    template<class ModelT> void syncAndSave(const std::string &fileName, std::vector<ModelT> &collection)
-    {
-        std::ofstream file(LocalPath + fileName);
-        for(ModelT &model : collection) {
-            model.syncAndSave(file, mVersion);
-        }
-        file.close();
-    }
-
-    template<class ModelT, class IteratorT> void addNewItem(const ModelT &item, std::vector<ModelT> &collection, const std::function<bool(const ModelT &model)> &compf, const std::function<void(ModelT &model)> &updf)
-    {
-        ++mVersion;
-        IteratorT searchedDeposit = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model){
-            return compf(model);
-        });
-        if(searchedDeposit == collection.end()) {
-            collection.push_back(item);
-            collection.back().setIsForCreate(true);
-        } else {
-            updf(*searchedDeposit);
-            searchedDeposit->setIsDeleted(false);
-            searchedDeposit->setIsForDelete(false);
-            searchedDeposit->setIsForUpdate(true);
-        }
-    }
+    template<class ModelT, class IteratorT> void addNewItem(
+        const ModelT &item,
+        std::vector<ModelT> &collection,
+        const std::function<bool(const ModelT &model)> &compf,
+        const std::function<void(ModelT &model)> &updf);
 
     template<class ModelT, class IteratorT> void parseAndMerge(
         const std::string &collectionName,
         const QJsonArray &replyJsonArray,
         std::vector<ModelT> &collection,
         const std::function<bool(const ModelT &, const ModelT &)> &compf,
-        std::function<ModelT(QJsonValueConstRef)> buildf)
-    {
-        int count = 0;
-        for (const auto &var : replyJsonArray) {
-            ModelT remoteTmp = buildf(var);
-
-            IteratorT localTmp = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model) {
-                return compf(remoteTmp, model);
-            });
-
-            if(localTmp == collection.end())
-                collection.push_back(remoteTmp);
-            else
-                *localTmp = remoteTmp;
-
-            if(remoteTmp.version() > mVersion)
-                mVersion = remoteTmp.version();
-            if(remoteTmp.version() > settings()[(collectionName + "_last_synced_version").c_str()].toInt())
-                settings()[(collectionName + "_last_synced_version").c_str()] = remoteTmp.version();
-
-            ++count;
-        }
-        log().push_back({collectionName + " received: " + std::to_string(count)});
-    }
+        std::function<ModelT(QJsonValueConstRef)> buildf);
 
     RemoteStatus get(const std::string &collectionName);
 

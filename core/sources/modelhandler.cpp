@@ -5,6 +5,7 @@
 #include <QFile>
 
 #include "modelhandler.hpp"
+#include "localmodel.hpp"
 
 RemoteStatus DataModelHandler::get(const std::string &collectionName)
 {
@@ -68,4 +69,89 @@ std::vector<MonoBankDataHandler::Currency>::const_iterator MonoBankDataHandler::
     return std::find_if(mQuotes.begin(), mQuotes.end(), [&](const Currency &model){
         return model.code == 840;
     });
+}
+
+template<class ModelT>
+void DataModelHandler::deleteItem(ModelT *model)
+{
+    ++mVersion;
+    model->setIsDeleted(true);
+    model->setIsForDelete(true);
+}
+
+template<class ModelT>
+void DataModelHandler::syncAndLoad(const std::string &collectionName, std::vector<ModelT> &collection)
+{
+    std::ifstream file(LocalPath + collectionName + ".txt");
+
+    if(file.is_open()) {
+        while(true) {
+            ModelT model;
+            model.load(file);
+
+            if(file.eof())
+                break;
+
+            collection.push_back(model);
+
+            if(collection.back().version() > mVersion)
+                mVersion = collection.back().version();
+        }
+        file.close();
+    }
+    get(collectionName);
+}
+
+template<class ModelT>
+void DataModelHandler::syncAndSave(const std::string &fileName, std::vector<ModelT> &collection)
+{
+    std::ofstream file(LocalPath + fileName);
+    for(ModelT &model : collection) {
+        model.syncAndSave(file, mVersion);
+    }
+    file.close();
+}
+
+template<class ModelT, class IteratorT>
+void DataModelHandler::addNewItem(const ModelT &item, std::vector<ModelT> &collection, const std::function<bool (const ModelT &)> &compf, const std::function<void (ModelT &)> &updf)
+{
+    ++mVersion;
+    IteratorT searchedDeposit = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model){
+        return compf(model);
+    });
+    if(searchedDeposit == collection.end()) {
+        collection.push_back(item);
+        collection.back().setIsForCreate(true);
+    } else {
+        updf(*searchedDeposit);
+        searchedDeposit->setIsDeleted(false);
+        searchedDeposit->setIsForDelete(false);
+        searchedDeposit->setIsForUpdate(true);
+    }
+}
+
+template<class ModelT, class IteratorT>
+void DataModelHandler::parseAndMerge(const std::string &collectionName, const QJsonArray &replyJsonArray, std::vector<ModelT> &collection, const std::function<bool (const ModelT &, const ModelT &)> &compf, std::function<ModelT (QJsonValueConstRef)> buildf)
+{
+    int count = 0;
+    for (const auto &var : replyJsonArray) {
+        ModelT remoteTmp = buildf(var);
+
+        IteratorT localTmp = std::find_if(collection.begin(), collection.end(), [&](const ModelT &model) {
+            return compf(remoteTmp, model);
+        });
+
+        if(localTmp == collection.end())
+            collection.push_back(remoteTmp);
+        else
+            *localTmp = remoteTmp;
+
+        if(remoteTmp.version() > mVersion)
+            mVersion = remoteTmp.version();
+        if(remoteTmp.version() > settings()[(collectionName + "_last_synced_version").c_str()].toInt())
+            settings()[(collectionName + "_last_synced_version").c_str()] = remoteTmp.version();
+
+        ++count;
+    }
+    log().push_back({collectionName + " received: " + std::to_string(count)});
 }
