@@ -20,6 +20,12 @@ public:
 
     inline bool isForDelete() const { return mIsForDelete; }
 
+    inline void setIsForCreate(bool value) { mIsForCreate = value; }
+
+    inline void setIsForUpdate(bool value) { mIsForUpdate = value; }
+
+    inline void setIsForDelete(bool value) { mIsForDelete = value; }
+
 protected:
 
     bool mIsForCreate = false;

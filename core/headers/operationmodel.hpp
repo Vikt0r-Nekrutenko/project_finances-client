@@ -32,7 +32,6 @@ public:
     inline int amount() const { return mAmount; }
 
     QDateTime rawDate() const;
-    DepositModel &rawDeposit(DepositModelHandler &handler);
     CategoryModel &rawCategory(CategoryModelHandler &handler);
 
 private:
