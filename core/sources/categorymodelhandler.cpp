@@ -88,3 +88,12 @@ std::vector<CategoryModel>::iterator CategoryModelHandler::findByName(const std:
 
 CategoryModelHandler::Query::Query(CategoryModelHandler *handler)
     : mHandler{handler} { }
+
+const CategoryModelHandler::Query &CategoryModelHandler::Query::select()
+{
+    clear();
+    for(size_t i = 0; i < mHandler->mCategories.size(); ++i)
+        if(mHandler->mCategories.at(i).mIsDeleted == false)
+            push_back(&mHandler->mCategories.at(i));
+    return *this;
+}
