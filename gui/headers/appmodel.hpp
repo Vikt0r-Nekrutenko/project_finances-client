@@ -21,8 +21,6 @@ public:
 
     AppModel();
 
-    inline const OperationHandlerQuery &operationsList() const { return mOperationsList; }
-
     inline const FavoriteCategoryList &favoriteCategories() const { return mFavoriteCategories; }
 
     inline const MinMaxLoss &minMaxLoss() const { return mMinMaxLoss; }
@@ -97,7 +95,6 @@ public:
 
 private:
 
-    OperationHandlerQuery mOperationsList = OperationHandlerQuery(&Operations);
     FavoriteCategoryList mFavoriteCategories = FavoriteCategoryList(3);
     MinMaxLoss mMinMaxLoss;
     std::vector<std::pair<CategoryModel *, int>> mMonthlyGroupPnls;

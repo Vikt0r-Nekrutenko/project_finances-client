@@ -38,12 +38,12 @@ void AppModel::deleteOperation(int id)
 
 void AppModel::selectOperationsList()
 {
-    mOperationsList.select().filterByDeposit(Deposits.selectedDeposit()->name());
+    Operations.query.select().filterByDeposit(Deposits.selectedDeposit()->name());
     if(SelectedYear == 0 || SelectedMonth == 0) {
-        mOperationsList.filterByCurrentYear().filterByCurrentMonth();
+        Operations.query.filterByCurrentYear().filterByCurrentMonth();
         return;
     }
-    mOperationsList.filterByYear(SelectedYear).filterByMonth(SelectedMonth);
+    Operations.query.filterByYear(SelectedYear).filterByMonth(SelectedMonth);
     return;
 }
 
