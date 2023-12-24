@@ -85,3 +85,6 @@ std::vector<CategoryModel>::iterator CategoryModelHandler::findByName(const std:
         return model.name() == name;
     });
 }
+
+CategoryModelHandler::Query::Query(CategoryModelHandler *handler)
+    : mHandler{handler} { }
