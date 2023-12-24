@@ -10,6 +10,20 @@ class CORE_EXPORT CategoryModelHandler : public DataModelHandler
 
 public:
 
+    class CORE_EXPORT Query : public std::vector<CategoryModel *>
+    {
+    public:
+
+        Query(CategoryModelHandler *handler);
+        const Query &select();
+        std::vector<CategoryModel *>::const_iterator findByName(const std::string &name) const;
+
+    private:
+
+        CategoryModelHandler *mHandler { nullptr };
+
+    } query {this};
+
     CategoryModelHandler();
     ~CategoryModelHandler() override;
 
