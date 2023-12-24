@@ -4,7 +4,7 @@
 
 CategoryModelHandler::CategoryModelHandler()
 {
-    syncAndLoad("categories", mCategories);
+    syncAndLoad<CategoryModel>("categories", mCategories);
     query.select();
 }
 

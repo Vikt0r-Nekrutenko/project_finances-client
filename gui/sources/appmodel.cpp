@@ -16,7 +16,7 @@ AppModel::AppModel()
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)
 {
     Operations.addNewOperation(date, Deposits.selectedDeposit()->name(), amount, category);
-    const std::string type = Categories.findByName(category)->type();
+    const std::string type = (*Categories.query.findByName(category))->type();
     if(type == "positive" || type == "earn")
         Deposits.increaseBalance(amount);
     else if(type == "negative")
@@ -119,9 +119,9 @@ void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::s
 
 void AppModel::selectFavoriteCategories(int id1, int id2, int id3)
 {
-    const CategoryModel &cat1 = Categories.categories().at(id1);
-    const CategoryModel &cat2 = Categories.categories().at(id2);
-    const CategoryModel &cat3 = Categories.categories().at(id3);
+    const CategoryModel &cat1 = *Categories.query.at(id1);
+    const CategoryModel &cat2 = *Categories.query.at(id2);
+    const CategoryModel &cat3 = *Categories.query.at(id3);
 
     int sum1 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat1.name()).sum();
     int sum2 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat2.name()).sum();
