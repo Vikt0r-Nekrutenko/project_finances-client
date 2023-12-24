@@ -31,7 +31,7 @@ public:
     private:
 
         OperationModelHandler *mHandler { nullptr };
-    };
+    } query {this};
 
     OperationModelHandler();
     ~OperationModelHandler() override;
