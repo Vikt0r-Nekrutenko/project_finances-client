@@ -97,3 +97,10 @@ const CategoryModelHandler::Query &CategoryModelHandler::Query::select()
             push_back(&mHandler->mCategories.at(i));
     return *this;
 }
+
+std::vector<CategoryModel *>::const_iterator CategoryModelHandler::Query::findByName(const std::string &name) const
+{
+    return std::find_if(begin(), end(), [&](const CategoryModel *model) {
+        return model->name() == name;
+    });
+}
