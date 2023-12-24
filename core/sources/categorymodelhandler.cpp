@@ -54,6 +54,22 @@ void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
         ++count;
     }
     log().push_back({"Categories received: " + std::to_string(count)});
+
+    parseAndMerge<CategoryModel, std::vector<CategoryModel>::iterator>(
+        "categories",
+        replyJsonArray,
+        mCategories,
+        [](const CategoryModel &remote, const CategoryModel &local) {
+            return remote.mName == local.mName;
+        },
+        [](QJsonValueConstRef var) {
+            return CategoryModel {
+                var.toObject()["name"].toString().toStdString(),
+                var.toObject()["type"].toString().toStdString(),
+                var.toObject()["version"].toInt(),
+                bool(var.toObject()["is_deleted"].toInt())
+            };
+        });
 }
 
 CategoryModelHandler::Query::Query(CategoryModelHandler *handler)
