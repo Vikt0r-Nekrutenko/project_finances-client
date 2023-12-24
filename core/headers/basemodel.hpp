@@ -6,6 +6,8 @@
 
 class CORE_EXPORT BaseModel : public CRUDModel, public LocalModel
 {
+    friend class DataModelHandler;
+
 public:
 
     BaseModel(int version = 0, bool isDeleted = false);

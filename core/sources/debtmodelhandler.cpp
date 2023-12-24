@@ -58,21 +58,22 @@ void DebtModelHandler::decreaseAmount(int index, int amount)
 
 void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    int count = 0;
-    for(const auto &var : replyJsonArray) {
-        DebtModel remoteTmp{
-            var.toObject()["id"].toInt(),
-            var.toObject()["name"].toString().toStdString(),
-            var.toObject()["amount"].toInt(),
-            var.toObject()["version"].toInt(),
-            bool(var.toObject()["is_deleted"].toInt())
-        };
-        merge<DebtModel, std::vector<DebtModel>::iterator>("debts", remoteTmp, mDebts, [&](const DebtModel &model){
-            return remoteTmp.id() == model.id();
+    parseAndMerge<DebtModel, std::vector<DebtModel>::iterator>(
+        "debts",
+        replyJsonArray,
+        mDebts,
+        [](const DebtModel &remoteModel, const DebtModel &localModel) {
+            return remoteModel.mId == localModel.mId;
+        },
+        [](QJsonValueConstRef var) {
+            return DebtModel {
+                var.toObject()["id"].toInt(),
+                var.toObject()["name"].toString().toStdString(),
+                var.toObject()["amount"].toInt(),
+                var.toObject()["version"].toInt(),
+                bool(var.toObject()["is_deleted"].toInt())
+            };
         });
-        ++count;
-    }
-    log().push_back({"Debts received: " + std::to_string(count)});
 }
 
 DebtModelHandler::Query::Query(DebtModelHandler *handler)
