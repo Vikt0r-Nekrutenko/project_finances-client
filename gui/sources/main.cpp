@@ -57,8 +57,8 @@ void printDMH(const DepositModelHandler &dmh)
 
 void printCMH(const CategoryModelHandler &cmh)
 {
-    for(const auto &item : cmh.categories())
-        qDebug() << item.name() << item.type() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    for(const auto &item : cmh.query)
+        qDebug() << item->name() << item->type() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
     qDebug() << "---CMH ver:" << cmh.version();
 }
 

@@ -74,7 +74,7 @@ IView *AddNewOperationView::onEnterPressHandler()
     int amount = mInputField.getExpressionResult();
     std::string category = mInputField.getStr();
 
-    if(mModel->Categories.findByName(category) == mModel->Categories.categories().end()) {
+    if(mModel->Categories.query.findByName(category) == mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered name [" << category << "] isn't exist!" << lendl;
         mInputField.restoreText();
         return this;
@@ -150,7 +150,7 @@ IView *AddNewTodayOperationView::onEnterPressHandler()
     int amount = mInputField.getExpressionResult();
     std::string category = mInputField.getStr();
 
-    if(mModel->Categories.findByName(category) == mModel->Categories.categories().end()) {
+    if(mModel->Categories.query.findByName(category) == mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered name [" << category << "] isn't exist!" << lendl;
         mInputField.restoreText();
         return this;
@@ -301,7 +301,7 @@ IView *ChangeCategory::onEnterPressHandler()
 {
     std::string category = mInputField.getStr();
 
-    if(mModel->Categories.findByName(category) == mModel->Categories.categories().end()) {
+    if(mModel->Categories.query.findByName(category) == mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered category [" << category << "] doesn't exist!" << lendl;
         mInputField.restoreText();
         return this;

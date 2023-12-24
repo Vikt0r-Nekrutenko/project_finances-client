@@ -41,20 +41,6 @@ void CategoryModelHandler::deleteCategory(int index)
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    int count = 0;
-    for (const auto &var : replyJsonArray) {
-        mCategories.push_back({
-            var.toObject()["name"].toString().toStdString(),
-            var.toObject()["type"].toString().toStdString(),
-            var.toObject()["version"].toInt(),
-            bool(var.toObject()["is_deleted"].toInt())
-        });
-        if(mCategories.back().version() > mVersion)
-            mVersion = mCategories.back().version();
-        ++count;
-    }
-    log().push_back({"Categories received: " + std::to_string(count)});
-
     parseAndMerge<CategoryModel, std::vector<CategoryModel>::iterator>(
         "categories",
         replyJsonArray,

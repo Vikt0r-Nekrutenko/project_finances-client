@@ -9,6 +9,7 @@ class CORE_EXPORT CategoryModel : public BaseModel
 
 public:
 
+    CategoryModel() = default;
     CategoryModel(const std::string &name, const std::string &type);
     CategoryModel(const std::string &name, const std::string &type, int version, bool isDeleted = false);
 

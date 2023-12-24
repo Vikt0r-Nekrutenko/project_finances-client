@@ -191,15 +191,15 @@ void AppModel::calcMinMaxLoss()
             mMinMaxLoss.second = pair;
     }
 
-    auto min = Categories.findByName(mMinMaxLoss.first.first);
-    auto max = Categories.findByName(mMinMaxLoss.second.first);
+    auto min = Categories.query.findByName(mMinMaxLoss.first.first);
+    auto max = Categories.query.findByName(mMinMaxLoss.second.first);
 
-    if(min == Categories.categories().end())
+    if(min == Categories.query.end())
         mMinMaxLoss.first = {"None", 0};
     else
         mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
 
-    if(max == Categories.categories().end())
+    if(max == Categories.query.end())
         mMinMaxLoss.second = {"None", 0};
     else
         mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
@@ -208,10 +208,10 @@ void AppModel::calcMinMaxLoss()
 void AppModel::calcMonthlyGroupPnL()
 {
     OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth();
-    for(auto &category : Categories.categories()) {
+    for(auto &category : Categories.query) {
         OperationHandlerQuery tmp = monthlyOperations;
-        int value = tmp.filterByCategoryName(category.name()).sum();
-        mMonthlyGroupPnls.push_back({&category, category.type() == "negative" ? -value : value});
+        int value = tmp.filterByCategoryName(category->name()).sum();
+        mMonthlyGroupPnls.push_back({category, category->type() == "negative" ? -value : value});
     }
 }
 
