@@ -38,9 +38,7 @@ void DebtModelHandler::updateDebt(int index, const std::string &name, int amount
 
 void DebtModelHandler::deleteDebt(int index)
 {
-    ++mVersion;
-    query.at(index)->mIsDeleted = true;
-    query.at(index)->mIsForDelete = true;
+    deleteItem(query.at(index));
     query.select();
 }
 
