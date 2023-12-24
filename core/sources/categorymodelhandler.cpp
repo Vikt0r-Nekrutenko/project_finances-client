@@ -36,9 +36,7 @@ void CategoryModelHandler::updateCategoryType(int index, const std::string &type
 
 void CategoryModelHandler::deleteCategory(int index)
 {
-    mCategories[index].mVersion = ++mVersion;
-    mCategories[index].mIsDeleted = true;
-    mCategories[index].remove();
+    deleteItem<CategoryModel>(query.at(index));
 }
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
