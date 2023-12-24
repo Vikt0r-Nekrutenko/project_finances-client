@@ -15,8 +15,16 @@ CategoryModelHandler::~CategoryModelHandler()
 
 void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)
 {
-    mCategories.push_back(CategoryModel{name, type, ++mVersion});
-    mCategories.back().create();
+    addNewItem<CategoryModel, std::vector<CategoryModel>::iterator>(
+        {name, type},
+        mCategories,
+        [&](const CategoryModel &model) {
+            return model.mName == name;
+        },
+        [&](CategoryModel &model) {
+            model.mType = type;
+        });
+    query.select();
 }
 
 void CategoryModelHandler::updateCategoryType(int index, const std::string &type)
