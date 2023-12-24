@@ -77,21 +77,20 @@ void AppModel::selectedOperationChangeAmount(int amount)
 
 void AppModel::selectedOperationChangeCategory(const std::string &category)
 {
-    OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
-    const std::string type = selectedOperation.rawCategory(Categories).type();
+    const std::string type = Operations.selectedOperation()->rawCategory(Categories).type();
     if(type == "positive" || type == "earn") {
-        Deposits.decreaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(Operations.selectedOperation()->amount());
     } else if(type == "negative") {
-        Deposits.increaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(Operations.selectedOperation()->amount());
     }
 
-    Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), selectedOperation.amount(), category);
+    Operations.changeCategory(category);
 
-    const std::string newType = selectedOperation.rawCategory(Categories).type();
+    const std::string newType = Operations.selectedOperation()->rawCategory(Categories).type();
     if(newType == "positive" || newType == "earn") {
-        Deposits.increaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(Operations.selectedOperation()->amount());
     } else if(newType == "negative") {
-        Deposits.decreaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(Operations.selectedOperation()->amount());
     }
 }
 
