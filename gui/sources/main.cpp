@@ -71,9 +71,9 @@ void printBMH(const DebtModelHandler &cmh)
 
 void printOMH(const OperationModelHandler &omh)
 {
-    auto item = omh.operations().back();
-    // for(const auto &item : omh.operations())
-        qDebug() << item.id() << item.date() << item.deposit() << item.amount() << item.category() << item.version() << item.isDeleted() << item.isForCreate() << item.isForUpdate() << item.isForDelete();
+    // auto item = omh.operations().back();
+    for(const auto &item : omh.query)
+        qDebug() << item->id() << item->date() << item->deposit() << item->amount() << item->category() << item->version() << item->isDeleted() << item->isForCreate() << item->isForUpdate() << item->isForDelete();
     qDebug() << "---OMH ver:" << omh.version();
 }
 
@@ -82,23 +82,18 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     loadSettings();
 
-    // DepositModelHandler dmh;
-    // printDMH(dmh);
+    OperationModelHandler omh;
+    printOMH(omh);
 
-    // dmh.addNewDeposit("test2", 0);
-    // dmh.updateBalance(7, 1000);
-    // dmh.updateBalance(8, 2000);
-    // dmh.deleteDeposit(7);
-    // dmh.updateBalance(7, 10000);
-
-    // for(const auto &item : log())
-        // qDebug() << item;
+    for(const auto &item : log())
+        qDebug() << item;
+    saveSettings();
     // auto t1 = std::chrono::high_resolution_clock::now();
 
     // qDebug() << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - t1).count();
 
-    // QTimer::singleShot(0, &a, SLOT(quit()));
-    // return a.exec();
+    QTimer::singleShot(0, &a, SLOT(quit()));
+    return a.exec();
 
-    return App().run();//a.exec();
+    // return App().run();//a.exec();
 }

@@ -93,7 +93,8 @@ OperationModelHandler::Query &OperationModelHandler::Query::select()
 {
     clear();
     for(size_t i = 0; i < mHandler->mOperations.size(); ++i)
-        push_back(&mHandler->mOperations.at(i));
+        if(mHandler->mOperations.at(i).mIsDeleted == false)
+            push_back(&mHandler->mOperations.at(i));
     return *this;
 }
 
