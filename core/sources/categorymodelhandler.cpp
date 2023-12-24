@@ -10,11 +10,7 @@ CategoryModelHandler::CategoryModelHandler()
 
 CategoryModelHandler::~CategoryModelHandler()
 {
-    // std::ofstream file(LocalPath + "categories.txt");
-    // for(auto &model : mCategories) {
-    //     model.save(file);
-    // }
-    // file.close();
+    syncAndSave("categories.txt", mCategories);
 }
 
 void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)
