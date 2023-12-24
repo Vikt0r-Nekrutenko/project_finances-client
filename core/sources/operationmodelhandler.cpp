@@ -17,11 +17,12 @@ OperationModelHandler::~OperationModelHandler()
 
 void OperationModelHandler::addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
+    int id = mOperations.empty() ? 0 : mOperations.back().id() + 1;
     addNewItem<OperationModel, std::vector<OperationModel>::iterator>(
-        {mOperations.empty() ? 0 : mOperations.back().id() + 1, date, deposit, amount, category},
+        {id, date, deposit, amount, category},
         mOperations,
         [&](const OperationModel &model) {
-            return model.mId == (mOperations.empty() ? 0 : mOperations.back().id() + 1);
+            return model.mId == id;
         },
         [&](OperationModel &model) {
             model.mDate = date;
