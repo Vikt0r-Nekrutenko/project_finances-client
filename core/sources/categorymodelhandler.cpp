@@ -4,84 +4,75 @@
 
 CategoryModelHandler::CategoryModelHandler()
 {
-    std::ifstream file(LocalPath + "categories.txt");
-
-    if(file.is_open()) {
-        while(true) {
-            CategoryModel tmp("", "");
-            tmp.load(file);
-            if(tmp.version() > mVersion)
-                mVersion = tmp.version();
-
-            if(file.eof())
-                break;
-
-            mCategories.push_back(tmp);
-
-            if(tmp.mIsForCreate) {
-                mCategories.back().create();
-            }
-            if(tmp.mIsForUpdate) {
-                mCategories.back().update();
-            }
-            if(tmp.mIsForDelete) {
-                mCategories.back().remove();
-            }
-        }
-        file.close();
-    }
-    // get("categories/");
+    syncAndLoad<CategoryModel>("categories", mCategories);
+    query.select();
 }
 
 CategoryModelHandler::~CategoryModelHandler()
 {
-    // std::ofstream file(LocalPath + "categories.txt");
-    // for(auto &model : mCategories) {
-    //     model.save(file);
-    // }
-    // file.close();
+    syncAndSave("categories.txt", mCategories);
 }
 
 void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)
 {
-    mCategories.push_back(CategoryModel{name, type, ++mVersion});
-    mCategories.back().create();
+    addNewItem<CategoryModel, std::vector<CategoryModel>::iterator>(
+        {name, type},
+        mCategories,
+        [&](const CategoryModel &model) {
+            return model.mName == name;
+        },
+        [&](CategoryModel &model) {
+            model.mType = type;
+        });
+    query.select();
 }
 
 void CategoryModelHandler::updateCategoryType(int index, const std::string &type)
 {
-    mCategories[index].mVersion = ++mVersion;
-    mCategories[index].mType = type;
-    mCategories[index].update();
+    ++mVersion;
+    query.at(index)->mType = type;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void CategoryModelHandler::deleteCategory(int index)
 {
-    mCategories[index].mVersion = ++mVersion;
-    mCategories[index].mIsDeleted = true;
-    mCategories[index].remove();
+    deleteItem<CategoryModel>(query.at(index));
 }
 
 void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    int count = 0;
-    for (const auto &var : replyJsonArray) {
-        mCategories.push_back({
-            var.toObject()["name"].toString().toStdString(),
-            var.toObject()["type"].toString().toStdString(),
-            var.toObject()["version"].toInt(),
-            bool(var.toObject()["is_deleted"].toInt())
+    parseAndMerge<CategoryModel, std::vector<CategoryModel>::iterator>(
+        "categories",
+        replyJsonArray,
+        mCategories,
+        [](const CategoryModel &remote, const CategoryModel &local) {
+            return remote.mName == local.mName;
+        },
+        [](QJsonValueConstRef var) {
+            return CategoryModel {
+                var.toObject()["name"].toString().toStdString(),
+                var.toObject()["type"].toString().toStdString(),
+                var.toObject()["version"].toInt(),
+                bool(var.toObject()["is_deleted"].toInt())
+            };
         });
-        if(mCategories.back().version() > mVersion)
-            mVersion = mCategories.back().version();
-        ++count;
-    }
-    log().push_back({"Categories received: " + std::to_string(count)});
 }
 
-std::vector<CategoryModel>::iterator CategoryModelHandler::findByName(const std::string &name)
+CategoryModelHandler::Query::Query(CategoryModelHandler *handler)
+    : mHandler{handler} { }
+
+const CategoryModelHandler::Query &CategoryModelHandler::Query::select()
 {
-    return std::find_if(mCategories.begin(), mCategories.end(), [&](const CategoryModel &model){
-        return model.name() == name;
+    clear();
+    for(size_t i = 0; i < mHandler->mCategories.size(); ++i)
+        if(mHandler->mCategories.at(i).mIsDeleted == false)
+            push_back(&mHandler->mCategories.at(i));
+    return *this;
+}
+
+std::vector<CategoryModel *>::const_iterator CategoryModelHandler::Query::findByName(const std::string &name) const
+{
+    return std::find_if(begin(), end(), [&](const CategoryModel *model) {
+        return model->name() == name;
     });
 }

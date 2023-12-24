@@ -16,7 +16,7 @@ AppModel::AppModel()
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)
 {
     Operations.addNewOperation(date, Deposits.selectedDeposit()->name(), amount, category);
-    const std::string type = Categories.findByName(category)->type();
+    const std::string type = (*Categories.query.findByName(category))->type();
     if(type == "positive" || type == "earn")
         Deposits.increaseBalance(amount);
     else if(type == "negative")
@@ -119,9 +119,9 @@ void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::s
 
 void AppModel::selectFavoriteCategories(int id1, int id2, int id3)
 {
-    const CategoryModel &cat1 = Categories.categories().at(id1);
-    const CategoryModel &cat2 = Categories.categories().at(id2);
-    const CategoryModel &cat3 = Categories.categories().at(id3);
+    const CategoryModel &cat1 = *Categories.query.at(id1);
+    const CategoryModel &cat2 = *Categories.query.at(id2);
+    const CategoryModel &cat3 = *Categories.query.at(id3);
 
     int sum1 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat1.name()).sum();
     int sum2 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat2.name()).sum();
@@ -191,15 +191,15 @@ void AppModel::calcMinMaxLoss()
             mMinMaxLoss.second = pair;
     }
 
-    auto min = Categories.findByName(mMinMaxLoss.first.first);
-    auto max = Categories.findByName(mMinMaxLoss.second.first);
+    auto min = Categories.query.findByName(mMinMaxLoss.first.first);
+    auto max = Categories.query.findByName(mMinMaxLoss.second.first);
 
-    if(min == Categories.categories().end())
+    if(min == Categories.query.end())
         mMinMaxLoss.first = {"None", 0};
     else
         mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
 
-    if(max == Categories.categories().end())
+    if(max == Categories.query.end())
         mMinMaxLoss.second = {"None", 0};
     else
         mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
@@ -208,10 +208,10 @@ void AppModel::calcMinMaxLoss()
 void AppModel::calcMonthlyGroupPnL()
 {
     OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth();
-    for(auto &category : Categories.categories()) {
+    for(auto &category : Categories.query) {
         OperationHandlerQuery tmp = monthlyOperations;
-        int value = tmp.filterByCategoryName(category.name()).sum();
-        mMonthlyGroupPnls.push_back({&category, category.type() == "negative" ? -value : value});
+        int value = tmp.filterByCategoryName(category->name()).sum();
+        mMonthlyGroupPnls.push_back({category, category->type() == "negative" ? -value : value});
     }
 }
 
