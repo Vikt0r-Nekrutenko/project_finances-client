@@ -29,9 +29,9 @@ void CategoryModelHandler::addNewCategory(const std::string &name, const std::st
 
 void CategoryModelHandler::updateCategoryType(int index, const std::string &type)
 {
-    mCategories[index].mVersion = ++mVersion;
-    mCategories[index].mType = type;
-    mCategories[index].update();
+    ++mVersion;
+    query.at(index)->mType = type;
+    query.at(index)->mIsForUpdate = true;
 }
 
 void CategoryModelHandler::deleteCategory(int index)
