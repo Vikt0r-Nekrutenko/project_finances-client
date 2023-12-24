@@ -49,12 +49,7 @@ void AppModel::selectOperationsList()
 
 void AppModel::selectOperation(int id)
 {
-    mSelectedOperationId = std::distance(Operations.operations().begin(), Operations.at(id));
-}
-
-OperationModel &AppModel::selectedOperation()
-{
-    return Operations.operations().at(mSelectedOperationId);
+    Operations.selectOperation(id);
 }
 
 void AppModel::selectedOperationChangeDate(const std::string &date)

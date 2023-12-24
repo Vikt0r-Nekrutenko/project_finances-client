@@ -65,7 +65,7 @@ public:
 
     void selectOperation(int id);
 
-    OperationModel &selectedOperation();
+    inline const OperationModel &selectedOperation() const { return *Operations.selectedOperation(); }
 
     void selectedOperationChangeDate(const std::string &date);
 
