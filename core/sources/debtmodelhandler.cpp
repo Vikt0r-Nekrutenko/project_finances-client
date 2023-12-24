@@ -11,27 +11,20 @@ DebtModelHandler::DebtModelHandler()
 
 DebtModelHandler::~DebtModelHandler()
 {
-    std::ofstream file(LocalPath + "debts.txt");
-    for(auto &model : mDebts) {
-        model.syncAndSave(file, mVersion);
-    }
-    file.close();
+    syncAndSave("debts.txt", mDebts);
 }
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
 {
-    ++mVersion;
-    std::vector<DebtModel>::iterator searchedDebt = std::find_if(mDebts.begin(), mDebts.end(), [&](const DebtModel &model){
-        return model.name() == name;
-    });
-    if(searchedDebt == mDebts.end()) {
-        mDebts.push_back({0, name, amount});
-        mDebts.back().mIsForCreate = true;
-    } else {
-        searchedDebt->mAmount = amount;
-        searchedDebt->mIsDeleted = searchedDebt->mIsForDelete = false;
-        searchedDebt->mIsForUpdate = true;
-    }
+    addNewItem<DebtModel, std::vector<DebtModel>::iterator>(
+        {0, name, amount},
+        mDebts,
+        [&](const DebtModel &model) {
+            return model.mName == name;
+        },
+        [&](DebtModel &model) {
+            model.mAmount = amount;
+        });
     query.select();
 }
 
@@ -45,9 +38,7 @@ void DebtModelHandler::updateDebt(int index, const std::string &name, int amount
 
 void DebtModelHandler::deleteDebt(int index)
 {
-    ++mVersion;
-    query.at(index)->mIsDeleted = true;
-    query.at(index)->mIsForDelete = true;
+    deleteItem(query.at(index));
     query.select();
 }
 
@@ -67,21 +58,22 @@ void DebtModelHandler::decreaseAmount(int index, int amount)
 
 void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    int count = 0;
-    for(const auto &var : replyJsonArray) {
-        DebtModel remoteTmp{
-            var.toObject()["id"].toInt(),
-            var.toObject()["name"].toString().toStdString(),
-            var.toObject()["amount"].toInt(),
-            var.toObject()["version"].toInt(),
-            bool(var.toObject()["is_deleted"].toInt())
-        };
-        merge<DebtModel, std::vector<DebtModel>::iterator>("debts", remoteTmp, mDebts, [&](const DebtModel &model){
-            return remoteTmp.id() == model.id();
+    parseAndMerge<DebtModel, std::vector<DebtModel>::iterator>(
+        "debts",
+        replyJsonArray,
+        mDebts,
+        [](const DebtModel &remoteModel, const DebtModel &localModel) {
+            return remoteModel.mId == localModel.mId;
+        },
+        [](QJsonValueConstRef var) {
+            return DebtModel {
+                var.toObject()["id"].toInt(),
+                var.toObject()["name"].toString().toStdString(),
+                var.toObject()["amount"].toInt(),
+                var.toObject()["version"].toInt(),
+                bool(var.toObject()["is_deleted"].toInt())
+            };
         });
-        ++count;
-    }
-    log().push_back({"Debts received: " + std::to_string(count)});
 }
 
 DebtModelHandler::Query::Query(DebtModelHandler *handler)
