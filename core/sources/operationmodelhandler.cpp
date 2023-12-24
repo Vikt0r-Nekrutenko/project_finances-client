@@ -17,15 +17,6 @@ OperationModelHandler::~OperationModelHandler()
 
 void OperationModelHandler::addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category)
 {
-    mOperations.push_back(OperationModel{
-        0,
-        date,
-        deposit,
-        amount,
-        category,
-        ++mVersion
-    });
-    mOperations.back().create();
     addNewItem<OperationModel, std::vector<OperationModel>::iterator>(
         {mOperations.empty() ? 0 : mOperations.back().id() + 1, date, deposit, amount, category},
         mOperations,
