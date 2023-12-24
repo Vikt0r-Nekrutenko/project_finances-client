@@ -100,3 +100,63 @@ std::vector<OperationModel>::iterator OperationModelHandler::at(int id)
         return model.id() == id;
     });
 }
+
+OperationModelHandler::Query::Query(OperationModelHandler *model)
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::select()
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByDeposit(const std::string &deposit)
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryName(const std::string &name)
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryType(CategoryModelHandler &handler, const std::string &type)
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentMonth()
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentYear()
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentDay()
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByYear(const int year)
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const int month)
+{
+
+}
+
+const OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const int day)
+{
+
+}
+
+int OperationModelHandler::Query::sum() const
+{
+
+}
