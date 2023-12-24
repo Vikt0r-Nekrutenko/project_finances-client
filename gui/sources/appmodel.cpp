@@ -54,8 +54,7 @@ void AppModel::selectOperation(int id)
 
 void AppModel::selectedOperationChangeDate(const std::string &date)
 {
-    OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
-    Operations.updateOperation(mSelectedOperationId, date, selectedOperation.deposit(), selectedOperation.amount(), selectedOperation.category());
+    Operations.changeDate(date);
 }
 
 void AppModel::selectedOperationChangeDeposit(const std::string &deposit)

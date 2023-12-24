@@ -55,6 +55,13 @@ void OperationModelHandler::selectOperation(int index)
     mSelectedOperation = query.at(index);
 }
 
+void OperationModelHandler::changeDate(const std::string &date)
+{
+    ++mVersion;
+    mSelectedOperation->mDate = date;
+    mSelectedOperation->mIsForUpdate = true;
+}
+
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     parseAndMerge<OperationModel, std::vector<OperationModel>::iterator>(
