@@ -42,6 +42,9 @@ public:
     void deleteOperation(int index);
     void selectOperation(int index);
     void changeDate(const std::string &date);
+    void changeDeposit(const std::string &deposit);
+    void changeAmount(int amount);
+    void changeCategory(const std::string &category);
 
     inline const OperationModel *selectedOperation() const { return mSelectedOperation; }
 

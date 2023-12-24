@@ -62,6 +62,27 @@ void OperationModelHandler::changeDate(const std::string &date)
     mSelectedOperation->mIsForUpdate = true;
 }
 
+void OperationModelHandler::changeDeposit(const std::string &deposit)
+{
+    ++mVersion;
+    mSelectedOperation->mDeposit = deposit;
+    mSelectedOperation->mIsForUpdate = true;
+}
+
+void OperationModelHandler::changeAmount(int amount)
+{
+    ++mVersion;
+    mSelectedOperation->mAmount = amount;
+    mSelectedOperation->mIsForUpdate = true;
+}
+
+void OperationModelHandler::changeCategory(const std::string &category)
+{
+    ++mVersion;
+    mSelectedOperation->mCategory = category;
+    mSelectedOperation->mIsForUpdate = true;
+}
+
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     parseAndMerge<OperationModel, std::vector<OperationModel>::iterator>(
