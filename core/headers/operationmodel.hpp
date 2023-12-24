@@ -33,7 +33,7 @@ public:
     inline int amount() const { return mAmount; }
 
     QDateTime rawDate() const;
-    CategoryModel &rawCategory(CategoryModelHandler &handler);
+    const CategoryModel &rawCategory(CategoryModelHandler &handler) const;
 
 private:
 
