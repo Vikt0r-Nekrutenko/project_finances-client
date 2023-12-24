@@ -26,12 +26,12 @@ void AppModel::addNewOperation(const std::string &date, int amount, const std::s
 
 void AppModel::deleteOperation(int id)
 {
-    id = std::distance(Operations.operations().begin(), Operations.at(id));
-    const std::string type = Operations.operations().at(id).rawCategory(Categories).type();
+    OperationModel *model = Operations.query.at(id);
+    const std::string type = model->rawCategory(Categories).type();
     if(type == "positive" || type == "earn")
-        Deposits.decreaseBalance(Operations.operations().at(id).amount());
+        Deposits.decreaseBalance(model->amount());
     else if(type == "negative")
-        Deposits.increaseBalance(Operations.operations().at(id).amount());
+        Deposits.increaseBalance(model->amount());
     Operations.deleteOperation(id);
     selectOperationsList();
 }
