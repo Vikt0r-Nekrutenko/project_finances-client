@@ -210,7 +210,7 @@ IView *ChangeOperationView::onEnterPressHandler()
 
     --id;
 
-    if(mModel->Operations.at(id) == mModel->Operations.operations().end()) {
+    if(mModel->Operations.query.get(id) == mModel->Operations.query.end()) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
