@@ -25,6 +25,7 @@ public:
         Query &filterByYear(const int year);
         Query &filterByMonth(const int month);
         Query &filterByDay(const int day);
+        Query::const_iterator get(size_t index) const;
         OperationModel *at(size_t index);
 
         int sum() const;

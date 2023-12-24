@@ -177,6 +177,13 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const in
     return *this;
 }
 
+OperationModelHandler::Query::const_iterator OperationModelHandler::Query::get(size_t index) const
+{
+    Query::const_iterator it = begin();
+    for(size_t i = 0; i != index; ++i, ++it);
+    return it;
+}
+
 OperationModel *OperationModelHandler::Query::at(size_t index)
 {
     auto it = begin();
