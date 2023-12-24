@@ -26,80 +26,71 @@ void AppModel::addNewOperation(const std::string &date, int amount, const std::s
 
 void AppModel::deleteOperation(int id)
 {
-    id = std::distance(Operations.operations().begin(), Operations.at(id));
-    const std::string type = Operations.operations().at(id).rawCategory(Categories).type();
+    OperationModel *model = Operations.query.at(id);
+    const std::string type = model->rawCategory(Categories).type();
     if(type == "positive" || type == "earn")
-        Deposits.decreaseBalance(Operations.operations().at(id).amount());
+        Deposits.decreaseBalance(model->amount());
     else if(type == "negative")
-        Deposits.increaseBalance(Operations.operations().at(id).amount());
+        Deposits.increaseBalance(model->amount());
     Operations.deleteOperation(id);
     selectOperationsList();
 }
 
 void AppModel::selectOperationsList()
 {
-    mOperationsList.select().filterByDeposit(Deposits.selectedDeposit()->name());
+    Operations.query.select().filterByDeposit(Deposits.selectedDeposit()->name());
     if(SelectedYear == 0 || SelectedMonth == 0) {
-        mOperationsList.filterByCurrentYear().filterByCurrentMonth();
+        Operations.query.filterByCurrentYear().filterByCurrentMonth();
         return;
     }
-    mOperationsList.filterByYear(SelectedYear).filterByMonth(SelectedMonth);
+    Operations.query.filterByYear(SelectedYear).filterByMonth(SelectedMonth);
     return;
 }
 
 void AppModel::selectOperation(int id)
 {
-    mSelectedOperationId = std::distance(Operations.operations().begin(), Operations.at(id));
-}
-
-OperationModel &AppModel::selectedOperation()
-{
-    return Operations.operations().at(mSelectedOperationId);
+    Operations.selectOperation(id);
 }
 
 void AppModel::selectedOperationChangeDate(const std::string &date)
 {
-    OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
-    Operations.updateOperation(mSelectedOperationId, date, selectedOperation.deposit(), selectedOperation.amount(), selectedOperation.category());
+    Operations.changeDate(date);
 }
 
 void AppModel::selectedOperationChangeDeposit(const std::string &deposit)
 {
-    OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
-    Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), deposit, selectedOperation.amount(), selectedOperation.category());
+    Operations.changeDeposit(deposit);
 }
 
 void AppModel::selectedOperationChangeAmount(int amount)
 {
-    OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
-    const std::string type = selectedOperation.rawCategory(Categories).type();
+    const std::string type = Operations.selectedOperation()->rawCategory(Categories).type();
     if(type == "positive" || type == "earn") {
-        Deposits.decreaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(Operations.selectedOperation()->amount());
         Deposits.increaseBalance(amount);
     } else if(type == "negative") {
-        Deposits.increaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(Operations.selectedOperation()->amount());
         Deposits.decreaseBalance(amount);
     }
-    Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), amount, selectedOperation.category());
+    Operations.changeAmount(amount);
 }
 
 void AppModel::selectedOperationChangeCategory(const std::string &category)
 {
-    OperationModel &selectedOperation = Operations.operations().at(mSelectedOperationId);
-    const std::string type = selectedOperation.rawCategory(Categories).type();
+    const std::string type = Operations.selectedOperation()->rawCategory(Categories).type();
     if(type == "positive" || type == "earn") {
-        Deposits.decreaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(Operations.selectedOperation()->amount());
     } else if(type == "negative") {
-        Deposits.increaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(Operations.selectedOperation()->amount());
     }
 
-    Operations.updateOperation(mSelectedOperationId, selectedOperation.date(), selectedOperation.deposit(), selectedOperation.amount(), category);
+    Operations.changeCategory(category);
 
-    const std::string newType = selectedOperation.rawCategory(Categories).type();
+    const std::string newType = Operations.selectedOperation()->rawCategory(Categories).type();
     if(newType == "positive" || newType == "earn") {
-        Deposits.increaseBalance(selectedOperation.amount());
+        Deposits.increaseBalance(Operations.selectedOperation()->amount());
     } else if(newType == "negative") {
-        Deposits.decreaseBalance(selectedOperation.amount());
+        Deposits.decreaseBalance(Operations.selectedOperation()->amount());
     }
 }
 

@@ -14,6 +14,7 @@ class CORE_EXPORT OperationModel : public BaseModel
 
 public:
 
+    OperationModel() = default;
     OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category);
     OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category, int version, bool isDeleted = false);
 
@@ -32,7 +33,7 @@ public:
     inline int amount() const { return mAmount; }
 
     QDateTime rawDate() const;
-    CategoryModel &rawCategory(CategoryModelHandler &handler);
+    const CategoryModel &rawCategory(CategoryModelHandler &handler) const;
 
 private:
 
