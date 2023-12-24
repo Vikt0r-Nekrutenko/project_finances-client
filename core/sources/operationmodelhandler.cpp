@@ -2,6 +2,7 @@
 #include <QJsonObject>
 
 #include "operationmodelhandler.hpp"
+#include "categorymodel.hpp"
 
 OperationModelHandler::OperationModelHandler()
 {
@@ -101,62 +102,88 @@ std::vector<OperationModel>::iterator OperationModelHandler::at(int id)
     });
 }
 
-OperationModelHandler::Query::Query(OperationModelHandler *model)
-{
+OperationModelHandler::Query::Query(OperationModelHandler *handler)
+    : mHandler{handler} { }
 
+OperationModelHandler::Query &OperationModelHandler::Query::select()
+{
+    clear();
+    for(size_t i = 0; i < mHandler->mOperations.size(); ++i)
+        push_back(&mHandler->mOperations.at(i));
+    return *this;
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::select()
+OperationModelHandler::Query &OperationModelHandler::Query::filterByDeposit(const std::string &deposit)
 {
-
+    for(Query::iterator it = begin(); it != end(); )
+        it = ((*it)->deposit() != deposit) ? erase(it) : ++it;
+    return *this;
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByDeposit(const std::string &deposit)
+OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryName(const std::string &name)
 {
-
+    for(Query::iterator it = begin(); it != end(); )
+        it = ((*it)->category() != name) ? erase(it) : ++it;
+    return *this;
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryName(const std::string &name)
+OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryType(CategoryModelHandler &handler, const std::string &type)
 {
-
+    for(Query::iterator it = begin(); it != end(); )
+        it = ((*it)->rawCategory(handler).type() != type) ? erase(it) : ++it;
+    return *this;
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryType(CategoryModelHandler &handler, const std::string &type)
+OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentMonth()
 {
-
+    const QDate &currentDate = QDate().currentDate();
+    return filterByMonth(currentDate.month());
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentMonth()
+OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentYear()
 {
-
+    const QDate &currentDate = QDate().currentDate();
+    return filterByYear(currentDate.year());
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentYear()
+OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentDay()
 {
-
+    const QDate &currentDate = QDate().currentDate();
+    return filterByDay(currentDate.day());
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentDay()
+OperationModelHandler::Query &OperationModelHandler::Query::filterByYear(const int year)
 {
-
+    for(Query::iterator it = begin(); it != end(); )
+        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().year() != year) ? erase(it) : ++it;
+    return *this;
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByYear(const int year)
+OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const int month)
 {
-
+    for(Query::iterator it = begin(); it != end(); )
+        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().month() != month) ? erase(it) : ++it;
+    return *this;
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const int month)
+OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const int day)
 {
-
+    for(Query::iterator it = begin(); it != end(); )
+        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
+    return *this;
 }
 
-const OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const int day)
+const OperationModel &OperationModelHandler::Query::at(size_t index) const
 {
-
+    auto it = begin();
+    for(size_t i = 0; i != index; ++i, ++it);
+    return *(*it);
 }
 
 int OperationModelHandler::Query::sum() const
 {
-
+    int result = 0;
+    for(Query::const_iterator it = begin(); it != end(); ++it)
+        result += (*it)->amount();
+    return result;
 }

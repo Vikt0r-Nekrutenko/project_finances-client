@@ -10,21 +10,22 @@ class CORE_EXPORT OperationModelHandler : public DataModelHandler
 
 public:
 
-    class CORE_EXPORT Query : public std::vector<OperationModel *>
+    class CORE_EXPORT Query : public std::list<OperationModel *>
     {
     public:
 
-        Query(OperationModelHandler *model);
-        const Query &select();
-        const Query &filterByDeposit(const std::string &deposit);
-        const Query &filterByCategoryName(const std::string &name);
-        const Query &filterByCategoryType(CategoryModelHandler &handler, const std::string &type);
-        const Query &filterByCurrentMonth();
-        const Query &filterByCurrentYear();
-        const Query &filterByCurrentDay();
-        const Query &filterByYear(const int year);
-        const Query &filterByMonth(const int month);
-        const Query &filterByDay(const int day);
+        Query(OperationModelHandler *handler);
+        Query &select();
+        Query &filterByDeposit(const std::string &deposit);
+        Query &filterByCategoryName(const std::string &name);
+        Query &filterByCategoryType(CategoryModelHandler &handler, const std::string &type);
+        Query &filterByCurrentMonth();
+        Query &filterByCurrentYear();
+        Query &filterByCurrentDay();
+        Query &filterByYear(const int year);
+        Query &filterByMonth(const int month);
+        Query &filterByDay(const int day);
+        const OperationModel &at(size_t index) const;
 
         int sum() const;
 
