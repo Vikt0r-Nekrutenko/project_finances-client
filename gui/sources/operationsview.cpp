@@ -239,7 +239,7 @@ void OperationView::show(stf::Renderer &renderer)
 
     auto operation = mModel->selectedOperation();
     renderer.drawLine({mMenuBar->Width +  1, 2}, {renderer.Size.x - 1, 2}, '.');
-    renderer.draw({mMenuBar->Width +  1, 2}, "%d.%s..%m.00 UAH", operation.id() + 1, operation.date().c_str(), operation.amount());
+    renderer.draw({mMenuBar->Width +  1, 2}, "%s..%m.00 UAH", operation.date().c_str(), operation.amount());
     renderer.draw({mMenuBar->Width + 33, 2}, "%s", operation.category().c_str());
 }
 
