@@ -100,7 +100,7 @@ QDateTime OperationModel::rawDate() const
     return QDateTime().fromString(mDate.c_str(), "yyyy-MM-dd");
 }
 
-CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler)
+const CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler) const
 {
     return *(*handler.query.findByName(mCategory));
 }

@@ -82,18 +82,18 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     loadSettings();
 
-    OperationModelHandler omh;
-    printOMH(omh);
+    // OperationModelHandler omh;
+    // printOMH(omh);
 
-    for(const auto &item : log())
-        qDebug() << item;
-    saveSettings();
+    // for(const auto &item : log())
+    //     qDebug() << item;
+    // saveSettings();
     // auto t1 = std::chrono::high_resolution_clock::now();
 
     // qDebug() << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - t1).count();
 
-    QTimer::singleShot(0, &a, SLOT(quit()));
-    return a.exec();
+    // QTimer::singleShot(0, &a, SLOT(quit()));
+    // return a.exec();
 
-    // return App().run();//a.exec();
+    return App().run();//a.exec();
 }

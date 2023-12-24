@@ -47,6 +47,40 @@ void OperationModelHandler::updateOperation(int index, const std::string &date, 
 void OperationModelHandler::deleteOperation(int index)
 {
     deleteItem<OperationModel>(query.at(index));
+    query.select();
+}
+
+void OperationModelHandler::selectOperation(int index)
+{
+    mSelectedOperation = query.at(index);
+}
+
+void OperationModelHandler::changeDate(const std::string &date)
+{
+    ++mVersion;
+    mSelectedOperation->mDate = date;
+    mSelectedOperation->mIsForUpdate = true;
+}
+
+void OperationModelHandler::changeDeposit(const std::string &deposit)
+{
+    ++mVersion;
+    mSelectedOperation->mDeposit = deposit;
+    mSelectedOperation->mIsForUpdate = true;
+}
+
+void OperationModelHandler::changeAmount(int amount)
+{
+    ++mVersion;
+    mSelectedOperation->mAmount = amount;
+    mSelectedOperation->mIsForUpdate = true;
+}
+
+void OperationModelHandler::changeCategory(const std::string &category)
+{
+    ++mVersion;
+    mSelectedOperation->mCategory = category;
+    mSelectedOperation->mIsForUpdate = true;
 }
 
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
@@ -69,13 +103,6 @@ void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
                 bool(var.toObject()["is_deleted"].toInt())
             };
         });
-}
-
-std::vector<OperationModel>::iterator OperationModelHandler::at(int id)
-{
-    return std::find_if(mOperations.begin(), mOperations.end(), [&](const OperationModel &model){
-        return model.id() == id;
-    });
 }
 
 OperationModelHandler::Query::Query(OperationModelHandler *handler)
@@ -148,6 +175,13 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const in
     for(Query::iterator it = begin(); it != end(); )
         it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
     return *this;
+}
+
+OperationModelHandler::Query::const_iterator OperationModelHandler::Query::get(size_t index) const
+{
+    Query::const_iterator it = begin();
+    for(size_t i = 0; i != index; ++i, ++it);
+    return it;
 }
 
 OperationModel *OperationModelHandler::Query::at(size_t index)

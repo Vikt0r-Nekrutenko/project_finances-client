@@ -25,12 +25,12 @@ void OperationsView::show(stf::Renderer &renderer)
     mMenuBar->show(renderer);
     drawLogItem(renderer, mMenuBar->Width);
 
-    int y = 2;
-    for(auto operation = mModel->operationsList().rbegin(); operation != mModel->operationsList().rend(); ++operation) {
+    int y = 2, id = 0;
+    for(auto operation = mModel->Operations.query.rbegin(); operation != mModel->Operations.query.rend(); ++operation) {
         if(y == renderer.Size.y - LogHeight - 1)
             break;
         renderer.drawLine({mMenuBar->Width +  1, y}, {renderer.Size.x - 1, y}, '.');
-        renderer.draw({mMenuBar->Width +  1, y}, "%d.%s..%m.00 UAH", (*operation)->id() + 1, (*operation)->date().c_str(), (*operation)->amount());
+        renderer.draw({mMenuBar->Width +  1, y}, "%d.%s..%m.00 UAH", ++id, (*operation)->date().c_str(), (*operation)->amount());
         renderer.draw({mMenuBar->Width + 33, y}, "%s", (*operation)->category().c_str());
         ++y;
     }
@@ -170,7 +170,7 @@ IView *DeleteOperationView::onEnterPressHandler()
 
     --id;
 
-    if(mModel->Operations.at(id) == mModel->Operations.operations().end()) {
+    if(mModel->Operations.query.get(id) == mModel->Operations.query.end()) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
@@ -210,7 +210,7 @@ IView *ChangeOperationView::onEnterPressHandler()
 
     --id;
 
-    if(mModel->Operations.at(id) == mModel->Operations.operations().end()) {
+    if(mModel->Operations.query.get(id) == mModel->Operations.query.end()) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
@@ -239,7 +239,7 @@ void OperationView::show(stf::Renderer &renderer)
 
     auto operation = mModel->selectedOperation();
     renderer.drawLine({mMenuBar->Width +  1, 2}, {renderer.Size.x - 1, 2}, '.');
-    renderer.draw({mMenuBar->Width +  1, 2}, "%d.%s..%m.00 UAH", operation.id() + 1, operation.date().c_str(), operation.amount());
+    renderer.draw({mMenuBar->Width +  1, 2}, "%s..%m.00 UAH", operation.date().c_str(), operation.amount());
     renderer.draw({mMenuBar->Width + 33, 2}, "%s", operation.category().c_str());
 }
 
