@@ -4,33 +4,8 @@
 
 CategoryModelHandler::CategoryModelHandler()
 {
-    std::ifstream file(LocalPath + "categories.txt");
-
-    if(file.is_open()) {
-        while(true) {
-            CategoryModel tmp("", "");
-            tmp.load(file);
-            if(tmp.version() > mVersion)
-                mVersion = tmp.version();
-
-            if(file.eof())
-                break;
-
-            mCategories.push_back(tmp);
-
-            if(tmp.mIsForCreate) {
-                mCategories.back().create();
-            }
-            if(tmp.mIsForUpdate) {
-                mCategories.back().update();
-            }
-            if(tmp.mIsForDelete) {
-                mCategories.back().remove();
-            }
-        }
-        file.close();
-    }
-    // get("categories/");
+    syncAndLoad("categories", mCategories);
+    query.select();
 }
 
 CategoryModelHandler::~CategoryModelHandler()
