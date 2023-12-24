@@ -40,6 +40,9 @@ public:
     void addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category);
     void updateOperation(int index, const std::string &date, const std::string &deposit, int amount, const std::string &category);
     void deleteOperation(int index);
+    void selectOperation(int index);
+
+    inline const OperationModel *selectedOperation() const { return mSelectedOperation; }
 
 protected:
 
@@ -48,6 +51,7 @@ protected:
 private:
 
     std::vector<OperationModel> mOperations;
+    OperationModel *mSelectedOperation { nullptr };
 };
 
 #endif // OPERATIONMODELHANDLER_HPP

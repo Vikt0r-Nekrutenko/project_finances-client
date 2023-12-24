@@ -47,6 +47,12 @@ void OperationModelHandler::updateOperation(int index, const std::string &date, 
 void OperationModelHandler::deleteOperation(int index)
 {
     deleteItem<OperationModel>(query.at(index));
+    query.select();
+}
+
+void OperationModelHandler::selectOperation(int index)
+{
+    mSelectedOperation = query.at(index);
 }
 
 void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
