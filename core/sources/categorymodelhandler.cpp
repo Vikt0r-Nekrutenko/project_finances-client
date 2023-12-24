@@ -79,13 +79,6 @@ void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
     log().push_back({"Categories received: " + std::to_string(count)});
 }
 
-std::vector<CategoryModel>::iterator CategoryModelHandler::findByName(const std::string &name)
-{
-    return std::find_if(mCategories.begin(), mCategories.end(), [&](const CategoryModel &model){
-        return model.name() == name;
-    });
-}
-
 CategoryModelHandler::Query::Query(CategoryModelHandler *handler)
     : mHandler{handler} { }
 
