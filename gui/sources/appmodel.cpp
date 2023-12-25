@@ -144,6 +144,7 @@ void AppModel::calcPnLs()
 
 void AppModel::calcMonthlyGroupPnL()
 {
+    mMonthlyGroupPnls.clear();
     OperationModelHandler::Query monthlyOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentMonth().filterByCurrentYear();
     for(auto &category : Categories.query) {
         OperationModelHandler::Query tmp = monthlyOperations;
