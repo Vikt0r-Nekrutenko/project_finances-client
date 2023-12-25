@@ -107,11 +107,6 @@ void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::s
     }
 }
 
-void AppModel::selectFavoriteCategories(int id1, int id2, int id3)
-{
-
-}
-
 int AppModel::calcTotalEarn()
 {
     return mTotalEarn = OperationModelHandler::Query(&Operations).select().filterByCategoryType(Categories, "earn").sum();
@@ -147,11 +142,6 @@ void AppModel::calcPnLs()
     mTodayLoss = negativeOperations.filterByCurrentDay().sum();
 
     mTodayPnL = mTodayProfit - mTodayLoss;
-}
-
-void AppModel::calcMinMaxLoss()
-{
-
 }
 
 void AppModel::calcMonthlyGroupPnL()

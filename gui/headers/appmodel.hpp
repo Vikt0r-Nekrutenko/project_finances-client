@@ -15,16 +15,9 @@ public:
     CategoryModelHandler Categories;
     OperationModelHandler Operations;
 
-    using FavoriteCategoryList = std::vector<std::pair<std::string, int>>;
-    using MinMaxLoss = std::pair<std::pair<std::string, int>, std::pair<std::string, int>>;
-
     AppModel();
 
     inline const OperationModel &selectedOperation() const { return *Operations.selectedOperation(); }
-
-    inline const FavoriteCategoryList &favoriteCategories() const { return mFavoriteCategories; }
-
-    inline const MinMaxLoss &minMaxLoss() const { return mMinMaxLoss; }
 
     inline const std::pair<std::string, float> &currentCurrency() const { return mQuotes[mCurrentCurrencyId]; }
 
@@ -74,8 +67,6 @@ public:
 
     void addOrChangeDebt(const std::string &name, int amount, const std::string &lendOrRepay);
 
-    void selectFavoriteCategories(int id1, int id2, int id3);
-
     int calcTotalEarn();
 
     int calcTotalDeposits();
@@ -83,8 +74,6 @@ public:
     int calcTotalDebts();
 
     void calcPnLs();
-
-    void calcMinMaxLoss();
 
     void calcMonthlyGroupPnL();
 
@@ -94,8 +83,6 @@ public:
 
 private:
 
-    FavoriteCategoryList mFavoriteCategories = FavoriteCategoryList(3);
-    MinMaxLoss mMinMaxLoss;
     std::vector<std::pair<CategoryModel *, int>> mMonthlyGroupPnls;
     std::pair<std::string, float> mQuotes[2] {{"UAH", 1.f}, {"USD", 1.f}};
     int mTotalEarn = 0;
