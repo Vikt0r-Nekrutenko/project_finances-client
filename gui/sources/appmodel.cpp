@@ -1,5 +1,4 @@
 #include "appmodel.hpp"
-#include <unordered_map>
 
 AppModel::AppModel()
 {
@@ -167,10 +166,10 @@ void AppModel::calcMonthlyGroupPnL()
 
 void AppModel::updateStats()
 {
-    // calcTotalEarn();
-    // calcTotalDeposits();
-    // calcTotalDebts();
-    // calcPnLs();
+    calcTotalEarn();
+    calcTotalDeposits();
+    calcTotalDebts();
+    calcPnLs();
     // calcMinMaxLoss();
 }
 
