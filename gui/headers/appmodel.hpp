@@ -55,6 +55,8 @@ public:
 
     inline int yearLoss() const { return float(mYearLoss) / mQuotes[mCurrentCurrencyId].second; }
 
+    inline const OperationModel &selectedOperation() const { return *Operations.selectedOperation(); }
+
     void addNewOperation(const std::string &date, int amount, const std::string &category);
 
     void deleteOperation(int id);
@@ -62,8 +64,6 @@ public:
     void selectOperationsList();
 
     void selectOperation(int id);
-
-    inline const OperationModel &selectedOperation() const { return *Operations.selectedOperation(); }
 
     void selectedOperationChangeDate(const std::string &date);
 
