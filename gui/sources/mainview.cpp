@@ -45,19 +45,6 @@ void MainView::show(stf::Renderer &renderer)
     renderer.draw({mMenuBar->Width + 1, y++}, (std::string("Year.....") + (mModel->yearPnL() > 0 ? "%CG%m.00%CD (%CR-%m.00%CD/%CG+%m.00%CD) %s" : "%CR%m.00%CD (%CR-%m.00%CD/%CG+%m.00%CD) %s")).c_str(), mModel->yearPnL(), mModel->yearLoss(), mModel->yearProfit(), mModel->currentCurrency().first.c_str());
 
     drawColoredInfo("Total....", mModel->totalPnL());
-
-    ++y;
-    renderer.drawText({mMenuBar->Width + 1, y++}, "Favorite categories(by current month):");
-    for(const auto &category : mModel->favoriteCategories()) {
-        renderer.drawLine({mMenuBar->Width + 1, y}, {mMenuBar->Width + 15, y}, '.');
-        renderer.draw({mMenuBar->Width + 1, y}, "%s:", category.first.c_str());
-        drawColoredInfo("", category.second, 15);
-    }
-
-    ++y;
-    renderer.drawText({mMenuBar->Width + 1, y++}, "Min & Max loss(by current month):");
-    drawColoredInfo((mModel->minMaxLoss().first.first+": "), mModel->minMaxLoss().first.second);
-    drawColoredInfo((mModel->minMaxLoss().second.first+": "), mModel->minMaxLoss().second.second);
 }
 
 IView *MainView::keyHandler(int key)
