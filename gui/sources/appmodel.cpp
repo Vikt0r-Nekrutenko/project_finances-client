@@ -110,22 +110,12 @@ void AppModel::addOrChangeDebt(const std::string &name, int amount, const std::s
 
 void AppModel::selectFavoriteCategories(int id1, int id2, int id3)
 {
-    const CategoryModel &cat1 = *Categories.query.at(id1);
-    const CategoryModel &cat2 = *Categories.query.at(id2);
-    const CategoryModel &cat3 = *Categories.query.at(id3);
 
-    int sum1 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat1.name()).sum();
-    int sum2 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat2.name()).sum();
-    int sum3 = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth().filterByCategoryName(cat3.name()).sum();
-
-    mFavoriteCategories.at(0) = {cat1.name(), cat1.type() == "negative" ? -sum1 : sum1};
-    mFavoriteCategories.at(1) = {cat2.name(), cat2.type() == "negative" ? -sum2 : sum2};
-    mFavoriteCategories.at(2) = {cat3.name(), cat3.type() == "negative" ? -sum3 : sum3};
 }
 
 int AppModel::calcTotalEarn()
 {
-    return mTotalEarn = OperationHandlerQuery(&Operations).select().filterByCategoryType(Categories, "earn").sum();
+    return mTotalEarn = OperationModelHandler::Query(&Operations).select().filterByCategoryType(Categories, "earn").sum();
 }
 
 int AppModel::calcTotalDeposits()
@@ -140,67 +130,36 @@ int AppModel::calcTotalDebts()
 
 void AppModel::calcPnLs()
 {
-    OperationHandlerQuery yearEarnOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "earn");
-    OperationHandlerQuery yearPositiveOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "positive");
-    OperationHandlerQuery yearNegativeOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "negative");
+    OperationModelHandler::Query earnOperations =     OperationModelHandler::Query(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "earn");
+    OperationModelHandler::Query positiveOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "positive");
+    OperationModelHandler::Query negativeOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "negative");
 
-    mYearProfit = yearEarnOperations.sum() + yearPositiveOperations.sum();
-    mYearLoss = yearNegativeOperations.sum();
+    mYearProfit = earnOperations.sum() + positiveOperations.sum();
+    mYearLoss = negativeOperations.sum();
 
     mYearPnL = mYearProfit - mYearLoss;
 
-    mMonthlyProfit = yearEarnOperations.filterByCurrentMonth().sum() + yearPositiveOperations.filterByCurrentMonth().sum();
-    mMonthlyLoss = yearNegativeOperations.filterByCurrentMonth().sum();
+    mMonthlyProfit = earnOperations.filterByCurrentMonth().sum() + positiveOperations.filterByCurrentMonth().sum();
+    mMonthlyLoss = negativeOperations.filterByCurrentMonth().sum();
 
     mMonthlyPnL = mMonthlyProfit - mMonthlyLoss;
 
-    mTodayProfit = yearEarnOperations.filterByCurrentDay().sum() + yearPositiveOperations.filterByCurrentDay().sum();
-    mTodayLoss = yearNegativeOperations.filterByCurrentDay().sum();
+    mTodayProfit = earnOperations.filterByCurrentDay().sum() + positiveOperations.filterByCurrentDay().sum();
+    mTodayLoss = negativeOperations.filterByCurrentDay().sum();
 
     mTodayPnL = mTodayProfit - mTodayLoss;
 }
 
 void AppModel::calcMinMaxLoss()
 {
-    OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations)
-                                                  .select()
-                                                  .filterByCurrentYear()
-                                                  .filterByCurrentMonth()
-                                                  .filterByCategoryType(Categories, "negative");
-    std::unordered_map<std::string, int> sumByCategories;
-    for(const auto &operation : monthlyOperations) {
-        sumByCategories[operation->category()] += operation->amount();
-    }
 
-    mMinMaxLoss.first.second = INT_MAX;
-    mMinMaxLoss.second.second = 0;
-
-    for(const auto &pair : sumByCategories) {
-        if(pair.second < mMinMaxLoss.first.second)
-            mMinMaxLoss.first = pair;
-        if(pair.second > mMinMaxLoss.second.second)
-            mMinMaxLoss.second = pair;
-    }
-
-    auto min = Categories.query.findByName(mMinMaxLoss.first.first);
-    auto max = Categories.query.findByName(mMinMaxLoss.second.first);
-
-    if(min == Categories.query.end())
-        mMinMaxLoss.first = {"None", 0};
-    else
-        mMinMaxLoss.first.second = -mMinMaxLoss.first.second;
-
-    if(max == Categories.query.end())
-        mMinMaxLoss.second = {"None", 0};
-    else
-        mMinMaxLoss.second.second = -mMinMaxLoss.second.second;
 }
 
 void AppModel::calcMonthlyGroupPnL()
 {
-    OperationHandlerQuery monthlyOperations = OperationHandlerQuery(&Operations).select().filterByCurrentYear().filterByCurrentMonth();
+    OperationModelHandler::Query monthlyOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentMonth().filterByCurrentYear();
     for(auto &category : Categories.query) {
-        OperationHandlerQuery tmp = monthlyOperations;
+        OperationModelHandler::Query tmp = monthlyOperations;
         int value = tmp.filterByCategoryName(category->name()).sum();
         mMonthlyGroupPnls.push_back({category, category->type() == "negative" ? -value : value});
     }

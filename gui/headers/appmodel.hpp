@@ -20,6 +20,8 @@ public:
 
     AppModel();
 
+    inline const OperationModel &selectedOperation() const { return *Operations.selectedOperation(); }
+
     inline const FavoriteCategoryList &favoriteCategories() const { return mFavoriteCategories; }
 
     inline const MinMaxLoss &minMaxLoss() const { return mMinMaxLoss; }
@@ -53,8 +55,6 @@ public:
     inline int yearProfit() const { return float(mYearProfit) / mQuotes[mCurrentCurrencyId].second; }
 
     inline int yearLoss() const { return float(mYearLoss) / mQuotes[mCurrentCurrencyId].second; }
-
-    inline const OperationModel &selectedOperation() const { return *Operations.selectedOperation(); }
 
     void addNewOperation(const std::string &date, int amount, const std::string &category);
 
