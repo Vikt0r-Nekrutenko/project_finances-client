@@ -5,7 +5,6 @@
 #include "headers/debtmodelhandler.hpp"
 #include "headers/categorymodelhandler.hpp"
 #include "headers/operationmodelhandler.hpp"
-#include "headers/queryresult.hpp"
 
 class AppModel
 {
