@@ -7,9 +7,6 @@ AppModel::AppModel()
         float usd = mdh.usd()->sell;
         mQuotes[1].second = usd;
     }
-    try {
-        // selectFavoriteCategories(0, 1, 10);
-    } catch(...) { }
 }
 
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)
@@ -124,9 +121,10 @@ int AppModel::calcTotalDebts()
 
 void AppModel::calcPnLs()
 {
-    OperationModelHandler::Query earnOperations =     OperationModelHandler::Query(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "earn");
-    OperationModelHandler::Query positiveOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "positive");
-    OperationModelHandler::Query negativeOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentYear().filterByCategoryType(Categories, "negative");
+    OperationModelHandler::Query operationsByYear =   OperationModelHandler::Query(&Operations).select().filterByCurrentYear();
+    OperationModelHandler::Query earnOperations =     OperationModelHandler::Query(operationsByYear).filterByCategoryType(Categories, "earn");
+    OperationModelHandler::Query positiveOperations = OperationModelHandler::Query(operationsByYear).filterByCategoryType(Categories, "positive");
+    OperationModelHandler::Query negativeOperations = OperationModelHandler::Query(operationsByYear).filterByCategoryType(Categories, "negative");
 
     mYearProfit = earnOperations.sum() + positiveOperations.sum();
     mYearLoss = negativeOperations.sum();
@@ -160,7 +158,6 @@ void AppModel::updateStats()
     calcTotalDeposits();
     calcTotalDebts();
     calcPnLs();
-    // calcMinMaxLoss();
 }
 
 void AppModel::switchCurrency()

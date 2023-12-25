@@ -9,8 +9,8 @@ void IMenu::show(stf::Renderer &renderer)
 {
     renderer.drawLine({Width, 2}, {Width, renderer.Size.y}, '|');
 
-    renderer.drawPixel({0, 2 + Selector}, '[');
-    renderer.drawPixel({Width - 1, 2 + Selector}, ']');
+    renderer.drawPixel({0, 2 + int(Selector)}, '[');
+    renderer.drawPixel({Width - 1, 2 + int(Selector)}, ']');
 }
 
 IView *IMenu::keyHandler(IView *sender, int key)
@@ -40,7 +40,7 @@ ActiveMenu::ActiveMenu(const MenuBar *mbar)
 void ActiveMenu::show(stf::Renderer &renderer)
 {
     for(size_t i = 0; i < mMenuBar->size(); ++i) {
-        renderer.draw({1, 2 + i}, "%d.%s", i+1, mMenuBar->at(i)->caption().c_str());
+        renderer.draw({1, 2 + int(i)}, "%d.%s", i+1, mMenuBar->at(i)->caption().c_str());
     }
     IMenu::show(renderer);
 }
@@ -65,7 +65,7 @@ InactiveMenu::InactiveMenu(const MenuBar *mbar)
 void InactiveMenu::show(stf::Renderer &renderer)
 {
     for(size_t i = 0; i < mMenuBar->size(); ++i) {
-        renderer.draw({1, 2 + i}, "%d", i+1);
+        renderer.draw({1, 2 + int(i)}, "%d", i+1);
     }
     IMenu::show(renderer);
 }
