@@ -33,7 +33,7 @@ SOURCES += \
 
 HEADERS += \
     headers/basemodel.hpp \
-    headers/core_global.h \
+    headers/core_global.hpp \
     headers/datamodel.hpp \
     headers/debtmodel.hpp \
     headers/debtmodelhandler.hpp \

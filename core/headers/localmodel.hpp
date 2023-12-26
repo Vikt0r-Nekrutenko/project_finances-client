@@ -2,7 +2,7 @@
 #define LOCALMODEL_HPP
 
 #include <fstream>
-#include "core_global.h"
+#include "core_global.hpp"
 
 const std::string LocalPath = "local/";
 

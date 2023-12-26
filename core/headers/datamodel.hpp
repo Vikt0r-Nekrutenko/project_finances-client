@@ -6,7 +6,7 @@
 #include <QUrlQuery>
 #include <vector>
 
-#include "core_global.h"
+#include "core_global.hpp"
 
 static std::vector<std::string> CoreLog;
 static QJsonObject Settings;
