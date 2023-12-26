@@ -158,34 +158,25 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentDay()
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByYear(const int year)
 {
-    for(Query::iterator it = begin(); it != end(); ) {
-        // it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().year() != year) ? erase(it) : ++it;
-        erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
-            int _year = std::stoi(model->mDate.substr(0, 4));
-            return _year != year; }), end());
-    }
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+              int _year = std::stoi(model->mDate.substr(0, 4));
+              return _year != year; }), end());
     return *this;
 }
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const int month)
 {
-    for(Query::iterator it = begin(); it != end(); ) {
-        // it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().month() != month) ? erase(it) : ++it;
-        erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
-                  int _month = std::stoi(model->mDate.substr(5, 7));
-                  return _month != month; }), end());
-    }
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+              int _month = std::stoi(model->mDate.substr(5, 7));
+              return _month != month; }), end());
     return *this;
 }
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const int day)
 {
-    for(Query::iterator it = begin(); it != end(); ) {
-        // it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
-        erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
-                  int _day = std::stoi(model->mDate.substr(8, 10));
-                  return _day != day; }), end());
-    }
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+              int _day = std::stoi(model->mDate.substr(8, 10));
+              return _day != day; }), end());
     return *this;
 }
 
