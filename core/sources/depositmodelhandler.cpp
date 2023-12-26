@@ -99,9 +99,5 @@ const DepositModelHandler::Query &DepositModelHandler::Query::select()
 
 int DepositModelHandler::Query::sum() const
 {
-    int result = 0;
-    for(auto item : *this) {
-        result += item->mBalance;
-    }
-    return result;
+    return std::accumulate(begin(), end(), 0, [](int accumulator, const DepositModel *model) { return accumulator + model->mBalance; });
 }
