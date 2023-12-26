@@ -95,11 +95,6 @@ void OperationModel::load(std::ifstream &file)
     BaseModel::load(file);
 }
 
-QDateTime OperationModel::rawDate() const
-{
-    return QDateTime().fromString(mDate.c_str(), "yyyy-MM-dd");
-}
-
 const CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler) const
 {
     return *(*handler.query.findByName(mCategory));
