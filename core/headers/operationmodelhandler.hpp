@@ -4,13 +4,15 @@
 #include "modelhandler.hpp"
 #include "operationmodel.hpp"
 
+#include <deque>
+
 class CORE_EXPORT OperationModelHandler : public DataModelHandler
 {
     friend class OperationHandlerQuery;
 
 public:
 
-    class CORE_EXPORT Query : public std::list<OperationModel *>
+    class CORE_EXPORT Query : public std::deque<OperationModel *>
     {
     public:
 
@@ -25,8 +27,6 @@ public:
         Query &filterByYear(const int year);
         Query &filterByMonth(const int month);
         Query &filterByDay(const int day);
-        Query::const_iterator get(size_t index) const;
-        OperationModel *at(size_t index);
 
         int sum() const;
 
