@@ -189,24 +189,7 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const in
     return *this;
 }
 
-OperationModelHandler::Query::const_iterator OperationModelHandler::Query::get(size_t index) const
-{
-    Query::const_iterator it = begin();
-    for(size_t i = 0; i != index; ++i, ++it);
-    return it;
-}
-
-OperationModel *OperationModelHandler::Query::at(size_t index)
-{
-    auto it = begin();
-    for(size_t i = 0; i != index; ++i, ++it);
-    return *it;
-}
-
 int OperationModelHandler::Query::sum() const
 {
-    int result = 0;
-    for(Query::const_iterator it = begin(); it != end(); ++it)
-        result += (*it)->amount();
-    return result;
+    return std::accumulate(begin(), end(), 0, [](int accumulator, const OperationModel *model) { return accumulator + model->mAmount; });
 }
