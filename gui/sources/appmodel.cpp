@@ -43,21 +43,6 @@ void AppModel::selectOperationsList()
     return;
 }
 
-void AppModel::selectOperation(int id)
-{
-    Operations.selectOperation(id);
-}
-
-void AppModel::selectedOperationChangeDate(const std::string &date)
-{
-    Operations.changeDate(date);
-}
-
-void AppModel::selectedOperationChangeDeposit(const std::string &deposit)
-{
-    Operations.changeDeposit(deposit);
-}
-
 void AppModel::selectedOperationChangeAmount(int amount)
 {
     const std::string type = Operations.selectedOperation()->rawCategory(Categories).type();

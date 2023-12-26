@@ -55,12 +55,6 @@ public:
 
     void selectOperationsList();
 
-    void selectOperation(int id);
-
-    void selectedOperationChangeDate(const std::string &date);
-
-    void selectedOperationChangeDeposit(const std::string &deposit);
-
     void selectedOperationChangeAmount(int amount);
 
     void selectedOperationChangeCategory(const std::string &category);

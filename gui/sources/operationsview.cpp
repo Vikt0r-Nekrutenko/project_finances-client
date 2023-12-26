@@ -216,7 +216,7 @@ IView *ChangeOperationView::onEnterPressHandler()
         return this;
     }
 
-    mModel->selectOperation(id);
+    mModel->Operations.selectOperation(id);
     return new OperationView(mModel, mParent);
 }
 
@@ -278,7 +278,7 @@ IView *ChangeDate::onEnterPressHandler()
 {
     std::string date = mInputField.getStr();
 
-    mModel->selectedOperationChangeDate(date);
+    mModel->Operations.changeDate(date);
     return mParent;
 }
 
