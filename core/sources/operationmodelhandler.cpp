@@ -169,8 +169,12 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByYear(const i
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const int month)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().month() != month) ? erase(it) : ++it;
+    for(Query::iterator it = begin(); it != end(); ) {
+        // it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().month() != month) ? erase(it) : ++it;
+        erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+                  int _month = std::stoi(model->mDate.substr(5, 7));
+                  return _month != month; }), end());
+    }
     return *this;
 }
 
