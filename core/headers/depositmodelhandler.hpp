@@ -7,16 +7,32 @@
 class CORE_EXPORT DepositModelHandler : public DataModelHandler
 {
 public:
+
+    class CORE_EXPORT Query : public std::vector<DepositModel *>
+    {
+    public:
+
+        Query(DepositModelHandler *handler);
+        const Query &select();
+        int sum() const;
+        std::vector<DepositModel *>::const_iterator findByName(const std::string &name) const;
+
+    private:
+
+        DepositModelHandler *mHandler { nullptr };
+
+    } query {this};
+
     DepositModelHandler();
     ~DepositModelHandler() override;
     void addNewDeposit(const std::string &name, int balance);
-    void updateBalance(int depositIndex, int newBalance);
-    void deleteDeposit(int depositIndex);
+    void selectDeposit(int index);
+    void updateBalance(int index, int newBalance);
+    void deleteDeposit(int index);
+    void increaseBalance(int amount);
+    void decreaseBalance(int amount);
 
-    inline const std::vector<DepositModel> &deposits() const { return mDeposits; }
-    inline std::vector<DepositModel> &deposits() { return mDeposits; }
-
-    std::vector<DepositModel>::iterator findByName(const std::string &name);
+    inline const DepositModel *selectedDeposit() const { return mSelectedDeposit; }
 
 protected:
 
@@ -25,6 +41,7 @@ protected:
 private:
 
     std::vector<DepositModel> mDeposits;
+    DepositModel *mSelectedDeposit { nullptr };
 };
 
 #endif // DEPOSITMODELHANDLER_HPP

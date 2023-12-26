@@ -14,6 +14,12 @@ QJsonObject &BaseModel::completeJsonObject(QJsonObject &object)
     return object;
 }
 
+void BaseModel::parseJsonObject(const QJsonObject &object)
+{
+    mVersion = object["balance"].toInt();
+    mIsDeleted = object["is_deleted"].toInt();
+}
+
 void BaseModel::load(std::ifstream &file)
 {
     file >> mVersion >> mIsDeleted;
@@ -25,4 +31,24 @@ void BaseModel::save(std::ofstream &file)
     file << " " << mVersion
          << " " << mIsDeleted;
     LocalModel::save(file);
+}
+
+void BaseModel::syncAndSave(std::ofstream &file, int version)
+{
+    if(mIsForCreate && mIsForDelete)
+        return;
+
+    if(mIsForCreate) {
+        mVersion = version;
+        create();
+        mIsForUpdate = false;
+    } else if (mIsForDelete) {
+        mVersion = version;
+        remove();
+        mIsForUpdate = false;
+    } else if (mIsForUpdate) {
+        mVersion = version;
+        update();
+    }
+    save(file);
 }

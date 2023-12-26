@@ -2,7 +2,6 @@
 #include <QJsonDocument>
 
 #include "operationmodel.hpp"
-#include "depositmodelhandler.hpp"
 #include "categorymodelhandler.hpp"
 
 OperationModel::OperationModel(int id, const std::string &date, const std::string &deposit, int amount, const std::string &category)
@@ -96,17 +95,7 @@ void OperationModel::load(std::ifstream &file)
     BaseModel::load(file);
 }
 
-QDateTime OperationModel::rawDate() const
+const CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler) const
 {
-    return QDateTime().fromString(mDate.c_str(), "yyyy-MM-dd");
-}
-
-DepositModel &OperationModel::rawDeposit(DepositModelHandler &handler)
-{
-    return *handler.findByName(mDeposit);
-}
-
-CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler)
-{
-    return *handler.findByName(mCategory);
+    return *(*handler.query.findByName(mCategory));
 }

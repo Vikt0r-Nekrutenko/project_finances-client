@@ -9,7 +9,6 @@ CategoriesView::CategoriesView(AppModel *model, IView *parent)
     mOptionsList.insert(mOptionsList.end(), {
                                                 new options::categories_view::AddNewCategory,
                                                 new options::categories_view::DeleteCategory,
-                                                new options::categories_view::SelectFavoriteCategories,
                                             });
     mActiveMenuBar->recalculateBarWidth();
     mModel->calcMonthlyGroupPnL();
@@ -71,7 +70,7 @@ IView *AddNewCategoryView::onEnterPressHandler()
     std::string name = mInputField.getStr();
     std::string type = mInputField.getStr();
 
-    if(mModel->Categories.findByName(name) != mModel->Categories.categories().end()) {
+    if(mModel->Categories.query.findByName(name) != mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
         mInputField.restoreText();
         return this;
@@ -95,36 +94,12 @@ IView *DeleteCategoryView::onEnterPressHandler()
 
     --id;
 
-    if(id < 0 || id >= int(mModel->Categories.categories().size())) {
+    if(id < 0 || id >= int(mModel->Categories.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
     }
 
     mModel->Categories.deleteCategory(id);
-    return mParent;
-}
-
-SelectFavoriteCategoriesView::SelectFavoriteCategoriesView(AppModel *model, IView *parent)
-    : ICategoryView{model, parent, "Enter 'Id1 Id2 Id3' or press ESC to back up"} { }
-
-IView *SelectFavoriteCategoriesView::onEnterPressHandler()
-{
-    int id1 = mInputField.getExpressionResult();
-    int id2 = mInputField.getExpressionResult();
-    int id3 = mInputField.getExpressionResult();
-
-    --id1; --id2; --id3;
-
-    if(id1 < 0 || id1 >= int(mModel->Categories.categories().size()) ||
-        id2 < 0 || id2 >= int(mModel->Categories.categories().size()) ||
-        id3 < 0 || id3 >= int(mModel->Categories.categories().size()))
-    {
-        mLogItem << "WARNING! Entered ids is wrong!" << lendl;
-        mInputField.restoreText();
-        return this;
-    }
-
-    mModel->selectFavoriteCategories(id1, id2, id3);
     return mParent;
 }

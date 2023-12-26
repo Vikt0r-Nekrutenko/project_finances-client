@@ -16,14 +16,8 @@ std::string
 QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request, const QUrlQuery &params)
 {
     if(!MainPath.length() || !AuthValue.length()) {
-        QFile settingsFile("settings.json");
-        settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
-        if(!settingsFile.isOpen())
-            throw std::invalid_argument("file: " + settingsFile.fileName().toStdString() + " doesn't opened!");
-
-        QJsonObject obj = QJsonDocument::fromJson(QString(settingsFile.readAll()).toUtf8()).object();
-        AuthValue = obj["value"].toString().toStdString();
-        MainPath = obj["url"].toString().toStdString();
+        AuthValue = Settings["value"].toString().toStdString();
+        MainPath = Settings["url"].toString().toStdString();
     }
 
     QNetworkAccessManager *mManager = new QNetworkAccessManager();
@@ -57,4 +51,31 @@ RemoteStatus DataModel::replyHandler(QNetworkReply *reply, const std::string &no
     }
     reply->deleteLater();
     return status;
+}
+
+void loadSettings()
+{
+    QFile settingsFile("settings.json");
+    settingsFile.open(QIODevice::ReadOnly | QIODevice::Text);
+    if(!settingsFile.isOpen())
+        throw std::invalid_argument("file: " + settingsFile.fileName().toStdString() + " doesn't opened!");
+
+    Settings = QJsonDocument::fromJson(QString(settingsFile.readAll()).toUtf8()).object();
+    settingsFile.close();
+}
+
+void saveSettings()
+{
+    QFile settingsFile("settings.json");
+    settingsFile.open(QIODevice::WriteOnly | QIODevice::Text);
+    if(!settingsFile.isOpen())
+        throw std::invalid_argument("file: " + settingsFile.fileName().toStdString() + " doesn't opened!");
+
+    settingsFile.write(QJsonDocument(Settings).toJson());
+    settingsFile.close();
+}
+
+QJsonObject &settings()
+{
+    return Settings;
 }

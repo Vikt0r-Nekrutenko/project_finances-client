@@ -4,84 +4,100 @@
 
 DepositModelHandler::DepositModelHandler()
 {
-    std::ifstream file(LocalPath + "deposits.txt");
-
-    if(file.is_open()) {
-        while(true) {
-            DepositModel tmp("", 0);
-            tmp.load(file);
-            if(tmp.version() > mVersion)
-                mVersion = tmp.version();
-
-            if(file.eof())
-                break;
-
-            mDeposits.push_back(tmp);
-
-            if(tmp.mIsForCreate) {
-                mDeposits.back().create();
-            }
-            if(tmp.isForUpdate()) {
-                mDeposits.back().update();
-            }
-            if(tmp.isForDelete()) {
-                mDeposits.back().remove();
-            }
-        }
-        file.close();
-    }
-    get("deposits/");
+    syncAndLoad<DepositModel>("deposits", mDeposits);
+    query.select();
 }
 
 DepositModelHandler::~DepositModelHandler()
 {
-    std::ofstream file(LocalPath + "deposits.txt");
-    for(auto &model : mDeposits) {
-        model.save(file);
-    }
-    file.close();
+    syncAndSave("deposits.txt", mDeposits);
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
 {
-    mDeposits.push_back(DepositModel{name, balance, ++mVersion});
-    mDeposits.back().create();
+    addNewItem<DepositModel, std::vector<DepositModel>::iterator>(
+        {name, balance},
+        mDeposits,
+        [&](const DepositModel &model) {
+            return model.mName == name;
+        },
+        [&](DepositModel &model) {
+            model.mBalance = balance;
+        });
+    query.select();
 }
 
-void DepositModelHandler::updateBalance(int depositIndex, int newBalance)
+void DepositModelHandler::selectDeposit(int index)
 {
-    mDeposits[depositIndex].mBalance = newBalance;
-    mDeposits[depositIndex].mVersion = ++mVersion;
-    mDeposits[depositIndex].update();
+    mSelectedDeposit = query.at(index);
 }
 
-void DepositModelHandler::deleteDeposit(int depositIndex)
+void DepositModelHandler::updateBalance(int index, int newBalance)
 {
-    mDeposits[depositIndex].mVersion = ++mVersion;
-    mDeposits[depositIndex].mIsDeleted = true;
-    mDeposits[depositIndex].remove();
+    ++mVersion;
+    query.at(index)->mBalance = newBalance;
+    query.at(index)->mIsForUpdate = true;
+}
+
+void DepositModelHandler::deleteDeposit(int index)
+{
+    deleteItem(query.at(index));
+    query.select();
+}
+
+void DepositModelHandler::increaseBalance(int amount)
+{
+    ++mVersion;
+    mSelectedDeposit->mBalance += amount;
+    mSelectedDeposit->mIsForUpdate = true;
+}
+
+void DepositModelHandler::decreaseBalance(int amount)
+{
+    ++mVersion;
+    mSelectedDeposit->mBalance -= amount;
+    mSelectedDeposit->mIsForUpdate = true;
 }
 
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
-    int count = 0;
-    for (const auto &var : replyJsonArray) {
-        mDeposits.push_back({
-            var.toObject()["name"].toString().toStdString(),
-            var.toObject()["balance"].toInt(),
-            var.toObject()["version"].toInt(),
-            bool(var.toObject()["is_deleted"].toInt())
+    parseAndMerge<DepositModel, std::vector<DepositModel>::iterator>(
+        "deposits",
+        replyJsonArray,
+        mDeposits,
+        [&](const DepositModel &remoteModel, const DepositModel &localModel) {
+            return remoteModel.mName == localModel.mName;
+        },
+        [&](QJsonValueConstRef var) {
+            return DepositModel {
+                var.toObject()["name"].toString().toStdString(),
+                var.toObject()["balance"].toInt(),
+                var.toObject()["version"].toInt(),
+                bool(var.toObject()["is_deleted"].toInt())
+            };
         });
-        if(mDeposits.back().version() > mVersion)
-            mVersion = mDeposits.back().version();
-        ++count;
-    }
-    log().push_back({"Deposits received: " + std::to_string(count)});
 }
 
-std::vector<DepositModel>::iterator DepositModelHandler::findByName(const std::string &name)
+std::vector<DepositModel *>::const_iterator DepositModelHandler::Query::findByName(const std::string &name) const
 {
-    return std::find_if(mDeposits.begin(), mDeposits.end(), [&](const DepositModel &model){
-        return model.name() == name;
+    return std::find_if(begin(), end(), [&](const DepositModel *model) {
+        return model->name() == name;
     });
+}
+
+DepositModelHandler::Query::Query(DepositModelHandler *handler)
+    : mHandler{handler} { }
+
+const DepositModelHandler::Query &DepositModelHandler::Query::select()
+{
+    clear();
+    for(size_t i = 0; i < mHandler->mDeposits.size(); ++i)
+        if(mHandler->mDeposits.at(i).mIsDeleted == false)
+            push_back(&mHandler->mDeposits.at(i));
+    return *this;
+}
+
+int DepositModelHandler::Query::sum() const
+{
+    return std::accumulate(begin(), end(), 0, [](int accumulator, const DepositModel *model) { return accumulator + model->mBalance; });
 }

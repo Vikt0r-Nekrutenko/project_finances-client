@@ -71,6 +71,7 @@ void DebtModel::parseJsonObject(const QJsonObject &object)
     mId = object["id"].toInt();
     mName = object["name"].toString().toStdString();
     mAmount = object["amount"].toInt();
+    BaseModel::parseJsonObject(object);
 }
 
 void DebtModel::load(std::ifstream &file)
@@ -83,14 +84,4 @@ void DebtModel::save(std::ofstream &file)
 {
     file << mId << " " << mName << " " << mAmount;
     BaseModel::save(file);
-}
-
-void DebtModel::increase(int amount)
-{
-    mAmount += amount;
-}
-
-void DebtModel::decrease(int amount)
-{
-    mAmount -= amount;
 }
