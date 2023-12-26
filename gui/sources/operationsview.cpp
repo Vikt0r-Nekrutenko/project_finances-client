@@ -170,11 +170,11 @@ IView *DeleteOperationView::onEnterPressHandler()
 
     --id;
 
-    // if(mModel->Operations.query.get(id) == mModel->Operations.query.end()) {
-    //     mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
-    //     mInputField.restoreText();
-    //     return this;
-    // }
+    if(id < 1 || id > int(mModel->Operations.query.size())) {
+        mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
 
     mModel->deleteOperation(id);
     mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
@@ -210,11 +210,11 @@ IView *ChangeOperationView::onEnterPressHandler()
 
     --id;
 
-    // if(mModel->Operations.query.get(id) == mModel->Operations.query.end()) {
-    //     mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
-    //     mInputField.restoreText();
-    //     return this;
-    // }
+    if(id < 1 || id > int(mModel->Operations.query.size())) {
+        mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
 
     mModel->selectOperation(id);
     return new OperationView(mModel, mParent);
