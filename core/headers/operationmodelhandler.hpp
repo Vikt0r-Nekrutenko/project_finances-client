@@ -19,7 +19,7 @@ public:
         Query(OperationModelHandler *handler);
         Query &select();
         Query &filterByDeposit(const std::string &deposit);
-        Query &filterByCategoryName(const std::string &name);
+        Query &filterByCategoryName(const std::string &category);
         Query &filterByCategoryType(CategoryModelHandler &handler, const std::string &type);
         Query &filterByCurrentMonth();
         Query &filterByCurrentYear();

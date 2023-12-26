@@ -119,22 +119,22 @@ OperationModelHandler::Query &OperationModelHandler::Query::select()
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByDeposit(const std::string &deposit)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = ((*it)->deposit() != deposit) ? erase(it) : ++it;
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+              return model->mDeposit != deposit; }), end());
     return *this;
 }
 
-OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryName(const std::string &name)
+OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryName(const std::string &category)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = ((*it)->category() != name) ? erase(it) : ++it;
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+        return model->category() != category; }), end());
     return *this;
 }
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryType(CategoryModelHandler &handler, const std::string &type)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = ((*it)->rawCategory(handler).type() != type) ? erase(it) : ++it;
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+        return model->rawCategory(handler).type() != type; }), end());
     return *this;
 }
 
@@ -159,24 +159,24 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentDay()
 OperationModelHandler::Query &OperationModelHandler::Query::filterByYear(const int year)
 {
     erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
-              int _year = std::stoi(model->mDate.substr(0, 4));
-              return _year != year; }), end());
+        int _year = std::stoi(model->mDate.substr(0, 4));
+        return _year != year; }), end());
     return *this;
 }
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const int month)
 {
     erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
-              int _month = std::stoi(model->mDate.substr(5, 7));
-              return _month != month; }), end());
+        int _month = std::stoi(model->mDate.substr(5, 7));
+        return _month != month; }), end());
     return *this;
 }
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const int day)
 {
     erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
-              int _day = std::stoi(model->mDate.substr(8, 10));
-              return _day != day; }), end());
+        int _day = std::stoi(model->mDate.substr(8, 10));
+        return _day != day; }), end());
     return *this;
 }
 
