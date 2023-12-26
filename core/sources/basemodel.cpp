@@ -37,8 +37,6 @@ void BaseModel::syncAndSave(std::ofstream &file, int version)
 {
     if(mIsForCreate && mIsForDelete)
         return;
-    if(mIsDeleted && mIsForDelete == false)
-        return;
 
     if(mIsForCreate) {
         mVersion = version;
