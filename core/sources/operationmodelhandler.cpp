@@ -92,7 +92,7 @@ void OperationModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
         [&](const OperationModel &remoteModel, const OperationModel &localModel) {
             return remoteModel.mId == localModel.mId;
         },
-        [&](QJsonValueConstRef var) {
+        [&](const QJsonValue &var) {
             return OperationModel{
                 var.toObject()["id"].toInt(),
                 var.toObject()["date"].toString().toStdString(),

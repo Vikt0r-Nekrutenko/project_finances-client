@@ -68,7 +68,7 @@ void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
         [&](const DepositModel &remoteModel, const DepositModel &localModel) {
             return remoteModel.mName == localModel.mName;
         },
-        [&](QJsonValueConstRef var) {
+        [&](const QJsonValue &var) {
             return DepositModel {
                 var.toObject()["name"].toString().toStdString(),
                 var.toObject()["balance"].toInt(),

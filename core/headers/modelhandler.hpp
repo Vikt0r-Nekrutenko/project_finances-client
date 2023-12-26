@@ -77,7 +77,7 @@ protected:
         const QJsonArray &replyJsonArray,
         std::vector<ModelT> &collection,
         const std::function<bool(const ModelT &, const ModelT &)> &compf,
-        std::function<ModelT(QJsonValueConstRef)> buildf)
+        std::function<ModelT(const QJsonValue &)> buildf)
     {
         int count = 0;
         for (const auto &var : replyJsonArray) {

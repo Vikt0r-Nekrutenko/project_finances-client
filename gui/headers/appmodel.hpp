@@ -91,7 +91,6 @@ private:
     int mTodayPnL = 0,
         mMonthlyPnL = 0,
         mYearPnL = 0;
-    int mSelectedOperationId = 0;
     uint8_t mCurrentCurrencyId = 0;
 
 public:

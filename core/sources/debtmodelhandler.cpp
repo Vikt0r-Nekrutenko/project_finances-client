@@ -65,7 +65,7 @@ void DebtModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
         [](const DebtModel &remoteModel, const DebtModel &localModel) {
             return remoteModel.mId == localModel.mId;
         },
-        [](QJsonValueConstRef var) {
+        [](const QJsonValue& var) {
             return DebtModel {
                 var.toObject()["id"].toInt(),
                 var.toObject()["name"].toString().toStdString(),

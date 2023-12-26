@@ -48,7 +48,7 @@ void CategoryModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
         [](const CategoryModel &remote, const CategoryModel &local) {
             return remote.mName == local.mName;
         },
-        [](QJsonValueConstRef var) {
+        [](const QJsonValue &var) {
             return CategoryModel {
                 var.toObject()["name"].toString().toStdString(),
                 var.toObject()["type"].toString().toStdString(),
