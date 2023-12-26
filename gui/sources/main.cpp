@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
     //     qDebug() << item;
     // saveSettings();
     // auto t1 = std::chrono::high_resolution_clock::now();
-
+    // App app;
     // qDebug() << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - t1).count();
 
     // QTimer::singleShot(0, &a, SLOT(quit()));

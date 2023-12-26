@@ -158,43 +158,29 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByCurrentDay()
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByYear(const int year)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().year() != year) ? erase(it) : ++it;
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+              int _year = std::stoi(model->mDate.substr(0, 4));
+              return _year != year; }), end());
     return *this;
 }
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const int month)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().month() != month) ? erase(it) : ++it;
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+              int _month = std::stoi(model->mDate.substr(5, 7));
+              return _month != month; }), end());
     return *this;
 }
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const int day)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
+    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+              int _day = std::stoi(model->mDate.substr(8, 10));
+              return _day != day; }), end());
     return *this;
-}
-
-OperationModelHandler::Query::const_iterator OperationModelHandler::Query::get(size_t index) const
-{
-    Query::const_iterator it = begin();
-    for(size_t i = 0; i != index; ++i, ++it);
-    return it;
-}
-
-OperationModel *OperationModelHandler::Query::at(size_t index)
-{
-    auto it = begin();
-    for(size_t i = 0; i != index; ++i, ++it);
-    return *it;
 }
 
 int OperationModelHandler::Query::sum() const
 {
-    int result = 0;
-    for(Query::const_iterator it = begin(); it != end(); ++it)
-        result += (*it)->amount();
-    return result;
+    return std::accumulate(begin(), end(), 0, [](int accumulator, const OperationModel *model) { return accumulator + model->mAmount; });
 }
