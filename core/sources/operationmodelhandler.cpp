@@ -180,8 +180,12 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByMonth(const 
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByDay(const int day)
 {
-    for(Query::iterator it = begin(); it != end(); )
-        it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
+    for(Query::iterator it = begin(); it != end(); ) {
+        // it = (QDateTime().fromString((*it)->date().c_str(), "yyyy-MM-dd").date().day() != day) ? erase(it) : ++it;
+        erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+                  int _day = std::stoi(model->mDate.substr(8, 10));
+                  return _day != day; }), end());
+    }
     return *this;
 }
 
