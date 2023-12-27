@@ -1,6 +1,6 @@
 #include "iview.hpp"
+#include "appmodel.hpp"
 #include "ioption.hpp"
-#include "headers/datamodel.hpp"
 
 #include <QDateTime>
 
@@ -9,6 +9,7 @@ IView::IView(AppModel *model)
 
 void IView::show(stf::Renderer &renderer)
 {
+    renderer.draw({renderer.Size.x - 14, 0}, "Currency: %s", mModel->currentCurrency().first.c_str());
     renderer.drawLine({0, 1}, {renderer.Size.x - 1, 1}, '-');
 }
 
