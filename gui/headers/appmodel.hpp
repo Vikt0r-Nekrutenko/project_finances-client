@@ -21,7 +21,7 @@ public:
 
     inline const std::pair<std::string, float> &currentCurrency() const { return mQuotes[mCurrentCurrencyId]; }
 
-    inline const std::vector<std::pair<CategoryModel *, int>> &monthlyPnlsByCategories() const { return mMonthlyGroupPnls; }
+    inline const std::vector<std::tuple<CategoryModel *, int, int, int>> &pnlsByCategories() const { return mPnLsByCategories; }
 
     inline int totalEarn() const { return mTotalEarn; }
 
@@ -69,7 +69,7 @@ public:
 
     void calcPnLs();
 
-    void calcMonthlyGroupPnL();
+    void calcPnLsByCategories();
 
     void updateStats();
 
@@ -77,7 +77,7 @@ public:
 
 private:
 
-    std::vector<std::pair<CategoryModel *, int>> mMonthlyGroupPnls;
+    std::vector<std::tuple<CategoryModel *, int, int, int>> mPnLsByCategories;
     std::pair<std::string, float> mQuotes[2] {{"UAH", 1.f}, {"USD", 1.f}};
     int mTotalEarn = 0;
     int mTotalDeposits = 0;

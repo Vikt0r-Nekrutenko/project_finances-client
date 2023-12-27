@@ -127,15 +127,15 @@ void AppModel::calcPnLs()
     mTodayPnL = mTodayProfit - mTodayLoss;
 }
 
-void AppModel::calcMonthlyGroupPnL()
+void AppModel::calcPnLsByCategories()
 {
-    mMonthlyGroupPnls.clear();
+    mPnLsByCategories.clear();
     Categories.query.select();
     OperationModelHandler::Query monthlyOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentMonth().filterByCurrentYear();
     for(auto &category : Categories.query) {
         OperationModelHandler::Query tmp = monthlyOperations;
         int value = tmp.filterByCategoryName(category->name()).sum();
-        mMonthlyGroupPnls.push_back({category, category->type() == "negative" ? -value : value});
+        mPnLsByCategories.push_back({category, category->type() == "negative" ? -value : value});
     }
 }
 
