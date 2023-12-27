@@ -63,8 +63,15 @@ AddNewDepositView::AddNewDepositView(AppModel *model, IView *parent)
 
 IView *AddNewDepositView::onEnterPressHandler()
 {
-    std::string name = mInputField.getStr();
-    int balance = mInputField.getExpressionResult();
+    std::string name;
+    int balance = 0;
+
+    try {
+        name = mInputField.getStr();
+        balance = mInputField.getExpressionResult();
+    } catch(...) {
+        return this;
+    }
 
     if(mModel->Deposits.query.findByName(name) != mModel->Deposits.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
@@ -81,8 +88,14 @@ ChangeBalanceView::ChangeBalanceView(AppModel *model, IView *parent)
 
 IView *ChangeBalanceView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
-    int balance = mInputField.getExpressionResult();
+    int id = 0, balance = 0;
+
+    try {
+        id = mInputField.getExpressionResult();
+        balance = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 
@@ -100,7 +113,12 @@ DeleteDepositView::DeleteDepositView(AppModel *model, IView *parent)
 
 IView *DeleteDepositView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
+    int id = 0;
+    try {
+        id = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 
@@ -119,7 +137,12 @@ SelectDepositView::SelectDepositView(AppModel *model, IView *parent)
 
 IView *SelectDepositView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
+    int id = 0;
+    try {
+        id = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 

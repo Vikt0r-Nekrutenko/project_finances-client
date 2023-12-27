@@ -67,8 +67,14 @@ AddNewCategoryView::AddNewCategoryView(AppModel *model, IView *parent)
 
 IView *AddNewCategoryView::onEnterPressHandler()
 {
-    std::string name = mInputField.getStr();
-    std::string type = mInputField.getStr();
+    std::string name, type;
+
+    try {
+        name = mInputField.getStr();
+        type = mInputField.getStr();
+    } catch(...) {
+        return this;
+    }
 
     if(mModel->Categories.query.findByName(name) != mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
@@ -90,7 +96,12 @@ DeleteCategoryView::DeleteCategoryView(AppModel *model, IView *parent)
 
 IView *DeleteCategoryView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
+    int id = 0;
+    try {
+        id = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 
