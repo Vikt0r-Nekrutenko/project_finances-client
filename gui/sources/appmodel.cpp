@@ -131,11 +131,18 @@ void AppModel::calcPnLsByCategories()
 {
     mPnLsByCategories.clear();
     Categories.query.select();
-    OperationModelHandler::Query monthlyOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentMonth().filterByCurrentYear();
+    OperationModelHandler::Query currentYearOperations = OperationModelHandler::Query(&Operations).select().filterByCurrentYear();
+    OperationModelHandler::Query currentMonthOperations = OperationModelHandler::Query(currentYearOperations).filterByCurrentMonth();
+    OperationModelHandler::Query currentDayOperations = OperationModelHandler::Query(currentMonthOperations).filterByCurrentDay();
+
     for(auto &category : Categories.query) {
-        OperationModelHandler::Query tmp = monthlyOperations;
-        int value = tmp.filterByCategoryName(category->name()).sum();
-        mPnLsByCategories.push_back({category, category->type() == "negative" ? -value : value});
+        int pnlByYear = OperationModelHandler::Query(currentYearOperations).filterByCategoryName(category->name()).sum();
+        int pnlByMonth = OperationModelHandler::Query(currentMonthOperations).filterByCategoryName(category->name()).sum();
+        int pnlByDay = OperationModelHandler::Query(currentDayOperations).filterByCategoryName(category->name()).sum();
+        if(category->type() == "negative")
+            mPnLsByCategories.push_back({category, -pnlByDay, -pnlByMonth, -pnlByYear});
+        else
+            mPnLsByCategories.push_back({category, +pnlByDay, +pnlByMonth, +pnlByYear});
     }
 }
 

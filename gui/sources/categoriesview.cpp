@@ -25,11 +25,12 @@ void CategoriesView::show(stf::Renderer &renderer)
         renderer.draw({mMenuBar->Width + 1 + ox, 1 + index}, (a + (v > 0 ? "%CG%m.00%CD %s" : "%CR%m.00%CD %s")).c_str(), int(float(v) / mModel->currentCurrency().second), mModel->currentCurrency().first.c_str());
     };
 
-    for(const auto &Category : mModel->pnlsByCategories()) {
+    for(auto [category, daily, monthly, yearly] : mModel->pnlsByCategories()) {
         renderer.drawLine({mMenuBar->Width +  1, 1 + index}, {renderer.Size.x - 1, 1 + index}, '.');
-        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, Category.first->name().c_str());
-        drawColoredInfo("", Category.second, 15);
-        renderer.draw({mMenuBar->Width + 33, 1 + index}, "%s", Category.first->type().c_str());
+        renderer.draw({mMenuBar->Width +  1, 1 + index}, "%d.%s", index, category->name().c_str());
+        drawColoredInfo("", daily, 15);
+        drawColoredInfo("", monthly, 30);
+        drawColoredInfo("", yearly, 50);
         ++index;
     }
 }
