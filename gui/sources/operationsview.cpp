@@ -25,12 +25,12 @@ void OperationsView::show(stf::Renderer &renderer)
     mMenuBar->show(renderer);
     drawLogItem(renderer, mMenuBar->Width);
 
-    int y = 2, id = 0;
+    int y = 2, id = mModel->Operations.query.size();
     for(auto operation = mModel->Operations.query.rbegin(); operation != mModel->Operations.query.rend(); ++operation) {
         if(y == renderer.Size.y - LogHeight - 1)
             break;
         renderer.drawLine({mMenuBar->Width +  1, y}, {renderer.Size.x - 1, y}, '.');
-        renderer.draw({mMenuBar->Width +  1, y}, "%d.%s..%m.00 UAH", ++id, (*operation)->date().c_str(), (*operation)->amount());
+        renderer.draw({mMenuBar->Width +  1, y}, "%d.%s..%m.00 UAH", id--, (*operation)->date().c_str(), (*operation)->amount());
         renderer.draw({mMenuBar->Width + 33, y}, "%s", (*operation)->category().c_str());
         ++y;
     }
