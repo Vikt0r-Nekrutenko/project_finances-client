@@ -62,8 +62,15 @@ AddNewDebtView::AddNewDebtView(AppModel *model, IView *parent)
 
 IView *AddNewDebtView::onEnterPressHandler()
 {
-    std::string name = mInputField.getStr();
-    int amount = mInputField.getExpressionResult();
+    std::string name;
+    int amount = 0;
+
+    try {
+        name = mInputField.getStr();
+        amount = mInputField.getExpressionResult();
+    } catch(...) {
+        return this;
+    }
 
     if(mModel->Debts.query.findByName(name) != mModel->Debts.query.end()) {
         mLogItem << "WARNING! Entered name [" << name << "] is exist!" << lendl;
@@ -80,8 +87,15 @@ ChangeAmountView::ChangeAmountView(AppModel *model, IView *parent)
 
 IView *ChangeAmountView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
-    int amount = mInputField.getExpressionResult();
+    int id = 0;
+    int amount = 0;
+
+    try {
+        amount = mInputField.getExpressionResult();
+        id = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 
@@ -99,7 +113,12 @@ DeleteDebtView::DeleteDebtView(AppModel *model, IView *parent)
 
 IView *DeleteDebtView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
+    int id = 0;
+    try {
+        id = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 

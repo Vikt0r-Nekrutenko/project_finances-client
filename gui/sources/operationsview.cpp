@@ -70,9 +70,16 @@ AddNewOperationView::AddNewOperationView(AppModel *model, IView *parent)
 
 IView *AddNewOperationView::onEnterPressHandler()
 {
-    std::string date = mInputField.getStr();
-    int amount = mInputField.getExpressionResult();
-    std::string category = mInputField.getStr();
+    std::string date, category;
+    int amount = 0;
+
+    try {
+        date = mInputField.getStr();
+        amount = mInputField.getExpressionResult();
+        category = mInputField.getStr();
+    } catch(...) {
+        return this;
+    }
 
     if(mModel->Categories.query.findByName(category) == mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered name [" << category << "] isn't exist!" << lendl;
@@ -90,10 +97,17 @@ AddNewTodayLendOrRepayView::AddNewTodayLendOrRepayView(AppModel *model, IView *p
 
 IView *AddNewTodayLendOrRepayView::onEnterPressHandler()
 {
-    std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
-    int amount = mInputField.getExpressionResult();
-    std::string name = mInputField.getStr();
-    std::string type = mInputField.getStr();
+    std::string date, name, type;
+    int amount = 0;
+
+    try {
+        date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
+        amount = mInputField.getExpressionResult();
+        name = mInputField.getStr();
+        type = mInputField.getStr();
+    } catch(...) {
+        return this;
+    }
 
     if(type == "l") {
         mModel->addNewOperation(date, amount, "Lend");
@@ -118,10 +132,17 @@ AddNewLendOrRepayView::AddNewLendOrRepayView(AppModel *model, IView *parent)
 
 IView *AddNewLendOrRepayView::onEnterPressHandler()
 {
-    std::string date = mInputField.getStr();
-    int amount = mInputField.getExpressionResult();
-    std::string name = mInputField.getStr();
-    std::string type = mInputField.getStr();
+    std::string date, name, type;
+    int amount = 0;
+
+    try {
+        date = mInputField.getStr();
+        amount = mInputField.getExpressionResult();
+        name = mInputField.getStr();
+        type = mInputField.getStr();
+    } catch(...) {
+        return this;
+    }
 
     if(type == "l") {
         mModel->addNewOperation(date, amount, "Lend");
@@ -146,9 +167,16 @@ AddNewTodayOperationView::AddNewTodayOperationView(AppModel *model, IView *paren
 
 IView *AddNewTodayOperationView::onEnterPressHandler()
 {
-    std::string date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
-    int amount = mInputField.getExpressionResult();
-    std::string category = mInputField.getStr();
+    std::string date, category;
+    int amount = 0;
+
+    try {
+        date = QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString();
+        amount = mInputField.getExpressionResult();
+        category = mInputField.getStr();
+    } catch(...) {
+        return this;
+    }
 
     if(mModel->Categories.query.findByName(category) == mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered name [" << category << "] isn't exist!" << lendl;
@@ -166,7 +194,12 @@ DeleteOperationView::DeleteOperationView(AppModel *model, IView *parent)
 
 IView *DeleteOperationView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
+    int id = 0;
+    try {
+        id = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 
@@ -186,8 +219,14 @@ SelectOperationsView::SelectOperationsView(AppModel *model, IView *parent)
 
 IView *SelectOperationsView::onEnterPressHandler()
 {
-    int year = mInputField.getExpressionResult();
-    int month = mInputField.getExpressionResult();
+    int year = 0, month = 0;
+
+    try {
+        year = mInputField.getExpressionResult();
+        month = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     if(year < 0 || month < 0) {
         mLogItem << "WARNING! Entered date is wrong!" << lendl;
@@ -206,7 +245,13 @@ ChangeOperationView::ChangeOperationView(AppModel *model, IView *parent)
 
 IView *ChangeOperationView::onEnterPressHandler()
 {
-    int id = mInputField.getExpressionResult();
+    int id = 0;
+
+    try {
+        id = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     --id;
 
@@ -276,7 +321,12 @@ ChangeDate::ChangeDate(AppModel *model, IView *parent)
 
 IView *ChangeDate::onEnterPressHandler()
 {
-    std::string date = mInputField.getStr();
+    std::string date;
+    try {
+        date = mInputField.getStr();
+    } catch(...) {
+        return this;
+    }
 
     mModel->Operations.changeDate(date);
     return mParent;
@@ -287,7 +337,12 @@ ChangeAmount::ChangeAmount(AppModel *model, IView *parent)
 
 IView *ChangeAmount::onEnterPressHandler()
 {
-    int amount = mInputField.getExpressionResult();
+    int amount = 0;
+    try {
+        amount = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &) {
+        return this;
+    }
 
     mModel->selectedOperationChangeAmount(amount);
     mLogItem << "Deposit [" << mModel->Deposits.selectedDeposit()->name() << "] balance now: " << mModel->Deposits.selectedDeposit()->balance() << ".00 UAH" << lendl;
@@ -299,7 +354,12 @@ ChangeCategory::ChangeCategory(AppModel *model, IView *parent)
 
 IView *ChangeCategory::onEnterPressHandler()
 {
-    std::string category = mInputField.getStr();
+    std::string category;
+    try {
+        category = mInputField.getStr();
+    } catch(...) {
+        return this;
+    }
 
     if(mModel->Categories.query.findByName(category) == mModel->Categories.query.end()) {
         mLogItem << "WARNING! Entered category [" << category << "] doesn't exist!" << lendl;
