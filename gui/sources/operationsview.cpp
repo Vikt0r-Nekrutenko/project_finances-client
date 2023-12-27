@@ -170,7 +170,7 @@ IView *DeleteOperationView::onEnterPressHandler()
 
     --id;
 
-    if(id < 1 || id > int(mModel->Operations.query.size())) {
+    if(id < 0 || id >= int(mModel->Operations.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
@@ -210,7 +210,7 @@ IView *ChangeOperationView::onEnterPressHandler()
 
     --id;
 
-    if(id < 1 || id > int(mModel->Operations.query.size())) {
+    if(id < 0 || id >= int(mModel->Operations.query.size())) {
         mLogItem << "WARNING! Entered id [" << id + 1 << "] is wrong!" << lendl;
         mInputField.restoreText();
         return this;
