@@ -22,7 +22,6 @@ void MainView::show(stf::Renderer &renderer)
     IView::show(renderer);
     mMenuBar->show(renderer);
     drawLogItem(renderer, mMenuBar->Width);
-    renderer.draw({renderer.Size.x - 14, 0}, "Currency: %s", mModel->currentCurrency().first.c_str());
 
     int y = 2;
 
