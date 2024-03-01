@@ -155,3 +155,6 @@ IView *SelectDepositView::onEnterPressHandler()
     mModel->Deposits.selectDeposit(id);
     return new OperationsView(mModel, mParent);
 }
+
+MakeTransfer::MakeTransfer(AppModel *model, IView *parent)
+    : IDepositView{model, parent, "Enter 'From ID to ID amount' or press ESC to back up"} { }
