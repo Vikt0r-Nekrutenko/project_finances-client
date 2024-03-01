@@ -11,6 +11,7 @@ DepositsView::DepositsView(AppModel *model, IView *parent)
                                              new options::deposits_view::ChangeBalance,
                                              new options::deposits_view::SelectDeposit,
                                              new options::deposits_view::DeleteDeposit,
+                                             new options::deposits_view::MakeTransfer,
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
