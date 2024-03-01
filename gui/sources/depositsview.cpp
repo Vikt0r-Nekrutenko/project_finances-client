@@ -158,3 +158,30 @@ IView *SelectDepositView::onEnterPressHandler()
 
 MakeTransfer::MakeTransfer(AppModel *model, IView *parent)
     : IDepositView{model, parent, "Enter 'From ID to ID amount' or press ESC to back up"} { }
+
+IView *MakeTransfer::onEnterPressHandler()
+{
+    int fromId = 0,
+        toId = 0,
+        amount = 0;
+
+    try {
+        fromId = mInputField.getExpressionResult();
+        toId = mInputField.getExpressionResult();
+        amount = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &ex) {
+        return this;
+    }
+
+    --fromId;
+    --toId;
+
+    if(fromId < 0 || toId < 0 || fromId >= int(mModel->Deposits.query.size()) || toId >= int(mModel->Deposits.query.size())) {
+        mLogItem << "WARNING! Entered id/s is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->makeTransfer(fromId, toId, amount);
+    return mParent;
+}
