@@ -183,6 +183,6 @@ IView *MakeTransferView::onEnterPressHandler()
         return this;
     }
 
-    mModel->makeTransfer(fromId, toId, amount);
+    mModel->Deposits.makeTransfer(fromId, toId, amount);
     return mParent;
 }
