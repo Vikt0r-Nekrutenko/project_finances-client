@@ -68,11 +68,11 @@ public:
     IView *onEnterPressHandler() override;
 };
 
-class MakeTransfer : public IDepositView
+class MakeTransferView : public IDepositView
 {
 public:
 
-    MakeTransfer(AppModel *model, IView *parent);
+    MakeTransferView(AppModel *model, IView *parent);
 
     IView *onEnterPressHandler() override;
 };
