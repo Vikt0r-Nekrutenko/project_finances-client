@@ -250,3 +250,8 @@ std::string options::deposits_view::MakeTransfer::caption() const
 {
     return "Make transfer";
 }
+
+IView *options::deposits_view::MakeTransfer::execute(IView *sender)
+{
+    return new input_views::deposits_views::MakeTransferView(sender->model(), sender);
+}
