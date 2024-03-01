@@ -245,3 +245,8 @@ IView *options::operations_view::ChangeCategory::execute(IView *sender)
 {
     return new input_views::change_operation_views::ChangeCategory(sender->model(), sender);
 }
+
+std::string options::deposits_view::MakeTransfer::caption() const
+{
+    return "Make transfer";
+}
