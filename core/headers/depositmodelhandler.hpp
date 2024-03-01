@@ -31,6 +31,7 @@ public:
     void deleteDeposit(int index);
     void increaseBalance(int amount);
     void decreaseBalance(int amount);
+    void makeTransfer(int fromId, int toId, int amount);
 
     inline const DepositModel *selectedDeposit() const { return mSelectedDeposit; }
 

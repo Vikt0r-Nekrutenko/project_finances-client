@@ -11,6 +11,7 @@ DepositsView::DepositsView(AppModel *model, IView *parent)
                                              new options::deposits_view::ChangeBalance,
                                              new options::deposits_view::SelectDeposit,
                                              new options::deposits_view::DeleteDeposit,
+                                             new options::deposits_view::MakeTransfer,
                                             });
     mActiveMenuBar->recalculateBarWidth();
 }
@@ -154,4 +155,34 @@ IView *SelectDepositView::onEnterPressHandler()
 
     mModel->Deposits.selectDeposit(id);
     return new OperationsView(mModel, mParent);
+}
+
+MakeTransferView::MakeTransferView(AppModel *model, IView *parent)
+    : IDepositView{model, parent, "Enter 'From ID to ID amount' or press ESC to back up"} { }
+
+IView *MakeTransferView::onEnterPressHandler()
+{
+    int fromId = 0,
+        toId = 0,
+        amount = 0;
+
+    try {
+        fromId = mInputField.getExpressionResult();
+        toId = mInputField.getExpressionResult();
+        amount = mInputField.getExpressionResult();
+    } catch(const std::invalid_argument &ex) {
+        return this;
+    }
+
+    --fromId;
+    --toId;
+
+    if(fromId < 0 || toId < 0 || fromId >= int(mModel->Deposits.query.size()) || toId >= int(mModel->Deposits.query.size())) {
+        mLogItem << "WARNING! Entered id/s is wrong!" << lendl;
+        mInputField.restoreText();
+        return this;
+    }
+
+    mModel->Deposits.makeTransfer(fromId, toId, amount);
+    return mParent;
 }

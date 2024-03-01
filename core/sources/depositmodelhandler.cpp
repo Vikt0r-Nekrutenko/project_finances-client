@@ -59,6 +59,15 @@ void DepositModelHandler::decreaseBalance(int amount)
     mSelectedDeposit->mIsForUpdate = true;
 }
 
+void DepositModelHandler::makeTransfer(int fromId, int toId, int amount)
+{
+    ++mVersion;
+    query.at(fromId)->mBalance -= amount;
+    query.at(toId)->mBalance += amount;
+    query.at(fromId)->mIsForUpdate = true;
+    query.at(toId)->mIsForUpdate = true;
+}
+
 void DepositModelHandler::parseJsonArray(const QJsonArray &replyJsonArray)
 {
     parseAndMerge<DepositModel, std::vector<DepositModel>::iterator>(

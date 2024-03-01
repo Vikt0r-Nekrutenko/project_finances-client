@@ -68,6 +68,15 @@ public:
     IView *onEnterPressHandler() override;
 };
 
+class MakeTransferView : public IDepositView
+{
+public:
+
+    MakeTransferView(AppModel *model, IView *parent);
+
+    IView *onEnterPressHandler() override;
+};
+
 }}
 
 #endif // DEPOSITSVIEW_H
