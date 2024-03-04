@@ -16,7 +16,7 @@ QJsonObject &BaseModel::completeJsonObject(QJsonObject &object)
 
 void BaseModel::parseJsonObject(const QJsonObject &object)
 {
-    mVersion = object["balance"].toInt();
+    mVersion = object["version"].toInt();
     mIsDeleted = object["is_deleted"].toInt();
 }
 
