@@ -15,11 +15,11 @@ public:
     {
         loadSettings();
         mViewHolder = new StartView(nullptr);;
-        std::thread([this](){
+        // std::thread([this](){
             mModel = new AppModel;
             mMainView = new MainView{mModel};
             mViewHolder = mMainView;
-        }).detach();
+        // }).detach();
     }
 
     ~App()

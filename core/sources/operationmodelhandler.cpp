@@ -133,8 +133,10 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryName
 
 OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryType(CategoryModelHandler &handler, const std::string &type)
 {
-    erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
-        return model->rawCategory(handler).type() != type; }), end());
+    try {
+        erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
+            return model->rawCategory(handler).type() != type; }), end());
+    } catch(const std::invalid_argument &) { }
     return *this;
 }
 

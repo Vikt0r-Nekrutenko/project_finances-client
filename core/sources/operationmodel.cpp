@@ -97,5 +97,7 @@ void OperationModel::load(std::ifstream &file)
 
 const CategoryModel &OperationModel::rawCategory(CategoryModelHandler &handler) const
 {
+    if(handler.query.findByName(mCategory) == handler.query.end())
+        throw std::invalid_argument("handler has empty query!");
     return *(*handler.query.findByName(mCategory));
 }
