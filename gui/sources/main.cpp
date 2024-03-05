@@ -22,6 +22,10 @@ public:
     {
         delete mModel;
         saveSettings();
+        std::ofstream logFile("last_session_log.log");
+        for(auto &item : log())
+            logFile << item << std::endl;
+        logFile.close();
     }
 
     bool onUpdate(const float) override
