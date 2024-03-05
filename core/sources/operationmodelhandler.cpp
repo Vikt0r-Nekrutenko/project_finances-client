@@ -136,7 +136,9 @@ OperationModelHandler::Query &OperationModelHandler::Query::filterByCategoryType
     try {
         erase(std::remove_if(begin(), end(), [&](OperationModel *model) {
             return model->rawCategory(handler).type() != type; }), end());
-    } catch(const std::invalid_argument &) { }
+    } catch(const std::invalid_argument &ex) {
+        log().push_back(std::string{"OperationModelHandler -> filterByCategoryType() -> "} + ex.what());
+    }
     return *this;
 }
 
