@@ -22,6 +22,7 @@ public:
     {
         delete mModel;
         saveSettings();
+        saveLog();
     }
 
     bool onUpdate(const float) override
