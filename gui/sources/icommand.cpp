@@ -6,15 +6,9 @@ std::string ICommand::info() const { return ""; }
 
 std::string ICommand::help() const { return ""; }
 
-std::string commands::Help::info() const
-{
-    return "Commands list:";
-}
+std::string commands::Help::info() const { return "Commands list:"; }
 
-std::string commands::Help::help() const
-{
-    return "Get a commands list with descriptions";
-}
+std::string commands::Help::help() const{ return "Get a commands list with descriptions"; }
 
 void commands::Help::execute(int &, char **)
 {
@@ -23,15 +17,9 @@ void commands::Help::execute(int &, char **)
     }
 }
 
-std::string commands::Log::info() const
-{
-    return "Current session log:";
-}
+std::string commands::Log::info() const { return "Current session log:"; }
 
-std::string commands::Log::help() const
-{
-    return "Get a current session log";
-}
+std::string commands::Log::help() const { return "Get a current session log"; }
 
 void commands::Log::execute(int &, char **)
 {
@@ -39,3 +27,5 @@ void commands::Log::execute(int &, char **)
         std::cout << "\t" << item << std::endl;
     }
 }
+
+std::string commands::AddOperation::info() const { return ""; }
