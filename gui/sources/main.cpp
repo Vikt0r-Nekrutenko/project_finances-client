@@ -1,10 +1,12 @@
 #include <QCoreApplication>
 #include <QTimer>
+#include <iostream>
 
 #include "window.hpp"
 #include "viewholder.hpp"
 #include "mainview.hpp"
 #include "appmodel.hpp"
+#include "icommand.hpp"
 
 class App : public stf::Window
 {
@@ -56,7 +58,26 @@ private:
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    int appResult = App().run();
+    int appResult = 0;
+
+    std::unordered_map<std::string, ICommand *> commands {
+                                                         {"@help", new commands::Help}
+    };
+    dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
+
+    if(argc > 1) {
+        int n = 1;
+        do {
+            if(argv[n][0] == '@') {
+                auto result = commands.find(argv[n]);
+                if(result != commands.end()) {
+                    std::cout << result->second->info() << std::endl;
+                    result->second->execute();
+                }
+            }
+        } while(++n < argc);
+    } else appResult = App().run();
+
     QTimer::singleShot(0, &a, SLOT(quit()));
     return a.exec() | appResult;
 }
