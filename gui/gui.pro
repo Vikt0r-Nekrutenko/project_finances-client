@@ -52,6 +52,7 @@ HEADERS += \
     headers/categoriesview.hpp \
     headers/debtsview.hpp \
     headers/depositsview.hpp \
+    headers/icommand.hpp \
     headers/imenu.hpp \
     headers/inputfield.hpp \
     headers/ioption.hpp \
