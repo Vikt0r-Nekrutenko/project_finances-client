@@ -42,13 +42,30 @@ void commands::AddOperation::execute(int &n, char **argv)
 {
     std::string date = argv[++n];
     std::string depo = argv[++n];
-            int amot = std::stoi(argv[++n]);
-    std::string catg = argv[++n];
+    int amount = 0;
+    try{
+        amount = std::stoi(argv[++n]);
+    } catch(...) {
+        return;
+    }
+    std::string category = argv[++n];
 
-    mModel->Deposits.selectDeposit(std::distance(mModel->Deposits.query.cbegin(), mModel->Deposits.query.findByName(depo)));
-    std::cout
-        << "Date: " << date << "\n"
-        << "Deposit: " << mModel->Deposits.selectedDeposit()->name() << "\n"
-        << "Amount: " << amot << "\n"
-        << "Category: " << catg << std::endl;
+    auto depoIt = mModel->Deposits.query.findByName(depo);
+
+    if(depoIt == mModel->Deposits.query.end()) {
+        log().push_back({"Deposit with name [" + depo + "] doesn't exist!"});
+        return;
+    }
+
+    mModel->Deposits.selectDeposit(std::distance(mModel->Deposits.query.cbegin(), depoIt));
+
+    if(mModel->Categories.query.findByName(category) == mModel->Categories.query.end()) {
+        log().push_back({"Category with name [" + category + "] doesn't exist!"});
+        return;
+    }
+
+    mModel->addNewOperation(date, amount, category);
+    std::string result = "Operation successfully added! Deposit [" + mModel->Deposits.selectedDeposit()->name() + "] balance now: " + std::to_string(mModel->Deposits.selectedDeposit()->balance()) + ".00 UAH";
+    log().push_back(result);
+    std::cout << result << std::endl;
 }
