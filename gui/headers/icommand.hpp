@@ -7,7 +7,8 @@ class ICommand
 {
 public:
 
-    virtual std::string info() const { return ""; }
+    virtual std::string info() const;
+    virtual std::string help() const;
     virtual void execute() { }
 };
 

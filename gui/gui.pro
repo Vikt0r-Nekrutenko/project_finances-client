@@ -26,6 +26,7 @@ SOURCES += \
     sources/categoriesview.cpp \
     sources/debtsview.cpp \
     sources/depositsview.cpp \
+    sources/icommand.cpp \
     sources/imenu.cpp \
     sources/inputfield.cpp \
     sources/ioption.cpp \
