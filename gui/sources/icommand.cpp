@@ -36,11 +36,11 @@ commands::AddOperation::AddOperation(AppModel *model)
 
 std::string commands::AddOperation::info() const { return ""; }
 
-std::string commands::AddOperation::help() const { return "Add a new operation"; }
+std::string commands::AddOperation::help() const { return "Add a new operation: yyyy-mm-dd Deposit Amount Category"; }
 
 void commands::AddOperation::execute(int &n, char **argv)
 {
-    std::string date = argv[++n];
+    std::string date = parseDate(n, argv);
     std::string depo = argv[++n];
     int amount = 0;
     try{
@@ -68,4 +68,9 @@ void commands::AddOperation::execute(int &n, char **argv)
     std::string result = "Operation successfully added! Deposit [" + mModel->Deposits.selectedDeposit()->name() + "] balance now: " + std::to_string(mModel->Deposits.selectedDeposit()->balance()) + ".00 UAH";
     log().push_back(result);
     std::cout << result << std::endl;
+}
+
+std::string commands::AddOperation::parseDate(int &n, char **argv) const
+{
+    return argv[++n];
 }

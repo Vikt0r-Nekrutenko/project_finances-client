@@ -60,6 +60,10 @@ public:
     std::string info() const final;
     std::string help() const final;
     void execute(int &n, char **argv) final;
+
+protected:
+
+    virtual std::string parseDate(int &n, char **argv) const;
 };
 }
 
