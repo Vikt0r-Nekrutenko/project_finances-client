@@ -57,13 +57,25 @@ class AddOperation : public ICommand, public IModelCommand
 public:
 
     AddOperation(AppModel *model);
-    std::string info() const final;
-    std::string help() const final;
-    void execute(int &n, char **argv) final;
+    std::string info() const override;
+    std::string help() const override;
+    void execute(int &n, char **argv) override;
 
 protected:
 
     virtual std::string parseDate(int &n, char **argv) const;
+};
+
+class AddTodayOperation : public AddOperation
+{
+public:
+
+    AddTodayOperation(AppModel *model);
+    std::string help() const override;
+
+protected:
+
+    std::string parseDate(int &n, char **argv) const override;
 };
 }
 

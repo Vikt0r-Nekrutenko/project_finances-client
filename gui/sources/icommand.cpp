@@ -74,3 +74,10 @@ std::string commands::AddOperation::parseDate(int &n, char **argv) const
 {
     return argv[++n];
 }
+
+commands::AddTodayOperation::AddTodayOperation(AppModel *model)
+    : AddOperation{model} { }
+
+std::string commands::AddTodayOperation::help() const { return "Add a new today operation: Deposit Amount Category"; }
+
+
