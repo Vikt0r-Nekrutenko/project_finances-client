@@ -10,7 +10,7 @@ public:
 
     virtual std::string info() const;
     virtual std::string help() const;
-    virtual void execute() { }
+    virtual void execute(int &, char **) { }
 };
 
 namespace commands {
@@ -21,7 +21,7 @@ public:
 
     std::string info() const final;
     std::string help() const final;
-    void execute() final;
+    void execute(int &, char **) final;
     inline void addCommandsList(std::unordered_map<std::string, ICommand *> *commandsList) { mCommandsList = commandsList; }
 
 private:
@@ -35,7 +35,16 @@ public:
 
     std::string info() const final;
     std::string help() const final;
-    void execute() final;
+    void execute(int &, char **) final;
+};
+
+class AddOperation : public ICommand
+{
+public:
+
+    std::string info() const final;
+    std::string help() const final;
+    void execute(int &n, char **argv) final;
 };
 }
 

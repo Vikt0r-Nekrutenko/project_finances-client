@@ -16,7 +16,7 @@ std::string commands::Help::help() const
     return "Get a commands list with descriptions";
 }
 
-void commands::Help::execute()
+void commands::Help::execute(int &, char **)
 {
     for(const auto &item : *mCommandsList) {
         std::cout << "\t" << item.first << " - " << item.second->help() << std::endl;
@@ -33,7 +33,7 @@ std::string commands::Log::help() const
     return "Get a current session log";
 }
 
-void commands::Log::execute()
+void commands::Log::execute(int &, char **)
 {
     for(const auto &item : log()) {
         std::cout << "\t" << item << std::endl;
