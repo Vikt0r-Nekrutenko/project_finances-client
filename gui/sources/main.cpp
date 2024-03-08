@@ -1,10 +1,27 @@
 #include <QCoreApplication>
 #include <QTimer>
+#include <iostream>
 
 #include "window.hpp"
 #include "viewholder.hpp"
 #include "mainview.hpp"
 #include "appmodel.hpp"
+#include "icommand.hpp"
+
+int parseCmdParams(const std::unordered_map<std::string, ICommand *> &commandsList, int argc, char **argv)
+{
+    int n = 1;
+    do {
+        if(argv[n][0] == '@') {
+            auto result = commandsList.find(argv[n]);
+            if(result != commandsList.end()) {
+                std::cout << result->second->info() << std::endl;
+                result->second->execute(n, argv);
+            }
+        }
+    } while(++n < argc);
+    return 0;
+}
 
 class App : public stf::Window
 {
@@ -56,7 +73,25 @@ private:
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-    int appResult = App().run();
+    int appResult = 0;
+
+    if(argc > 1) {
+        loadSettings();
+        AppModel *model = new AppModel;
+        std::unordered_map<std::string, ICommand *> commands {
+            {"@help", new commands::Help},
+            {"@log", new commands::Log},
+            {"@addop", new commands::AddOperation{model}},
+            {"@addtdop", new commands::AddTodayOperation{model}},
+        };
+        dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
+
+        appResult = parseCmdParams(commands, argc, argv);
+        delete model;
+        saveSettings();
+    } else
+        appResult = App().run();
+
     QTimer::singleShot(0, &a, SLOT(quit()));
     return a.exec() | appResult;
 }

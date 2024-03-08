@@ -26,6 +26,7 @@ SOURCES += \
     sources/categoriesview.cpp \
     sources/debtsview.cpp \
     sources/depositsview.cpp \
+    sources/icommand.cpp \
     sources/imenu.cpp \
     sources/inputfield.cpp \
     sources/ioption.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     headers/categoriesview.hpp \
     headers/debtsview.hpp \
     headers/depositsview.hpp \
+    headers/icommand.hpp \
     headers/imenu.hpp \
     headers/inputfield.hpp \
     headers/ioption.hpp \
