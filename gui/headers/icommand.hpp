@@ -28,6 +28,15 @@ private:
 
     std::unordered_map<std::string, ICommand *> *mCommandsList {nullptr};
 };
+
+class Log : public ICommand
+{
+public:
+
+    std::string info() const final;
+    std::string help() const final;
+    void execute() final;
+};
 }
 
 #endif // ICOMMAND_HPP

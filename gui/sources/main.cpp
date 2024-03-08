@@ -61,7 +61,8 @@ int main(int argc, char *argv[])
     int appResult = 0;
 
     std::unordered_map<std::string, ICommand *> commands {
-                                                         {"@help", new commands::Help}
+        {"@help", new commands::Help},
+        {"@log", new commands::Log}
     };
     dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
 
