@@ -8,6 +8,21 @@
 #include "appmodel.hpp"
 #include "icommand.hpp"
 
+int parseCmdParams(const std::unordered_map<std::string, ICommand *> &commandsList, int argc, char **argv)
+{
+    int n = 1;
+    do {
+        if(argv[n][0] == '@') {
+            auto result = commandsList.find(argv[n]);
+            if(result != commandsList.end()) {
+                std::cout << result->second->info() << std::endl;
+                result->second->execute();
+            }
+        }
+    } while(++n < argc);
+    return 0;
+}
+
 class App : public stf::Window
 {
 public:
@@ -66,18 +81,10 @@ int main(int argc, char *argv[])
     };
     dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
 
-    if(argc > 1) {
-        int n = 1;
-        do {
-            if(argv[n][0] == '@') {
-                auto result = commands.find(argv[n]);
-                if(result != commands.end()) {
-                    std::cout << result->second->info() << std::endl;
-                    result->second->execute();
-                }
-            }
-        } while(++n < argc);
-    } else appResult = App().run();
+    if(argc > 1)
+        appResult = parseCmdParams(commands, argc, argv);
+    else
+        appResult = App().run();
 
     QTimer::singleShot(0, &a, SLOT(quit()));
     return a.exec() | appResult;
