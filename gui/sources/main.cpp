@@ -16,7 +16,7 @@ int parseCmdParams(const std::unordered_map<std::string, ICommand *> &commandsLi
             auto result = commandsList.find(argv[n]);
             if(result != commandsList.end()) {
                 std::cout << result->second->info() << std::endl;
-                result->second->execute();
+                result->second->execute(n, argv);
             }
         }
     } while(++n < argc);
@@ -75,15 +75,17 @@ int main(int argc, char *argv[])
     QCoreApplication a(argc, argv);
     int appResult = 0;
 
-    std::unordered_map<std::string, ICommand *> commands {
-        {"@help", new commands::Help},
-        {"@log", new commands::Log}
-    };
-    dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
+    if(argc > 1) {
+        AppModel model;
+        std::unordered_map<std::string, ICommand *> commands {
+            {"@help", new commands::Help},
+            {"@log", new commands::Log},
+            {"@addop", new commands::AddOperation{&model}}
+        };
+        dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
 
-    if(argc > 1)
         appResult = parseCmdParams(commands, argc, argv);
-    else
+    } else
         appResult = App().run();
 
     QTimer::singleShot(0, &a, SLOT(quit()));

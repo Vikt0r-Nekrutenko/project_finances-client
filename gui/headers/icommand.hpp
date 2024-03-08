@@ -13,6 +13,19 @@ public:
     virtual void execute(int &, char **) { }
 };
 
+class AppModel;
+
+class IModelCommand
+{
+public:
+
+    IModelCommand(AppModel *model);
+
+protected:
+
+    AppModel *mModel {nullptr};
+};
+
 namespace commands {
 
 class Help : public ICommand
@@ -38,10 +51,11 @@ public:
     void execute(int &, char **) final;
 };
 
-class AddOperation : public ICommand
+class AddOperation : public ICommand, public IModelCommand
 {
 public:
 
+    AddOperation(AppModel *model);
     std::string info() const final;
     std::string help() const final;
     void execute(int &n, char **argv) final;
