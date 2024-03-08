@@ -20,7 +20,7 @@ class IModelCommand
 public:
 
     IModelCommand(AppModel *model);
-    virtual IModelCommand() = default;
+    virtual ~IModelCommand() = default;
 
 protected:
 
