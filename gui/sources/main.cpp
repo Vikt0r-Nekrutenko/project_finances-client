@@ -80,7 +80,8 @@ int main(int argc, char *argv[])
         std::unordered_map<std::string, ICommand *> commands {
             {"@help", new commands::Help},
             {"@log", new commands::Log},
-            {"@addop", new commands::AddOperation{&model}}
+            {"@addop", new commands::AddOperation{&model}},
+            {"@addtdop", new commands::AddTodayOperation{&model}},
         };
         dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
 

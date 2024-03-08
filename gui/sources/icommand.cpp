@@ -80,4 +80,6 @@ commands::AddTodayOperation::AddTodayOperation(AppModel *model)
 
 std::string commands::AddTodayOperation::help() const { return "Add a new today operation: Deposit Amount Category"; }
 
+std::string commands::AddTodayOperation::parseDate(int &, char **) const { return QDateTime().currentDateTime().toString("yyyy-MM-dd").toStdString(); }
+
 
