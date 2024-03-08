@@ -76,16 +76,19 @@ int main(int argc, char *argv[])
     int appResult = 0;
 
     if(argc > 1) {
-        AppModel model;
+        loadSettings();
+        AppModel *model = new AppModel;
         std::unordered_map<std::string, ICommand *> commands {
             {"@help", new commands::Help},
             {"@log", new commands::Log},
-            {"@addop", new commands::AddOperation{&model}},
-            {"@addtdop", new commands::AddTodayOperation{&model}},
+            {"@addop", new commands::AddOperation{model}},
+            {"@addtdop", new commands::AddTodayOperation{model}},
         };
         dynamic_cast<commands::Help *>(commands["@help"])->addCommandsList(&commands);
 
         appResult = parseCmdParams(commands, argc, argv);
+        delete model;
+        saveSettings();
     } else
         appResult = App().run();
 
