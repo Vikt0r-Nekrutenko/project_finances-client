@@ -59,9 +59,14 @@ std::string InputField::getStr()
 int InputField::getExpressionResult()
 {
     std::string expression = getStr();
+    return calculateExpressionResultFromString(expression);
+}
+
+int calculateExpressionResultFromString(const std::string &expression)
+{
     std::vector<char> operators;
     std::vector<int> operands;
-    std::string::iterator it = expression.begin(), jt = expression.begin();
+    std::string::const_iterator it = expression.begin(), jt = expression.begin();
 
     for(; it != expression.end(); ++it) {
         if(*it == '+' || *it == '-') {

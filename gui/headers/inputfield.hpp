@@ -12,6 +12,8 @@ constexpr int VK_BACKSPACE2 = 8;
 constexpr int VK_ESCAPE1 = 27;
 constexpr int VK_TAB1 = 9;
 
+int calculateExpressionResultFromString(const std::string &expression);
+
 class InputField
 {
 public:
