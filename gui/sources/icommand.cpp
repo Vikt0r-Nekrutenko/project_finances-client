@@ -1,5 +1,6 @@
 #include "icommand.hpp"
 #include "appmodel.hpp"
+#include "inputfield.hpp"
 #include <iostream>
 
 IModelCommand::IModelCommand(AppModel *model)
@@ -44,7 +45,7 @@ void commands::AddOperation::execute(int &n, char **argv)
     std::string depo = argv[++n];
     int amount = 0;
     try{
-        amount = std::stoi(argv[++n]);
+        amount = calculateExpressionResultFromString(argv[++n]);
     } catch(...) {
         return;
     }
