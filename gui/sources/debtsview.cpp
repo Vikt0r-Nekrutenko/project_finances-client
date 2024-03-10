@@ -91,8 +91,8 @@ IView *ChangeAmountView::onEnterPressHandler()
     int amount = 0;
 
     try {
-        amount = mInputField.getExpressionResult();
         id = mInputField.getExpressionResult();
+        amount = mInputField.getExpressionResult();
     } catch(const std::invalid_argument &) {
         return this;
     }
