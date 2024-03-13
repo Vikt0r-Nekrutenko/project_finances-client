@@ -4,15 +4,19 @@
 #include "operationmodelhandler.hpp"
 #include "categorymodel.hpp"
 
-OperationModelHandler::OperationModelHandler()
+std::thread *OperationModelHandler::asyncConstruct()
 {
-    syncAndLoad<OperationModel>("operations", mOperations);
-    query.select();
+    return new std::thread{[this](){
+        syncAndLoad<OperationModel>("operations", mOperations);
+        query.select();
+    }};
 }
 
-OperationModelHandler::~OperationModelHandler()
+std::thread *OperationModelHandler::asyncDestruct()
 {
-    syncAndSave<OperationModel>("operations.txt", mOperations);
+    return new std::thread{[this](){
+        syncAndSave<OperationModel>("operations.txt", mOperations);
+    }};
 }
 
 void OperationModelHandler::addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category)
