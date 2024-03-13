@@ -2,6 +2,16 @@
 
 AppModel::AppModel()
 {
+    std::unique_ptr<std::thread> dmhTh { Deposits.asyncConstruct() };
+    std::unique_ptr<std::thread> cmhTh { Categories.asyncConstruct() };
+    std::unique_ptr<std::thread> bmhTh { Debts.asyncConstruct() };
+    std::unique_ptr<std::thread> omhTh { Operations.asyncConstruct() };
+
+    dmhTh->join();
+    cmhTh->join();
+    bmhTh->join();
+    omhTh->join();
+
     MonoBankDataHandler mdh;
     if(mdh.usd() != mdh.quotes().end()) {
         float usd = mdh.usd()->sell;
