@@ -23,8 +23,8 @@ public:
 
     } query {this};
 
-    DebtModelHandler();
-    ~DebtModelHandler() override;
+    std::thread *asyncConstruct() final;
+    std::thread *asyncDestruct() final;
 
     void addNewDebt(const std::string &name, int amount);
     void updateDebt(int index, const std::string &name, int amount);

@@ -3,15 +3,19 @@
 
 #include "debtmodelhandler.hpp"
 
-DebtModelHandler::DebtModelHandler()
+std::thread *DebtModelHandler::asyncConstruct()
 {
-    syncAndLoad<DebtModel>("debts", mDebts);
-    query.select();
+    return new std::thread{[this](){
+        syncAndLoad<DebtModel>("debts", mDebts);
+        query.select();
+    }};
 }
 
-DebtModelHandler::~DebtModelHandler()
+std::thread *DebtModelHandler::asyncDestruct()
 {
-    syncAndSave("debts.txt", mDebts);
+    return new std::thread{[this](){
+        syncAndSave("debts.txt", mDebts);
+    }};
 }
 
 void DebtModelHandler::addNewDebt(const std::string &name, int amount)
