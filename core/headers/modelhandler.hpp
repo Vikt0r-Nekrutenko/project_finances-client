@@ -107,6 +107,7 @@ protected:
 
     virtual void parseJsonArray(const QJsonArray &array) = 0;
     virtual std::thread *asyncConstruct() = 0;
+    virtual std::thread *asyncDestruct() = 0;
 };
 
 class CORE_EXPORT MonoBankDataHandler
