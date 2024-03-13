@@ -4,6 +4,7 @@
 #include "datamodel.hpp"
 #include <QJsonObject>
 #include <QJsonArray>
+#include <thread>
 
 #include "localmodel.hpp"
 
@@ -105,6 +106,7 @@ protected:
     RemoteStatus get(const std::string &collectionName);
 
     virtual void parseJsonArray(const QJsonArray &array) = 0;
+    virtual std::thread *asyncConstruct() = 0;
 };
 
 class CORE_EXPORT MonoBankDataHandler
