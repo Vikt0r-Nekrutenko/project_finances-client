@@ -23,8 +23,8 @@ public:
 
     } query {this};
 
-    DepositModelHandler();
     ~DepositModelHandler() override;
+    std::thread *asyncConstruct() final;
     void addNewDeposit(const std::string &name, int balance);
     void selectDeposit(int index);
     void updateBalance(int index, int newBalance);
