@@ -10,9 +10,11 @@ std::thread *DepositModelHandler::asyncConstruct()
     }};
 }
 
-DepositModelHandler::~DepositModelHandler()
+std::thread *DepositModelHandler::asyncDestruct()
 {
-    syncAndSave("deposits.txt", mDeposits);
+    return new std::thread{[this](){
+        syncAndSave("deposits.txt", mDeposits);
+    }};
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)
