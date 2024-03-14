@@ -19,6 +19,19 @@ AppModel::AppModel()
     }
 }
 
+AppModel::~AppModel()
+{
+    std::unique_ptr<std::thread> dmhTh { Deposits.asyncDestruct() };
+    std::unique_ptr<std::thread> cmhTh { Categories.asyncDestruct() };
+    std::unique_ptr<std::thread> bmhTh { Debts.asyncDestruct() };
+    std::unique_ptr<std::thread> omhTh { Operations.asyncDestruct() };
+
+    dmhTh->join();
+    cmhTh->join();
+    bmhTh->join();
+    omhTh->join();
+}
+
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)
 {
     Operations.addNewOperation(date, Deposits.selectedDeposit()->name(), amount, category);
