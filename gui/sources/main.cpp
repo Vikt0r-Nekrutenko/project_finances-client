@@ -92,6 +92,10 @@ int main(int argc, char *argv[])
     } else
         appResult = App().run();
 
+    // auto t = std::chrono::high_resolution_clock::now();
+
+    // std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - t).count() << std::endl;
+
     QTimer::singleShot(0, &a, SLOT(quit()));
     return a.exec() | appResult;
 }

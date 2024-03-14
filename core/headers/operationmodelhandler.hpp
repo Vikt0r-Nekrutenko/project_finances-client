@@ -35,8 +35,8 @@ public:
         OperationModelHandler *mHandler { nullptr };
     } query {this};
 
-    OperationModelHandler();
-    ~OperationModelHandler() override;
+    std::thread *asyncConstruct() final;
+    std::thread *asyncDestruct() final;
 
     void addNewOperation(const std::string &date, const std::string &deposit, int amount, const std::string &category);
     void updateOperation(int index, const std::string &date, const std::string &deposit, int amount, const std::string &category);

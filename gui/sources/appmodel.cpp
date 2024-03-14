@@ -2,11 +2,34 @@
 
 AppModel::AppModel()
 {
+    std::unique_ptr<std::thread> dmhTh { Deposits.asyncConstruct() };
+    std::unique_ptr<std::thread> cmhTh { Categories.asyncConstruct() };
+    std::unique_ptr<std::thread> bmhTh { Debts.asyncConstruct() };
+    std::unique_ptr<std::thread> omhTh { Operations.asyncConstruct() };
+
+    dmhTh->join();
+    cmhTh->join();
+    bmhTh->join();
+    omhTh->join();
+
     MonoBankDataHandler mdh;
     if(mdh.usd() != mdh.quotes().end()) {
         float usd = mdh.usd()->sell;
         mQuotes[1].second = usd;
     }
+}
+
+AppModel::~AppModel()
+{
+    std::unique_ptr<std::thread> dmhTh { Deposits.asyncDestruct() };
+    std::unique_ptr<std::thread> cmhTh { Categories.asyncDestruct() };
+    std::unique_ptr<std::thread> bmhTh { Debts.asyncDestruct() };
+    std::unique_ptr<std::thread> omhTh { Operations.asyncDestruct() };
+
+    dmhTh->join();
+    cmhTh->join();
+    bmhTh->join();
+    omhTh->join();
 }
 
 void AppModel::addNewOperation(const std::string &date, int amount, const std::string &category)

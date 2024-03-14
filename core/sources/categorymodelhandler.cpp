@@ -2,15 +2,19 @@
 #include <QJsonObject>
 #include "categorymodelhandler.hpp"
 
-CategoryModelHandler::CategoryModelHandler()
+std::thread *CategoryModelHandler::asyncConstruct()
 {
-    syncAndLoad<CategoryModel>("categories", mCategories);
-    query.select();
+    return new std::thread{[this](){
+        syncAndLoad<CategoryModel>("categories", mCategories);
+        query.select();
+    }};
 }
 
-CategoryModelHandler::~CategoryModelHandler()
+std::thread *CategoryModelHandler::asyncDestruct()
 {
-    syncAndSave("categories.txt", mCategories);
+    return new std::thread{[this](){
+        syncAndSave("categories.txt", mCategories);
+    }};
 }
 
 void CategoryModelHandler::addNewCategory(const std::string &name, const std::string &type)

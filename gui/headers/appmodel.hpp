@@ -17,6 +17,8 @@ public:
 
     AppModel();
 
+    ~AppModel();
+
     inline const OperationModel &selectedOperation() const { return *Operations.selectedOperation(); }
 
     inline const std::pair<std::string, float> &currentCurrency() const { return mQuotes[mCurrentCurrencyId]; }

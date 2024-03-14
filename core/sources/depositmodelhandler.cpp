@@ -2,15 +2,19 @@
 #include <QJsonObject>
 #include "depositmodelhandler.hpp"
 
-DepositModelHandler::DepositModelHandler()
+std::thread *DepositModelHandler::asyncConstruct()
 {
-    syncAndLoad<DepositModel>("deposits", mDeposits);
-    query.select();
+    return new std::thread{[this](){
+        syncAndLoad<DepositModel>("deposits", mDeposits);
+        query.select();
+    }};
 }
 
-DepositModelHandler::~DepositModelHandler()
+std::thread *DepositModelHandler::asyncDestruct()
 {
-    syncAndSave("deposits.txt", mDeposits);
+    return new std::thread{[this](){
+        syncAndSave("deposits.txt", mDeposits);
+    }};
 }
 
 void DepositModelHandler::addNewDeposit(const std::string &name, int balance)

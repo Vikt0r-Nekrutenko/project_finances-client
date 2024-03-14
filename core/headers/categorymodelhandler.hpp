@@ -24,8 +24,8 @@ public:
 
     } query {this};
 
-    CategoryModelHandler();
-    ~CategoryModelHandler() override;
+    std::thread *asyncConstruct() final;
+    std::thread *asyncDestruct() final;
 
     void addNewCategory(const std::string &name, const std::string &type);
     void updateCategoryType(int index, const std::string &type);
