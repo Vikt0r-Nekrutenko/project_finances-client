@@ -3,6 +3,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include "datamodel.hpp"
+#include <mutex>
 
 std::vector<std::string> &log()
 {
@@ -12,6 +13,8 @@ std::vector<std::string> &log()
 std::string
     DataModel::AuthValue,
     DataModel::MainPath;
+    
+std::mutex netAMMtx;
 
 QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, const QJsonObject &data, const std::string &request, const QUrlQuery &params)
 {
@@ -20,7 +23,10 @@ QNetworkReply *DataModel::sendCRUDRequest(const std::string &additionalPath, con
         MainPath = Settings["url"].toString().toStdString();
     }
 
-    QNetworkAccessManager *mManager = new QNetworkAccessManager();
+    netAMMtx.lock();
+        QNetworkAccessManager *mManager = new QNetworkAccessManager();
+    netAMMtx.unlock();
+    
     QUrl url{(MainPath + additionalPath).c_str()};
     if(!params.isEmpty())
         url.setQuery(params);
